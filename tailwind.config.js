@@ -68,10 +68,12 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
-        'ibm-sans': ['var(--font-ibm-plex-sans)', 'system-ui', 'sans-serif'],
-        'ibm-serif': ['var(--font-ibm-plex-serif)', 'Georgia', 'serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Consolas', 'monospace'],
+        'inter': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        'ibm-sans': ['var(--font-ibm-plex-sans)', 'IBM Plex Sans', 'system-ui', 'sans-serif'],
+        'ibm-serif': ['var(--font-ibm-plex-serif)', 'IBM Plex Serif', 'Georgia', 'serif'],
+        'jetbrains': ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'SF Mono', 'Monaco', 'monospace'],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
