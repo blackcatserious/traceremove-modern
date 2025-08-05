@@ -293,7 +293,7 @@ export default function ProjectsPage() {
                 className="group"
               >
                 <Link href={project.demoUrl}>
-                  <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 overflow-hidden border border-accent-ai-purple/10 hover:border-accent-ai-purple/30">
+                  <div className="glass-card-research transition-all duration-500 overflow-hidden hover:border-accent-ai-purple/30">
                     {/* Gradient Header */}
                     <div className="h-2 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600" />
                     

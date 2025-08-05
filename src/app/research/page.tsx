@@ -369,7 +369,7 @@ export default function Research() {
                 className="group"
               >
                 <Link href={article.href}>
-                  <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 overflow-hidden border border-accent-ai-purple/10 hover:border-accent-ai-purple/30">
+                  <div className="glass-card-research transition-all duration-500 overflow-hidden">
                     {/* Gradient Header */}
                     <div className="h-2 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600" />
                     
@@ -507,7 +507,7 @@ export default function Research() {
                 className="group"
               >
                 <Link href={article.href}>
-                  <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 p-10 border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 overflow-hidden">
+                  <div className="glass-card-research transition-all duration-500 p-10 overflow-hidden">
                     {/* Background Effects */}
                     <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

@@ -148,6 +148,7 @@ export default function AILabMembers() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02, y: -8 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
@@ -195,6 +196,7 @@ export default function AILabMembers() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02, y: -8 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
@@ -223,6 +225,7 @@ export default function AILabMembers() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02, y: -8 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
