@@ -335,9 +335,14 @@ export default function SymbolicAI() {
             </Link>
 
             <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 Symbolic AI: Bridging Logic and Learning in Artificial Intelligence
-              </h1>
+              </motion.h1>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
                 <div className="flex items-center">
@@ -366,11 +371,16 @@ export default function SymbolicAI() {
                 ))}
               </div>
 
-              <p className="section-title text-research-text-secondary leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
                 Developing next-generation symbolic AI systems that combine classical knowledge representation 
                 and reasoning with modern machine learning approaches, creating interpretable, robust, and 
                 generalizable artificial intelligence that can explain its reasoning and adapt to new domains.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>

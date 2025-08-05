@@ -164,7 +164,7 @@ export default function ToolsPage() {
             >
               <Code className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                AI Tools & Demos
+                AI Tools &amp; Demos
               </span>
             </motion.div>
 
@@ -181,7 +181,7 @@ export default function ToolsPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="block text-accent-deep-blue mb-2"
                 >
-                  AI Tools &
+                  AI Tools &amp;
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}

@@ -93,7 +93,7 @@ export default function InfoCard({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl lg:text-5xl font-bold text-white mb-6 font-ibm-sans tracking-tight leading-tight"
+              className="text-4xl lg:text-5xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight"
             >
               {title}
             </motion.h2>
@@ -102,7 +102,7 @@ export default function InfoCard({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl text-slate-300 font-inter leading-relaxed"
+              className="text-xl text-slate-300 typography-premium leading-relaxed"
             >
               {description}
             </motion.p>

@@ -146,20 +146,35 @@ export default function AIHumanDignity() {
               transition={{ duration: 1, ease: "easeOut" }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-full border border-accent-ai-purple/30 mb-6">
-                <Heart className="h-4 w-4 text-accent-ai-purple mr-2" />
-                <span className="text-sm font-medium text-accent-ai-purple">AI Ethics & Human Values</span>
-              </div>
+              <motion.div 
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full border border-purple-400/30 mb-6"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Heart className="h-4 w-4 text-purple-300 mr-2" />
+                <span className="text-sm font-semibold text-purple-300 typography-premium">AI Ethics & Human Values</span>
+              </motion.div>
               
-              <h1 className="hero-title text-research-text mb-6">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 AI & Human Dignity
-              </h1>
+              </motion.h1>
               
-              <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
                 Exploring the fundamental relationship between artificial intelligence and human dignity, 
                 examining how AI systems can be designed to respect, protect, and enhance human worth, 
                 autonomy, and fundamental rights in an increasingly automated world.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Architecture Diagram */}

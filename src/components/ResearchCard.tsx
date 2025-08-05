@@ -115,7 +115,7 @@ export default function ResearchCard({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-3xl font-bold text-white mb-6 font-ibm-sans tracking-tight leading-tight"
+          className="text-3xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight"
         >
           {title}
         </motion.h3>
@@ -124,7 +124,7 @@ export default function ResearchCard({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-slate-300 font-inter leading-relaxed text-base mb-6"
+          className="text-slate-300 typography-premium leading-relaxed text-base mb-6"
         >
           {description}
         </motion.p>

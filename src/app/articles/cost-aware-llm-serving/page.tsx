@@ -300,16 +300,26 @@ export default function CostAwareLLMServing() {
           >
             <Link
               href="/articles"
-              className="inline-flex items-center text-accent-ai-purple hover:text-accent-lab-purple font-medium mb-8 transition-colors duration-200"
+              className="inline-flex items-center text-purple-300 hover:text-white font-medium transition-all duration-300 group"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Research Articles
+              <motion.div
+                whileHover={{ x: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+              </motion.div>
+              <span className="typography-premium">Back to Research Articles</span>
             </Link>
 
             <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 Cost-Aware LLM Serving: Optimizing Performance &amp; Economics
-              </h1>
+              </motion.h1>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
                 <div className="flex items-center">
@@ -330,25 +340,38 @@ export default function CostAwareLLMServing() {
                 </button>
               </div>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {['LLM Serving', 'Cost Optimization', 'Resource Management', 'Model Selection', 'Performance Engineering', 'Cloud Computing'].map((tag) => (
-                  <span
+              <motion.div 
+                className="flex flex-wrap gap-3 mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                {['LLM Serving', 'Cost Optimization', 'Resource Management', 'Model Selection', 'Performance Engineering', 'Cloud Computing'].map((tag, index) => (
+                  <motion.span
                     key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent-ai-purple/10 text-accent-ai-purple border border-accent-ai-purple/20"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border border-purple-400/30 typography-premium"
                   >
-                    <Tag className="h-3 w-3 mr-1" />
+                    <Tag className="h-4 w-4 mr-2" />
                     {tag}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
 
-              <p className="section-title text-research-text-secondary leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
                 A comprehensive analysis of cost-aware strategies for large language model 
                 serving, examining resource optimization, intelligent model selection, and 
                 dynamic scaling approaches that balance service quality with economic 
                 efficiency. This research addresses the critical challenge of sustainable 
                 AI deployment in production environments.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>

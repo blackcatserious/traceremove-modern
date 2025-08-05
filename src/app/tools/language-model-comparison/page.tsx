@@ -326,16 +326,26 @@ export default function LanguageModelComparison() {
           >
             <Link
               href="/tools"
-              className="inline-flex items-center text-accent-ai-purple hover:text-accent-lab-purple font-medium mb-8 transition-colors duration-200"
+              className="inline-flex items-center text-purple-300 hover:text-white font-medium transition-all duration-300 group"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Tools
+              <motion.div
+                whileHover={{ x: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ArrowLeft className="h-5 w-5 mr-3" />
+              </motion.div>
+              <span className="typography-premium">Back to Tools</span>
             </Link>
 
             <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 Language Model Comparison: Comprehensive AI Model Evaluation &amp; Selection Platform
-              </h1>
+              </motion.h1>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
                 <div className="flex items-center">
@@ -364,12 +374,17 @@ export default function LanguageModelComparison() {
                 ))}
               </div>
 
-              <p className="section-title text-research-text-secondary leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
                 Advanced platform for comprehensive evaluation and comparison of language models 
                 across multiple dimensions including performance, cost, bias, and domain-specific 
                 capabilities. Features automated benchmarking, statistical analysis, and intelligent 
                 recommendations to support optimal model selection for diverse AI applications and use cases.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>

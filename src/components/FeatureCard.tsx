@@ -98,7 +98,7 @@ export default function FeatureCard({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-2xl font-bold text-white mb-4 font-ibm-sans tracking-tight"
+          className="text-2xl font-bold text-white mb-4 typography-premium tracking-tight"
         >
           {title}
         </motion.h3>
@@ -107,7 +107,7 @@ export default function FeatureCard({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-slate-300 font-inter leading-relaxed text-sm"
+          className="text-slate-300 typography-premium leading-relaxed text-sm"
         >
           {description}
         </motion.p>

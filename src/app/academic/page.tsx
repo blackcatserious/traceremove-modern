@@ -147,61 +147,93 @@ export default function AcademicPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
+      <section className="relative overflow-hidden py-32 sm:py-40 lg:py-48">
         {/* Dynamic Background System */}
         <BackgroundLayers variant="research" className="absolute inset-0 z-0" />
         
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)] z-10" />
+        {/* Enhanced Premium Background Layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-blue-900/15 to-purple-900/20 backdrop-blur-md z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(30,58,138,0.15),transparent_70%)] z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.12),transparent_70%)] z-10" />
+        <div className="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(139,92,246,0.08),rgba(59,130,246,0.06),rgba(147,51,234,0.08),rgba(139,92,246,0.08))] z-10" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="text-center">
-            {/* Badge */}
+            {/* Enhanced Badge */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8"
+              initial={{ opacity: 0, y: -20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.2,
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}
+              className="mb-12"
             >
-              <GraduationCap className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="caption-text text-accent-ai-purple">
-                Academic Resources
-              </span>
+              <motion.div 
+                className="inline-flex items-center space-x-3 px-8 py-4 rounded-full glass-card-premium border border-accent-ai-purple/40 shadow-ai-glow"
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -2,
+                  boxShadow: "0 25px 50px -12px rgba(124, 58, 237, 0.25)"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                >
+                  <GraduationCap className="w-6 h-6 text-purple-300" />
+                </motion.div>
+                <span className="text-white/95 font-semibold text-sm tracking-wide typography-premium">
+                  Academic Resources
+                </span>
+                <motion.div 
+                  className="w-3 h-3 rounded-full bg-green-400"
+                  animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </motion.div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="content-spacing-large"
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="mb-12"
             >
-              <h1 className="hero-title">
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="block text-accent-deep-blue mb-2"
+              <motion.h1 
+                className="hero-title text-white mb-10 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
+                <motion.span
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="block"
                 >
                   Academic
                 </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 bg-clip-text text-transparent"
+                <motion.span
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="block bg-gradient-to-r from-blue-400 via-purple-400 to-violet-400 bg-clip-text text-transparent"
                 >
                   Profile
                 </motion.span>
-              </h1>
+              </motion.h1>
             </motion.div>
 
-            <motion.p
+            <motion.p 
+              className="text-xl text-slate-200 max-w-4xl mx-auto mb-20 typography-premium leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="body-text-large text-research-600 max-w-4xl mx-auto content-spacing"
+              transition={{ duration: 0.8, delay: 1.0 }}
             >
               Comprehensive academic profile including publications, collaborations, teaching materials, and research contributions. 
               Explore the academic journey of Artur Ziganshin in AI ethics, philosophy of technology, and responsible AI development.

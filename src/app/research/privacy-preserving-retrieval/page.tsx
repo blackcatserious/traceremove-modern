@@ -77,228 +77,421 @@ class PrivacyPreservingRetrieval:
 
 export default function PrivacyPreservingRetrieval() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50">
+    <div className="min-h-screen relative">
+      {/* Enhanced Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-blue-900/15 to-purple-900/20 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(30,58,138,0.15),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(124,58,237,0.12),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[conic-gradient(from_45deg_at_50%_50%,rgba(139,92,246,0.08),rgba(59,130,246,0.06),rgba(147,51,234,0.08),rgba(139,92,246,0.08))]" />
+      
       {/* Header */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-blue-50/30" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-24">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <Link
-              href="/research"
-              className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mb-8 transition-colors duration-200"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-12"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Research
-            </Link>
+              <Link
+                href="/research"
+                className="inline-flex items-center text-purple-300 hover:text-white font-medium transition-all duration-300 group"
+              >
+                <motion.div
+                  whileHover={{ x: -4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowLeft className="h-5 w-5 mr-3" />
+                </motion.div>
+                <span className="typography-premium">Back to Research</span>
+              </Link>
+            </motion.div>
 
-            <div className="mb-8">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <div className="glass-card-premium p-12 mb-16">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 Privacy-Preserving Information Retrieval in AI Systems
-              </h1>
+              </motion.h1>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  8 min read
+              <motion.div 
+                className="flex flex-wrap items-center gap-6 text-slate-300 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <div className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">8 min read</span>
                 </div>
-                <div className="flex items-center">
-                  <BookOpen className="h-4 w-4 mr-1" />
-                  January 10, 2024
+                <div className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">January 10, 2024</span>
                 </div>
-                <button className="flex items-center hover:text-primary-600 transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Share
-                </button>
-              </div>
+                <motion.button 
+                  className="flex items-center space-x-2 hover:text-purple-300 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Share2 className="h-5 w-5" />
+                  <span className="typography-premium">Share</span>
+                </motion.button>
+              </motion.div>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {['Privacy', 'Security', 'Retrieval', 'Encryption'].map((tag) => (
-                  <span
+              <motion.div 
+                className="flex flex-wrap gap-3 mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                {['Privacy', 'Security', 'Retrieval', 'Encryption'].map((tag, index) => (
+                  <motion.span
                     key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-50 text-purple-700"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border border-purple-400/30 typography-premium"
                   >
-                    <Tag className="h-3 w-3 mr-1" />
+                    <Tag className="h-4 w-4 mr-2" />
                     {tag}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
 
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
+              >
                 Developing secure information retrieval systems that maintain user privacy while delivering accurate results. 
                 Focus on differential privacy, homomorphic encryption, and secure multi-party computation.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-12">
+      <section className="py-16 relative z-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none">
+          <div className="space-y-16">
             {/* Introduction */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Introduction</h2>
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Introduction
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-6 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 Privacy-preserving information retrieval represents a critical challenge in modern AI systems. 
                 As organizations handle increasingly sensitive data, the need for retrieval systems that can 
                 deliver accurate results without compromising user privacy has become paramount.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
+              </motion.p>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
                 This research explores advanced cryptographic techniques including differential privacy, 
                 homomorphic encryption, and secure multi-party computation to enable private information 
                 retrieval at scale.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Privacy Animation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Privacy Protection Mechanisms</h2>
-              <LottieAnimation 
-                animationFile="privacy.json"
-                className="mx-auto"
-                width={500}
-                height={400}
-              />
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Privacy Protection Mechanisms
+              </motion.h2>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <LottieAnimation 
+                  animationFile="privacy.json"
+                  className="mx-auto"
+                  width={500}
+                  height={400}
+                />
+              </motion.div>
             </motion.div>
 
             {/* Architecture */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Privacy-Preserving Architecture</h2>
-              <p className="text-gray-700 leading-relaxed mb-8">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Privacy-Preserving Architecture
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-10 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 The architecture integrates multiple privacy-preserving techniques to ensure that sensitive 
                 information remains protected throughout the retrieval process. Each component adds a layer 
                 of protection while maintaining system performance.
-              </p>
+              </motion.p>
               
-              <MermaidDiagram chart={privacyArchitectureDiagram} className="mb-8" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="mb-10"
+              >
+                <MermaidDiagram chart={privacyArchitectureDiagram} className="rounded-2xl overflow-hidden" />
+              </motion.div>
               
-              <p className="text-gray-700 leading-relaxed">
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
                 This multi-layered approach ensures that even if one privacy mechanism is compromised, 
                 the overall system maintains strong privacy guarantees through defense in depth.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Performance Metrics */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Privacy vs Performance Trade-offs</h2>
-              <p className="text-gray-700 leading-relaxed mb-8">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Privacy vs Performance Trade-offs
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-10 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 Our evaluation demonstrates the trade-offs between privacy guarantees and system performance. 
                 The following metrics show how different privacy levels affect retrieval accuracy and latency.
-              </p>
+              </motion.p>
               
-              <InteractiveChart
-                dataFile="privacy_metrics.json"
-                chartType="line"
-                title="Privacy-Performance Trade-offs"
-                className="mb-8"
-              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="mb-10"
+              >
+                <InteractiveChart
+                  dataFile="privacy_metrics.json"
+                  chartType="line"
+                  title="Privacy-Performance Trade-offs"
+                  className="rounded-2xl overflow-hidden"
+                />
+              </motion.div>
               
-              <p className="text-gray-700 leading-relaxed">
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
                 The results show that while stronger privacy guarantees do introduce some performance overhead, 
                 the impact can be minimized through careful system design and optimization techniques.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Implementation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Implementation Example</h2>
-              <p className="text-gray-700 leading-relaxed mb-8">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Implementation Example
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-10 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 The following implementation demonstrates key privacy-preserving techniques including 
                 query encryption, differential privacy, and homomorphic search operations.
-              </p>
+              </motion.p>
               
-              <CodeBlock
-                code={encryptionCode}
-                language="python"
-                className="mb-8"
-              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="mb-10"
+              >
+                <CodeBlock
+                  code={encryptionCode}
+                  language="python"
+                  className="rounded-2xl overflow-hidden"
+                />
+              </motion.div>
               
-              <p className="text-gray-700 leading-relaxed">
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
                 This implementation provides a foundation for building production-ready privacy-preserving 
                 retrieval systems. The modular design allows for easy integration of additional privacy 
                 mechanisms as needed.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Conclusion */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Conclusion</h2>
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Conclusion
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-6 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 Privacy-preserving information retrieval is essential for building trustworthy AI systems 
                 that handle sensitive data. The techniques presented here provide a comprehensive framework 
                 for maintaining privacy while delivering high-quality retrieval results.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
+              </motion.p>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
                 Future research should focus on optimizing the performance of privacy-preserving operations 
                 and developing new cryptographic primitives that can further reduce the privacy-utility trade-off.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Navigation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="border-t border-gray-200 pt-8"
+              className="glass-card-premium p-8"
             >
               <div className="flex justify-between items-center">
-                <Link
-                  href="/research/agentic-systems-tool-use"
-                  className="inline-flex items-center px-4 py-2 bg-white text-gray-700 font-medium rounded-lg border border-gray-200 hover:border-primary-300 transition-colors duration-200"
+                <motion.div
+                  whileHover={{ scale: 1.05, x: -5 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous Article
-                </Link>
+                  <Link
+                    href="/research/agentic-systems-tool-use"
+                    className="inline-flex items-center px-6 py-3 glass-card-premium text-white font-semibold rounded-xl border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 typography-premium"
+                  >
+                    <ArrowLeft className="h-5 w-5 mr-3" />
+                    Previous Article
+                  </Link>
+                </motion.div>
                 
-                <Link
-                  href="/research"
-                  className="inline-flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200"
+                <motion.div
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <Shield className="h-4 w-4 mr-2" />
-                  All Research
-                </Link>
+                  <Link
+                    href="/research"
+                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300 typography-premium"
+                  >
+                    <Shield className="h-5 w-5 mr-3" />
+                    All Research
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </div>

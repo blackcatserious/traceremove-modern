@@ -316,143 +316,253 @@ export default function DigitalIdentityAgency() {
       <ParticleSystem variant="data" particleCount={75} />
       
       {/* Header */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-24">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <Link
-              href="/projects"
-              className="inline-flex items-center text-accent-ai-purple hover:text-accent-lab-purple font-medium mb-8 transition-colors duration-200"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-12"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Projects
-            </Link>
-
-            <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
-                Digital Identity &amp; Agency: Empowering Autonomous Digital Citizenship
-              </h1>
-              
-              <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  26 min read
-                </div>
-                <div className="flex items-center">
-                  <BookOpen className="h-4 w-4 mr-1" />
-                  Project Status: Active Development
-                </div>
-                <PremiumButton
-                  variant="ghost"
-                  size="sm"
-                  icon={Share2}
-                  iconPosition="left"
-                  className="hover:text-accent-ai-purple transition-colors duration-200"
+              <Link
+                href="/projects"
+                className="inline-flex items-center text-purple-300 hover:text-white font-medium transition-all duration-300 group"
+              >
+                <motion.div
+                  whileHover={{ x: -4 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  Share
-                </PremiumButton>
-              </div>
+                  <ArrowLeft className="h-5 w-5 mr-3" />
+                </motion.div>
+                <span className="typography-premium">Back to Projects</span>
+              </Link>
+            </motion.div>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {['Self-Sovereign Identity', 'Digital Agency', 'Privacy Protection', 'Decentralized Systems', 'Consent Management', 'Trust Networks'].map((tag) => (
-                  <span
+            <div className="glass-card-premium p-12 mb-16">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
+                Digital Identity &amp; Agency: Empowering Autonomous Digital Citizenship
+              </motion.h1>
+              
+              <motion.div 
+                className="flex flex-wrap items-center gap-6 text-slate-300 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <div className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">26 min read</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">Project Status: Active Development</span>
+                </div>
+                <motion.button 
+                  className="flex items-center space-x-2 hover:text-purple-300 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Share2 className="h-5 w-5" />
+                  <span className="typography-premium">Share</span>
+                </motion.button>
+              </motion.div>
+
+              <motion.div 
+                className="flex flex-wrap gap-3 mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                {['Self-Sovereign Identity', 'Digital Agency', 'Privacy Protection', 'Decentralized Systems', 'Consent Management', 'Trust Networks'].map((tag, index) => (
+                  <motion.span
                     key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent-ai-purple/10 text-accent-ai-purple border border-accent-ai-purple/20"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border border-purple-400/30 typography-premium"
                   >
-                    <Tag className="h-3 w-3 mr-1" />
+                    <Tag className="h-4 w-4 mr-2" />
                     {tag}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
 
-              <p className="section-title text-research-text-secondary leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.4 }}
+              >
                 Developing comprehensive frameworks for digital identity and autonomous agency that empower 
                 individuals with self-sovereign control over their digital presence while enabling intelligent, 
                 privacy-preserving interactions in complex digital ecosystems through decentralized trust networks.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-12">
+      <section className="py-16 relative z-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none">
+          <div className="space-y-16">
             {/* Project Overview */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
+              className="glass-card-premium p-10"
             >
-              <div className="flex items-center mb-6">
-                <Shield className="h-8 w-8 text-accent-ai-purple mr-3" />
-                <h2 className="section-title text-research-text">Project Overview</h2>
+              <div className="flex items-center mb-8">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <Shield className="h-10 w-10 text-purple-400 mr-4" />
+                </motion.div>
+                <motion.h2 
+                  className="section-title text-white typography-premium"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  Project Overview
+                </motion.h2>
               </div>
-              <p className="body-text text-research-text-secondary mb-6">
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 The Digital Identity &amp; Agency project addresses fundamental challenges in digital citizenship 
                 by creating systems that give individuals true ownership and control over their digital identities. 
                 Our approach combines self-sovereign identity principles with autonomous agency mechanisms to 
                 enable intelligent, privacy-preserving digital interactions.
-              </p>
-              <p className="body-text text-research-text-secondary">
+              </motion.p>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+              >
                 This project represents a paradigm shift from centralized identity management to user-controlled, 
                 decentralized systems that respect individual autonomy while enabling sophisticated digital services. 
                 The framework empowers users to make autonomous decisions about their digital presence while 
                 maintaining privacy and security in an increasingly connected world.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Interactive Animation */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
+              className="glass-card-premium p-10"
             >
-              <div className="flex items-center mb-6">
-                <Users className="h-8 w-8 text-accent-lab-purple mr-3" />
-                <h2 className="section-title text-research-text">Digital Identity Ecosystem</h2>
+              <div className="flex items-center mb-8">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <Users className="h-10 w-10 text-blue-400 mr-4" />
+                </motion.div>
+                <motion.h2 
+                  className="section-title text-white typography-premium"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  Digital Identity Ecosystem
+                </motion.h2>
               </div>
-              <LottieAnimation 
-                animationFile="digital-identity-network.json"
-                className="mx-auto"
-                width={620}
-                height={420}
-              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <LottieAnimation 
+                  animationFile="digital-identity-network.json"
+                  className="mx-auto"
+                  width={620}
+                  height={420}
+                />
+              </motion.div>
             </motion.div>
 
             {/* System Architecture */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
+              className="glass-card-premium p-10"
             >
-              <h2 className="section-title text-research-text mb-6">Digital Identity &amp; Agency Architecture</h2>
-              <p className="body-text text-research-text-secondary mb-8">
+              <motion.h2 
+                className="section-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                Digital Identity &amp; Agency Architecture
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed mb-10 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 Our digital identity and agency framework integrates decentralized identity management, autonomous 
                 agency mechanisms, and comprehensive privacy protection to create a holistic system for digital 
                 citizenship. The architecture emphasizes user empowerment, privacy preservation, and intelligent 
                 automation while maintaining security and trust in digital interactions.
-              </p>
+              </motion.p>
               
-              <MermaidDiagram chart={digitalIdentityArchitecture} className="mb-8" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="mb-10"
+              >
+                <MermaidDiagram chart={digitalIdentityArchitecture} className="rounded-2xl overflow-hidden" />
+              </motion.div>
               
-              <p className="body-text text-research-text-secondary">
+              <motion.p 
+                className="text-lg text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
                 The system operates through four integrated layers: (1) identity management providing self-sovereign 
                 control over digital credentials, (2) agency frameworks enabling autonomous decision-making, 
                 (3) privacy protection ensuring data minimization and user control, and (4) trust establishment 
                 mechanisms that enable secure interactions without compromising privacy.
-              </p>
+              </motion.p>
             </motion.div>
 
             {/* Impact Analysis */}

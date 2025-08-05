@@ -310,52 +310,91 @@ export default function CV() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Link
-              href="/academic"
-              className="inline-flex items-center text-accent-ai-purple hover:text-accent-lab-purple font-medium mb-8 transition-colors duration-200"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-12"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Academic Resources
-            </Link>
+              <Link
+                href="/academic"
+                className="inline-flex items-center text-purple-300 hover:text-white font-medium transition-all duration-300 group"
+              >
+                <motion.div
+                  whileHover={{ x: -4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowLeft className="h-5 w-5 mr-3" />
+                </motion.div>
+                <span className="typography-premium">Back to Academic Resources</span>
+              </Link>
+            </motion.div>
 
-            <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
+            <div className="glass-card-premium p-12 mb-16">
+              <motion.h1 
+                className="hero-title text-white mb-8 typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
                 Curriculum Vitae: Artur Ziganshin - AI Researcher &amp; Technology Philosopher
-              </h1>
+              </motion.h1>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  Updated January 2025
+              <motion.div 
+                className="flex flex-wrap items-center gap-6 text-slate-300 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <div className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">Updated January 2025</span>
                 </div>
-                <div className="flex items-center">
-                  <BookOpen className="h-4 w-4 mr-1" />
-                  Academic Profile
+                <div className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5 text-purple-400" />
+                  <span className="typography-premium">Academic Profile</span>
                 </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Download className="h-4 w-4 mr-1" />
-                  Download PDF
-                </button>
-              </div>
+                <motion.button 
+                  className="flex items-center space-x-2 hover:text-purple-300 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Download className="h-5 w-5" />
+                  <span className="typography-premium">Download PDF</span>
+                </motion.button>
+              </motion.div>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {['AI Ethics', 'Philosophy of Technology', 'Language Technologies', 'Big Data Systems', 'Digital Rights', 'Research Leadership'].map((tag) => (
-                  <span
+              <motion.div 
+                className="flex flex-wrap gap-3 mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                {['AI Ethics', 'Philosophy of Technology', 'Language Technologies', 'Big Data Systems', 'Digital Rights', 'Research Leadership'].map((tag, index) => (
+                  <motion.span
                     key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent-ai-purple/10 text-accent-ai-purple border border-accent-ai-purple/20"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border border-purple-400/30 typography-premium"
                   >
-                    <Tag className="h-3 w-3 mr-1" />
+                    <Tag className="h-4 w-4 mr-2" />
                     {tag}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
 
-              <p className="section-title text-research-text-secondary leading-relaxed">
+              <motion.p 
+                className="text-xl text-slate-200 leading-relaxed typography-premium"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1.6 }}
+              >
                 Comprehensive academic and professional profile of Artur Ziganshin, showcasing expertise 
                 in AI ethics, language technologies, and digital rights advocacy. Founder of Traceremove 
                 and co-founder of Rarematrix, with extensive research contributions, international 
                 collaborations, and leadership in technology philosophy and human-centered AI development.
-              </p>
+              </motion.p>
             </div>
           </motion.div>
         </div>
