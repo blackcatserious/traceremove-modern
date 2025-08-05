@@ -130,11 +130,27 @@ export default function ContactPage() {
     setFormStatus('loading');
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setFormStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setFormStatus('idle'), 5000);
-    } catch {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        console.error('Contact form error:', result.error);
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 5000);
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
       setFormStatus('error');
       setTimeout(() => setFormStatus('idle'), 5000);
     }
