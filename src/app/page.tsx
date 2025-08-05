@@ -1,16 +1,76 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'lucide-react';
+import { Shield, Search, Scale, Eye, Bot, Zap, CheckCircle, Star, Users, Clock, Mail, User, MessageSquare, Send, AlertCircle, Loader2, Sparkles, Info, BookOpen, Database, Network } from 'lucide-react';
 import FeatureCard from '@/components/FeatureCard';
 import ResearchCard from '@/components/ResearchCard';
 import InfoCard from '@/components/InfoCard';
 import VantaBackground from '@/components/VantaBackground';
 import GeometricMesh from '@/components/GeometricMesh';
 import DynamicLabBackground from '@/components/DynamicLabBackground';
+import PremiumButton from '@/components/PremiumButton';
 
 export default function Home() {
+  const [auditFormData, setAuditFormData] = useState({
+    name: '',
+    email: '',
+    website: '',
+    message: ''
+  });
+  const [auditFormStatus, setAuditFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [auditErrors, setAuditErrors] = useState<Record<string, string>>({});
+
+  const validateAuditForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!auditFormData.name.trim()) {
+      newErrors.name = 'Имя обязательно для заполнения';
+    }
+
+    if (!auditFormData.email.trim()) {
+      newErrors.email = 'Email обязателен для заполнения';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(auditFormData.email)) {
+      newErrors.email = 'Введите корректный email адрес';
+    }
+
+    if (!auditFormData.website.trim()) {
+      newErrors.website = 'URL сайта обязателен для заполнения';
+    }
+
+    setAuditErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleAuditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateAuditForm()) {
+      return;
+    }
+
+    setAuditFormStatus('loading');
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setAuditFormStatus('success');
+      setAuditFormData({ name: '', email: '', website: '', message: '' });
+      setTimeout(() => setAuditFormStatus('idle'), 5000);
+    } catch {
+      setAuditFormStatus('error');
+      setTimeout(() => setAuditFormStatus('idle'), 5000);
+    }
+  };
+
+  const handleAuditInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setAuditFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (auditErrors[name]) {
+      setAuditErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
   return (
     <div className="min-h-screen relative">
       {/* Premium Background Layers */}
@@ -269,6 +329,7 @@ export default function Home() {
               damping: 20
             }}
             viewport={{ once: true }}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
           >
             <InfoCard
               title="About Artur Ziganshin"
