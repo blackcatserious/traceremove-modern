@@ -216,7 +216,7 @@ export default function RootLayout({
           <DynamicLabBackground intensity="medium" />
           <FloatingNavigation />
           <Breadcrumb />
-          <main className="pt-16">
+          <main className="relative pt-24 pb-16 z-20">
             {children}
           </main>
           <Footer />

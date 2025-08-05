@@ -227,7 +227,7 @@ export default function FloatingNavigation() {
             initial="closed"
             animate="open"
             exit="closed"
-            className="fixed top-0 left-0 h-full w-96 z-45 p-8 pt-24 overflow-y-auto"
+            className="fixed top-0 left-0 h-full w-96 z-50 p-8 pt-24 overflow-y-auto"
             style={{
               background: 'linear-gradient(135deg, rgba(15, 10, 26, 0.98) 0%, rgba(30, 27, 75, 0.95) 20%, rgba(49, 46, 129, 0.92) 40%, rgba(67, 56, 202, 0.9) 60%, rgba(124, 58, 237, 0.88) 80%, rgba(139, 92, 246, 0.85) 100%)',
               backdropFilter: 'blur(24px)',
