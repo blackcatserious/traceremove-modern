@@ -1,0 +1,32 @@
+[
+  {
+    "qps": 10,
+    "latency_p95": 100,
+    "cost_per_hour": 12.50,
+    "instance_type": "small"
+  },
+  {
+    "qps": 25,
+    "latency_p95": 120,
+    "cost_per_hour": 25.00,
+    "instance_type": "medium"
+  },
+  {
+    "qps": 50,
+    "latency_p95": 150,
+    "cost_per_hour": 45.00,
+    "instance_type": "large"
+  },
+  {
+    "qps": 100,
+    "latency_p95": 200,
+    "cost_per_hour": 80.00,
+    "instance_type": "xlarge"
+  },
+  {
+    "qps": 200,
+    "latency_p95": 300,
+    "cost_per_hour": 150.00,
+    "instance_type": "2xlarge"
+  }
+]

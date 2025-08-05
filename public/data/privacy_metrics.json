@@ -1,0 +1,8 @@
+[
+  { "metric": "PII Detection Accuracy", "before": 78, "after": 96, "improvement": 23 },
+  { "metric": "False Positive Rate", "before": 12, "after": 3, "improvement": -75 },
+  { "metric": "Search Relevance", "before": 92, "after": 89, "improvement": -3 },
+  { "metric": "Compliance Coverage", "before": 45, "after": 98, "improvement": 118 },
+  { "metric": "Data Exposure Risk", "before": 85, "after": 4, "improvement": -95 },
+  { "metric": "Processing Latency", "before": 120, "after": 165, "improvement": 38 }
+]

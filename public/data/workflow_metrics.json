@@ -1,0 +1,23 @@
+[
+  {
+    "metric": "Task Success Rate",
+    "simple_tasks": 0.94,
+    "complex_tasks": 0.78,
+    "multi_step_tasks": 0.65
+  },
+  {
+    "metric": "Average Recovery Time",
+    "retry": 2.3,
+    "tool_substitution": 8.7,
+    "rollback": 15.2,
+    "human_intervention": 180.5
+  },
+  {
+    "metric": "Tool Reliability",
+    "web_search": 0.92,
+    "code_execution": 0.87,
+    "file_operations": 0.95,
+    "api_calls": 0.83,
+    "data_analysis": 0.89
+  }
+]

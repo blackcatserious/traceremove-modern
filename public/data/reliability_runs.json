@@ -1,0 +1,42 @@
+[
+  {
+    "run": 1,
+    "task_success": 0.85,
+    "decomposition_quality": 0.78,
+    "tool_appropriateness": 0.92,
+    "error_recovery": 0.67,
+    "consistency": 0.81
+  },
+  {
+    "run": 2,
+    "task_success": 0.88,
+    "decomposition_quality": 0.82,
+    "tool_appropriateness": 0.89,
+    "error_recovery": 0.71,
+    "consistency": 0.79
+  },
+  {
+    "run": 3,
+    "task_success": 0.83,
+    "decomposition_quality": 0.76,
+    "tool_appropriateness": 0.94,
+    "error_recovery": 0.69,
+    "consistency": 0.83
+  },
+  {
+    "run": 4,
+    "task_success": 0.90,
+    "decomposition_quality": 0.84,
+    "tool_appropriateness": 0.91,
+    "error_recovery": 0.73,
+    "consistency": 0.80
+  },
+  {
+    "run": 5,
+    "task_success": 0.87,
+    "decomposition_quality": 0.80,
+    "tool_appropriateness": 0.93,
+    "error_recovery": 0.68,
+    "consistency": 0.82
+  }
+]
