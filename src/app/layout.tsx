@@ -38,22 +38,22 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://traceremove.dev'),
+  metadataBase: new URL('https://traceremove.com'),
   title: {
-    default: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
-    template: "%s | Traceremove Research"
+    default: "TraceRemove — AI Reputation Firewall",
+    template: "%s | TraceRemove"
   },
-  description: "Advanced AI research platform by Artur Ziganshin. Specializing in AI ethics, privacy-preserving technologies, agentic systems, and philosophical foundations of artificial intelligence. International collaborations in responsible AI development.",
+  description: "Удаление негативных ссылок, управление репутацией, AI-система мониторинга и защиты бренда. Профессиональные услуги ORM, деиндексация, правовая поддержка.",
   keywords: [
-    "AI research", "artificial intelligence", "AI ethics", "privacy-preserving AI", "agentic systems", 
-    "philosophy of technology", "responsible AI", "machine learning ethics", "AI safety", 
-    "computational philosophy", "digital rights", "AI governance", "transparent AI", "interpretable AI",
-    "Artur Ziganshin", "Traceremove", "AI researcher", "philosophy PhD", "international AI collaboration",
-    "Big Data", "language technologies", "security", "Rarematrix", "Equality", "Federal University"
+    "управление репутацией", "удаление негативных ссылок", "ORM", "деиндексация", "защита бренда", 
+    "мониторинг репутации", "AI инструменты", "правовая поддержка", "онлайн репутация", 
+    "негативные отзывы", "SEO репутация", "кризис-менеджмент", "репутационный аудит", 
+    "TraceRemove", "трейсремув", "удаление из поиска", "право на забвение", "GDPR",
+    "репутационные риски", "бренд-мониторинг", "цифровая репутация", "интернет репутация"
   ],
-  authors: [{ name: "Artur Ziganshin", url: "https://traceremove.dev/about" }],
-  creator: "Artur Ziganshin",
-  publisher: "Traceremove Research",
+  authors: [{ name: "TraceRemove Team", url: "https://traceremove.com/about" }],
+  creator: "TraceRemove",
+  publisher: "TraceRemove",
   formatDetection: {
     email: false,
     address: false,
@@ -61,32 +61,32 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://traceremove.dev",
-    siteName: "Traceremove Research",
-    title: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
-    description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
+    locale: "ru_RU",
+    url: "https://traceremove.com",
+    siteName: "TraceRemove",
+    title: "TraceRemove — AI Reputation Firewall",
+    description: "Профессиональное управление репутацией: удаление негативных ссылок, деиндексация, мониторинг бренда с использованием AI-технологий.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Traceremove Research - AI Ethics & Philosophy Lab",
+        alt: "TraceRemove - AI Reputation Firewall",
         type: "image/png",
       },
       {
         url: "/og-image-square.png", 
         width: 1200,
         height: 1200,
-        alt: "Traceremove Research Logo",
+        alt: "TraceRemove Logo",
         type: "image/png",
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Traceremove Research | AI Ethics & Philosophy",
-    description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
+    title: "TraceRemove — AI Reputation Firewall",
+    description: "Профессиональное управление репутацией и защита бренда с использованием AI-технологий.",
     images: ["/twitter-image.png"],
     creator: "@traceremove",
     site: "@traceremove",
@@ -107,10 +107,10 @@ export const metadata: Metadata = {
     yandex: "your-yandex-verification-code",
   },
   alternates: {
-    canonical: "https://traceremove.dev",
+    canonical: "https://traceremove.com",
     languages: {
-      "en-US": "https://traceremove.dev",
-      "ru-RU": "https://traceremove.dev/ru",
+      "ru-RU": "https://traceremove.com",
+      "en-US": "https://traceremove.com/en",
     },
   },
   category: "technology",
@@ -137,72 +137,87 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Artur Ziganshin",
-              "jobTitle": "AI Systems Architect & Researcher",
-              "description": "AI systems architect, developer, and philosopher of technology specializing in AI ethics, privacy-preserving technologies, and responsible AI development.",
-              "url": "https://traceremove.dev",
+              "@type": "Organization",
+              "name": "TraceRemove",
+              "alternateName": "TraceRemove — AI Reputation Firewall",
+              "description": "Профессиональные услуги управления репутацией: удаление негативных ссылок, деиндексация, мониторинг бренда с использованием AI-технологий.",
+              "url": "https://traceremove.com",
+              "logo": "https://traceremove.com/logo.png",
+              "image": "https://traceremove.com/og-image.png",
+              "foundingDate": "2020",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "RU"
+              },
+              "contactPoint": [
+                {
+                  "@type": "ContactPoint",
+                  "telephone": "+7-XXX-XXX-XXXX",
+                  "contactType": "customer service",
+                  "availableLanguage": ["Russian", "English"]
+                }
+              ],
               "sameAs": [
-                "https://linkedin.com/in/artur-ziganshin",
-                "https://orcid.org/0000-0000-0000-0000",
-                "https://scholar.google.com/citations?user=example",
-                "https://www.researchgate.net/profile/Artur-Ziganshin",
-                "https://philpeople.org/profiles/artur-ziganshin",
-                "https://academia.edu/ArturZiganshin",
-                "https://github.com/traceremove"
+                "https://t.me/traceremove",
+                "https://wa.me/79XXXXXXXXX"
               ],
-              "affiliation": [
-                {
-                  "@type": "Organization",
-                  "name": "Traceremove",
-                  "url": "https://traceremove.dev",
-                  "description": "AI research platform focused on transparent and interpretable AI systems"
-                },
-                {
-                  "@type": "Organization", 
-                  "name": "Rarematrix",
-                  "description": "Advanced data analytics and AI infrastructure solutions"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Equality",
-                  "description": "International organization promoting digital rights and AI ethics"
-                }
+              "serviceType": [
+                "Online Reputation Management",
+                "Negative Link Removal",
+                "Search Engine Deindexing",
+                "Brand Monitoring",
+                "Legal Support",
+                "AI-powered Reputation Tools"
               ],
-              "alumniOf": [
-                {
-                  "@type": "EducationalOrganization",
-                  "name": "Federal University",
-                  "description": "Master of Arts in Philosophy, Bachelor of Arts in Philosophy"
-                }
-              ],
-              "knowsAbout": [
-                "Artificial Intelligence", "AI Ethics", "Privacy-Preserving Technologies", "Agentic Systems",
-                "Philosophy of Technology", "Machine Learning", "Big Data", "Language Technologies",
-                "Security & Privacy", "Responsible AI Development"
-              ],
-              "expertise": [
-                {
-                  "@type": "Thing",
-                  "name": "AI Ethics",
-                  "description": "Developing ethical frameworks for AI systems and responsible technology deployment"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Agentic Systems",
-                  "description": "Building autonomous AI agents with advanced reasoning and tool-use capabilities"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Privacy-Preserving Technologies",
-                  "description": "Privacy-preserving technologies and secure AI system architectures"
-                }
-              ],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Traceremove Research",
-                "url": "https://traceremove.dev",
-                "description": "AI research lab focused on ethical AI systems and philosophical foundations"
+              "areaServed": {
+                "@type": "Country",
+                "name": "Russia"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Reputation Management Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "ORM - Online Reputation Management",
+                      "description": "Комплексное управление онлайн репутацией"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Deindex - Удаление из поиска",
+                      "description": "Деиндексация негативных материалов из поисковых систем"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Legal Support",
+                      "description": "Правовая поддержка по вопросам репутации"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Monitoring",
+                      "description": "Мониторинг репутации и бренда в интернете"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "AI Tools",
+                      "description": "AI-инструменты для управления репутацией"
+                    }
+                  }
+                ]
               }
             })
           }}
