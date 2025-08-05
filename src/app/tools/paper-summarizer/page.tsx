@@ -9,6 +9,7 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
 import BackgroundLayers from '@/components/BackgroundLayers';
 import ParticleSystem from '@/components/ParticleSystem';
+import PremiumButton from '@/components/PremiumButton';
 
 const summarizerArchitecture = `
 graph TD
@@ -346,10 +347,15 @@ export default function PaperSummarizer() {
                   <BookOpen className="h-4 w-4 mr-1" />
                   Status: Production Ready
                 </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
+                <PremiumButton
+                  variant="ghost"
+                  size="sm"
+                  icon={Share2}
+                  iconPosition="left"
+                  className="hover:text-accent-ai-purple transition-colors duration-200"
+                >
                   Share Tool
-                </button>
+                </PremiumButton>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-8">
@@ -425,9 +431,13 @@ export default function PaperSummarizer() {
                     <FileText className="h-12 w-12 text-accent-ai-purple mx-auto mb-4" />
                     <p className="text-research-text mb-2">Drop your research paper here or click to browse</p>
                     <p className="text-sm text-research-text-secondary">Supports PDF, DOC, DOCX, TXT formats up to 50MB</p>
-                    <button className="mt-4 px-6 py-2 bg-accent-ai-purple/20 text-accent-ai-purple rounded-lg hover:bg-accent-ai-purple/30 transition-colors duration-200">
+                    <PremiumButton
+                      variant="outline"
+                      size="md"
+                      className="mt-4 bg-accent-ai-purple/20 text-accent-ai-purple border-accent-ai-purple/30 hover:bg-accent-ai-purple/30"
+                    >
                       Choose File
-                    </button>
+                    </PremiumButton>
                   </div>
                 </div>
                 
@@ -465,10 +475,15 @@ export default function PaperSummarizer() {
                 </div>
                 
                 <div className="text-center">
-                  <button className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-xl hover:shadow-ai-glow transition-all duration-300">
-                    <Zap className="h-5 w-5 mr-2" />
+                  <PremiumButton
+                    variant="primary"
+                    size="lg"
+                    icon={Zap}
+                    iconPosition="left"
+                    className="hover:shadow-ai-glow"
+                  >
                     Generate Summary
-                  </button>
+                  </PremiumButton>
                 </div>
               </div>
               
@@ -480,10 +495,15 @@ export default function PaperSummarizer() {
               />
               
               <div className="mt-6 text-center">
-                <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-2xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300">
-                  <Download className="h-5 w-5 mr-2" />
+                <PremiumButton
+                  variant="primary"
+                  size="lg"
+                  icon={Download}
+                  iconPosition="left"
+                  className="shadow-ai-glow hover:shadow-hero-glow"
+                >
                   Download Summary Report
-                </button>
+                </PremiumButton>
               </div>
             </motion.div>
 

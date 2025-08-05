@@ -9,6 +9,7 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
 import BackgroundLayers from '@/components/BackgroundLayers';
 import ParticleSystem from '@/components/ParticleSystem';
+import PremiumButton from '@/components/PremiumButton';
 
 const interpretabilityPipelineDiagram = `
 graph TD
@@ -168,10 +169,15 @@ export default function BigDataInterpretability() {
                   <BookOpen className="h-4 w-4 mr-1" />
                   February 8, 2024
                 </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
+                <PremiumButton
+                  variant="ghost"
+                  size="sm"
+                  icon={Share2}
+                  iconPosition="left"
+                  className="hover:text-accent-ai-purple transition-colors duration-200"
+                >
                   Share
-                </button>
+                </PremiumButton>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-8">

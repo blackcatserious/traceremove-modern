@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
-import FloatingNavigation from "@/components/FloatingNavigation";
+import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
@@ -214,7 +214,7 @@ export default function RootLayout({
         <BackgroundProvider>
           <VantaBackground variant="hero" />
           <DynamicLabBackground intensity="medium" />
-          <FloatingNavigation />
+          <Navigation />
           <Breadcrumb />
           <main className="relative pt-24 pb-16 z-20">
             {children}

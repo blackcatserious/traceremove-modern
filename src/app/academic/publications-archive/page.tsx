@@ -9,6 +9,7 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
 import BackgroundLayers from '@/components/BackgroundLayers';
 import ParticleSystem from '@/components/ParticleSystem';
+import PremiumButton from '@/components/PremiumButton';
 
 const publicationArchitecture = `
 graph TD
@@ -343,10 +344,15 @@ export default function PublicationsArchive() {
                   <BookOpen className="h-4 w-4 mr-1" />
                   45+ Publications
                 </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
+                <PremiumButton
+                  variant="ghost"
+                  size="sm"
+                  icon={Share2}
+                  iconPosition="left"
+                  className="hover:text-accent-ai-purple transition-colors duration-200"
+                >
                   Export Bibliography
-                </button>
+                </PremiumButton>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-8">
@@ -463,27 +469,50 @@ export default function PublicationsArchive() {
                 </div>
                 
                 <div className="flex flex-wrap gap-4 mb-6">
-                  <button className="flex items-center px-4 py-2 bg-accent-ai-purple/20 text-accent-ai-purple rounded-lg border border-accent-ai-purple/30 hover:bg-accent-ai-purple/30 transition-all duration-200">
-                    <Filter className="h-4 w-4 mr-2" />
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    icon={Filter}
+                    iconPosition="left"
+                    className="bg-accent-ai-purple/20 text-accent-ai-purple border-accent-ai-purple/30 hover:bg-accent-ai-purple/30"
+                  >
                     High Impact
-                  </button>
-                  <button className="flex items-center px-4 py-2 bg-white/10 text-research-text-secondary rounded-lg border border-accent-ai-purple/20 hover:bg-white/20 transition-all duration-200">
-                    <Calendar className="h-4 w-4 mr-2" />
+                  </PremiumButton>
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    icon={Calendar}
+                    iconPosition="left"
+                    className="bg-white/10 text-research-text-secondary border-accent-ai-purple/20 hover:bg-white/20"
+                  >
                     Recent
-                  </button>
-                  <button className="flex items-center px-4 py-2 bg-white/10 text-research-text-secondary rounded-lg border border-accent-ai-purple/20 hover:bg-white/20 transition-all duration-200">
+                  </PremiumButton>
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    className="bg-white/10 text-research-text-secondary border-accent-ai-purple/20 hover:bg-white/20"
+                  >
                     Open Access
-                  </button>
-                  <button className="flex items-center px-4 py-2 bg-white/10 text-research-text-secondary rounded-lg border border-accent-ai-purple/20 hover:bg-white/20 transition-all duration-200">
+                  </PremiumButton>
+                  <PremiumButton
+                    variant="outline"
+                    size="sm"
+                    className="bg-white/10 text-research-text-secondary border-accent-ai-purple/20 hover:bg-white/20"
+                  >
                     Collaborative
-                  </button>
+                  </PremiumButton>
                 </div>
                 
                 <div className="text-center">
-                  <button className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-xl hover:shadow-ai-glow transition-all duration-300">
-                    <Search className="h-5 w-5 mr-2" />
+                  <PremiumButton
+                    variant="primary"
+                    size="lg"
+                    icon={Search}
+                    iconPosition="left"
+                    className="hover:shadow-ai-glow"
+                  >
                     Search Publications
-                  </button>
+                  </PremiumButton>
                 </div>
               </div>
               
