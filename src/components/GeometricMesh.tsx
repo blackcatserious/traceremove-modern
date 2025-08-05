@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface GeometricMeshProps {
   variant?: 'research' | 'academic' | 'tech';
@@ -14,14 +14,19 @@ export default function GeometricMesh({
   className = '' 
 }: GeometricMeshProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [patterns, setPatterns] = useState<React.ReactElement[]>([]);
+  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
 
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
     const updateDimensions = () => {
-      svg.setAttribute('width', window.innerWidth.toString());
-      svg.setAttribute('height', window.innerHeight.toString());
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      svg.setAttribute('width', width.toString());
+      svg.setAttribute('height', height.toString());
+      setDimensions({ width, height });
     };
 
     updateDimensions();
@@ -29,6 +34,10 @@ export default function GeometricMesh({
 
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
+
+  useEffect(() => {
+    setPatterns(generatePatterns());
+  }, [dimensions, variant, density]);
 
   const getGridSize = () => {
     switch (density) {
@@ -66,8 +75,7 @@ export default function GeometricMesh({
 
   const generatePatterns = () => {
     const patterns = [];
-    const width = window.innerWidth || 1920;
-    const height = window.innerHeight || 1080;
+    const { width, height } = dimensions;
 
     for (let x = 0; x <= width; x += gridSize) {
       patterns.push(
@@ -216,7 +224,7 @@ export default function GeometricMesh({
 
         {/* Dynamic geometric patterns */}
         <g filter="url(#glow)">
-          {generatePatterns()}
+          {patterns}
         </g>
       </svg>
     </div>

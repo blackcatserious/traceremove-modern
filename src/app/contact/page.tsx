@@ -17,6 +17,9 @@ import {
   AlertCircle,
   Loader2
 } from 'lucide-react';
+import BackgroundLayers from '@/components/BackgroundLayers';
+import ParticleSystem from '@/components/ParticleSystem';
+import PremiumButton from '@/components/PremiumButton';
 
 const socialLinks = [
   {
@@ -147,7 +150,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
+    <div className="min-h-screen relative">
+      <BackgroundLayers variant="research" />
+      <ParticleSystem variant="neural" particleCount={75} />
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Background Elements */}
@@ -176,12 +181,12 @@ export default function ContactPage() {
               transition={{ duration: 1, ease: "easeOut" }}
               className="mb-8"
             >
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-ibm-sans">
+              <h1 className="hero-title text-research-text mb-6">
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
-                  className="block text-accent-deep-blue mb-2"
+                  className="block mb-2"
                 >
                   Get in
                 </motion.span>
@@ -200,7 +205,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-xl sm:text-2xl text-research-600 max-w-4xl mx-auto mb-12 leading-relaxed font-ibm-sans"
+              className="section-title text-research-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed"
             >
               Let&apos;s discuss AI research, collaboration opportunities, or any questions about my work. 
               I&apos;m always interested in connecting with fellow researchers and innovators to advance the field together.
@@ -355,25 +360,18 @@ export default function ContactPage() {
                       )}
                     </div>
 
-                    <motion.button
+                    <PremiumButton
                       type="submit"
                       disabled={formStatus === 'loading'}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full inline-flex items-center justify-center px-8 py-5 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-bold rounded-2xl shadow-ai-glow hover:shadow-hero-glow focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed font-ibm-sans text-lg"
+                      loading={formStatus === 'loading'}
+                      variant="primary"
+                      size="lg"
+                      icon={formStatus === 'loading' ? Loader2 : Send}
+                      iconPosition="left"
+                      className="w-full text-lg"
                     >
-                      {formStatus === 'loading' ? (
-                        <>
-                          <Loader2 className="h-6 w-6 mr-3 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-6 w-6 mr-3" />
-                          Send Message
-                        </>
-                      )}
-                    </motion.button>
+                      {formStatus === 'loading' ? 'Sending...' : 'Send Message'}
+                    </PremiumButton>
                   </form>
                 </div>
               </div>

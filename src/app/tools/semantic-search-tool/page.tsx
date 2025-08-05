@@ -9,6 +9,7 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
 import BackgroundLayers from '@/components/BackgroundLayers';
 import ParticleSystem from '@/components/ParticleSystem';
+import PremiumButton from '@/components/PremiumButton';
 
 const semanticSearchArchitecture = `
 graph TD
@@ -345,10 +346,15 @@ export default function SemanticSearchTool() {
                   <BookOpen className="h-4 w-4 mr-1" />
                   Status: Production Ready
                 </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
+                <PremiumButton
+                  variant="ghost"
+                  size="sm"
+                  icon={Share2}
+                  iconPosition="left"
+                  className="hover:text-accent-ai-purple transition-colors duration-200"
+                >
                   Share Tool
-                </button>
+                </PremiumButton>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-8">
@@ -427,9 +433,13 @@ export default function SemanticSearchTool() {
                       className="w-full pl-10 pr-4 py-3 bg-white/10 border border-accent-ai-purple/30 rounded-xl text-research-text placeholder-research-text-secondary focus:outline-none focus:border-accent-ai-purple focus:ring-2 focus:ring-accent-ai-purple/20"
                     />
                   </div>
-                  <button className="px-6 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-xl hover:shadow-ai-glow transition-all duration-300">
+                  <PremiumButton
+                    variant="primary"
+                    size="md"
+                    className="hover:shadow-ai-glow"
+                  >
                     Search
-                  </button>
+                  </PremiumButton>
                 </div>
                 
                 <div className="flex flex-wrap gap-2">
@@ -452,10 +462,15 @@ export default function SemanticSearchTool() {
               />
               
               <div className="mt-6 text-center">
-                <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-2xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300">
-                  <Zap className="h-5 w-5 mr-2" />
+                <PremiumButton
+                  variant="primary"
+                  size="lg"
+                  icon={Zap}
+                  iconPosition="left"
+                  className="shadow-ai-glow hover:shadow-hero-glow"
+                >
                   Try Advanced Search
-                </button>
+                </PremiumButton>
               </div>
             </motion.div>
 
