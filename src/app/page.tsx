@@ -606,7 +606,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="group relative research-card-wow rounded-[48px] p-8 transition-all duration-1000 hover:scale-108 glow-effect card-hover-glow motion-safe"
+                className="group relative floating-card-enhanced p-10 transition-all duration-800 motion-safe"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
@@ -673,7 +673,7 @@ export default function Home() {
                 className="group"
               >
                 <Link href={research.href}>
-                  <div className="research-card p-10 transition-all duration-700 overflow-hidden card-hover-glow motion-safe">
+                  <div className="research-card-wow p-10 transition-all duration-800 overflow-hidden motion-safe">
                     {/* Gradient top bar */}
                     <div className={`h-1 bg-gradient-to-r ${research.gradient}`} />
                     
