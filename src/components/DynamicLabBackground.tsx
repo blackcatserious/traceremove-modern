@@ -50,7 +50,7 @@ export default function DynamicLabBackground({ intensity = 'medium', className =
       'rgba(168, 85, 247, 0.3)'
     ];
 
-    const particleCount = intensity === 'low' ? 30 : intensity === 'medium' ? 50 : 80;
+    const particleCount = intensity === 'low' ? 40 : intensity === 'medium' ? 70 : 120;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -88,12 +88,17 @@ export default function DynamicLabBackground({ intensity = 'medium', className =
             const dy = particle.y - otherParticle.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < 100) {
+            if (distance < 120) {
               ctx.beginPath();
               ctx.moveTo(particle.x, particle.y);
               ctx.lineTo(otherParticle.x, otherParticle.y);
-              ctx.strokeStyle = `rgba(124, 58, 237, ${0.1 * (1 - distance / 100)})`;
-              ctx.lineWidth = 0.5;
+              const opacity = 0.15 * (1 - distance / 120);
+              const gradient = ctx.createLinearGradient(particle.x, particle.y, otherParticle.x, otherParticle.y);
+              gradient.addColorStop(0, `rgba(124, 58, 237, ${opacity})`);
+              gradient.addColorStop(0.5, `rgba(99, 102, 241, ${opacity * 1.2})`);
+              gradient.addColorStop(1, `rgba(139, 92, 246, ${opacity})`);
+              ctx.strokeStyle = gradient;
+              ctx.lineWidth = 0.8;
               ctx.stroke();
             }
           }
@@ -130,54 +135,81 @@ export default function DynamicLabBackground({ intensity = 'medium', className =
         }}
       />
       
-      {/* Additional SVG patterns */}
-      <svg className="absolute inset-0 w-full h-full opacity-10" style={{ zIndex: -6 }}>
+      {/* Enhanced SVG patterns with bold gradients */}
+      <svg className="absolute inset-0 w-full h-full opacity-15" style={{ zIndex: -6 }}>
         <defs>
-          <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+          <radialGradient id="meshGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(124, 58, 237, 0.4)" />
+            <stop offset="30%" stopColor="rgba(99, 102, 241, 0.3)" />
+            <stop offset="60%" stopColor="rgba(139, 92, 246, 0.2)" />
+            <stop offset="100%" stopColor="rgba(30, 58, 138, 0.1)" />
+          </radialGradient>
+          
+          <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(124, 58, 237, 0.6)" />
+            <stop offset="50%" stopColor="rgba(99, 102, 241, 0.4)" />
+            <stop offset="100%" stopColor="rgba(139, 92, 246, 0.3)" />
+          </linearGradient>
+          
+          <pattern id="hexPattern" x="0" y="0" width="80" height="69" patternUnits="userSpaceOnUse">
             <polygon
-              points="30,2 50,17 50,35 30,50 10,35 10,17"
+              points="40,2 65,22 65,45 40,65 15,45 15,22"
               fill="none"
-              stroke="rgba(124, 58, 237, 0.3)"
-              strokeWidth="0.5"
+              stroke="url(#connectionGradient)"
+              strokeWidth="0.8"
+              opacity="0.6"
             />
+            <circle cx="40" cy="33" r="1.5" fill="rgba(124, 58, 237, 0.5)" />
           </pattern>
-          <pattern id="circuitPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-            <circle cx="50" cy="50" r="2" fill="rgba(99, 102, 241, 0.4)" />
-            <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(124, 58, 237, 0.2)" strokeWidth="0.5" />
-            <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(124, 58, 237, 0.2)" strokeWidth="0.5" />
+          
+          <pattern id="neuralPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+            <circle cx="60" cy="60" r="3" fill="rgba(99, 102, 241, 0.6)" />
+            <line x1="60" y1="0" x2="60" y2="120" stroke="url(#connectionGradient)" strokeWidth="0.6" opacity="0.4" />
+            <line x1="0" y1="60" x2="120" y2="60" stroke="url(#connectionGradient)" strokeWidth="0.6" opacity="0.4" />
+            <line x1="15" y1="15" x2="105" y2="105" stroke="url(#connectionGradient)" strokeWidth="0.4" opacity="0.3" />
+            <line x1="105" y1="15" x2="15" y2="105" stroke="url(#connectionGradient)" strokeWidth="0.4" opacity="0.3" />
           </pattern>
         </defs>
         
         <motion.rect
           width="100%"
           height="100%"
-          fill="url(#hexPattern)"
-          animate={{ opacity: [0.1, 0.3, 0.1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          fill="url(#meshGradient)"
+          animate={{ opacity: [0.1, 0.4, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         
         <motion.rect
           width="100%"
           height="100%"
-          fill="url(#circuitPattern)"
-          animate={{ opacity: [0.05, 0.2, 0.05] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          fill="url(#hexPattern)"
+          animate={{ opacity: [0.15, 0.4, 0.15] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        
+        <motion.rect
+          width="100%"
+          height="100%"
+          fill="url(#neuralPattern)"
+          animate={{ opacity: [0.08, 0.25, 0.08] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 3 }}
         />
       </svg>
 
-      {/* Animated gradient beams */}
+      {/* Enhanced animated gradient beams with bold effects */}
       <div className="absolute inset-0" style={{ zIndex: -5 }}>
         <motion.div
-          className="absolute top-0 left-1/4 w-px h-full"
+          className="absolute top-0 left-1/4 w-0.5 h-full"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(124, 58, 237, 0.4) 50%, transparent 100%)'
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(124, 58, 237, 0.6) 30%, rgba(99, 102, 241, 0.8) 50%, rgba(139, 92, 246, 0.6) 70%, transparent 100%)',
+            boxShadow: '0 0 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(99, 102, 241, 0.2)'
           }}
           animate={{
             scaleY: [0, 1, 0],
-            opacity: [0, 0.6, 0]
+            opacity: [0, 0.8, 0]
           }}
           transition={{
-            duration: 6,
+            duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 1
@@ -185,36 +217,74 @@ export default function DynamicLabBackground({ intensity = 'medium', className =
         />
         
         <motion.div
-          className="absolute top-0 right-1/3 w-px h-full"
+          className="absolute top-0 right-1/3 w-0.5 h-full"
           style={{
-            background: 'linear-gradient(to bottom, transparent 0%, rgba(99, 102, 241, 0.3) 50%, transparent 100%)'
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(99, 102, 241, 0.5) 30%, rgba(139, 92, 246, 0.7) 50%, rgba(168, 85, 247, 0.5) 70%, transparent 100%)',
+            boxShadow: '0 0 15px rgba(99, 102, 241, 0.3), 0 0 30px rgba(139, 92, 246, 0.2)'
           }}
           animate={{
             scaleY: [0, 1, 0],
-            opacity: [0, 0.5, 0]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-        />
-
-        <motion.div
-          className="absolute left-0 top-1/3 w-full h-px"
-          style={{
-            background: 'linear-gradient(to right, transparent 0%, rgba(139, 92, 246, 0.3) 50%, transparent 100%)'
-          }}
-          animate={{
-            scaleX: [0, 1, 0],
-            opacity: [0, 0.4, 0]
+            opacity: [0, 0.7, 0]
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 5
+            delay: 4
+          }}
+        />
+
+        <motion.div
+          className="absolute left-0 top-1/3 w-full h-0.5"
+          style={{
+            background: 'linear-gradient(to right, transparent 0%, rgba(139, 92, 246, 0.4) 30%, rgba(124, 58, 237, 0.6) 50%, rgba(99, 102, 241, 0.4) 70%, transparent 100%)',
+            boxShadow: '0 0 10px rgba(139, 92, 246, 0.3), 0 0 20px rgba(124, 58, 237, 0.2)'
+          }}
+          animate={{
+            scaleX: [0, 1, 0],
+            opacity: [0, 0.6, 0]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 7
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-0 left-2/3 w-0.5 h-full"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(30, 58, 138, 0.5) 40%, rgba(59, 130, 246, 0.7) 50%, rgba(147, 197, 253, 0.5) 60%, transparent 100%)',
+            boxShadow: '0 0 12px rgba(30, 58, 138, 0.3), 0 0 25px rgba(59, 130, 246, 0.2)'
+          }}
+          animate={{
+            scaleY: [0, 1, 0],
+            opacity: [0, 0.6, 0]
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+
+        <motion.div
+          className="absolute left-0 top-2/3 w-full h-0.5"
+          style={{
+            background: 'linear-gradient(to right, transparent 0%, rgba(168, 85, 247, 0.4) 25%, rgba(139, 92, 246, 0.6) 50%, rgba(99, 102, 241, 0.4) 75%, transparent 100%)',
+            boxShadow: '0 0 8px rgba(168, 85, 247, 0.3), 0 0 16px rgba(139, 92, 246, 0.2)'
+          }}
+          animate={{
+            scaleX: [0, 1, 0],
+            opacity: [0, 0.5, 0]
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 9
           }}
         />
       </div>
