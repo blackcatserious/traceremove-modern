@@ -34,8 +34,6 @@ const ibmPlexSerif = IBM_Plex_Serif({
   display: "swap",
 });
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.dev'),
