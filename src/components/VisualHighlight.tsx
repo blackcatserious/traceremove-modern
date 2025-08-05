@@ -39,7 +39,7 @@ export default function VisualHighlight({
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
         
-        <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 transition-all duration-500 overflow-hidden">
+        <div className="relative glass-card-premium p-0 transition-all duration-700 overflow-hidden hover:shadow-card-hover">
           {/* Background Decorations */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent-lab-purple/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

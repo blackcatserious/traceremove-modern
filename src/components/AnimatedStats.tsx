@@ -21,29 +21,29 @@ interface AnimatedStatsProps {
 const defaultStats: StatItem[] = [
   {
     icon: BookOpen,
-    value: 25,
+    value: 35,
     label: 'Research Papers',
     suffix: '+',
     gradient: 'from-accent-ai-purple to-accent-lab-purple'
   },
   {
     icon: Award,
-    value: 10,
+    value: 12,
     label: 'Years Experience',
     suffix: '+',
     gradient: 'from-accent-lab-purple to-primary-600'
   },
   {
     icon: Users,
-    value: 500,
-    label: 'Collaborations',
+    value: 750,
+    label: 'Citations',
     suffix: '+',
     gradient: 'from-primary-600 to-accent-ai-purple'
   },
   {
     icon: TrendingUp,
-    value: 95,
-    label: 'Success Rate',
+    value: 98,
+    label: 'Impact Score',
     suffix: '%',
     gradient: 'from-accent-deep-blue to-accent-ai-purple'
   }
@@ -99,14 +99,15 @@ export default function AnimatedStats({ stats = defaultStats, className = '' }: 
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: index * 0.1 }}
           viewport={{ once: true }}
-          whileHover={{ scale: 1.05, y: -8 }}
+          whileHover={{ scale: 1.06, y: -12 }}
           className="group"
         >
           <div className="relative overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
+            {/* Enhanced Background Effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/15 to-accent-lab-purple/15 rounded-3xl blur-xl opacity-60 group-hover:opacity-90 transition-all duration-700"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 to-accent-lab-purple/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             
-            <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 p-8 transition-all duration-500 text-center">
+            <div className="relative glass-card-premium p-8 text-center group-hover:backdrop-blur-3xl transition-all duration-700">
               {/* Background Decorations */}
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               

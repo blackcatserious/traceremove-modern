@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Brain, Microscope, Users, Zap, ChevronDown, Sparkles, Target, Globe, Award, TrendingUp, BarChart3, Activity, User, Cpu, FileText } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Microscope, Users, Zap, ChevronDown, Sparkles, Target, Globe, Award, TrendingUp, BarChart3, Activity, User, Cpu, FileText, Shield, Database, Network, Eye, Lightbulb, GitBranch, Code2, Layers, Workflow, Compass } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveStatsChart from '@/components/InteractiveStatsChart';
+import AnimatedStats from '@/components/AnimatedStats';
+import ResearchMetricsChart from '@/components/ResearchMetricsChart';
 import VantaBackground from '@/components/VantaBackground';
 import FloatingNavigation from '@/components/FloatingNavigation';
 
@@ -113,7 +115,7 @@ export default function Home() {
         {/* Ultra-Subtle Content Overlay for Readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 via-transparent to-slate-900/8 z-5" />
         
-        {/* Floating Elements */}
+        {/* Floating Elements - Fixed positioning to prevent overflow */}
         <motion.div
           animate={{ 
             y: [0, -20, 0],
@@ -125,7 +127,7 @@ export default function Home() {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5 rounded-full blur-xl"
+          className="absolute top-20 left-4 sm:left-10 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5 rounded-full blur-xl max-w-[calc(100vw-2rem)]"
         />
         <motion.div
           animate={{ 
@@ -139,11 +141,27 @@ export default function Home() {
             ease: "easeInOut",
             delay: 2
           }}
-          className="absolute bottom-32 right-16 w-24 h-24 bg-gradient-to-br from-accent-lab-purple/8 to-accent-violet/5 rounded-full blur-lg"
+          className="absolute bottom-32 right-4 sm:right-16 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-accent-lab-purple/8 to-accent-violet/5 rounded-full blur-lg max-w-[calc(100vw-2rem)]"
         />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
+            {/* Platform Introduction Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-8"
+            >
+              <div className="inline-flex items-center space-x-3 px-6 py-3 rounded-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-400/30 backdrop-blur-sm">
+                <Sparkles className="w-5 h-5 text-purple-300" />
+                <span className="text-white/90 font-medium text-sm tracking-wide">
+                  Advanced AI Research Platform
+                </span>
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              </div>
+            </motion.div>
+
             {/* Main Heading */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -189,19 +207,122 @@ export default function Home() {
               </h1>
             </motion.div>
 
-            {/* Mission Statement */}
+            {/* About the Platform - Enhanced Academic Introduction */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="max-w-6xl mx-auto mb-16"
             >
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.0, delay: 0.7 }}
+                className="glass-card-hero p-12 mb-12"
+              >
+                <div className="text-center mb-10">
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-400/30 mb-6"
+                  >
+                    <BookOpen className="w-5 h-5 text-blue-300 mr-3" />
+                    <span className="text-blue-200 font-medium text-lg font-ibm-sans">
+                      About This Research Platform
+                    </span>
+                  </motion.div>
+                  
+                  <h2 className="text-4xl lg:text-5xl font-bold text-white mb-8 font-ibm-sans">
+                    <span className="bg-gradient-to-r from-blue-200 via-purple-200 to-violet-200 bg-clip-text text-transparent">
+                      Advancing Interpretable AI
+                    </span>
+                    <span className="block text-3xl lg:text-4xl mt-2 text-slate-300">
+                      Through Interdisciplinary Research
+                    </span>
+                  </h2>
+                </div>
+
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                  <div className="space-y-6">
+                    <p className="text-xl text-slate-200 leading-relaxed font-inter">
+                      <strong className="text-blue-300">Traceremove Research</strong> investigates AI as a participant in the human symbolic environment, 
+                      developing interpretable systems that respect meaning, agency, and ethical foundations.
+                    </p>
+                    
+                    <p className="text-lg text-slate-300 leading-relaxed font-inter">
+                      We bridge <span className="text-purple-300 font-semibold">rigorous engineering</span> with 
+                      <span className="text-blue-300 font-semibold"> philosophical inquiry</span> to advance 
+                      transparent, human-aligned artificial intelligence.
+                    </p>
+
+                    <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-2xl p-6 border border-slate-600/30">
+                      <h4 className="text-lg font-semibold text-blue-300 mb-3 font-ibm-sans">Research Focus</h4>
+                      <ul className="space-y-2 text-slate-300">
+                        <li className="flex items-center">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                          <span>Agentic AI systems and tool-use architectures</span>
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                          <span>Privacy-preserving information retrieval</span>
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-2 h-2 bg-violet-400 rounded-full mr-3"></div>
+                          <span>Ethical frameworks for AI deployment</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-2xl p-8 border border-blue-500/20">
+                      <h4 className="text-xl font-semibold text-white mb-4 font-ibm-sans flex items-center">
+                        <Compass className="w-6 h-6 text-blue-300 mr-3" />
+                        How to Navigate This Platform
+                      </h4>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-4">
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-white font-bold text-sm">1</span>
+                          </div>
+                          <div>
+                            <p className="text-blue-200 font-medium">Explore Research</p>
+                            <p className="text-slate-300 text-sm">Browse peer-reviewed publications, methodologies, and findings</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-4">
+                          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-white font-bold text-sm">2</span>
+                          </div>
+                          <div>
+                            <p className="text-purple-200 font-medium">Interactive Tools</p>
+                            <p className="text-slate-300 text-sm">Test AI architectures and ethical decision-making frameworks</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start space-x-4">
+                          <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-violet-600 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-white font-bold text-sm">3</span>
+                          </div>
+                          <div>
+                            <p className="text-violet-200 font-medium">Academic Profile</p>
+                            <p className="text-slate-300 text-sm">Learn about collaborations, publications, and research philosophy</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
               <p className="body-text-large text-slate-200 text-center mb-8">
-                Traceremove Research investigates AI as a participant in the human symbolic environment, 
-                developing interpretable systems that respect meaning, agency, and ethical foundations. 
-                <span className="block mt-4 text-slate-300">
-                  We bridge rigorous engineering with philosophical inquiry to advance transparent, human-aligned artificial intelligence.
-                </span>
+                This platform serves as a comprehensive resource for researchers, practitioners, and students interested in 
+                <span className="text-blue-300 font-semibold"> ethical AI development</span>, 
+                <span className="text-purple-300 font-semibold"> interpretable machine learning</span>, and 
+                <span className="text-violet-300 font-semibold"> philosophical foundations of artificial intelligence</span>.
               </p>
 
               {/* Platform Guide - Enhanced with Glassmorphism */}
@@ -312,7 +433,7 @@ export default function Home() {
             </motion.div>
 
             {/* Enhanced Stats Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto mb-20">
               {/* Interactive Chart */}
               <InteractiveStatsChart className="lg:col-span-1" />
               
@@ -352,6 +473,71 @@ export default function Home() {
                 ))}
               </motion.div>
             </div>
+
+            {/* Advanced Research Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.4 }}
+              className="max-w-7xl mx-auto"
+            >
+              <div className="text-center mb-16">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1.6 }}
+                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-6"
+                >
+                  <BarChart3 className="w-4 h-4 text-accent-ai-purple mr-2" />
+                  <span className="text-sm font-medium text-accent-ai-purple font-ibm-sans">
+                    Research Analytics
+                  </span>
+                </motion.div>
+                <h3 className="text-3xl font-bold text-white mb-4 font-ibm-sans">
+                  Impact &amp; Collaboration Metrics
+                </h3>
+                <p className="text-slate-300 max-w-2xl mx-auto font-ibm-sans">
+                  Real-time visualization of research output, citation networks, and academic collaboration patterns across AI ethics and philosophy domains.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <ResearchMetricsChart
+                  title="Publication Impact"
+                  type="bar"
+                  data={[
+                    { label: 'AI Ethics', value: 12, color: '#6366F1', trend: 15 },
+                    { label: 'Philosophy', value: 8, color: '#7056E6', trend: 8 },
+                    { label: 'Technology', value: 15, color: '#282A36', trend: 22 }
+                  ]}
+                />
+                <ResearchMetricsChart
+                  title="Citation Growth"
+                  type="line"
+                  data={[
+                    { label: '2021', value: 45, color: '#6366F1' },
+                    { label: '2022', value: 78, color: '#7056E6' },
+                    { label: '2023', value: 124, color: '#282A36' },
+                    { label: '2024', value: 189, color: '#6366F1' }
+                  ]}
+                />
+                <ResearchMetricsChart
+                  title="Research Areas"
+                  type="pie"
+                  data={[
+                    { label: 'AI Ethics', value: 35, color: '#6366F1' },
+                    { label: 'Big Data', value: 25, color: '#7056E6' },
+                    { label: 'Philosophy', value: 20, color: '#282A36' },
+                    { label: 'Security', value: 20, color: '#10B981' }
+                  ]}
+                />
+              </div>
+
+              {/* Animated Stats Component */}
+              <div className="mt-20">
+                <AnimatedStats />
+              </div>
+            </motion.div>
           </div>
         </div>
 

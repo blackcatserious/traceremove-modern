@@ -153,31 +153,55 @@ export default function FloatingNavigation() {
       {/* Floating Menu Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed top-8 left-8 z-50 p-4 rounded-2xl backdrop-blur-xl border transition-all duration-300 ${
+        className={`fixed top-6 left-6 z-50 p-4 rounded-2xl backdrop-blur-xl border transition-all duration-500 ${
           scrolled 
-            ? 'bg-black/20 border-white/10 shadow-2xl' 
-            : 'bg-white/5 border-white/5 shadow-xl'
+            ? 'bg-black/30 border-white/20 shadow-2xl' 
+            : 'bg-white/10 border-white/10 shadow-xl'
         }`}
         style={{
           background: scrolled 
-            ? 'linear-gradient(135deg, rgba(15, 10, 26, 0.9) 0%, rgba(30, 27, 75, 0.8) 50%, rgba(49, 46, 129, 0.7) 100%)'
-            : 'linear-gradient(135deg, rgba(15, 10, 26, 0.6) 0%, rgba(30, 27, 75, 0.5) 50%, rgba(49, 46, 129, 0.4) 100%)',
-          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+            ? 'linear-gradient(135deg, rgba(15, 10, 26, 0.95) 0%, rgba(30, 27, 75, 0.9) 30%, rgba(49, 46, 129, 0.85) 60%, rgba(124, 58, 237, 0.8) 100%)'
+            : 'linear-gradient(135deg, rgba(15, 10, 26, 0.7) 0%, rgba(30, 27, 75, 0.6) 30%, rgba(49, 46, 129, 0.5) 60%, rgba(124, 58, 237, 0.4) 100%)',
+          boxShadow: scrolled 
+            ? '0 25px 50px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(124, 58, 237, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+            : '0 20px 40px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(124, 58, 237, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+          fontFamily: 'var(--font-inter)'
         }}
         whileHover={{ 
-          scale: 1.05,
-          boxShadow: '0 25px 50px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+          scale: 1.08,
+          rotate: isOpen ? 0 : 5,
+          boxShadow: '0 30px 60px rgba(124, 58, 237, 0.4), 0 15px 30px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
         }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.92 }}
       >
         <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          animate={{ 
+            rotate: isOpen ? 180 : 0,
+            scale: isOpen ? 1.1 : 1
+          }}
+          transition={{ 
+            duration: 0.4,
+            type: "spring",
+            stiffness: 200,
+            damping: 15
+          }}
         >
           {isOpen ? (
-            <X className="w-6 h-6 text-white" />
+            <motion.div
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <X className="w-6 h-6 text-white drop-shadow-lg" />
+            </motion.div>
           ) : (
-            <Menu className="w-6 h-6 text-white" />
+            <motion.div
+              initial={{ opacity: 0, rotate: 90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Menu className="w-6 h-6 text-white drop-shadow-lg" />
+            </motion.div>
           )}
         </motion.div>
       </motion.button>
@@ -203,12 +227,13 @@ export default function FloatingNavigation() {
             initial="closed"
             animate="open"
             exit="closed"
-            className="fixed top-0 left-0 h-full w-80 z-45 p-8 pt-24"
+            className="fixed top-0 left-0 h-full w-96 z-45 p-8 pt-24 overflow-y-auto"
             style={{
-              background: 'linear-gradient(135deg, rgba(15, 10, 26, 0.95) 0%, rgba(30, 27, 75, 0.9) 30%, rgba(49, 46, 129, 0.85) 60%, rgba(67, 56, 202, 0.8) 100%)',
-              backdropFilter: 'blur(20px)',
-              borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-              boxShadow: '20px 0 40px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(255, 255, 255, 0.05)'
+              background: 'linear-gradient(135deg, rgba(15, 10, 26, 0.98) 0%, rgba(30, 27, 75, 0.95) 20%, rgba(49, 46, 129, 0.92) 40%, rgba(67, 56, 202, 0.9) 60%, rgba(124, 58, 237, 0.88) 80%, rgba(139, 92, 246, 0.85) 100%)',
+              backdropFilter: 'blur(24px)',
+              borderRight: '1px solid rgba(255, 255, 255, 0.15)',
+              boxShadow: '25px 0 50px rgba(0, 0, 0, 0.4), 10px 0 20px rgba(124, 58, 237, 0.2), inset -1px 0 0 rgba(255, 255, 255, 0.08)',
+              fontFamily: 'var(--font-inter)'
             }}
           >
             <motion.div
@@ -223,7 +248,7 @@ export default function FloatingNavigation() {
                     {item.children ? (
                       <button
                         onClick={() => toggleExpanded(item.label)}
-                        className="w-full flex items-center justify-between p-4 rounded-xl text-white/90 hover:text-white transition-all duration-300 group hover:bg-white/5"
+                        className="w-full flex items-center justify-between p-4 rounded-xl text-white/90 hover:text-white transition-all duration-500 group hover:bg-white/8 hover:backdrop-blur-sm"
                         style={{
                           background: expandedItems.includes(item.label) 
                             ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%)'
@@ -232,7 +257,7 @@ export default function FloatingNavigation() {
                       >
                         <div className="flex items-center space-x-3">
                           <item.icon className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
-                          <span className="font-medium text-lg">{item.label}</span>
+                          <span className="font-semibold text-lg tracking-wide">{item.label}</span>
                         </div>
                         <motion.div
                           animate={{ rotate: expandedItems.includes(item.label) ? 180 : 0 }}
@@ -245,10 +270,10 @@ export default function FloatingNavigation() {
                       <Link
                         href={item.href}
                         onClick={() => setIsOpen(false)}
-                        className={`flex items-center space-x-3 p-4 rounded-xl transition-all duration-300 group ${
+                        className={`flex items-center space-x-3 p-4 rounded-xl transition-all duration-500 group ${
                           pathname === item.href
-                            ? 'bg-gradient-to-r from-purple-600/30 to-blue-600/20 text-white border border-purple-500/30'
-                            : 'text-white/90 hover:text-white hover:bg-white/5'
+                            ? 'bg-gradient-to-r from-purple-600/40 to-blue-600/30 text-white border border-purple-400/40 shadow-lg shadow-purple-500/20'
+                            : 'text-white/90 hover:text-white hover:bg-white/8 hover:backdrop-blur-sm hover:shadow-md hover:shadow-purple-500/10'
                         }`}
                       >
                         <item.icon className={`w-5 h-5 transition-colors ${
@@ -297,18 +322,30 @@ export default function FloatingNavigation() {
               ))}
             </motion.div>
 
-            {/* Footer */}
+            {/* Enhanced Footer */}
             <motion.div
               variants={itemVariants}
               className="absolute bottom-8 left-8 right-8"
             >
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <p className="text-white/60 text-sm text-center">
-                  Artur Ziganshin
-                </p>
-                <p className="text-white/40 text-xs text-center mt-1">
-                  AI Research Lab
-                </p>
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/15 backdrop-blur-sm shadow-lg">
+                <div className="text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center"
+                  >
+                    <User className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <p className="text-white/80 text-sm font-semibold tracking-wide">
+                    Artur Ziganshin
+                  </p>
+                  <p className="text-white/50 text-xs mt-1 font-medium">
+                    AI Research Lab • Philosophy
+                  </p>
+                  <div className="flex justify-center space-x-2 mt-3">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <span className="text-white/40 text-xs">Online</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.nav>
