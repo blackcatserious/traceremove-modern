@@ -61,101 +61,38 @@ const navigationItems = [
   { 
     href: '/research', 
     label: 'Research', 
-    icon: BookOpen,
-    dropdown: [
-      { href: '/research/ethical-ai-architecture', label: 'Ethical AI Architecture', icon: Shield },
-      { href: '/research/agentic-systems-tool-use', label: 'Agentic Systems', icon: Cpu },
-      { href: '/research/multimodal-reasoning', label: 'Multimodal Reasoning', icon: Brain },
-      { href: '/research/big-data-interpretability', label: 'Big Data Interpretability', icon: Database },
-      { href: '/research/language-code-interoperability', label: 'Language & Code Interoperability', icon: Code },
-      { href: '/research/privacy-preserving-ai', label: 'Privacy-Preserving AI', icon: Lock },
-      { href: '/research/benchmarking-open-vs-closed-ai', label: 'Benchmarking Open vs Closed AI', icon: BarChart3 },
-      { href: '/research/opacity-responsibility-ai', label: 'Opacity & Responsibility in AI', icon: Eye },
-      { href: '/research/ai-infrastructure-academia', label: 'AI Infrastructure for Academia', icon: GraduationCap },
-      { href: '/research/human-centered-ai', label: 'Human-Centered AI', icon: Heart },
-      { href: '/research/digital-rights-ai', label: 'Digital Rights & AI', icon: Scale }
-    ]
+    icon: BookOpen
   },
   { 
     href: '/projects', 
     label: 'Projects', 
-    icon: Lightbulb,
-    dropdown: [
-      { href: '/projects/transparent-llms', label: 'Transparent LLMs', icon: Eye },
-      { href: '/projects/symbolic-ai', label: 'Symbolic AI', icon: Network },
-      { href: '/projects/digital-identity-agency', label: 'Digital Identity & Agency', icon: UserCheck },
-      { href: '/projects/semantic-data-pipelines', label: 'Semantic Data Pipelines', icon: Workflow },
-      { href: '/projects/nlp-evaluation', label: 'NLP Evaluation', icon: Target },
-      { href: '/projects/ethics-multimodal-ai', label: 'Ethics in Multimodal AI', icon: Shield },
-      { href: '/projects/real-world-ai-deployments', label: 'Real-World AI Deployments', icon: Globe }
-    ]
+    icon: Lightbulb
   },
   { 
     href: '/tools', 
     label: 'Tools', 
-    icon: Wrench,
-    dropdown: [
-      { href: '/tools/ai-research-dashboard', label: 'AI Research Dashboard', icon: BarChart3 },
-      { href: '/tools/semantic-search-tool', label: 'Semantic Search Tool', icon: Search },
-      { href: '/tools/privacy-score-calculator', label: 'Privacy Score Calculator', icon: Calculator },
-      { href: '/tools/data-visualization-playground', label: 'Data Visualization Playground', icon: PieChart },
-      { href: '/tools/paper-summarizer', label: 'Paper Summarizer', icon: BookMarked },
-      { href: '/tools/language-model-comparison', label: 'Language Model Comparison', icon: GitCompare },
-      { href: '/tools/annotation-demo', label: 'Annotation Demo', icon: Target }
-    ]
-  },
-  { 
-    href: '/academic', 
-    label: 'Academic', 
-    icon: GraduationCap,
-    dropdown: [
-      { href: '/academic/cv', label: 'Curriculum Vitae', icon: User },
-      { href: '/academic/publications-archive', label: 'Publications Archive', icon: Library },
-      { href: '/academic/collaborations', label: 'Academic Collaborations', icon: Users },
-      { href: '/academic/press-coverage', label: 'Press / Media Coverage', icon: Newspaper },
-      { href: '/academic/conference-talks', label: 'Conference Talks', icon: Presentation },
-      { href: '/academic/teaching-materials', label: 'Teaching Materials', icon: BookOpenCheck },
-      { href: '/academic/ethics-syllabi', label: 'AI Ethics Syllabi', icon: ScrollText },
-      { href: '/academic/reading-list', label: 'Reading List', icon: BookOpen }
-    ]
+    icon: Wrench
   },
   { 
     href: '/articles', 
     label: 'Articles', 
-    icon: Newspaper,
-    dropdown: [
-      { href: '/articles/guardrails-ux-safety', label: 'Guardrails in UX Safety', icon: Shield },
-      { href: '/articles/cost-aware-llm-serving', label: 'Cost-Aware LLM Serving', icon: BarChart3 },
-      { href: '/articles/agent-evaluation-beyond-win-rates', label: 'Agent Evaluation Beyond Win-Rates', icon: Target },
-      { href: '/articles/philosophy-machine-agency', label: 'Philosophy of Machine Agency', icon: Brain },
-      { href: '/articles/epistemic-risks-ai', label: 'Epistemic Risks in AI', icon: Eye },
-      { href: '/articles/linguistic-symbolism-ml', label: 'Linguistic Symbolism in ML', icon: Code },
-      { href: '/articles/ai-human-dignity', label: 'AI & Human Dignity', icon: Heart },
-      { href: '/articles/philosophy-responsibility', label: 'Philosophy of Responsibility', icon: Scale },
-      { href: '/articles/comparative-llm-analysis', label: 'Comparative LLM Analysis', icon: GitCompare },
-      { href: '/articles/case-study-ai-social-systems', label: 'Case Study: AI in Social Systems', icon: Globe }
-    ]
+    icon: Newspaper
   },
-  { href: '/about', label: 'About', icon: User },
-  { href: '/whitepapers', label: 'Whitepapers', icon: FileText },
   { 
-    href: '/more', 
-    label: 'More', 
-    icon: Menu,
-    dropdown: [
-      { href: '/ai-lab-members', label: 'AI Lab Members', icon: Users },
-      { href: '/faq', label: 'FAQ', icon: HelpCircle },
-      { href: '/site-map', label: 'Site Map', icon: Map },
-      { href: '/legal/ethics-statement', label: 'Ethics Statement', icon: Scale },
-      { href: '/legal/privacy-policy', label: 'Privacy Policy', icon: Shield }
-    ]
+    href: '/about', 
+    label: 'About', 
+    icon: User 
   },
+  { 
+    href: '/contact', 
+    label: 'Contact', 
+    icon: Mail
+  }
 ];
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -174,13 +111,6 @@ export default function Navigation() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const handleDropdownEnter = (label: string) => {
-    setActiveDropdown(label);
-  };
-
-  const handleDropdownLeave = () => {
-    setActiveDropdown(null);
-  };
 
   return (
     <motion.nav
@@ -219,12 +149,10 @@ export default function Navigation() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative"
-                onMouseEnter={() => item.dropdown && handleDropdownEnter(item.label)}
-                onMouseLeave={() => item.dropdown && handleDropdownLeave()}
               >
                 <Link
                   href={item.href}
-                  className={`nav-link-premium ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
+                  className={`nav-link-premium ${isActive(item.href) ? 'active' : ''}`}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -233,16 +161,6 @@ export default function Navigation() {
                     <item.icon className="w-5 h-5 mr-2 transition-colors duration-300" />
                   </motion.div>
                   <span className="font-ibm-sans">{item.label}</span>
-                  
-                  {/* Dropdown indicator */}
-                  {item.dropdown && (
-                    <motion.div
-                      animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronDown className="w-4 h-4 ml-1 transition-colors duration-300" />
-                    </motion.div>
-                  )}
                   
                   {/* Active indicator */}
                   {isActive(item.href) && (
@@ -257,62 +175,6 @@ export default function Navigation() {
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent-ai-purple/0 via-accent-ai-purple/5 to-accent-lab-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
-
-                {/* Dropdown Menu */}
-                {item.dropdown && (
-                  <AnimatePresence>
-                    {activeDropdown === item.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full left-0 mt-2 w-80 bg-white/10 backdrop-blur-xl border border-accent-ai-purple/20 rounded-2xl shadow-2xl shadow-accent-ai-purple/10 z-50"
-                      >
-                        <div className="p-4 space-y-1">
-                          {item.dropdown.map((dropdownItem, dropdownIndex) => (
-                            <motion.div
-                              key={dropdownItem.href}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.2, delay: dropdownIndex * 0.03 }}
-                            >
-                              <Link
-                                href={dropdownItem.href}
-                                className="flex items-center px-4 py-3 rounded-xl text-research-text hover:text-accent-ai-purple hover:bg-accent-ai-purple/10 transition-all duration-200 group"
-                              >
-                                <motion.div
-                                  whileHover={{ scale: 1.1, rotate: 5 }}
-                                  whileTap={{ scale: 0.9 }}
-                                >
-                                  <dropdownItem.icon className="w-5 h-5 mr-3 text-accent-ai-purple/70 group-hover:text-accent-ai-purple transition-colors duration-200" />
-                                </motion.div>
-                                <span className="font-medium text-sm">{dropdownItem.label}</span>
-                                
-                                {/* Hover indicator */}
-                                <motion.div
-                                  initial={{ width: 0 }}
-                                  whileHover={{ width: 4 }}
-                                  className="ml-auto h-4 bg-gradient-to-b from-accent-ai-purple to-accent-lab-purple rounded-full"
-                                />
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </div>
-                        
-                        {/* Dropdown footer */}
-                        <div className="px-4 py-3 border-t border-accent-ai-purple/10">
-                          <div className="text-center">
-                            <p className="text-xs text-research-text-secondary font-medium">
-                              {item.dropdown.length} {item.label.toLowerCase()} areas
-                            </p>
-                            <div className="mt-1 w-12 h-0.5 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full mx-auto" />
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
               </motion.div>
             ))}
           </div>
@@ -402,35 +264,7 @@ export default function Navigation() {
                         className="ml-auto w-2 h-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full"
                       />
                     )}
-                    
-                    {/* Dropdown indicator for mobile */}
-                    {item.dropdown && (
-                      <ChevronDown className="w-4 h-4 ml-2 text-accent-ai-purple/70" />
-                    )}
                   </Link>
-                  
-                  {/* Mobile dropdown items */}
-                  {item.dropdown && (
-                    <div className="ml-8 mt-2 space-y-1">
-                      {item.dropdown.map((dropdownItem, dropdownIndex) => (
-                        <motion.div
-                          key={dropdownItem.href}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.2, delay: dropdownIndex * 0.02 }}
-                        >
-                          <Link
-                            href={dropdownItem.href}
-                            onClick={() => setIsOpen(false)}
-                            className="flex items-center px-3 py-2 rounded-lg text-research-text-secondary hover:text-accent-ai-purple hover:bg-accent-ai-purple/5 transition-all duration-200 group"
-                          >
-                            <dropdownItem.icon className="w-4 h-4 mr-3 text-accent-ai-purple/50 group-hover:text-accent-ai-purple transition-colors duration-200" />
-                            <span className="text-sm font-medium">{dropdownItem.label}</span>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
                 </motion.div>
               ))}
             </div>
