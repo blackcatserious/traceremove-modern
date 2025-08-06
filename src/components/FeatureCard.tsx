@@ -54,7 +54,7 @@ export default function FeatureCard({
       <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-xl"></div>
       
       {/* Content Container */}
-      <div className="relative p-8 text-center">
+      <div className="relative p-6 text-center">
         {/* Floating Icon with Advanced Effects */}
         <motion.div
           whileHover={{ 
@@ -68,7 +68,7 @@ export default function FeatureCard({
             stiffness: 400,
             damping: 10
           }}
-          className="relative mx-auto mb-6 w-20 h-20"
+          className="relative mx-auto mb-6 w-16 h-16"
         >
           {/* Icon Background with Multiple Layers */}
           <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-2xl shadow-2xl"></div>

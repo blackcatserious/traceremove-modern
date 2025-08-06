@@ -71,7 +71,7 @@ export default function ResearchCard({
       <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-2xl"></div>
       
       {/* Content Container */}
-      <div className="relative p-10 text-center">
+      <div className="relative p-8 text-center">
         {/* Research Icon with Scientific Feel */}
         <motion.div
           whileHover={{ 
@@ -85,7 +85,7 @@ export default function ResearchCard({
             stiffness: 300,
             damping: 12
           }}
-          className="relative mx-auto mb-8 w-24 h-24"
+          className="relative mx-auto mb-8 w-20 h-20"
         >
           {/* Multi-layer Icon Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-3xl shadow-2xl"></div>

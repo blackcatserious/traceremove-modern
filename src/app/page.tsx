@@ -76,7 +76,7 @@ export default function Home() {
       {/* Hero Section with Premium Glass Effect */}
       <section className="glass-card-premium relative overflow-hidden py-32 sm:py-40 lg:py-48 mx-6 lg:mx-8 mb-8">
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="text-center">
             {/* Platform Badge */}
             <motion.div
@@ -149,18 +149,47 @@ export default function Home() {
               </motion.h1>
               
               <motion.p 
-                className="text-xl text-slate-200 max-w-4xl mx-auto mb-20 typography-premium leading-relaxed"
+                className="text-xl text-slate-200 max-w-5xl mx-auto mb-20 typography-premium leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.0 }}
               >
-                Traceremove is committed to exploring the intersection of artificial intelligence, 
-                ethics, and human understanding for responsible innovation.
+                TraceRemove is Artur Ziganshin&apos;s advanced AI research laboratory and platform, dedicated to exploring the intersection of artificial intelligence, 
+                ethics, and human understanding. Our mission is to advance responsible AI innovation through rigorous academic research, 
+                ethical AI development, and cutting-edge machine learning solutions. We focus on creating transparent, interpretable AI systems 
+                that respect human dignity while pushing the boundaries of what&apos;s possible in artificial intelligence.
               </motion.p>
             </motion.div>
 
+            {/* AI Research Laboratory Info Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="mb-20"
+            >
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div className="text-center p-6 glass-card border border-white/10 rounded-2xl">
+                  <div className="text-3xl font-bold text-white mb-2">50+</div>
+                  <div className="text-slate-300 text-sm">Research Projects</div>
+                </div>
+                <div className="text-center p-6 glass-card border border-white/10 rounded-2xl">
+                  <div className="text-3xl font-bold text-white mb-2">15+</div>
+                  <div className="text-slate-300 text-sm">Publications</div>
+                </div>
+                <div className="text-center p-6 glass-card border border-white/10 rounded-2xl">
+                  <div className="text-3xl font-bold text-white mb-2">5+</div>
+                  <div className="text-slate-300 text-sm">AI Tools Developed</div>
+                </div>
+                <div className="text-center p-6 glass-card border border-white/10 rounded-2xl">
+                  <div className="text-3xl font-bold text-white mb-2">3+</div>
+                  <div className="text-slate-300 text-sm">Years of Research</div>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Main Feature Cards */}
-            <ScrollFadeIn delay={1.2} direction="up" distance={40}>
+            <ScrollFadeIn delay={1.4} direction="up" distance={40}>
               <div className="grid md:grid-cols-3 gap-10 mb-32">
                 <StaggeredList staggerDelay={0.2}>
                   {[
@@ -206,7 +235,7 @@ export default function Home() {
 
       {/* Research Areas Section with Premium Glass Effect */}
       <section className="glass-card-premium relative py-32 mx-6 lg:mx-8">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -279,7 +308,7 @@ export default function Home() {
 
       {/* About Artur Ziganshin Section */}
       <section className="glass-card-premium relative py-32 mx-6 lg:mx-8 mb-8">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -344,7 +373,7 @@ export default function Home() {
 
       {/* Tools & Projects Section */}
       <section className="glass-card-premium relative py-32 mx-6 lg:mx-8 mb-8">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -420,7 +449,7 @@ export default function Home() {
 
       {/* Articles & Publications Section */}
       <section className="glass-card-premium relative py-32 mx-6 lg:mx-8 mb-8">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

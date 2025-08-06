@@ -36,22 +36,22 @@ const ibmPlexSerif = IBM_Plex_Serif({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://traceremove.com'),
+  metadataBase: new URL('https://traceremove.dev'),
   title: {
-    default: "TraceRemove — AI Reputation Firewall",
-    template: "%s | TraceRemove"
+    default: "TraceRemove — AI Research Laboratory & Platform",
+    template: "%s | TraceRemove AI Lab"
   },
-  description: "Negative link removal, reputation management, AI monitoring and brand protection system. Professional ORM services, deindexing, legal support.",
+  description: "Advanced AI research laboratory focused on ethical AI development, machine learning innovation, and responsible artificial intelligence. Explore cutting-edge research, publications, and AI tools.",
   keywords: [
-    "reputation management", "negative link removal", "ORM", "deindexing", "brand protection", 
-    "reputation monitoring", "AI tools", "legal support", "online reputation", 
-    "negative reviews", "SEO reputation", "crisis management", "reputation audit", 
-    "TraceRemove", "search removal", "right to be forgotten", "GDPR",
-    "reputation risks", "brand monitoring", "digital reputation", "internet reputation"
+    "AI research", "artificial intelligence", "machine learning", "ethical AI", "AI laboratory", 
+    "research platform", "AI innovation", "responsible AI", "AI ethics", "deep learning", 
+    "neural networks", "AI development", "research publications", "AI tools", 
+    "TraceRemove", "AI platform", "academic research", "AI methodology",
+    "AI safety", "AI governance", "computational intelligence", "AI experiments"
   ],
-  authors: [{ name: "TraceRemove Team", url: "https://traceremove.com/about" }],
-  creator: "TraceRemove",
-  publisher: "TraceRemove",
+  authors: [{ name: "Artur Ziganshin", url: "https://traceremove.dev/about" }],
+  creator: "TraceRemove AI Research Lab",
+  publisher: "TraceRemove AI Research Lab",
   formatDetection: {
     email: false,
     address: false,
@@ -59,35 +59,35 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "ru_RU",
-    url: "https://traceremove.com",
-    siteName: "TraceRemove",
-    title: "TraceRemove — AI Reputation Firewall",
-    description: "Professional reputation management: negative link removal, deindexing, brand monitoring using AI technologies.",
+    locale: "en_US",
+    url: "https://traceremove.dev",
+    siteName: "TraceRemove AI Research Lab",
+    title: "TraceRemove — AI Research Laboratory & Platform",
+    description: "Advanced AI research laboratory focused on ethical AI development, machine learning innovation, and responsible artificial intelligence research.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "TraceRemove - AI Reputation Firewall",
+        alt: "TraceRemove - AI Research Laboratory",
         type: "image/png",
       },
       {
         url: "/og-image-square.png", 
         width: 1200,
         height: 1200,
-        alt: "TraceRemove Logo",
+        alt: "TraceRemove AI Research Lab Logo",
         type: "image/png",
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TraceRemove — AI Reputation Firewall",
-    description: "Professional reputation management and brand protection using AI technologies.",
+    title: "TraceRemove — AI Research Laboratory & Platform",
+    description: "Advanced AI research laboratory focused on ethical AI development and machine learning innovation.",
     images: ["/twitter-image.png"],
-    creator: "@traceremove",
-    site: "@traceremove",
+    creator: "@traceremove_ai",
+    site: "@traceremove_ai",
   },
   robots: {
     index: true,
@@ -105,13 +105,12 @@ export const metadata: Metadata = {
     yandex: "your-yandex-verification-code",
   },
   alternates: {
-    canonical: "https://traceremove.com",
+    canonical: "https://traceremove.dev",
     languages: {
-      "ru-RU": "https://traceremove.com",
-      "en-US": "https://traceremove.com/en",
+      "en-US": "https://traceremove.dev",
     },
   },
-  category: "technology",
+  category: "research",
 };
 
 export default function RootLayout({
@@ -135,84 +134,82 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "TraceRemove",
-              "alternateName": "TraceRemove — AI Reputation Firewall",
-              "description": "Professional reputation management services: negative link removal, deindexing, brand monitoring using AI technologies.",
-              "url": "https://traceremove.com",
-              "logo": "https://traceremove.com/logo.png",
-              "image": "https://traceremove.com/og-image.png",
+              "@type": "ResearchOrganization",
+              "name": "TraceRemove AI Research Lab",
+              "alternateName": "TraceRemove — AI Research Laboratory & Platform",
+              "description": "Advanced AI research laboratory focused on ethical AI development, machine learning innovation, and responsible artificial intelligence research.",
+              "url": "https://traceremove.dev",
+              "logo": "https://traceremove.dev/logo.png",
+              "image": "https://traceremove.dev/og-image.png",
               "foundingDate": "2020",
               "address": {
                 "@type": "PostalAddress",
-                "addressCountry": "RU"
+                "addressCountry": "US"
               },
               "contactPoint": [
                 {
                   "@type": "ContactPoint",
-                  "telephone": "+7-XXX-XXX-XXXX",
-                  "contactType": "customer service",
-                  "availableLanguage": ["Russian", "English"]
+                  "contactType": "research inquiries",
+                  "availableLanguage": ["English"]
                 }
               ],
               "sameAs": [
-                "https://t.me/traceremove",
-                "https://wa.me/79XXXXXXXXX"
+                "https://github.com/blackcatserious"
               ],
               "serviceType": [
-                "Online Reputation Management",
-                "Negative Link Removal",
-                "Search Engine Deindexing",
-                "Brand Monitoring",
-                "Legal Support",
-                "AI-powered Reputation Tools"
+                "AI Research",
+                "Machine Learning Development",
+                "Ethical AI Consulting",
+                "Research Publications",
+                "AI Tool Development",
+                "Academic Collaboration"
               ],
               "areaServed": {
-                "@type": "Country",
-                "name": "Russia"
+                "@type": "Place",
+                "name": "Global"
               },
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Reputation Management Services",
+                "name": "AI Research Services",
                 "itemListElement": [
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "ORM - Online Reputation Management",
-                      "description": "Comprehensive online reputation management"
+                      "name": "AI Research & Development",
+                      "description": "Cutting-edge artificial intelligence research and development"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Deindex - Search Removal",
-                      "description": "Deindexing negative materials from search engines"
+                      "name": "Machine Learning Solutions",
+                      "description": "Custom machine learning models and solutions"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Legal Support",
-                      "description": "Legal support for reputation issues"
+                      "name": "Ethical AI Consulting",
+                      "description": "Consulting on responsible and ethical AI development"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Monitoring",
-                      "description": "Reputation and brand monitoring on the internet"
+                      "name": "Research Publications",
+                      "description": "Academic research papers and publications in AI"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "AI Tools",
-                      "description": "AI tools for reputation management"
+                      "name": "AI Tools & Platforms",
+                      "description": "Development of AI tools and research platforms"
                     }
                   }
                 ]
@@ -230,7 +227,7 @@ export default function RootLayout({
           <Navigation />
           <Breadcrumb />
           <main className="relative pt-24 pb-16 z-20 min-h-screen">
-            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
+            <div className="container mx-auto px-6 lg:px-8 w-full">
               {children}
             </div>
           </main>

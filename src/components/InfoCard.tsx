@@ -71,7 +71,7 @@ export default function InfoCard({
       <div className="absolute inset-[1px] rounded-4xl bg-gradient-to-br from-slate-900/98 via-slate-800/95 to-slate-900/98 backdrop-blur-3xl"></div>
       
       {/* Content Container */}
-      <div className="relative p-12">
+      <div className="relative p-8">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             {/* Floating Sparkle Indicator */}

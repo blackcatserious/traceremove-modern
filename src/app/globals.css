@@ -588,60 +588,44 @@ footer {
   }
 }
 
-/* Fix for Next.js static export adding offscreen attributes */
+/* Fix for Next.js static export adding offscreen attributes - targeted approach */
 [offscreen] {
-  position: static !important;
-  left: auto !important;
-  top: auto !important;
   clip: auto !important;
   width: auto !important;
   height: auto !important;
   overflow: visible !important;
-  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-/* Comprehensive navigation visibility fixes */
+/* Navigation-specific offscreen fixes - preserve positioning but ensure visibility */
 nav[offscreen], 
-nav[offscreen] *,
-nav a[offscreen],
-nav button[offscreen],
-nav div[offscreen],
-nav svg[offscreen],
+nav[offscreen] a,
+nav[offscreen] button,
 .desktop-nav[offscreen],
 .mobile-menu-button[offscreen],
-.mobile-menu-premium[offscreen],
-a[href="/projects"][offscreen],
-a[href="/tools"][offscreen],
-a[href="/academic"][offscreen],
-a[href="/articles"][offscreen],
-a[href="/about"][offscreen],
-a[href="/whitepapers"][offscreen],
-a[href="/contact"][offscreen],
-button[offscreen] {
-  position: static !important;
+.mobile-menu-premium[offscreen] {
   clip: auto !important;
   width: auto !important;
   height: auto !important;
   overflow: visible !important;
-  transform: none !important;
-  left: auto !important;
-  top: auto !important;
   visibility: visible !important;
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
-/* Force all navigation elements to be visible regardless of offscreen attribute */
-nav, nav *, nav a, nav button, nav div, nav svg {
-  position: static !important;
-  clip: auto !important;
-  width: auto !important;
-  height: auto !important;
-  overflow: visible !important;
-  transform: none !important;
-  left: auto !important;
-  top: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+/* Ensure navigation maintains proper z-index hierarchy */
+nav {
+  z-index: 50 !important;
+  position: relative !important;
+}
+
+nav .desktop-nav {
+  z-index: 51 !important;
+}
+
+nav .mobile-menu-button {
+  z-index: 52 !important;
 }
 
 /* Static export visibility fix */
