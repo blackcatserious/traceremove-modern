@@ -1,0 +1,7 @@
+[
+  { "tier": "Starter", "monthly_cost": 500, "researchers": 3, "storage_tb": 1, "compute_hours": 100 },
+  { "tier": "Small Lab", "monthly_cost": 1500, "researchers": 8, "storage_tb": 5, "compute_hours": 400 },
+  { "tier": "Medium Lab", "monthly_cost": 4000, "researchers": 20, "storage_tb": 15, "compute_hours": 1200 },
+  { "tier": "Large Lab", "monthly_cost": 8000, "researchers": 50, "storage_tb": 50, "compute_hours": 3000 },
+  { "tier": "Multi-Lab", "monthly_cost": 15000, "researchers": 100, "storage_tb": 100, "compute_hours": 6000 }
+]

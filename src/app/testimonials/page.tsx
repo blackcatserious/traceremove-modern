@@ -7,80 +7,80 @@ import { Star, Quote, Building2, Users, ArrowRight, CheckCircle } from 'lucide-r
 const testimonials = [
   {
     id: 'tech-ceo',
-    name: 'Алексей Петров',
+    name: 'Alex Petrov',
     position: 'CEO',
     company: 'TechStart',
     industry: 'IT',
     avatar: '/avatars/alexey.jpg',
     companyLogo: '/logos/techstart.png',
     rating: 5,
-    text: 'TraceRemove помогли нам превратить репутационный кризис в возможность для роста. Их профессиональный подход и быстрые результаты превзошли все наши ожидания. Рекомендую всем, кто серьезно относится к своей репутации.',
-    results: ['Рост трафика на 582%', 'Конверсия увеличилась в 4 раза', 'Негативные упоминания снизились на 73%'],
+    text: 'TraceRemove helped us turn a reputation crisis into an opportunity for growth. Their professional approach and quick results exceeded all our expectations. I recommend them to everyone who takes their reputation seriously.',
+    results: ['Traffic growth by 582%', 'Conversion increased 4 times', 'Negative mentions decreased by 73%'],
     gradient: 'from-blue-600 to-purple-600'
   },
   {
     id: 'restaurant-director',
-    name: 'Мария Иванова',
-    position: 'Директор по маркетингу',
+    name: 'Maria Ivanova',
+    position: 'Marketing Director',
     company: 'FoodChain',
     industry: 'HoReCa',
     avatar: '/avatars/maria.jpg',
     companyLogo: '/logos/foodchain.png',
     rating: 5,
-    text: 'Благодаря TraceRemove мы не только восстановили репутацию после кризиса, но и стали сильнее. Клиенты снова нам доверяют, а наши рестораны процветают. Команда работала круглосуточно, чтобы помочь нам.',
-    results: ['Рейтинг Google вырос с 2.1 до 4.6', 'Посещаемость увеличилась на 68%', 'Выручка выросла на 53%'],
+    text: 'Thanks to TraceRemove, we not only restored our reputation after the crisis, but became stronger. Customers trust us again, and our restaurants are thriving. The team worked around the clock to help us.',
+    results: ['Google rating grew from 2.1 to 4.6', 'Attendance increased by 68%', 'Revenue grew by 53%'],
     gradient: 'from-green-600 to-blue-600'
   },
   {
     id: 'medical-doctor',
-    name: 'Доктор Сергей Волков',
-    position: 'Главный врач',
-    company: 'МедЦентр+',
-    industry: 'Медицина',
+    name: 'Dr. Sergey Volkov',
+    position: 'Chief Medical Officer',
+    company: 'MedCenter+',
+    industry: 'Medicine',
     avatar: '/avatars/sergey.jpg',
     companyLogo: '/logos/medcenter.png',
     rating: 5,
-    text: 'Профессиональная работа команды TraceRemove помогла нам полностью очистить репутацию от клеветнических материалов конкурентов. Теперь пациенты снова нам доверяют, а наша клиника процветает.',
-    results: ['Удалено 23 негативных страницы', 'Записи на прием выросли на 182%', 'Доверие пациентов увеличилось на 55%'],
+    text: 'The professional work of the TraceRemove team helped us completely clear our reputation from slanderous materials from competitors. Now patients trust us again, and our clinic is thriving.',
+    results: ['23 negative pages removed', 'Appointments increased by 182%', 'Patient trust increased by 55%'],
     gradient: 'from-purple-600 to-pink-600'
   },
   {
     id: 'finance-director',
-    name: 'Елена Смирнова',
-    position: 'PR-директор',
+    name: 'Elena Smirnova',
+    position: 'PR Director',
     company: 'FinanceGroup',
-    industry: 'Финансы',
+    industry: 'Finance',
     avatar: '/avatars/elena.jpg',
     companyLogo: '/logos/financegroup.png',
     rating: 5,
-    text: 'TraceRemove не просто очистили нашу репутацию - они помогли построить долгосрочную стратегию управления имиджем компании. Их экспертиза в области финансового сектора впечатляет.',
-    results: ['87% позитивных упоминаний в СМИ', 'Клиентская база выросла на 34%', 'Стоимость акций увеличилась на 28%'],
+    text: 'TraceRemove did not just clean our reputation - they helped build a long-term strategy for managing the company image. Their expertise in the financial sector is impressive.',
+    results: ['87% positive media mentions', 'Client base grew by 34%', 'Stock value increased by 28%'],
     gradient: 'from-orange-600 to-red-600'
   },
   {
     id: 'retail-owner',
-    name: 'Дмитрий Козлов',
-    position: 'Владелец',
+    name: 'Dmitry Kozlov',
+    position: 'Owner',
     company: 'RetailMax',
-    industry: 'Ритейл',
+    industry: 'Retail',
     avatar: '/avatars/dmitry.jpg',
     companyLogo: '/logos/retailmax.png',
     rating: 5,
-    text: 'Когда наш интернет-магазин столкнулся с волной негативных отзывов, TraceRemove быстро взяли ситуацию под контроль. Их AI-инструменты и персональный подход помогли нам не только восстановиться, но и стать лидером рынка.',
-    results: ['Конверсия выросла на 245%', 'Возвраты снизились на 67%', 'NPS увеличился до 8.7'],
+    text: 'When our online store faced a wave of negative reviews, TraceRemove quickly took control of the situation. Their AI tools and personal approach helped us not only recover, but become a market leader.',
+    results: ['Conversion grew by 245%', 'Returns decreased by 67%', 'NPS increased to 8.7'],
     gradient: 'from-cyan-600 to-blue-600'
   },
   {
     id: 'law-partner',
-    name: 'Анна Федорова',
-    position: 'Управляющий партнер',
+    name: 'Anna Fedorova',
+    position: 'Managing Partner',
     company: 'LegalPro',
-    industry: 'Юриспруденция',
+    industry: 'Law',
     avatar: '/avatars/anna.jpg',
     companyLogo: '/logos/legalpro.png',
     rating: 5,
-    text: 'Как юристы, мы понимаем важность репутации. TraceRemove продемонстрировали высочайший профессионализм в работе с нашим делом. Их знание правовых аспектов управления репутацией впечатляет.',
-    results: ['Новые клиенты +156%', 'Средний чек увеличился на 89%', 'Рейтинг в каталогах 4.9/5'],
+    text: 'As lawyers, we understand the importance of reputation. TraceRemove demonstrated the highest professionalism in working with our case. Their knowledge of legal aspects of reputation management is impressive.',
+    results: ['New clients +156%', 'Average check increased by 89%', 'Directory rating 4.9/5'],
     gradient: 'from-indigo-600 to-purple-600'
   }
 ];
@@ -132,7 +132,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: { id: string; na
       <div className="relative z-10 mb-6">
         <h4 className="text-research-text font-semibold mb-3 flex items-center">
           <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-          Ключевые результаты
+          Key Results
         </h4>
         <ul className="space-y-2">
           {testimonial.results.map((result: string, resultIndex: number) => (
@@ -187,7 +187,7 @@ export default function TestimonialsPage() {
             className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 border border-accent-ai-purple/30 mb-8"
           >
             <Quote className="h-5 w-5 text-accent-ai-purple mr-2" />
-            <span className="text-accent-ai-purple font-medium">Отзывы клиентов</span>
+            <span className="text-accent-ai-purple font-medium">Client Reviews</span>
           </motion.div>
           
           <motion.h1 
@@ -196,9 +196,9 @@ export default function TestimonialsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Что говорят{' '}
+            What Our{' '}
             <span className="bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple bg-clip-text text-transparent">
-              Клиенты
+              Clients Say
             </span>
           </motion.h1>
           
@@ -208,8 +208,8 @@ export default function TestimonialsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Истории успеха от реальных клиентов, которые доверили нам свою репутацию. 
-            Узнайте, как мы помогли компаниям из разных отраслей достичь выдающихся результатов.
+            Success stories from real clients who trusted us with their reputation. 
+            Learn how we helped companies from different industries achieve outstanding results.
           </motion.p>
           
           {/* Stats */}
@@ -221,15 +221,15 @@ export default function TestimonialsPage() {
           >
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-accent-ai-purple mb-2">500+</div>
-              <div className="text-research-text-secondary">Довольных клиентов</div>
+              <div className="text-research-text-secondary">Satisfied Clients</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-accent-ai-purple mb-2">98%</div>
-              <div className="text-research-text-secondary">Успешных проектов</div>
+              <div className="text-research-text-secondary">Successful Projects</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-accent-ai-purple mb-2">4.9</div>
-              <div className="text-research-text-secondary">Средний рейтинг</div>
+              <div className="text-research-text-secondary">Average Rating</div>
             </div>
           </motion.div>
         </div>
@@ -269,7 +269,7 @@ export default function TestimonialsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            Работаем с компаниями всех отраслей
+            We Work with Companies from All Industries
           </motion.h2>
           
           <motion.div 
@@ -278,7 +278,7 @@ export default function TestimonialsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
           >
-            {['IT', 'HoReCa', 'Медицина', 'Финансы', 'Ритейл', 'Юриспруденция'].map((industry, index) => (
+            {['IT', 'HoReCa', 'Medicine', 'Finance', 'Retail', 'Law'].map((industry, index) => (
               <motion.div
                 key={industry}
                 className="bg-gradient-to-br from-research-surface/60 to-research-surface/30 backdrop-blur-sm border border-research-surface/40 rounded-xl p-6 text-center"
@@ -310,7 +310,7 @@ export default function TestimonialsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.4 }}
             >
-              Присоединяйтесь к довольным клиентам
+              Join Our Satisfied Clients
             </motion.h2>
             <motion.p 
               className="text-xl text-research-text-secondary mb-8"
@@ -318,7 +318,7 @@ export default function TestimonialsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.5 }}
             >
-              Станьте частью истории успеха TraceRemove. Позвольте нам защитить и улучшить репутацию вашего бренда.
+              Become part of TraceRemove&apos;s success story. Let us protect and improve your brand&apos;s reputation.
             </motion.p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -331,7 +331,7 @@ export default function TestimonialsPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Получить консультацию
+                Get Consultation
                 <ArrowRight className="h-5 w-5 ml-2" />
               </motion.button>
               <motion.button
@@ -339,7 +339,7 @@ export default function TestimonialsPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Посмотреть портфолио
+                View Portfolio
               </motion.button>
             </motion.div>
           </div>

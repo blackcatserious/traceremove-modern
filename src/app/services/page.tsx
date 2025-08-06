@@ -9,13 +9,13 @@ const services = [
     id: 'orm',
     title: 'ORM',
     subtitle: 'Online Reputation Management',
-    description: 'Комплексное управление онлайн репутацией вашего бренда. Мониторинг, анализ и улучшение восприятия компании в интернете.',
+    description: 'Comprehensive online reputation management for your brand. Monitoring, analysis and improvement of company perception on the internet.',
     icon: Shield,
     features: [
-      'Анализ текущей репутации',
-      'Стратегия улучшения имиджа',
-      '24/7 мониторинг упоминаний',
-      'Работа с отзывами и комментариями'
+      'Current reputation analysis',
+      'Image improvement strategy',
+      '24/7 mention monitoring',
+      'Reviews and comments management'
     ],
     gradient: 'from-blue-600 to-purple-600',
     delay: 0.1
@@ -23,14 +23,14 @@ const services = [
   {
     id: 'deindex',
     title: 'Deindex',
-    subtitle: 'Удаление из поиска',
-    description: 'Профессиональная деиндексация негативных материалов из поисковых систем. Законные методы удаления нежелательного контента.',
+    subtitle: 'Search Removal',
+    description: 'Professional deindexing of negative materials from search engines. Legal methods for removing unwanted content.',
     icon: Search,
     features: [
-      'Удаление из Google и Yandex',
-      'Работа с поисковыми системами',
-      'Правовое обоснование запросов',
-      'Гарантия результата'
+      'Removal from Google and Yandex',
+      'Working with search engines',
+      'Legal justification of requests',
+      'Result guarantee'
     ],
     gradient: 'from-purple-600 to-pink-600',
     delay: 0.2
@@ -38,14 +38,14 @@ const services = [
   {
     id: 'legal',
     title: 'Legal Support',
-    subtitle: 'Правовая поддержка',
-    description: 'Юридическое сопровождение вопросов репутации. Защита от клеветы, диффамации и незаконного распространения информации.',
+    subtitle: 'Legal Support',
+    description: 'Legal support for reputation issues. Protection from slander, defamation and illegal information distribution.',
     icon: Scale,
     features: [
-      'Консультации по репутационному праву',
-      'Досудебное урегулирование',
-      'Судебная защита интересов',
-      'Международное право'
+      'Reputation law consultations',
+      'Pre-trial settlement',
+      'Judicial protection of interests',
+      'International law'
     ],
     gradient: 'from-green-600 to-blue-600',
     delay: 0.3
@@ -53,14 +53,14 @@ const services = [
   {
     id: 'monitoring',
     title: 'Monitoring',
-    subtitle: 'Мониторинг репутации',
-    description: 'Непрерывный мониторинг упоминаний вашего бренда в интернете. Раннее обнаружение репутационных угроз и возможностей.',
+    subtitle: 'Reputation Monitoring',
+    description: 'Continuous monitoring of your brand mentions on the internet. Early detection of reputation threats and opportunities.',
     icon: Eye,
     features: [
-      'Мониторинг социальных сетей',
-      'Отслеживание новостных сайтов',
-      'Анализ тональности упоминаний',
-      'Еженедельные отчеты'
+      'Social media monitoring',
+      'News sites tracking',
+      'Mention sentiment analysis',
+      'Weekly reports'
     ],
     gradient: 'from-orange-600 to-red-600',
     delay: 0.4
@@ -68,14 +68,14 @@ const services = [
   {
     id: 'ai-tools',
     title: 'AI Tools',
-    subtitle: 'AI-инструменты',
-    description: 'Передовые AI-технологии для управления репутацией. Автоматизация процессов мониторинга и анализа репутационных данных.',
+    subtitle: 'AI Tools',
+    description: 'Advanced AI technologies for reputation management. Automation of monitoring processes and reputation data analysis.',
     icon: Bot,
     features: [
-      'AI-анализ тональности',
-      'Автоматическое реагирование',
-      'Предиктивная аналитика',
-      'Персонализированные рекомендации'
+      'AI sentiment analysis',
+      'Automatic response',
+      'Predictive analytics',
+      'Personalized recommendations'
     ],
     gradient: 'from-cyan-600 to-blue-600',
     delay: 0.5
@@ -121,7 +121,7 @@ export default function ServicesPage() {
             className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 border border-accent-ai-purple/30 mb-8"
           >
             <Shield className="h-5 w-5 text-accent-ai-purple mr-2" />
-            <span className="text-accent-ai-purple font-medium">Профессиональные услуги</span>
+            <span className="text-accent-ai-purple font-medium">Professional Services</span>
           </motion.div>
           
           <motion.h1 
@@ -130,9 +130,9 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Наши{' '}
+            Our{' '}
             <span className="bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple bg-clip-text text-transparent">
-              Услуги
+              Services
             </span>
           </motion.h1>
           
@@ -142,8 +142,8 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Комплексные решения для управления репутацией с использованием передовых AI-технологий. 
-            Защитите и улучшите восприятие вашего бренда в цифровом пространстве.
+            Comprehensive reputation management solutions using advanced AI technologies. 
+            Protect and improve your brand perception in the digital space.
           </motion.p>
         </div>
       </motion.section>
@@ -213,7 +213,7 @@ export default function ServicesPage() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Узнать больше
+                        Learn More
                         <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                       </motion.button>
                     </div>
@@ -240,7 +240,7 @@ export default function ServicesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Готовы защитить свою репутацию?
+              Ready to Protect Your Reputation?
             </motion.h2>
             <motion.p 
               className="text-xl text-research-text-secondary mb-8"
@@ -248,7 +248,7 @@ export default function ServicesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
             >
-              Получите бесплатную консультацию и узнайте, как мы можем помочь улучшить восприятие вашего бренда
+              Get a free consultation and learn how we can help improve your brand perception
             </motion.p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -261,7 +261,7 @@ export default function ServicesPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Бесплатная консультация
+                Free Consultation
                 <ArrowRight className="h-5 w-5 ml-2" />
               </motion.button>
               <motion.button
@@ -269,7 +269,7 @@ export default function ServicesPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Связаться с нами
+                Contact Us
               </motion.button>
             </motion.div>
           </div>

@@ -1,0 +1,8 @@
+[
+  { "model": "GPT-4", "type": "closed", "accuracy": 0.89, "cost_per_1k": 0.03 },
+  { "model": "Claude-3", "type": "closed", "accuracy": 0.87, "cost_per_1k": 0.025 },
+  { "model": "Llama-2-70B", "type": "open", "accuracy": 0.82, "cost_per_1k": 0.008 },
+  { "model": "Mistral-7B", "type": "open", "accuracy": 0.78, "cost_per_1k": 0.003 },
+  { "model": "Code-Llama-34B", "type": "open", "accuracy": 0.85, "cost_per_1k": 0.006 },
+  { "model": "PaLM-2", "type": "closed", "accuracy": 0.88, "cost_per_1k": 0.028 }
+]

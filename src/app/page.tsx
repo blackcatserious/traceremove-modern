@@ -7,6 +7,7 @@ import FeatureCard from '@/components/FeatureCard';
 import ResearchCard from '@/components/ResearchCard';
 import InfoCard from '@/components/InfoCard';
 import PremiumButton from '@/components/PremiumButton';
+import { ScrollFadeIn, StaggeredList, ScrollProgress, Parallax, FloatingElement } from '@/components/ScrollAnimations';
 
 export default function Home() {
   const [auditFormData, setAuditFormData] = useState({
@@ -22,17 +23,17 @@ export default function Home() {
     const newErrors: Record<string, string> = {};
 
     if (!auditFormData.name.trim()) {
-      newErrors.name = 'Имя обязательно для заполнения';
+      newErrors.name = 'Name is required';
     }
 
     if (!auditFormData.email.trim()) {
-      newErrors.email = 'Email обязателен для заполнения';
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(auditFormData.email)) {
-      newErrors.email = 'Введите корректный email адрес';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!auditFormData.website.trim()) {
-      newErrors.website = 'URL сайта обязателен для заполнения';
+      newErrors.website = 'Website URL is required';
     }
 
     setAuditErrors(newErrors);
@@ -70,6 +71,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative">
+      <ScrollProgress />
+      
       {/* Hero Section with Premium Glass Effect */}
       <section className="glass-card-premium relative overflow-hidden py-32 sm:py-40 lg:py-48 mx-6 lg:mx-8 mb-8">
         
@@ -157,57 +160,46 @@ export default function Home() {
             </motion.div>
 
             {/* Main Feature Cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="grid md:grid-cols-3 gap-10 mb-32"
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.4 }}
-              >
-                <FeatureCard
-                  icon={Sparkles}
-                  title="Our Mission"
-                  description="Learn about the guiding principles of our research lab"
-                  gradient="from-blue-900/50 to-purple-900/50"
-                  borderColor="border-blue-500/30"
-                  iconGradient="from-blue-400 to-blue-500"
-                />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.6 }}
-              >
-                <FeatureCard
-                  icon={Info}
-                  title="How to Use This Platform"
-                  description="Discover the features and content across multiple sections"
-                  gradient="from-purple-900/50 to-violet-900/50"
-                  borderColor="border-purple-500/30"
-                  iconGradient="from-purple-400 to-purple-500"
-                />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.8 }}
-              >
-                <FeatureCard
-                  icon={BookOpen}
-                  title="Philosophy of AI"
-                  description="Understand the ethical and philosophical context of our work"
-                  gradient="from-violet-900/50 to-indigo-900/50"
-                  borderColor="border-violet-500/30"
-                  iconGradient="from-violet-400 to-violet-500"
-                />
-              </motion.div>
-            </motion.div>
+            <ScrollFadeIn delay={1.2} direction="up" distance={40}>
+              <div className="grid md:grid-cols-3 gap-10 mb-32">
+                <StaggeredList staggerDelay={0.2}>
+                  {[
+                    <FloatingElement key="mission" amplitude={8} frequency={3}>
+                      <FeatureCard
+                        icon={Sparkles}
+                        title="Our Mission"
+                        description="Learn about the guiding principles of our research lab"
+                        gradient="from-blue-900/50 to-purple-900/50"
+                        borderColor="border-blue-500/30"
+                        iconGradient="from-blue-400 to-blue-500"
+                      />
+                    </FloatingElement>,
+                    
+                    <FloatingElement key="platform" amplitude={10} frequency={2.5}>
+                      <FeatureCard
+                        icon={Info}
+                        title="How to Use This Platform"
+                        description="Discover the features and content across multiple sections"
+                        gradient="from-purple-900/50 to-violet-900/50"
+                        borderColor="border-purple-500/30"
+                        iconGradient="from-purple-400 to-purple-500"
+                      />
+                    </FloatingElement>,
+                    
+                    <FloatingElement key="philosophy" amplitude={12} frequency={2.8}>
+                      <FeatureCard
+                        icon={BookOpen}
+                        title="Philosophy of AI"
+                        description="Understand the ethical and philosophical context of our work"
+                        gradient="from-violet-900/50 to-indigo-900/50"
+                        borderColor="border-violet-500/30"
+                        iconGradient="from-violet-400 to-violet-500"
+                      />
+                    </FloatingElement>
+                  ]}
+                </StaggeredList>
+              </div>
+            </ScrollFadeIn>
           </div>
         </div>
       </section>
@@ -242,61 +234,46 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-10"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={MessageSquare}
-                title="Language Models & Ethics"
-                description="Examining the moral considerations surrounding large-scale language models"
-                gradient="from-blue-900/50 to-cyan-900/50"
-                borderColor="border-blue-500/30"
-                iconGradient="from-blue-400 to-cyan-400"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Database}
-                title="Big Data Architectures"
-                description="Developing robust AI frameworks for processing and analysis"
-                gradient="from-purple-900/50 to-pink-900/50"
-                borderColor="border-purple-500/30"
-                iconGradient="from-purple-400 to-pink-400"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Network}
-                title="Cognitive Agents"
-                description="Creating intelligent AI systems with advanced decision-making capabilities"
-                gradient="from-violet-900/50 to-indigo-900/50"
-                borderColor="border-violet-500/30"
-                iconGradient="from-violet-400 to-indigo-400"
-              />
-            </motion.div>
-          </motion.div>
+          <ScrollFadeIn delay={0.6} direction="up" distance={50}>
+            <div className="grid md:grid-cols-3 gap-10">
+              <StaggeredList staggerDelay={0.2}>
+                {[
+                  <Parallax key="language-models" speed={0.3}>
+                    <ResearchCard
+                      icon={MessageSquare}
+                      title="Language Models & Ethics"
+                      description="Examining the moral considerations surrounding large-scale language models"
+                      gradient="from-blue-900/50 to-cyan-900/50"
+                      borderColor="border-blue-500/30"
+                      iconGradient="from-blue-400 to-cyan-400"
+                    />
+                  </Parallax>,
+                  
+                  <Parallax key="big-data" speed={0.4}>
+                    <ResearchCard
+                      icon={Database}
+                      title="Big Data Architectures"
+                      description="Developing robust AI frameworks for processing and analysis"
+                      gradient="from-purple-900/50 to-pink-900/50"
+                      borderColor="border-purple-500/30"
+                      iconGradient="from-purple-400 to-pink-400"
+                    />
+                  </Parallax>,
+                  
+                  <Parallax key="cognitive-agents" speed={0.2}>
+                    <ResearchCard
+                      icon={Network}
+                      title="Cognitive Agents"
+                      description="Creating intelligent AI systems with advanced decision-making capabilities"
+                      gradient="from-violet-900/50 to-indigo-900/50"
+                      borderColor="border-violet-500/30"
+                      iconGradient="from-violet-400 to-indigo-400"
+                    />
+                  </Parallax>
+                ]}
+              </StaggeredList>
+            </div>
+          </ScrollFadeIn>
         </div>
       </section>
 
@@ -395,69 +372,49 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <InfoCard
-                title="AI Research Dashboard"
-                description="Interactive dashboard for exploring AI research metrics and trends."
-                gradient="from-blue-900/50 to-cyan-900/50"
-                borderColor="border-blue-500/30"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              viewport={{ once: true }}
-            >
-              <InfoCard
-                title="Language Model Comparison"
-                description="Compare different language models across various evaluation metrics."
-                gradient="from-purple-900/50 to-pink-900/50"
-                borderColor="border-purple-500/30"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              viewport={{ once: true }}
-            >
-              <InfoCard
-                title="Privacy Score Calculator"
-                description="Evaluate the privacy implications of AI systems and data processing."
-                gradient="from-violet-900/50 to-indigo-900/50"
-                borderColor="border-violet-500/30"
-              />
-            </motion.div>
+          <ScrollFadeIn delay={0.6} direction="up" distance={50}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <StaggeredList staggerDelay={0.2}>
+                {[
+                  <FloatingElement key="dashboard" amplitude={6} frequency={3.2}>
+                    <InfoCard
+                      title="AI Research Dashboard"
+                      description="Interactive dashboard for exploring AI research metrics and trends."
+                      gradient="from-blue-900/50 to-cyan-900/50"
+                      borderColor="border-blue-500/30"
+                    />
+                  </FloatingElement>,
+                  
+                  <FloatingElement key="comparison" amplitude={8} frequency={2.8}>
+                    <InfoCard
+                      title="Language Model Comparison"
+                      description="Compare different language models across various evaluation metrics."
+                      gradient="from-purple-900/50 to-pink-900/50"
+                      borderColor="border-purple-500/30"
+                    />
+                  </FloatingElement>,
+                  
+                  <FloatingElement key="privacy" amplitude={7} frequency={3.5}>
+                    <InfoCard
+                      title="Privacy Score Calculator"
+                      description="Evaluate the privacy implications of AI systems and data processing."
+                      gradient="from-violet-900/50 to-indigo-900/50"
+                      borderColor="border-violet-500/30"
+                    />
+                  </FloatingElement>,
 
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
-              viewport={{ once: true }}
-            >
-              <InfoCard
-                title="Semantic Search Tool"
-                description="Advanced semantic search capabilities for research papers and documents."
-                gradient="from-indigo-900/50 to-blue-900/50"
-                borderColor="border-indigo-500/30"
-              />
-            </motion.div>
-          </motion.div>
+                  <FloatingElement key="search" amplitude={9} frequency={2.6}>
+                    <InfoCard
+                      title="Semantic Search Tool"
+                      description="Advanced semantic search capabilities for research papers and documents."
+                      gradient="from-indigo-900/50 to-blue-900/50"
+                      borderColor="border-indigo-500/30"
+                    />
+                  </FloatingElement>
+                ]}
+              </StaggeredList>
+            </div>
+          </ScrollFadeIn>
         </div>
       </section>
 
@@ -491,61 +448,52 @@ export default function Home() {
             </motion.p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={BookOpen}
-                title="Philosophy of Machine Agency"
-                description="Exploring the philosophical foundations of autonomous AI systems and decision-making."
-                gradient="from-blue-900/50 to-cyan-900/50"
-                borderColor="border-blue-500/30"
-                iconGradient="from-blue-400 to-cyan-400"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Shield}
-                title="AI & Human Dignity"
-                description="Examining how AI systems can respect and enhance human dignity in their operations."
-                gradient="from-purple-900/50 to-pink-900/50"
-                borderColor="border-purple-500/30"
-                iconGradient="from-purple-400 to-pink-400"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Scale}
-                title="Epistemic Risks in AI"
-                description="Understanding and mitigating knowledge-related risks in artificial intelligence systems."
-                gradient="from-violet-900/50 to-indigo-900/50"
-                borderColor="border-violet-500/30"
-                iconGradient="from-violet-400 to-indigo-400"
-              />
-            </motion.div>
-          </motion.div>
+          <ScrollFadeIn delay={0.6} direction="up" distance={50}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <StaggeredList staggerDelay={0.25}>
+                {[
+                  <Parallax key="philosophy" speed={0.2}>
+                    <FloatingElement amplitude={5} frequency={4}>
+                      <ResearchCard
+                        icon={BookOpen}
+                        title="Philosophy of Machine Agency"
+                        description="Exploring the philosophical foundations of autonomous AI systems and decision-making."
+                        gradient="from-blue-900/50 to-cyan-900/50"
+                        borderColor="border-blue-500/30"
+                        iconGradient="from-blue-400 to-cyan-400"
+                      />
+                    </FloatingElement>
+                  </Parallax>,
+                  
+                  <Parallax key="dignity" speed={0.35}>
+                    <FloatingElement amplitude={7} frequency={3.5}>
+                      <ResearchCard
+                        icon={Shield}
+                        title="AI & Human Dignity"
+                        description="Examining how AI systems can respect and enhance human dignity in their operations."
+                        gradient="from-purple-900/50 to-pink-900/50"
+                        borderColor="border-purple-500/30"
+                        iconGradient="from-purple-400 to-pink-400"
+                      />
+                    </FloatingElement>
+                  </Parallax>,
+                  
+                  <Parallax key="epistemic" speed={0.15}>
+                    <FloatingElement amplitude={6} frequency={3.8}>
+                      <ResearchCard
+                        icon={Scale}
+                        title="Epistemic Risks in AI"
+                        description="Understanding and mitigating knowledge-related risks in artificial intelligence systems."
+                        gradient="from-violet-900/50 to-indigo-900/50"
+                        borderColor="border-violet-500/30"
+                        iconGradient="from-violet-400 to-indigo-400"
+                      />
+                    </FloatingElement>
+                  </Parallax>
+                ]}
+              </StaggeredList>
+            </div>
+          </ScrollFadeIn>
         </div>
       </section>
     </div>

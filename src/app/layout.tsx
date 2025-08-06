@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     default: "TraceRemove — AI Reputation Firewall",
     template: "%s | TraceRemove"
   },
-  description: "Удаление негативных ссылок, управление репутацией, AI-система мониторинга и защиты бренда. Профессиональные услуги ORM, деиндексация, правовая поддержка.",
+  description: "Negative link removal, reputation management, AI monitoring and brand protection system. Professional ORM services, deindexing, legal support.",
   keywords: [
-    "управление репутацией", "удаление негативных ссылок", "ORM", "деиндексация", "защита бренда", 
-    "мониторинг репутации", "AI инструменты", "правовая поддержка", "онлайн репутация", 
-    "негативные отзывы", "SEO репутация", "кризис-менеджмент", "репутационный аудит", 
-    "TraceRemove", "трейсремув", "удаление из поиска", "право на забвение", "GDPR",
-    "репутационные риски", "бренд-мониторинг", "цифровая репутация", "интернет репутация"
+    "reputation management", "negative link removal", "ORM", "deindexing", "brand protection", 
+    "reputation monitoring", "AI tools", "legal support", "online reputation", 
+    "negative reviews", "SEO reputation", "crisis management", "reputation audit", 
+    "TraceRemove", "search removal", "right to be forgotten", "GDPR",
+    "reputation risks", "brand monitoring", "digital reputation", "internet reputation"
   ],
   authors: [{ name: "TraceRemove Team", url: "https://traceremove.com/about" }],
   creator: "TraceRemove",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     url: "https://traceremove.com",
     siteName: "TraceRemove",
     title: "TraceRemove — AI Reputation Firewall",
-    description: "Профессиональное управление репутацией: удаление негативных ссылок, деиндексация, мониторинг бренда с использованием AI-технологий.",
+    description: "Professional reputation management: negative link removal, deindexing, brand monitoring using AI technologies.",
     images: [
       {
         url: "/og-image.png",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TraceRemove — AI Reputation Firewall",
-    description: "Профессиональное управление репутацией и защита бренда с использованием AI-технологий.",
+    description: "Professional reputation management and brand protection using AI technologies.",
     images: ["/twitter-image.png"],
     creator: "@traceremove",
     site: "@traceremove",
@@ -138,7 +138,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "TraceRemove",
               "alternateName": "TraceRemove — AI Reputation Firewall",
-              "description": "Профессиональные услуги управления репутацией: удаление негативных ссылок, деиндексация, мониторинг бренда с использованием AI-технологий.",
+              "description": "Professional reputation management services: negative link removal, deindexing, brand monitoring using AI technologies.",
               "url": "https://traceremove.com",
               "logo": "https://traceremove.com/logo.png",
               "image": "https://traceremove.com/og-image.png",
@@ -180,15 +180,15 @@ export default function RootLayout({
                     "itemOffered": {
                       "@type": "Service",
                       "name": "ORM - Online Reputation Management",
-                      "description": "Комплексное управление онлайн репутацией"
+                      "description": "Comprehensive online reputation management"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Deindex - Удаление из поиска",
-                      "description": "Деиндексация негативных материалов из поисковых систем"
+                      "name": "Deindex - Search Removal",
+                      "description": "Deindexing negative materials from search engines"
                     }
                   },
                   {
@@ -196,7 +196,7 @@ export default function RootLayout({
                     "itemOffered": {
                       "@type": "Service",
                       "name": "Legal Support",
-                      "description": "Правовая поддержка по вопросам репутации"
+                      "description": "Legal support for reputation issues"
                     }
                   },
                   {
@@ -204,7 +204,7 @@ export default function RootLayout({
                     "itemOffered": {
                       "@type": "Service",
                       "name": "Monitoring",
-                      "description": "Мониторинг репутации и бренда в интернете"
+                      "description": "Reputation and brand monitoring on the internet"
                     }
                   },
                   {
@@ -212,7 +212,7 @@ export default function RootLayout({
                     "itemOffered": {
                       "@type": "Service",
                       "name": "AI Tools",
-                      "description": "AI-инструменты для управления репутацией"
+                      "description": "AI tools for reputation management"
                     }
                   }
                 ]
@@ -225,9 +225,11 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
       >
         <BackgroundProvider>
+          <VantaBackground variant="hero" />
+          <DynamicLabBackground intensity="high" />
           <Navigation />
           <Breadcrumb />
-          <main className="relative pt-24 pb-16 min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+          <main className="relative pt-24 pb-16 z-20 min-h-screen">
             <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
               {children}
             </div>

@@ -25,25 +25,27 @@ export default function FeatureCard({
 }: FeatureCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95, rotateX: -8 }}
+      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
       whileHover={{ 
-        scale: 1.02, 
-        y: -8,
-        rotateX: 5,
-        rotateY: 5
+        scale: 1.04, 
+        y: -12,
+        rotateX: 6,
+        rotateY: 4,
+        rotateZ: 0.5
       }}
+      whileTap={{ scale: 0.98, y: -3 }}
       transition={{ 
-        duration: 0.4,
+        duration: 0.6,
         type: "spring",
-        stiffness: 300,
-        damping: 20
+        stiffness: 280,
+        damping: 18
       }}
-      className={`relative group cursor-pointer ${className}`}
+      className={`relative group cursor-pointer card-hover-float magnetic-hover gpu-accelerated ${className}`}
       style={{ perspective: '1000px' }}
     >
       {/* Multi-layered Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent rounded-3xl backdrop-blur-xl border border-white/10 shadow-2xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent rounded-3xl backdrop-blur-xl border border-white/10 shadow-2xl morph-glow"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/20 via-accent-lab-purple/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/5 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
       
@@ -95,10 +97,11 @@ export default function FeatureCard({
 
         {/* Enhanced Typography */}
         <motion.h3 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-2xl font-bold text-white mb-4 typography-premium tracking-tight"
+          initial={{ opacity: 0, y: 15, rotateX: -8 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          whileHover={{ scale: 1.02, y: -1 }}
+          transition={{ delay: 0.2, duration: 0.6, type: "spring", stiffness: 200 }}
+          className="text-2xl font-bold text-white mb-4 typography-premium tracking-tight text-shine"
         >
           {title}
         </motion.h3>

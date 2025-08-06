@@ -1,0 +1,7 @@
+[
+  { "dimension": "Technical Risk", "score": 0.7, "mitigation": 0.85 },
+  { "dimension": "Operational Risk", "score": 0.6, "mitigation": 0.78 },
+  { "dimension": "Ethical Risk", "score": 0.8, "mitigation": 0.72 },
+  { "dimension": "Legal Risk", "score": 0.65, "mitigation": 0.88 },
+  { "dimension": "Reputational Risk", "score": 0.75, "mitigation": 0.82 }
+]

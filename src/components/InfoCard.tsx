@@ -23,25 +23,27 @@ export default function InfoCard({
 }: InfoCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.9, rotateX: -15, y: 50 }}
+      animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
       whileHover={{ 
-        scale: 1.01, 
-        y: -6,
-        rotateX: 1,
-        rotateY: 1
+        scale: 1.05, 
+        y: -15,
+        rotateX: 3,
+        rotateY: 5,
+        rotateZ: 1
       }}
+      whileTap={{ scale: 0.98, rotateX: -2 }}
       transition={{ 
-        duration: 0.6,
+        duration: 0.8,
         type: "spring",
-        stiffness: 150,
-        damping: 20
+        stiffness: 200,
+        damping: 15
       }}
-      className={`relative group cursor-pointer ${className}`}
+      className={`relative group cursor-pointer card-hover-float magnetic-hover gpu-accelerated ${className}`}
       style={{ perspective: '1500px' }}
     >
       {/* Sophisticated Background Layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.15] via-white/[0.10] to-white/[0.05] rounded-4xl backdrop-blur-3xl border border-white/25 shadow-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.15] via-white/[0.10] to-white/[0.05] rounded-4xl backdrop-blur-3xl border border-white/25 shadow-3xl morph-glow"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/25 via-accent-lab-purple/15 to-transparent rounded-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-800"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/8 to-accent-lab-purple/15 rounded-4xl blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-600"></div>
       
@@ -90,10 +92,11 @@ export default function InfoCard({
 
             {/* Enhanced Info Typography */}
             <motion.h2 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-4xl lg:text-5xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight"
+              initial={{ opacity: 0, x: -30, rotateY: -15 }}
+              animate={{ opacity: 1, x: 0, rotateY: 0 }}
+              whileHover={{ scale: 1.02, x: 5 }}
+              transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 200 }}
+              className="text-4xl lg:text-5xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight text-shine"
             >
               {title}
             </motion.h2>

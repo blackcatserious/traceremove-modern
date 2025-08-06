@@ -116,27 +116,65 @@ export default function FloatingNavigation() {
     closed: {
       x: '-100%',
       opacity: 0,
+      scale: 0.95,
+      rotateY: -15,
+      filter: 'blur(8px)',
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 400,
-        damping: 40
+        damping: 40,
+        staggerChildren: 0.05,
+        staggerDirection: -1
       }
     },
     open: {
       x: 0,
       opacity: 1,
+      scale: 1,
+      rotateY: 0,
+      filter: 'blur(0px)',
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 400,
-        damping: 40
+        damping: 40,
+        staggerChildren: 0.08,
+        delayChildren: 0.1
       }
     }
   } as const;
 
   const itemVariants = {
-    closed: { x: -20, opacity: 0 },
-    open: { x: 0, opacity: 1 }
-  };
+    closed: { 
+      x: -30, 
+      opacity: 0, 
+      scale: 0.9,
+      rotateX: -10,
+      filter: 'blur(4px)'
+    },
+    open: { 
+      x: 0, 
+      opacity: 1, 
+      scale: 1,
+      rotateX: 0,
+      filter: 'blur(0px)',
+      transition: {
+        type: 'spring' as const,
+        stiffness: 300,
+        damping: 20
+      }
+    },
+    hover: {
+      scale: 1.05,
+      x: 8,
+      rotateY: 2,
+      boxShadow: '0 8px 25px rgba(124, 58, 237, 0.3), 0 4px 12px rgba(139, 92, 246, 0.2)',
+      transition: {
+        type: 'spring' as const,
+        stiffness: 400,
+        damping: 15
+      }
+    }
+  } as const;
 
   const containerVariants = {
     closed: {},
@@ -168,11 +206,22 @@ export default function FloatingNavigation() {
           fontFamily: 'var(--font-inter)'
         }}
         whileHover={{ 
-          scale: 1.08,
-          rotate: isOpen ? 0 : 5,
-          boxShadow: '0 30px 60px rgba(124, 58, 237, 0.4), 0 15px 30px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25)'
+          scale: 1.15,
+          rotate: isOpen ? 0 : 12,
+          rotateY: 8,
+          y: -4,
+          boxShadow: '0 40px 80px rgba(124, 58, 237, 0.6), 0 25px 50px rgba(139, 92, 246, 0.5), inset 0 3px 0 rgba(255, 255, 255, 0.4)'
         }}
-        whileTap={{ scale: 0.92 }}
+        whileTap={{ 
+          scale: 0.85, 
+          rotateX: -8,
+          rotateY: 0
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 600,
+          damping: 12
+        }}
       >
         <motion.div
           animate={{ 
@@ -246,9 +295,12 @@ export default function FloatingNavigation() {
                 <motion.div key={item.label} variants={itemVariants}>
                   <div className="relative">
                     {item.children ? (
-                      <button
+                      <motion.button
                         onClick={() => toggleExpanded(item.label)}
-                        className="w-full flex items-center justify-between p-4 rounded-xl text-white/90 hover:text-white transition-all duration-500 group hover:bg-white/8 hover:backdrop-blur-sm"
+                        variants={itemVariants}
+                        whileHover="hover"
+                        whileTap={{ scale: 0.98, rotateX: -2 }}
+                        className="w-full flex items-center justify-between p-4 rounded-xl text-white/90 hover:text-white transition-all duration-500 group hover:bg-white/8 hover:backdrop-blur-sm magnetic-hover"
                         style={{
                           background: expandedItems.includes(item.label) 
                             ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%)'
@@ -256,8 +308,22 @@ export default function FloatingNavigation() {
                         }}
                       >
                         <div className="flex items-center space-x-3">
-                          <item.icon className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
-                          <span className="font-semibold text-lg tracking-wide">{item.label}</span>
+                          <motion.div
+                            whileHover={{ 
+                              scale: 1.2, 
+                              rotate: [0, -5, 5, 0],
+                              filter: 'drop-shadow(0 0 8px rgba(124, 58, 237, 0.6))'
+                            }}
+                            transition={{ duration: 0.4 }}
+                          >
+                            <item.icon className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
+                          </motion.div>
+                          <motion.span 
+                            className="font-semibold text-lg tracking-wide text-shine"
+                            whileHover={{ x: 3 }}
+                          >
+                            {item.label}
+                          </motion.span>
                         </div>
                         <motion.div
                           animate={{ rotate: expandedItems.includes(item.label) ? 180 : 0 }}
@@ -265,24 +331,31 @@ export default function FloatingNavigation() {
                         >
                           <ChevronDown className="w-4 h-4 text-white/60" />
                         </motion.div>
-                      </button>
+                      </motion.button>
                     ) : (
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center space-x-3 p-4 rounded-xl transition-all duration-500 group ${
-                          pathname === item.href
-                            ? 'bg-gradient-to-r from-purple-600/40 to-blue-600/30 text-white border border-purple-400/40 shadow-lg shadow-purple-500/20'
-                            : 'text-white/90 hover:text-white hover:bg-white/8 hover:backdrop-blur-sm hover:shadow-md hover:shadow-purple-500/10'
-                        }`}
+                      <motion.div
+                        variants={itemVariants}
+                        whileHover="hover"
+                        whileTap={{ scale: 0.98, rotateX: -2 }}
+                        className="magnetic-hover"
                       >
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          className={`flex items-center space-x-3 p-4 rounded-xl transition-all duration-500 group ${
+                            pathname === item.href
+                              ? 'bg-gradient-to-r from-purple-600/40 to-blue-600/30 text-white border border-purple-400/40 shadow-lg shadow-purple-500/20'
+                              : 'text-white/90 hover:text-white hover:bg-white/8 hover:backdrop-blur-sm hover:shadow-md hover:shadow-purple-500/10'
+                          }`}
+                        >
                         <item.icon className={`w-5 h-5 transition-colors ${
                           pathname === item.href 
                             ? 'text-purple-300' 
                             : 'text-purple-400 group-hover:text-purple-300'
                         }`} />
-                        <span className="font-medium text-lg">{item.label}</span>
-                      </Link>
+                          <span className="font-medium text-lg">{item.label}</span>
+                        </Link>
+                      </motion.div>
                     )}
 
                     {/* Submenu */}
@@ -295,24 +368,51 @@ export default function FloatingNavigation() {
                           transition={{ duration: 0.3 }}
                           className="ml-8 mt-2 space-y-1 overflow-hidden"
                         >
-                          {item.children.map((child) => (
-                            <Link
+                          {item.children.map((child, childIndex) => (
+                            <motion.div
                               key={child.href}
-                              href={child.href}
-                              onClick={() => setIsOpen(false)}
-                              className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 group ${
-                                pathname === child.href
-                                  ? 'bg-gradient-to-r from-purple-600/20 to-blue-600/10 text-white border-l-2 border-purple-400'
-                                  : 'text-white/70 hover:text-white hover:bg-white/5'
-                              }`}
+                              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                              animate={{ opacity: 1, x: 0, scale: 1 }}
+                              transition={{ delay: childIndex * 0.05 }}
+                              whileHover={{ 
+                                scale: 1.02, 
+                                x: 5,
+                                boxShadow: '0 4px 12px rgba(124, 58, 237, 0.2)'
+                              }}
+                              whileTap={{ scale: 0.98 }}
+                              className="magnetic-hover"
                             >
-                              <child.icon className={`w-4 h-4 transition-colors ${
-                                pathname === child.href 
-                                  ? 'text-purple-300' 
-                                  : 'text-purple-400/70 group-hover:text-purple-300'
-                              }`} />
-                              <span className="font-medium">{child.label}</span>
-                            </Link>
+                              <Link
+                                href={child.href}
+                                onClick={() => setIsOpen(false)}
+                                className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 group ${
+                                  pathname === child.href
+                                    ? 'bg-gradient-to-r from-purple-600/20 to-blue-600/10 text-white border-l-2 border-purple-400'
+                                    : 'text-white/70 hover:text-white hover:bg-white/5'
+                                }`}
+                              >
+                                <motion.div
+                                  whileHover={{ 
+                                    scale: 1.15, 
+                                    rotate: 360,
+                                    filter: 'drop-shadow(0 0 6px rgba(139, 92, 246, 0.5))'
+                                  }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <child.icon className={`w-4 h-4 transition-colors ${
+                                    pathname === child.href 
+                                      ? 'text-purple-300' 
+                                      : 'text-purple-400/70 group-hover:text-purple-300'
+                                  }`} />
+                                </motion.div>
+                                <motion.span 
+                                  className="font-medium"
+                                  whileHover={{ x: 2 }}
+                                >
+                                  {child.label}
+                                </motion.span>
+                              </Link>
+                            </motion.div>
                           ))}
                         </motion.div>
                       )}

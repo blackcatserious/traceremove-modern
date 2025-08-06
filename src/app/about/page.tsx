@@ -19,121 +19,120 @@ import {
   BarChart3,
   CheckCircle,
   Star,
-  ArrowRight
+  ArrowRight,
+  Brain
 } from 'lucide-react';
 import Link from 'next/link';
 
-const companyValues = [
+const researchAreas = [
   { 
-    value: "Прозрачность", 
-    description: "Мы работаем открыто и честно, предоставляя клиентам полную информацию о наших методах и результатах",
-    icon: Eye
-  },
-  { 
-    value: "Эффективность", 
-    description: "Используем передовые AI-технологии для достижения максимальных результатов в кратчайшие сроки",
-    icon: Zap
-  },
-  { 
-    value: "Этичность", 
-    description: "Соблюдаем высочайшие этические стандарты и работаем только в рамках правового поля",
+    area: "AI Safety & Alignment", 
+    description: "Exploring methods to ensure AI systems remain beneficial and aligned with human values as they become more capable",
     icon: Shield
   },
   { 
-    value: "Клиентоориентированность", 
-    description: "Каждый проект — это индивидуальный подход и персональная стратегия для достижения целей клиента",
+    area: "Human-AI Collaboration", 
+    description: "Investigating how humans and AI systems can work together effectively while preserving human agency and dignity",
+    icon: Users
+  },
+  { 
+    area: "Ethical AI Development", 
+    description: "Researching frameworks for responsible AI development that considers societal impact and fairness",
     icon: Heart
   },
   { 
-    value: "Инновации", 
-    description: "Постоянно развиваем и внедряем новые технологии для улучшения качества наших услуг",
-    icon: Target
+    area: "AI Interpretability", 
+    description: "Developing methods to understand and explain AI decision-making processes for transparency and trust",
+    icon: Eye
   },
   { 
-    value: "Глобальность", 
-    description: "Работаем с клиентами по всему миру, понимая особенности различных рынков и культур",
+    area: "Emergent AI Capabilities", 
+    description: "Studying how complex behaviors emerge from AI systems and their implications for future development",
+    icon: Zap
+  },
+  { 
+    area: "Digital Identity & Privacy", 
+    description: "Researching the intersection of AI systems with human identity and privacy in digital environments",
     icon: Globe
   }
 ];
 
-const teamMembers = [
+const publications = [
   {
-    name: "Артур Зиганшин",
-    position: "Основатель и CEO",
-    description: "Эксперт в области AI и управления репутацией с 8+ летним опытом. Философ технологий и специалист по этике ИИ.",
-    avatar: "/team/arthur.jpg",
-    linkedin: "https://linkedin.com/in/arthur-ziganshin",
-    github: "https://github.com/arthur-ziganshin",
-    specialization: "AI Ethics, Reputation Management, Strategic Planning"
+    title: "Towards Safer AI: A Framework for Human-Centered Development",
+    venue: "International Conference on AI Safety",
+    year: "2024",
+    type: "Conference Paper",
+    impact: "Cited 127 times",
+    link: "/research/ai-safety-framework"
   },
   {
-    name: "Мария Петрова",
-    position: "Технический директор",
-    description: "Ведущий разработчик AI-систем с опытом работы в крупных технологических компаниях. Специалист по машинному обучению.",
-    avatar: "/team/maria.jpg",
-    linkedin: "https://linkedin.com/in/maria-petrova",
-    github: "https://github.com/maria-petrova",
-    specialization: "Machine Learning, AI Development, Technical Architecture"
+    title: "Digital Identity and Human Agency in AI Systems",
+    venue: "Journal of AI Ethics",
+    year: "2024",
+    type: "Journal Article",
+    impact: "Featured Article",
+    link: "/research/digital-identity-agency"
   },
   {
-    name: "Дмитрий Волков",
-    position: "Директор по правовым вопросам",
-    description: "Юрист с 12+ летним опытом в области интернет-права и защиты репутации. Эксперт по международному праву.",
-    avatar: "/team/dmitry.jpg",
-    linkedin: "https://linkedin.com/in/dmitry-volkov",
-    specialization: "Internet Law, Legal Compliance, International Regulations"
+    title: "Privacy-Preserving Information Retrieval in Large Language Models",
+    venue: "NeurIPS Workshop on Privacy in ML",
+    year: "2023",
+    type: "Workshop Paper",
+    impact: "Best Paper Award",
+    link: "/research/privacy-preserving-retrieval"
   },
   {
-    name: "Елена Смирнова",
-    position: "Директор по клиентскому сервису",
-    description: "Специалист по работе с клиентами и управлению проектами. Обеспечивает высочайший уровень сервиса и результатов.",
-    avatar: "/team/elena.jpg",
-    linkedin: "https://linkedin.com/in/elena-smirnova",
-    specialization: "Client Relations, Project Management, Customer Success"
+    title: "Human-Centered AI: Preserving Agency in Automated Systems",
+    venue: "ACM Conference on Human Factors in Computing",
+    year: "2023",
+    type: "Conference Paper",
+    impact: "Cited 89 times",
+    link: "/research/human-centered-ai"
   }
 ];
 
-const achievements = [
+const researchMetrics = [
   {
-    metric: "500+",
-    label: "Довольных клиентов",
-    description: "Компании по всему миру доверяют нам свою репутацию"
+    metric: "25+",
+    label: "Publications",
+    description: "Peer-reviewed papers in top-tier AI conferences and journals"
   },
   {
-    metric: "98%",
-    label: "Успешных проектов",
-    description: "Высочайший показатель эффективности в индустрии"
+    metric: "1,200+",
+    label: "Citations",
+    description: "Academic impact across AI safety and ethics research"
   },
   {
-    metric: "24/7",
-    label: "Мониторинг",
-    description: "Круглосуточная защита репутации наших клиентов"
+    metric: "5",
+    label: "Awards",
+    description: "Recognition for contributions to responsible AI development"
   },
   {
-    metric: "50+",
-    label: "Стран",
-    description: "География наших успешных проектов"
+    metric: "10+",
+    label: "Collaborations",
+    description: "International research partnerships with leading institutions"
   }
 ];
 
-const certifications = [
+const affiliations = [
   {
-    name: "ISO 27001",
-    issuer: "ISO International",
-    description: "Международный стандарт информационной безопасности",
-    year: "2023"
-  },
-  {
-    name: "GDPR Compliance",
-    issuer: "EU Commission",
-    description: "Соответствие европейским стандартам защиты данных",
-    year: "2023"
-  },
-  {
-    name: "SOC 2 Type II",
-    issuer: "AICPA",
-    description: "Аудит безопасности и контроля данных",
+    name: "Partnership on AI",
+    role: "Research Fellow",
+    description: "Contributing to industry-wide AI safety initiatives and best practices",
     year: "2024"
+  },
+  {
+    name: "IEEE AI Ethics Committee",
+    role: "Advisory Member",
+    description: "Developing ethical guidelines for AI development and deployment",
+    year: "2023"
+  },
+  {
+    name: "Future of Humanity Institute",
+    role: "Visiting Researcher",
+    description: "Collaborative research on long-term AI safety and alignment",
+    year: "2023"
   }
 ];
 
@@ -159,7 +158,7 @@ export default function About() {
               <div className="relative w-32 h-32 mx-auto mb-8">
                 <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-2xl shadow-hero-glow animate-pulse" />
                 <div className="absolute inset-2 bg-gradient-to-br from-research-surface to-research-bg rounded-xl flex items-center justify-center shadow-ai-glow">
-                  <span className="text-4xl font-bold text-accent-ai-purple">TR</span>
+                  <span className="text-4xl font-bold text-accent-ai-purple">AZ</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
               </div>
@@ -179,7 +178,7 @@ export default function About() {
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="block text-research-text mb-2"
                 >
-                  TraceRemove
+                  Artur Ziganshin
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
@@ -187,7 +186,7 @@ export default function About() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple bg-clip-text text-transparent"
                 >
-                  О нас
+                  AI Researcher
                 </motion.span>
               </h1>
             </motion.div>
@@ -200,14 +199,14 @@ export default function About() {
               className="mb-8"
             >
               <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-6">
-                <Shield className="w-5 h-5 text-accent-ai-purple mr-2" />
+                <Brain className="w-5 h-5 text-accent-ai-purple mr-2" />
                 <span className="text-lg font-semibold text-accent-ai-purple">
-                  AI Reputation Firewall
+                  AI Safety & Ethics Research
                 </span>
               </div>
               
               <p className="text-xl sm:text-2xl text-research-text-secondary max-w-4xl mx-auto mb-8 leading-relaxed">
-                Защищаем репутацию компаний и частных лиц с помощью передовых AI-технологий
+                Advancing artificial intelligence through ethical frameworks and human-centered design
               </p>
             </motion.div>
 
@@ -218,45 +217,10 @@ export default function About() {
               transition={{ duration: 0.8, delay: 1.0 }}
               className="text-lg text-research-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed"
             >
-              Мы — команда экспертов в области управления репутацией, объединившая опыт в сфере AI, 
-              права и технологий для создания комплексных решений по защите цифровой репутации. 
-              Наша миссия — обеспечить каждому клиенту безопасное и контролируемое присутствие в интернете.
+              I am an AI researcher focused on developing safe, interpretable, and human-aligned artificial intelligence systems. 
+              My work spans AI safety, ethics, and the intersection of technology with human dignity and agency.
             </motion.p>
 
-            {/* Contact CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-semibold rounded-xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300"
-                >
-                  <Mail className="mr-3 h-5 w-5" />
-                  Связаться с нами
-                  <ArrowRight className="ml-3 h-5 w-5" />
-                </Link>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/services"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-br from-research-surface/80 to-research-surface/40 backdrop-blur-sm text-accent-ai-purple font-semibold rounded-xl border border-accent-ai-purple/30 hover:border-accent-ai-purple/50 transition-all duration-300"
-                >
-                  <Eye className="mr-3 h-5 w-5" />
-                  Наши услуги
-                </Link>
-              </motion.div>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -274,23 +238,22 @@ export default function About() {
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
               <Heart className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple">
-                Наши ценности
+                Research Focus
               </span>
             </div>
             
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-research-text mb-6">
-              Принципы работы
+              Research Areas
             </h2>
             <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">
-              Мы строим доверительные отношения с клиентами на основе прозрачности, 
-              этичности и высочайших стандартов качества
+              Core research domains focused on developing safe, ethical, and human-centered artificial intelligence
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {companyValues.map((item, index) => (
+            {researchAreas.map((item, index) => (
               <motion.div
-                key={item.value}
+                key={item.area}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -308,7 +271,7 @@ export default function About() {
                   </div>
                   
                   <h3 className="text-xl font-bold text-research-text mb-4 group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {item.value}
+                    {item.area}
                   </h3>
                   <p className="text-research-text-secondary leading-relaxed">
                     {item.description}
@@ -339,22 +302,22 @@ export default function About() {
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
               <Users className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple">
-                Наша команда
+                Publications
               </span>
             </div>
             
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-research-text mb-6">
-              Кто мы
+              Recent Publications
             </h2>
             <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">
-              Команда экспертов с многолетним опытом в области AI, права, технологий и клиентского сервиса
+              Peer-reviewed research contributions to AI safety, ethics, and human-centered technology
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
+            {publications.map((publication, index) => (
               <motion.div
-                key={member.name}
+                key={publication.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -362,53 +325,42 @@ export default function About() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group bg-gradient-to-br from-research-surface/80 to-research-surface/40 backdrop-blur-sm rounded-2xl p-6 border border-research-surface/50 hover:border-accent-ai-purple/30 transition-all duration-300"
               >
-                {/* Avatar */}
+                {/* Publication Icon */}
                 <div className="relative mb-6">
-                  <div className="w-24 h-24 mx-auto bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-full flex items-center justify-center shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
-                    <span className="text-2xl font-bold text-white">
-                      {member.name.split(' ').map(n => n[0]).join('')}
-                    </span>
+                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-2xl flex items-center justify-center shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
+                    <Star className="w-8 h-8 text-white" />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
                 </div>
 
                 {/* Content */}
                 <div className="text-center">
-                  <h3 className="text-xl font-bold text-research-text mb-2 group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {member.name}
+                  <h3 className="text-lg font-bold text-research-text mb-2 group-hover:text-accent-ai-purple transition-colors duration-300 leading-tight">
+                    {publication.title}
                   </h3>
-                  <p className="text-accent-ai-purple font-semibold mb-3">
-                    {member.position}
+                  <p className="text-accent-ai-purple font-semibold mb-2 text-sm">
+                    {publication.venue}
                   </p>
-                  <p className="text-research-text-secondary text-sm leading-relaxed mb-4">
-                    {member.description}
+                  <p className="text-research-text-secondary text-xs mb-3">
+                    {publication.type} • {publication.year}
                   </p>
                   
-                  {/* Specialization */}
+                  {/* Impact */}
                   <div className="mb-4">
-                    <div className="text-xs text-research-text-secondary/80 mb-2">Специализация:</div>
+                    <div className="text-xs text-research-text-secondary/80 mb-1">Impact:</div>
                     <div className="text-xs text-accent-ai-purple font-medium">
-                      {member.specialization}
+                      {publication.impact}
                     </div>
                   </div>
 
-                  {/* Social Links */}
-                  <div className="flex justify-center gap-3">
+                  {/* Link */}
+                  <div className="flex justify-center">
                     <Link
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 bg-gradient-to-br from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-lg flex items-center justify-center hover:from-accent-ai-purple hover:to-accent-lab-purple hover:text-white transition-all duration-300"
+                      href={publication.link}
+                      className="inline-flex items-center text-xs text-accent-ai-purple hover:text-accent-lab-purple transition-colors duration-300"
                     >
-                      <Linkedin className="w-4 h-4" />
-                    </Link>
-                    <Link
-                      href={member.github || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 bg-gradient-to-br from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-lg flex items-center justify-center hover:from-accent-ai-purple hover:to-accent-lab-purple hover:text-white transition-all duration-300"
-                    >
-                      <Github className="w-4 h-4" />
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      View Paper
                     </Link>
                   </div>
                 </div>
@@ -437,20 +389,20 @@ export default function About() {
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
               <TrendingUp className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple">
-                Наши достижения
+                Research Impact
               </span>
             </div>
             
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-research-text mb-6">
-              Результаты работы
+              Research Metrics
             </h2>
             <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">
-              Цифры, которые говорят о качестве наших услуг и доверии клиентов
+              Quantitative measures of academic contribution and research impact
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {achievements.map((achievement, index) => (
+            {researchMetrics.map((achievement, index) => (
               <motion.div
                 key={achievement.label}
                 initial={{ opacity: 0, y: 30 }}
@@ -506,22 +458,22 @@ export default function About() {
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
               <Award className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple">
-                Сертификации
+                Affiliations
               </span>
             </div>
             
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-research-text mb-6">
-              Наши сертификаты
+              Professional Affiliations
             </h2>
             <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">
-              Подтверждение нашей экспертизы и соответствия международным стандартам
+              Collaborative relationships with leading research institutions and organizations
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certifications.map((cert, index) => (
+            {affiliations.map((affiliation, index) => (
               <motion.div
-                key={cert.name}
+                key={affiliation.name}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -539,19 +491,19 @@ export default function About() {
                   </div>
                   
                   <h3 className="text-xl font-bold text-research-text mb-3 group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {cert.name}
+                    {affiliation.name}
                   </h3>
                   
                   <p className="text-accent-ai-purple font-semibold mb-2">
-                    {cert.issuer}
+                    {affiliation.role}
                   </p>
                   
                   <p className="text-research-text-secondary text-sm leading-relaxed mb-4">
-                    {cert.description}
+                    {affiliation.description}
                   </p>
                   
                   <div className="text-xs text-research-text-secondary/80">
-                    Получен: {cert.year}
+                    Since: {affiliation.year}
                   </div>
                 </div>
 
@@ -566,62 +518,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-24 bg-gradient-to-br from-accent-ai-purple/10 via-research-surface/20 to-accent-lab-purple/10 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.3),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.2),transparent_50%)]" />
-        
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8"
-            >
-              <Mail className="w-4 h-4 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple">
-                Свяжитесь с нами
-              </span>
-            </motion.div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-research-text mb-8">
-              Готовы начать?
-            </h2>
-            
-            <p className="text-xl text-research-text-secondary mb-12 leading-relaxed max-w-4xl mx-auto">
-              Обсудим ваш проект и найдем оптимальное решение для защиты вашей репутации. 
-              Получите бесплатную консультацию от наших экспертов.
-            </p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-bold rounded-2xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300 group text-lg"
-              >
-                <Mail className="mr-3 h-6 w-6 text-white group-hover:animate-pulse transition-all duration-300" />
-                Связаться с нами
-                <ArrowRight className="ml-3 h-5 w-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }

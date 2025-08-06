@@ -26,28 +26,28 @@ const socialLinks = [
     name: 'WhatsApp',
     url: 'https://wa.me/79991234567',
     icon: MessageSquare,
-    description: 'Быстрая связь для срочных вопросов',
+    description: 'Quick communication for urgent questions',
     gradient: 'from-green-600 to-green-700'
   },
   {
     name: 'Telegram',
     url: 'https://t.me/traceremove_support',
     icon: Send,
-    description: 'Техническая поддержка и консультации',
+    description: 'Technical support and consultations',
     gradient: 'from-blue-500 to-blue-600'
   },
   {
     name: 'LinkedIn',
     url: 'https://linkedin.com/company/traceremove',
     icon: Linkedin,
-    description: 'Профессиональная сеть и новости компании',
+    description: 'Professional network and company news',
     gradient: 'from-blue-600 to-blue-700'
   },
   {
     name: 'GitHub',
     url: 'https://github.com/traceremove',
     icon: Github,
-    description: 'Open source инструменты и проекты',
+    description: 'Open source tools and projects',
     gradient: 'from-gray-800 to-gray-900'
   }
 ];
@@ -100,23 +100,23 @@ export default function ContactPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Имя обязательно для заполнения';
+      newErrors.name = 'Name is required';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email обязателен для заполнения';
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Введите корректный email адрес';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Тема сообщения обязательна';
+      newErrors.subject = 'Subject is required';
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Сообщение обязательно для заполнения';
+      newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Сообщение должно содержать минимум 10 символов';
+      newErrors.message = 'Message must contain at least 10 characters';
     }
 
     setErrors(newErrors);
@@ -174,7 +174,7 @@ export default function ContactPage() {
             >
               <Mail className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Свяжитесь с нами
+                Contact Us
               </span>
             </motion.div>
 
@@ -191,7 +191,7 @@ export default function ContactPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="block mb-2"
                 >
-                  Свяжитесь
+                  Contact
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
@@ -199,7 +199,7 @@ export default function ContactPage() {
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 bg-clip-text text-transparent"
                 >
-                  с нами
+                  Us
                 </motion.span>
               </h1>
             </motion.div>
@@ -210,8 +210,8 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="section-title text-research-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed"
             >
-              Обсудим ваш проект по управлению репутацией, получите бесплатную консультацию или задайте любые вопросы. 
-              Мы всегда готовы помочь защитить вашу цифровую репутацию и найти оптимальное решение.
+              Let&apos;s discuss your reputation management project, get a free consultation or ask any questions. 
+              We are always ready to help protect your digital reputation and find the optimal solution.
             </motion.p>
           </div>
         </div>
@@ -243,10 +243,10 @@ export default function ContactPage() {
                     >
                       <Send className="w-5 h-5 text-accent-ai-purple mr-2" />
                       <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                        Отправить сообщение
+                        Send Message
                       </span>
                     </motion.div>
-                    <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Отправить сообщение</h2>
+                    <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Send Message</h2>
                   </div>
               
                   {formStatus === 'success' && (
@@ -256,7 +256,7 @@ export default function ContactPage() {
                       className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl flex items-center shadow-soft"
                     >
                       <CheckCircle className="h-6 w-6 text-green-600 mr-4" />
-                      <span className="text-green-800 font-semibold font-ibm-sans">Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.</span>
+                      <span className="text-green-800 font-semibold font-ibm-sans">Message sent successfully! We will contact you shortly.</span>
                     </motion.div>
                   )}
 
@@ -267,7 +267,7 @@ export default function ContactPage() {
                       className="mb-8 p-6 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-2xl flex items-center shadow-soft"
                     >
                       <AlertCircle className="h-6 w-6 text-red-600 mr-4" />
-                      <span className="text-red-800 font-semibold font-ibm-sans">Не удалось отправить сообщение. Попробуйте еще раз или свяжитесь с нами напрямую.</span>
+                      <span className="text-red-800 font-semibold font-ibm-sans">Failed to send message. Please try again or contact us directly.</span>
                     </motion.div>
                   )}
 
@@ -275,7 +275,7 @@ export default function ContactPage() {
                     {/* Service Type Selection */}
                     <div>
                       <label htmlFor="serviceType" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                        Тип услуги
+                        Service Type
                       </label>
                       <select
                         id="serviceType"
@@ -284,20 +284,20 @@ export default function ContactPage() {
                         onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-white/90 backdrop-blur-sm border border-accent-ai-purple/20 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans shadow-lab-card hover:shadow-card-hover"
                       >
-                        <option value="general">Общие вопросы</option>
-                        <option value="audit">Запросить аудит репутации</option>
-                        <option value="orm">Управление репутацией (ORM)</option>
-                        <option value="deindex">Деиндексация контента</option>
-                        <option value="legal">Юридическая поддержка</option>
-                        <option value="monitoring">Мониторинг репутации</option>
-                        <option value="ai-tools">AI инструменты</option>
+                        <option value="general">General Questions</option>
+                        <option value="audit">Request Reputation Audit</option>
+                        <option value="orm">Reputation Management (ORM)</option>
+                        <option value="deindex">Content Deindexing</option>
+                        <option value="legal">Legal Support</option>
+                        <option value="monitoring">Reputation Monitoring</option>
+                        <option value="ai-tools">AI Tools</option>
                       </select>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                       <div>
                         <label htmlFor="name" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                          Имя *
+                          Name *
                         </label>
                         <div className="relative">
                           <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent-ai-purple" />
@@ -310,7 +310,7 @@ export default function ContactPage() {
                             className={`w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans ${
                               errors.name ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
                             }`}
-                            placeholder="Ваше имя"
+                            placeholder="Your name"
                           />
                         </div>
                         {errors.name && (
@@ -345,7 +345,7 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                       <div>
                         <label htmlFor="phone" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                          Телефон
+                          Phone
                         </label>
                         <input
                           type="tel"
@@ -360,7 +360,7 @@ export default function ContactPage() {
 
                       <div>
                         <label htmlFor="company" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                          Компания
+                          Company
                         </label>
                         <input
                           type="text"
@@ -369,14 +369,14 @@ export default function ContactPage() {
                           value={formData.company}
                           onChange={handleInputChange}
                           className="w-full px-4 py-4 bg-white/90 backdrop-blur-sm border border-accent-ai-purple/20 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans shadow-lab-card hover:shadow-card-hover"
-                          placeholder="Название компании"
+                          placeholder="Company name"
                         />
                       </div>
                     </div>
 
                     <div>
                       <label htmlFor="subject" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                        Тема сообщения *
+                        Message Subject *
                       </label>
                       <input
                         type="text"
@@ -387,7 +387,7 @@ export default function ContactPage() {
                         className={`w-full px-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans ${
                           errors.subject ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
                         }`}
-                        placeholder="О чем вы хотели бы поговорить?"
+                        placeholder="What would you like to talk about?"
                       />
                       {errors.subject && (
                         <p className="mt-2 text-sm text-red-600 font-ibm-sans">{errors.subject}</p>
@@ -396,7 +396,7 @@ export default function ContactPage() {
 
                     <div>
                       <label htmlFor="message" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                        Сообщение *
+                        Message *
                       </label>
                       <div className="relative">
                         <MessageSquare className="absolute left-4 top-4 h-5 w-5 text-accent-ai-purple" />
@@ -409,7 +409,7 @@ export default function ContactPage() {
                           className={`w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 resize-none font-ibm-sans ${
                             errors.message ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
                           }`}
-                          placeholder="Расскажите о вашем проекте, проблемах с репутацией или задайте любые вопросы..."
+                          placeholder="Tell us about your project, reputation issues, or ask any questions..."
                         />
                       </div>
                       {errors.message && (
@@ -427,7 +427,7 @@ export default function ContactPage() {
                       iconPosition="left"
                       className="w-full text-lg"
                     >
-                      {formStatus === 'loading' ? 'Отправляем...' : 'Отправить сообщение'}
+                      {formStatus === 'loading' ? 'Sending...' : 'Send Message'}
                     </PremiumButton>
                   </form>
                 </div>
@@ -451,10 +451,10 @@ export default function ContactPage() {
                   >
                     <MapPin className="w-5 h-5 text-accent-ai-purple mr-2" />
                     <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                      Контактная информация
+                      Contact Information
                     </span>
                   </motion.div>
-                  <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Контактная информация</h2>
+                  <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Contact Information</h2>
                 </div>
                 
                 <div className="space-y-6">
@@ -509,16 +509,16 @@ export default function ContactPage() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]" />
                 
                 <div className="relative p-10 text-white">
-                  <h3 className="text-3xl font-bold mb-6 font-ibm-sans">Готовы защитить репутацию?</h3>
+                  <h3 className="text-3xl font-bold mb-6 font-ibm-sans">Ready to Protect Your Reputation?</h3>
                   <p className="text-white/90 leading-relaxed mb-8 text-lg font-ibm-sans">
-                    Мы всегда готовы обсудить вопросы управления репутацией, удаления негативного контента 
-                    и защиты вашего цифрового присутствия. Свяжитесь с нами для получения бесплатной консультации.
+                    We are always ready to discuss reputation management, negative content removal 
+                    and protection of your digital presence. Contact us for a free consultation.
                   </p>
                   <div className="flex flex-wrap gap-4">
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Управление репутацией</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Деиндексация</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Юридическая поддержка</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">AI мониторинг</span>
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Reputation Management</span>
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Deindexing</span>
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Legal Support</span>
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">AI Monitoring</span>
                   </div>
                 </div>
               </motion.div>
@@ -547,13 +547,13 @@ export default function ContactPage() {
             >
               <Globe className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Социальные сети
+                Social Networks
               </span>
             </motion.div>
             
-            <h2 className="text-4xl sm:text-5xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">Мы в социальных сетях</h2>
+            <h2 className="text-4xl sm:text-5xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">Follow Us on Social Media</h2>
             <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Следите за нашими обновлениями, получайте советы по управлению репутацией и связывайтесь с нами через удобные каналы.
+              Follow our updates, get reputation management tips and connect with us through convenient channels.
             </p>
           </motion.div>
 
