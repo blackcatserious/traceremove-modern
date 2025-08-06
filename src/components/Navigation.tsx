@@ -211,7 +211,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="desktop-nav items-center space-x-1">
+          <div className="desktop-nav items-center space-x-1 static-export-visible">
             {navigationItems.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -331,7 +331,7 @@ export default function Navigation() {
               damping: 15
             }}
             onClick={toggleMenu}
-            className="lg:hidden mobile-menu-button relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
+            className="lg:hidden mobile-menu-button static-export-visible relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
