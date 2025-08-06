@@ -101,7 +101,7 @@ const testimonialVariants = {
   visible: { opacity: 1, x: 0 }
 };
 
-const TestimonialCard = ({ testimonial, index }: { testimonial: any, index: number }) => (
+const TestimonialCard = ({ testimonial, index }: { testimonial: { id: string; name: string; position: string; company: string; industry: string; avatar: string; companyLogo: string; text: string; rating: number; results: string[]; gradient: string }, index: number }) => (
   <motion.div
     variants={testimonialVariants}
     whileHover={{ y: -8, scale: 1.02 }}
@@ -125,7 +125,7 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: any, index: numb
       
       {/* Testimonial Text */}
       <blockquote className="relative z-10 text-research-text-secondary text-lg leading-relaxed mb-6">
-        "{testimonial.text}"
+        &ldquo;{testimonial.text}&rdquo;
       </blockquote>
       
       {/* Results */}

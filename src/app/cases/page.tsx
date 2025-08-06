@@ -111,7 +111,7 @@ const caseVariants = {
   visible: { opacity: 1, x: 0 }
 };
 
-const MetricCard = ({ metric, delay }: { metric: any, delay: number }) => (
+const MetricCard = ({ metric, delay }: { metric: { label: string; before: string; after: string; improvement: string }, delay: number }) => (
   <motion.div
     className="bg-gradient-to-br from-research-surface/60 to-research-surface/30 backdrop-blur-sm border border-research-surface/40 rounded-xl p-4"
     initial={{ opacity: 0, y: 20 }}
@@ -234,7 +234,7 @@ export default function CasesPage() {
                     transition={{ duration: 0.6, delay: 0.5 + (index * 0.1) }}
                   >
                     <p className="text-research-text-secondary italic mb-4">
-                      "{caseStudy.testimonial.text}"
+                      &ldquo;{caseStudy.testimonial.text}&rdquo;
                     </p>
                     <div className="flex items-center">
                       <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${caseStudy.gradient} flex items-center justify-center mr-4`}>
