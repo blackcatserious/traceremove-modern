@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://traceremove.com/</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://traceremove.com/about</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Services Page -->
+  <url>
+    <loc>https://traceremove.com/services</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Cases Page -->
+  <url>
+    <loc>https://traceremove.com/cases</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Testimonials Page -->
+  <url>
+    <loc>https://traceremove.com/testimonials</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://traceremove.com/contact</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog Index -->
+  <url>
+    <loc>https://traceremove.com/blog</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Articles -->
+  <url>
+    <loc>https://traceremove.com/reputation-management-fundamentals.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/crisis-management-strategies.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/best-practices-online-reputation.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/brand-monitoring-techniques.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/case-studies-success-stories.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/crisis-communication-protocols.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/customer-review-management.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/digital-marketing-reputation-strategies.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/executive-reputation-protection.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/financial-services-reputation.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/healthcare-reputation-compliance.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/international-reputation-laws.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/legal-updates-international.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/litigation-support-strategies.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/online-reputation-monitoring-tools.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/real-estate-reputation-management.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/reputation-recovery-strategies.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/social-media-reputation-management.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://traceremove.com/startup-reputation-building.php</loc>
+    <lastmod>2025-08-06T10:16:52+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
