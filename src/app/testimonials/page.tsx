@@ -98,14 +98,7 @@ const containerVariants = {
 
 const testimonialVariants = {
   hidden: { opacity: 0, x: -60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut"
-    }
-  }
+  visible: { opacity: 1, x: 0 }
 };
 
 const TestimonialCard = ({ testimonial, index }: { testimonial: any, index: number }) => (

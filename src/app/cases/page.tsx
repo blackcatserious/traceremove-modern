@@ -108,14 +108,7 @@ const containerVariants = {
 
 const caseVariants = {
   hidden: { opacity: 0, x: -50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut"
-    }
-  }
+  visible: { opacity: 1, x: 0 }
 };
 
 const MetricCard = ({ metric, delay }: { metric: any, delay: number }) => (

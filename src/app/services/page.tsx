@@ -95,26 +95,12 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
+  visible: { opacity: 1, y: 0 }
 };
 
 const cardHoverVariants = {
   rest: { scale: 1, y: 0 },
-  hover: { 
-    scale: 1.02, 
-    y: -5,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut"
-    }
-  }
+  hover: { scale: 1.02, y: -5 }
 };
 
 export default function ServicesPage() {
