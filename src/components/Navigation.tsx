@@ -320,14 +320,10 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <motion.button
             whileHover={{ 
-              scale: 1.12,
-              rotateY: 5,
-              y: -2,
-              boxShadow: "0 15px 30px rgba(124, 58, 237, 0.3), 0 8px 16px rgba(139, 92, 246, 0.2)"
+              scale: 1.12
             }}
             whileTap={{ 
-              scale: 0.88,
-              rotateX: -5
+              scale: 0.88
             }}
             transition={{
               type: "spring",
@@ -368,9 +364,9 @@ export default function Navigation() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0, y: -20 }}
-            animate={{ opacity: 1, height: 'auto', y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -20 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className={`mobile-menu-premium lg:hidden ${isOpen ? 'open' : ''}`}
           >
