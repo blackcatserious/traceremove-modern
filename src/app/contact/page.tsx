@@ -28,7 +28,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">        
+      <section className="relative py-16 overflow-hidden">        
         <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -73,13 +73,13 @@ export default function ContactPage() {
       </section>
 
       {/* Social Links */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="glass-card-premium p-8 text-center"
+            className="glass-card-premium p-6 text-center"
           >
             <h2 className="text-4xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">Research Network</h2>
             <p className="text-research-text-secondary mb-8 text-lg font-ibm-sans">
@@ -119,7 +119,7 @@ export default function ContactPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-deep-blue">
+      <section className="py-12 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-deep-blue">
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

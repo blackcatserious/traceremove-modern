@@ -398,26 +398,27 @@ main {
               border-color 0.3s ease;
 }
 
-/* Force navigation to be visible above background */
+/* Fix navigation visibility - remove background and fix positioning */
 nav.nav-premium {
   position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   z-index: 50 !important;
   display: block !important;
-  background: rgba(15, 23, 42, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* Remove background and backdrop-filter as requested by user */
 }
 
-/* Ensure sections are visible with glassmorphic styling */
+/* Ensure sections are visible with glassmorphic styling - reduce z-index */
 section {
   position: relative !important;
-  z-index: 21 !important;
+  z-index: 10 !important; /* Reduced from 21 to prevent navigation conflicts */
   background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(12px) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 24px !important;
   margin: 2rem 0 !important;
-  padding: 2rem !important;
+  padding: 1.5rem !important; /* Reduced from 2rem */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -428,14 +429,14 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Premium Glass Card System - Consolidated */
+/* Premium Glass Card System - Reduced padding */
 .glass-card-premium {
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
-  padding: 2rem;
+  padding: 1.5rem; /* Reduced from 2rem */
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.2),
@@ -546,9 +547,9 @@ footer {
   color: rgba(124, 58, 237, 1) !important;
 }
 
-/* Desktop Navigation Styling */
+/* Desktop Navigation Styling - Fix display conflicts */
 .desktop-nav {
-  display: none;
+  display: flex !important; /* Always show desktop nav, let media queries handle responsive behavior */
 }
 
 @media (min-width: 1024px) {
@@ -572,7 +573,7 @@ footer {
   }
 }
 
-/* Responsive Design */
+/* Responsive Design - Reduced padding */
 @media (max-width: 768px) {
   .section-title {
     font-size: 2rem;
@@ -580,28 +581,43 @@ footer {
   
   section {
     margin: 1rem 0 !important;
-    padding: 1.5rem !important;
+    padding: 1rem !important; /* Reduced from 1.5rem */
   }
   
   .glass-card-premium {
-    padding: 1.5rem;
+    padding: 1rem; /* Reduced from 1.5rem */
   }
 }
 
-/* Fix for Next.js static export adding offscreen attributes - targeted approach */
-[offscreen] {
+/* Fix for Next.js static export adding offscreen attributes - most aggressive approach */
+[offscreen],
+*[offscreen] {
   clip: auto !important;
   width: auto !important;
   height: auto !important;
   overflow: visible !important;
   visibility: visible !important;
   opacity: 1 !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  display: block !important;
+  margin: 0 !important;
 }
 
-/* Navigation-specific offscreen fixes - preserve positioning but ensure visibility */
+/* Navigation-specific offscreen fixes - most aggressive approach */
 nav[offscreen], 
+nav[offscreen] *,
 nav[offscreen] a,
 nav[offscreen] button,
+nav[offscreen] div,
+nav[offscreen] svg,
+nav *[offscreen],
+nav a[offscreen],
+nav button[offscreen],
+nav div[offscreen],
+nav svg[offscreen],
 .desktop-nav[offscreen],
 .mobile-menu-button[offscreen],
 .mobile-menu-premium[offscreen] {
@@ -612,12 +628,30 @@ nav[offscreen] button,
   visibility: visible !important;
   opacity: 1 !important;
   pointer-events: auto !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* Ensure navigation maintains proper z-index hierarchy */
+/* Force navigation to be visible regardless of any attributes */
+nav, nav *, nav a, nav button, nav div, nav svg {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+nav .desktop-nav {
+  display: flex !important;
+}
+
+/* Ensure navigation maintains proper z-index hierarchy - remove conflicting position rule */
 nav {
   z-index: 50 !important;
-  position: relative !important;
+  /* Remove position: relative that conflicts with fixed positioning */
 }
 
 nav .desktop-nav {
