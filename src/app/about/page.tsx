@@ -146,7 +146,7 @@ export default function About() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)]" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="text-center">
             {/* Company Logo */}
             <motion.div
@@ -227,7 +227,7 @@ export default function About() {
 
       {/* Company Values Section */}
       <section className="py-24 bg-gradient-to-br from-research-surface/30 to-research-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -291,7 +291,7 @@ export default function About() {
 
       {/* Team Section */}
       <section className="py-24 bg-gradient-to-br from-research-surface/20 to-research-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -378,7 +378,7 @@ export default function About() {
 
       {/* Achievements Section */}
       <section className="py-24 bg-gradient-to-br from-research-surface/40 to-research-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -447,7 +447,7 @@ export default function About() {
 
       {/* Certifications Section */}
       <section className="py-24 bg-gradient-to-br from-research-surface/30 to-research-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

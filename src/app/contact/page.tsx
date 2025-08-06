@@ -29,7 +29,7 @@ export default function ContactPage() {
     <div className="min-h-screen relative">
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -120,7 +120,7 @@ export default function ContactPage() {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-deep-blue">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

@@ -242,7 +242,7 @@ export default function ArticlesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)] z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)] z-10" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
+        <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="text-center">
             {/* Badge */}
             <motion.div
@@ -298,7 +298,7 @@ export default function ArticlesPage() {
 
       {/* Search and Filters */}
       <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -348,7 +348,7 @@ export default function ArticlesPage() {
       {/* Featured Articles */}
       {featuredArticles.length > 0 && (
         <section className="py-16 bg-gradient-to-br from-accent-ai-purple/5 via-research-50 to-accent-lab-purple/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -466,7 +466,7 @@ export default function ArticlesPage() {
 
       {/* All Articles */}
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -182,7 +182,7 @@ export default function CasesPage() {
         initial="hidden"
         animate="visible"
       >
-        <div className="max-w-7xl mx-auto space-y-20">
+        <div className="w-full mx-auto space-y-20">
           {caseStudies.map((caseStudy, index) => (
             <motion.div
               key={caseStudy.id}
