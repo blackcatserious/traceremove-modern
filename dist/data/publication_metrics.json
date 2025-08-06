@@ -1,0 +1,51 @@
+{
+  "timeline": [
+    {
+      "year": "2020",
+      "publications": 2,
+      "citations": 15,
+      "collaborations": 3
+    },
+    {
+      "year": "2021", 
+      "publications": 4,
+      "citations": 32,
+      "collaborations": 8
+    },
+    {
+      "year": "2022",
+      "publications": 7,
+      "citations": 58,
+      "collaborations": 12
+    },
+    {
+      "year": "2023",
+      "publications": 10,
+      "citations": 89,
+      "collaborations": 18
+    },
+    {
+      "year": "2024",
+      "publications": 13,
+      "citations": 125,
+      "collaborations": 22
+    },
+    {
+      "year": "2025",
+      "publications": 15,
+      "citations": 150,
+      "collaborations": 25
+    }
+  ],
+  "research_areas": {
+    "ai_ethics": 40,
+    "privacy_tech": 30,
+    "philosophy": 30
+  },
+  "impact_metrics": {
+    "total_citations": 150,
+    "h_index": 8,
+    "total_collaborations": 25,
+    "international_projects": 12
+  }
+}

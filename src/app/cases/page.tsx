@@ -7,89 +7,89 @@ import { TrendingUp, Users, Shield, Clock, ArrowRight, CheckCircle, BarChart3 } 
 const caseStudies = [
   {
     id: 'tech-startup',
-    title: 'IT-стартап',
-    category: 'Технологии',
-    challenge: 'Негативные отзывы о продукте в первые дни запуска',
-    solution: 'Комплексная ORM-стратегия с мониторингом и быстрым реагированием',
+    title: 'IT Startup',
+    category: 'Technology',
+    challenge: 'Negative product reviews in the first days of launch',
+    solution: 'Comprehensive ORM strategy with monitoring and rapid response',
     results: {
-      timeframe: '3 месяца',
+      timeframe: '3 months',
       metrics: [
-        { label: 'Негативные упоминания', before: '85%', after: '12%', improvement: '-73%' },
-        { label: 'Позитивные отзывы', before: '15%', after: '78%', improvement: '+63%' },
-        { label: 'Органический трафик', before: '2.3K', after: '15.7K', improvement: '+582%' },
-        { label: 'Конверсия', before: '1.2%', after: '4.8%', improvement: '+300%' }
+        { label: 'Negative mentions', before: '85%', after: '12%', improvement: '-73%' },
+        { label: 'Positive reviews', before: '15%', after: '78%', improvement: '+63%' },
+        { label: 'Organic traffic', before: '2.3K', after: '15.7K', improvement: '+582%' },
+        { label: 'Conversion', before: '1.2%', after: '4.8%', improvement: '+300%' }
       ]
     },
     testimonial: {
-      text: "TraceRemove помогли нам превратить репутационный кризис в возможность для роста. Профессиональный подход и быстрые результаты.",
-      author: "Алексей Петров",
+      text: "TraceRemove helped us turn a reputation crisis into an opportunity for growth. Professional approach and fast results.",
+      author: "Alex Petrov",
       position: "CEO, TechStart"
     },
     gradient: 'from-blue-600 to-purple-600'
   },
   {
     id: 'restaurant-chain',
-    title: 'Сеть ресторанов',
+    title: 'Restaurant Chain',
     category: 'HoReCa',
-    challenge: 'Массовые негативные отзывы после инцидента с качеством еды',
-    solution: 'Кризис-менеджмент, работа с отзывами, правовая поддержка',
+    challenge: 'Mass negative reviews after food quality incident',
+    solution: 'Crisis management, review management, legal support',
     results: {
-      timeframe: '6 месяцев',
+      timeframe: '6 months',
       metrics: [
-        { label: 'Рейтинг в Google', before: '2.1', after: '4.6', improvement: '+119%' },
-        { label: 'Негативные отзывы', before: '78%', after: '8%', improvement: '-70%' },
-        { label: 'Посещаемость', before: '-45%', after: '+23%', improvement: '+68%' },
-        { label: 'Выручка', before: '-38%', after: '+15%', improvement: '+53%' }
+        { label: 'Google Rating', before: '2.1', after: '4.6', improvement: '+119%' },
+        { label: 'Negative reviews', before: '78%', after: '8%', improvement: '-70%' },
+        { label: 'Attendance', before: '-45%', after: '+23%', improvement: '+68%' },
+        { label: 'Revenue', before: '-38%', after: '+15%', improvement: '+53%' }
       ]
     },
     testimonial: {
-      text: "Благодаря TraceRemove мы не только восстановили репутацию, но и стали сильнее. Клиенты снова нам доверяют.",
-      author: "Мария Иванова",
-      position: "Директор по маркетингу, FoodChain"
+      text: "Thanks to TraceRemove, we not only restored our reputation, but became stronger. Customers trust us again.",
+      author: "Maria Ivanova",
+      position: "Marketing Director, FoodChain"
     },
     gradient: 'from-green-600 to-blue-600'
   },
   {
     id: 'medical-clinic',
-    title: 'Медицинская клиника',
-    category: 'Медицина',
-    challenge: 'Клеветнические материалы от конкурентов в поисковой выдаче',
-    solution: 'Деиндексация негативного контента, правовая защита, SEO-оптимизация',
+    title: 'Medical Clinic',
+    category: 'Healthcare',
+    challenge: 'Slanderous materials from competitors in search results',
+    solution: 'Negative content deindexing, legal protection, SEO optimization',
     results: {
-      timeframe: '4 месяца',
+      timeframe: '4 months',
       metrics: [
-        { label: 'Удалено негативных страниц', before: '0', after: '23', improvement: '100%' },
-        { label: 'Позиции в поиске', before: '15-20', after: '1-3', improvement: '+85%' },
-        { label: 'Записи на прием', before: '45/день', after: '127/день', improvement: '+182%' },
-        { label: 'Доверие пациентов', before: '34%', after: '89%', improvement: '+55%' }
+        { label: 'Negative pages removed', before: '0', after: '23', improvement: '100%' },
+        { label: 'Search positions', before: '15-20', after: '1-3', improvement: '+85%' },
+        { label: 'Appointments', before: '45/day', after: '127/day', improvement: '+182%' },
+        { label: 'Patient trust', before: '34%', after: '89%', improvement: '+55%' }
       ]
     },
     testimonial: {
-      text: "Профессиональная работа команды TraceRemove помогла нам полностью очистить репутацию и вернуть доверие пациентов.",
-      author: "Доктор Сергей Волков",
-      position: "Главный врач, МедЦентр+"
+      text: "The professional work of the TraceRemove team helped us completely clean our reputation and restore patient trust.",
+      author: "Dr. Sergey Volkov",
+      position: "Chief Physician, MedCenter+"
     },
     gradient: 'from-purple-600 to-pink-600'
   },
   {
     id: 'financial-company',
-    title: 'Финансовая компания',
-    category: 'Финансы',
-    challenge: 'Негативная информация о руководстве в СМИ и соцсетях',
-    solution: 'Комплексный мониторинг, работа с журналистами, создание позитивного контента',
+    title: 'Financial Company',
+    category: 'Finance',
+    challenge: 'Negative information about management in media and social networks',
+    solution: 'Comprehensive monitoring, working with journalists, creating positive content',
     results: {
-      timeframe: '8 месяцев',
+      timeframe: '8 months',
       metrics: [
-        { label: 'Упоминания в СМИ', before: '23% позитивных', after: '87% позитивных', improvement: '+64%' },
-        { label: 'Социальные сети', before: '156 негативных', after: '12 негативных', improvement: '-92%' },
-        { label: 'Клиентская база', before: '-12%', after: '+34%', improvement: '+46%' },
-        { label: 'Стоимость акций', before: '-8%', after: '+28%', improvement: '+36%' }
+        { label: 'Media mentions', before: '23% positive', after: '87% positive', improvement: '+64%' },
+        { label: 'Social networks', before: '156 negative', after: '12 negative', improvement: '-92%' },
+        { label: 'Client base', before: '-12%', after: '+34%', improvement: '+46%' },
+        { label: 'Stock price', before: '-8%', after: '+28%', improvement: '+36%' }
       ]
     },
     testimonial: {
-      text: "TraceRemove не просто очистили нашу репутацию - они помогли построить долгосрочную стратегию управления имиджем компании.",
-      author: "Елена Смирнова",
-      position: "PR-директор, FinanceGroup"
+      text: "TraceRemove didn't just clean our reputation - they helped build a long-term company image management strategy.",
+      author: "Elena Smirnova",
+      position: "PR Director, FinanceGroup"
     },
     gradient: 'from-orange-600 to-red-600'
   }
@@ -108,17 +108,10 @@ const containerVariants = {
 
 const caseVariants = {
   hidden: { opacity: 0, x: -50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut"
-    }
-  }
+  visible: { opacity: 1, x: 0 }
 };
 
-const MetricCard = ({ metric, delay }: { metric: any, delay: number }) => (
+const MetricCard = ({ metric, delay }: { metric: { label: string; before: string; after: string; improvement: string }, delay: number }) => (
   <motion.div
     className="bg-gradient-to-br from-research-surface/60 to-research-surface/30 backdrop-blur-sm border border-research-surface/40 rounded-xl p-4"
     initial={{ opacity: 0, y: 20 }}
@@ -127,8 +120,8 @@ const MetricCard = ({ metric, delay }: { metric: any, delay: number }) => (
   >
     <div className="text-sm text-research-text-secondary mb-1">{metric.label}</div>
     <div className="flex items-center justify-between mb-2">
-      <span className="text-research-text-secondary text-sm">До: {metric.before}</span>
-      <span className="text-research-text font-semibold">После: {metric.after}</span>
+      <span className="text-research-text-secondary text-sm">Before: {metric.before}</span>
+      <span className="text-research-text font-semibold">After: {metric.after}</span>
     </div>
     <div className="flex items-center">
       <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
@@ -155,7 +148,7 @@ export default function CasesPage() {
             className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 border border-accent-ai-purple/30 mb-8"
           >
             <BarChart3 className="h-5 w-5 text-accent-ai-purple mr-2" />
-            <span className="text-accent-ai-purple font-medium">Успешные кейсы</span>
+            <span className="text-accent-ai-purple font-medium">Success Stories</span>
           </motion.div>
           
           <motion.h1 
@@ -164,9 +157,9 @@ export default function CasesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Наши{' '}
+            Our{' '}
             <span className="bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple bg-clip-text text-transparent">
-              Результаты
+              Results
             </span>
           </motion.h1>
           
@@ -176,8 +169,8 @@ export default function CasesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Реальные истории успеха наших клиентов. Узнайте, как мы помогли компаниям 
-            восстановить репутацию и достичь новых высот в бизнесе.
+            Real success stories from our clients. Learn how we helped companies 
+            restore their reputation and reach new heights in business.
           </motion.p>
         </div>
       </motion.section>
@@ -211,7 +204,7 @@ export default function CasesPage() {
                     <div>
                       <h3 className="text-lg font-semibold text-research-text mb-2 flex items-center">
                         <Shield className="h-5 w-5 text-red-500 mr-2" />
-                        Вызов
+                        Challenge
                       </h3>
                       <p className="text-research-text-secondary">{caseStudy.challenge}</p>
                     </div>
@@ -219,7 +212,7 @@ export default function CasesPage() {
                     <div>
                       <h3 className="text-lg font-semibold text-research-text mb-2 flex items-center">
                         <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                        Решение
+                        Solution
                       </h3>
                       <p className="text-research-text-secondary">{caseStudy.solution}</p>
                     </div>
@@ -227,7 +220,7 @@ export default function CasesPage() {
                     <div>
                       <h3 className="text-lg font-semibold text-research-text mb-2 flex items-center">
                         <Clock className="h-5 w-5 text-blue-500 mr-2" />
-                        Временные рамки
+                        Timeframe
                       </h3>
                       <p className="text-research-text-secondary">{caseStudy.results.timeframe}</p>
                     </div>
@@ -241,7 +234,7 @@ export default function CasesPage() {
                     transition={{ duration: 0.6, delay: 0.5 + (index * 0.1) }}
                   >
                     <p className="text-research-text-secondary italic mb-4">
-                      "{caseStudy.testimonial.text}"
+                      &ldquo;{caseStudy.testimonial.text}&rdquo;
                     </p>
                     <div className="flex items-center">
                       <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${caseStudy.gradient} flex items-center justify-center mr-4`}>
@@ -264,7 +257,7 @@ export default function CasesPage() {
                     transition={{ duration: 0.6, delay: 0.3 + (index * 0.1) }}
                   >
                     <h3 className="text-2xl font-bold text-research-text mb-6 text-center">
-                      Результаты
+                      Results
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {caseStudy.results.metrics.map((metric, metricIndex) => (
@@ -298,7 +291,7 @@ export default function CasesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
             >
-              Станьте следующей историей успеха
+              Become the Next Success Story
             </motion.h2>
             <motion.p 
               className="text-xl text-research-text-secondary mb-8"
@@ -306,7 +299,7 @@ export default function CasesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.3 }}
             >
-              Позвольте нам помочь вашей компании достичь таких же впечатляющих результатов
+              Let us help your company achieve the same impressive results
             </motion.p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -319,7 +312,7 @@ export default function CasesPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Обсудить ваш проект
+                Discuss Your Project
                 <ArrowRight className="h-5 w-5 ml-2" />
               </motion.button>
               <motion.button
@@ -327,7 +320,7 @@ export default function CasesPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Скачать кейсы PDF
+                Download Cases PDF
               </motion.button>
             </motion.div>
           </div>

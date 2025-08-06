@@ -27,25 +27,27 @@ export default function ResearchCard({
 }: ResearchCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 40, scale: 0.9, rotateX: -10 }}
+      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
       whileHover={{ 
-        scale: 1.03, 
-        y: -12,
-        rotateX: 2,
-        rotateY: 2
+        scale: 1.06, 
+        y: -18,
+        rotateX: 4,
+        rotateY: 3,
+        rotateZ: 1
       }}
+      whileTap={{ scale: 0.97, y: -5 }}
       transition={{ 
-        duration: 0.5,
+        duration: 0.7,
         type: "spring",
-        stiffness: 200,
-        damping: 15
+        stiffness: 250,
+        damping: 12
       }}
-      className={`relative group cursor-pointer ${className}`}
+      className={`relative group cursor-pointer card-hover-float magnetic-hover gpu-accelerated ${className}`}
       style={{ perspective: '1200px' }}
     >
       {/* Advanced Layered Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.04] rounded-3xl backdrop-blur-2xl border border-white/20 shadow-2xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.04] rounded-3xl backdrop-blur-2xl border border-white/20 shadow-2xl morph-glow"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/30 via-accent-lab-purple/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/10 to-accent-lab-purple/20 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
       
@@ -112,10 +114,11 @@ export default function ResearchCard({
 
         {/* Enhanced Research Typography */}
         <motion.h3 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-3xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight"
+          initial={{ opacity: 0, y: 20, rotateX: -10 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          whileHover={{ scale: 1.03, y: -2 }}
+          transition={{ delay: 0.2, duration: 0.7, type: "spring", stiffness: 180 }}
+          className="text-3xl font-bold text-white mb-6 typography-premium tracking-tight leading-tight text-shine"
         >
           {title}
         </motion.h3>

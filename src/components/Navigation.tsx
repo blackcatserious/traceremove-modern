@@ -150,7 +150,6 @@ const navigationItems = [
       { href: '/legal/privacy-policy', label: 'Privacy Policy', icon: Shield }
     ]
   },
-  { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
 export default function Navigation() {
@@ -212,7 +211,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="desktop-nav items-center space-x-1">
             {navigationItems.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -320,10 +319,23 @@ export default function Navigation() {
 
           {/* Mobile menu button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ 
+              scale: 1.12,
+              rotateY: 5,
+              y: -2,
+              boxShadow: "0 15px 30px rgba(124, 58, 237, 0.3), 0 8px 16px rgba(139, 92, 246, 0.2)"
+            }}
+            whileTap={{ 
+              scale: 0.88,
+              rotateX: -5
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 15
+            }}
             onClick={toggleMenu}
-            className="lg:hidden relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
+            className="lg:hidden mobile-menu-button relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -360,7 +372,7 @@ export default function Navigation() {
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="mobile-menu-premium lg:hidden"
+            className={`mobile-menu-premium lg:hidden ${isOpen ? 'open' : ''}`}
           >
             <div className="px-6 py-4 space-y-2 max-h-96 overflow-y-auto">
               {navigationItems.map((item, index) => (

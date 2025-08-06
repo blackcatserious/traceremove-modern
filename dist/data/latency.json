@@ -1,0 +1,38 @@
+[
+  {
+    "stage": "Query Normalization",
+    "p50": 25,
+    "p95": 45,
+    "target": 50
+  },
+  {
+    "stage": "Query Building",
+    "p50": 65,
+    "p95": 95,
+    "target": 100
+  },
+  {
+    "stage": "Retrieval",
+    "p50": 120,
+    "p95": 180,
+    "target": 200
+  },
+  {
+    "stage": "Reranking",
+    "p50": 75,
+    "p95": 95,
+    "target": 100
+  },
+  {
+    "stage": "Generation",
+    "p50": 220,
+    "p95": 280,
+    "target": 300
+  },
+  {
+    "stage": "Evaluation",
+    "p50": 35,
+    "p95": 45,
+    "target": 50
+  }
+]

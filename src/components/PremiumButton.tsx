@@ -55,17 +55,22 @@ export default function PremiumButton({
       {...componentProps}
       disabled={disabled || loading}
       whileHover={{ 
-        scale: disabled ? 1 : 1.02,
-        y: disabled ? 0 : -2
+        scale: disabled ? 1 : 1.08,
+        y: disabled ? 0 : -4,
+        rotateY: 2,
+        rotateX: -2,
+        boxShadow: disabled ? undefined : "0 20px 40px rgba(124, 58, 237, 0.4), 0 10px 20px rgba(139, 92, 246, 0.3)"
       }}
       whileTap={{ 
-        scale: disabled ? 1 : 0.98 
+        scale: disabled ? 1 : 0.92,
+        rotateY: 0,
+        rotateX: 0
       }}
       transition={{ 
-        duration: 0.2,
+        duration: 0.3,
         type: "spring",
-        stiffness: 400,
-        damping: 20
+        stiffness: 500,
+        damping: 15
       }}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
     >
@@ -89,15 +94,65 @@ export default function PremiumButton({
             }}
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           />
+          
+          {/* Ripple Effect */}
+          <motion.div
+            initial={{ scale: 0, opacity: 0.8 }}
+            whileTap={{ 
+              scale: [0, 1.5, 2],
+              opacity: [0.8, 0.3, 0]
+            }}
+            transition={{ 
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+            className="absolute inset-0 bg-white/30 rounded-inherit pointer-events-none"
+          />
+          
+          {/* Pulse Animation */}
+          <motion.div
+            animate={{
+              scale: [1, 1.05, 1],
+              opacity: [0.5, 0.8, 0.5]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-inherit opacity-0 group-hover:opacity-100"
+          />
         </>
       )}
+      
+      {/* Magnetic Field Effect */}
+      <motion.div
+        animate={{
+          rotate: [0, 360],
+          scale: [0.8, 1.2, 0.8]
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="absolute inset-0 bg-gradient-conic from-accent-ai-purple/10 via-transparent to-accent-lab-purple/10 rounded-inherit opacity-0 group-hover:opacity-100"
+      />
 
       {/* Content Container */}
       <div className="relative flex items-center space-x-2">
         {Icon && iconPosition === 'left' && (
           <motion.div
-            whileHover={{ rotate: 5, scale: 1.1 }}
-            transition={{ duration: 0.2 }}
+            whileHover={{ 
+              rotate: [0, -10, 10, 0], 
+              scale: 1.2,
+              filter: "drop-shadow(0 0 8px rgba(124, 58, 237, 0.6))"
+            }}
+            transition={{ 
+              duration: 0.4,
+              type: "spring",
+              stiffness: 300
+            }}
           >
             <Icon className={`${size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-5 h-5' : size === 'lg' ? 'w-6 h-6' : 'w-7 h-7'}`} />
           </motion.div>
@@ -117,16 +172,52 @@ export default function PremiumButton({
         
         {Icon && iconPosition === 'right' && (
           <motion.div
-            whileHover={{ rotate: 5, scale: 1.1 }}
-            transition={{ duration: 0.2 }}
+            whileHover={{ 
+              rotate: [0, -10, 10, 0], 
+              scale: 1.2,
+              filter: "drop-shadow(0 0 8px rgba(124, 58, 237, 0.6))"
+            }}
+            transition={{ 
+              duration: 0.4,
+              type: "spring",
+              stiffness: 300
+            }}
           >
             <Icon className={`${size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-5 h-5' : size === 'lg' ? 'w-6 h-6' : 'w-7 h-7'}`} />
           </motion.div>
         )}
       </div>
 
-      {/* Glow Effect */}
-      <div className="absolute inset-0 rounded-inherit bg-gradient-to-r from-accent-ai-purple/50 to-accent-lab-purple/50 blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-300 -z-10"></div>
+      {/* Enhanced Glow Effects */}
+      <motion.div
+        animate={{
+          boxShadow: [
+            "0 0 20px rgba(124, 58, 237, 0.3)",
+            "0 0 40px rgba(139, 92, 246, 0.5)",
+            "0 0 20px rgba(124, 58, 237, 0.3)"
+          ]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute inset-0 rounded-inherit bg-gradient-to-r from-accent-ai-purple/50 to-accent-lab-purple/50 blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-300 -z-10"
+      />
+      
+      {/* Outer Glow Ring */}
+      <motion.div
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0, 0.6, 0]
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute inset-0 rounded-inherit border-2 border-accent-ai-purple/30 opacity-0 group-hover:opacity-100 -z-10"
+      />
     </Component>
   );
 }

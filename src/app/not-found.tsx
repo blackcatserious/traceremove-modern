@@ -53,7 +53,7 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Страница не найдена
+          Page Not Found
         </motion.h1>
 
         {/* Description */}
@@ -63,8 +63,8 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          К сожалению, запрашиваемая страница не существует или была перемещена. 
-          Возможно, вы перешли по устаревшей ссылке.
+          Unfortunately, the requested page does not exist or has been moved. 
+          You may have followed an outdated link.
         </motion.p>
 
         {/* Suggestions */}
@@ -75,24 +75,24 @@ export default function NotFound() {
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <h3 className="text-lg font-semibold text-research-text mb-4">
-            Что вы можете сделать:
+            What you can do:
           </h3>
           <ul className="text-research-text-secondary space-y-2 text-left">
             <li className="flex items-center">
               <div className="w-2 h-2 bg-accent-ai-purple rounded-full mr-3 flex-shrink-0" />
-              Проверьте правильность введенного URL
+              Check the correctness of the entered URL
             </li>
             <li className="flex items-center">
               <div className="w-2 h-2 bg-accent-ai-purple rounded-full mr-3 flex-shrink-0" />
-              Вернитесь на главную страницу
+              Return to the home page
             </li>
             <li className="flex items-center">
               <div className="w-2 h-2 bg-accent-ai-purple rounded-full mr-3 flex-shrink-0" />
-              Воспользуйтесь навигационным меню
+              Use the navigation menu
             </li>
             <li className="flex items-center">
               <div className="w-2 h-2 bg-accent-ai-purple rounded-full mr-3 flex-shrink-0" />
-              Свяжитесь с нами, если проблема повторяется
+              Contact us if the problem persists
             </li>
           </ul>
         </motion.div>
@@ -110,7 +110,7 @@ export default function NotFound() {
               className="inline-flex items-center justify-center bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-semibold py-4 px-8 rounded-xl hover:shadow-lg transition-all duration-300"
             >
               <Home className="h-5 w-5 mr-2" />
-              На главную
+              Home
             </Link>
           </motion.div>
 
@@ -120,7 +120,7 @@ export default function NotFound() {
               className="inline-flex items-center justify-center border border-accent-ai-purple text-accent-ai-purple font-semibold py-4 px-8 rounded-xl hover:bg-accent-ai-purple/10 transition-all duration-300"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
-              Назад
+              Back
             </button>
           </motion.div>
 
@@ -130,7 +130,7 @@ export default function NotFound() {
               className="inline-flex items-center justify-center border border-accent-ai-purple text-accent-ai-purple font-semibold py-4 px-8 rounded-xl hover:bg-accent-ai-purple/10 transition-all duration-300"
             >
               <Search className="h-5 w-5 mr-2" />
-              Наши услуги
+              Our Services
             </Link>
           </motion.div>
         </motion.div>
@@ -143,14 +143,14 @@ export default function NotFound() {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <h3 className="text-lg font-semibold text-research-text mb-6">
-            Популярные страницы:
+            Popular pages:
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { href: '/services', title: 'Услуги', description: 'ORM, Deindex, Legal' },
-              { href: '/cases', title: 'Кейсы', description: 'Истории успеха' },
-              { href: '/testimonials', title: 'Отзывы', description: 'Мнения клиентов' },
-              { href: '/contact', title: 'Контакты', description: 'Связаться с нами' }
+              { href: '/services', title: 'Services', description: 'ORM, Deindex, Legal' },
+              { href: '/cases', title: 'Cases', description: 'Success Stories' },
+              { href: '/testimonials', title: 'Reviews', description: 'Client Opinions' },
+              { href: '/contact', title: 'Contact', description: 'Get in Touch' }
             ].map((page, index) => (
               <motion.div
                 key={page.href}
@@ -179,7 +179,7 @@ export default function NotFound() {
           transition={{ duration: 0.6, delay: 1.2 }}
         >
           <p className="text-research-text-secondary text-sm">
-            Нужна помощь? Свяжитесь с нами:{' '}
+            Need help? Contact us:{' '}
             <a 
               href="mailto:support@traceremove.com" 
               className="text-accent-ai-purple hover:underline"
