@@ -398,15 +398,18 @@ main {
               border-color 0.3s ease;
 }
 
-/* Fix navigation visibility - remove background and fix positioning */
+/* Fix navigation visibility - full width with transparent background */
 nav.nav-premium {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
+  width: 100% !important;
   z-index: 50 !important;
   display: block !important;
-  /* Remove background and backdrop-filter as requested by user */
+  background: rgba(15, 23, 42, 0.3) !important; /* More transparent background */
+  backdrop-filter: blur(8px) !important; /* Lighter blur effect */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Ensure sections are visible with glassmorphic styling - reduce z-index */
@@ -547,14 +550,20 @@ footer {
   color: rgba(124, 58, 237, 1) !important;
 }
 
-/* Desktop Navigation Styling - Fix display conflicts */
+/* Desktop Navigation Styling - Full width layout */
 .desktop-nav {
-  display: flex !important; /* Always show desktop nav, let media queries handle responsive behavior */
+  display: flex !important;
+  width: 100% !important;
+  justify-content: center !important;
+  padding: 0 2rem !important;
 }
 
 @media (min-width: 1024px) {
   .desktop-nav {
     display: flex !important;
+    width: 100% !important;
+    max-width: none !important;
+    justify-content: center !important;
   }
   .mobile-menu-button {
     display: none !important;
@@ -648,18 +657,26 @@ nav .desktop-nav {
   display: flex !important;
 }
 
-/* Ensure navigation maintains proper z-index hierarchy - remove conflicting position rule */
+/* Ensure navigation maintains proper z-index hierarchy and full width */
 nav {
   z-index: 50 !important;
-  /* Remove position: relative that conflicts with fixed positioning */
+  width: 100% !important;
 }
 
 nav .desktop-nav {
   z-index: 51 !important;
+  width: 100% !important;
 }
 
 nav .mobile-menu-button {
   z-index: 52 !important;
+}
+
+/* Ensure navigation container spans full width */
+nav > div {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 2rem !important;
 }
 
 /* Static export visibility fix */
