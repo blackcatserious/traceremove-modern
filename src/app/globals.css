@@ -597,51 +597,19 @@ footer {
   width: auto !important;
   height: auto !important;
   overflow: visible !important;
-  transform: none !important;
 }
 
-/* Comprehensive navigation visibility fixes */
+/* Ensure navigation elements are always visible */
 nav[offscreen], 
 nav[offscreen] *,
-nav a[offscreen],
-nav button[offscreen],
-nav div[offscreen],
-nav svg[offscreen],
 .desktop-nav[offscreen],
 .mobile-menu-button[offscreen],
-.mobile-menu-premium[offscreen],
-a[href="/projects"][offscreen],
-a[href="/tools"][offscreen],
-a[href="/academic"][offscreen],
-a[href="/articles"][offscreen],
-a[href="/about"][offscreen],
-a[href="/whitepapers"][offscreen],
-a[href="/contact"][offscreen],
-button[offscreen] {
+.mobile-menu-premium[offscreen] {
   position: static !important;
   clip: auto !important;
   width: auto !important;
   height: auto !important;
   overflow: visible !important;
-  transform: none !important;
-  left: auto !important;
-  top: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Force all navigation elements to be visible regardless of offscreen attribute */
-nav, nav *, nav a, nav button, nav div, nav svg {
-  position: static !important;
-  clip: auto !important;
-  width: auto !important;
-  height: auto !important;
-  overflow: visible !important;
-  transform: none !important;
-  left: auto !important;
-  top: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
 /* Static export visibility fix */
@@ -650,7 +618,6 @@ nav, nav *, nav a, nav button, nav div, nav svg {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  transform: none !important;
 }
 
 .static-export-visible.desktop-nav {
