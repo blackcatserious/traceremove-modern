@@ -74,7 +74,7 @@ export default function Home() {
       <ScrollProgress />
       
       {/* Hero Section with Premium Glass Effect */}
-      <section className="glass-card-premium relative overflow-hidden py-16 sm:py-20 lg:py-24 mx-6 lg:mx-8 mb-8 mt-20">
+      <section className="glass-card-premium relative overflow-hidden py-16 sm:py-20 lg:py-24 mx-6 lg:mx-8 mb-8 mt-32">
         
         <div className="relative w-full mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="text-center">
