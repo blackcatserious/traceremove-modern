@@ -587,3 +587,39 @@ footer {
     padding: 1.5rem;
   }
 }
+
+/* Fix for Next.js static export adding offscreen attributes */
+[offscreen] {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  clip: auto !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure navigation elements are always visible */
+nav[offscreen], 
+nav[offscreen] *,
+.desktop-nav[offscreen],
+.mobile-menu-button[offscreen],
+.mobile-menu-premium[offscreen] {
+  position: static !important;
+  clip: auto !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Static export visibility fix */
+.static-export-visible {
+  position: static !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.static-export-visible.desktop-nav {
+  display: flex !important;
+}
