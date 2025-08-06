@@ -225,12 +225,12 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
       >
         <BackgroundProvider>
-          <VantaBackground variant="hero" />
-          <DynamicLabBackground intensity="medium" />
           <Navigation />
           <Breadcrumb />
-          <main className="relative pt-24 pb-16 z-20">
-            {children}
+          <main className="relative pt-24 pb-16 min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+            <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
+              {children}
+            </div>
           </main>
           <Footer />
         </BackgroundProvider>

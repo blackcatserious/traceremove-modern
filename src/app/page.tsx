@@ -225,9 +225,7 @@ export default function Home() {
       </section>
 
       {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/30 to-slate-900/40 backdrop-blur-md" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(124,58,237,0.08),transparent_70%)]" />
+      <section className="glass-card-premium relative py-32 mx-6 lg:mx-8">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -315,8 +313,7 @@ export default function Home() {
       </section>
 
       {/* About Artur Ziganshin Section */}
-      <section className="relative py-32">
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent backdrop-blur-sm" />
+      <section className="glass-card-premium relative py-32 mx-6 lg:mx-8">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
