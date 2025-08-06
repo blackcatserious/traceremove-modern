@@ -21,7 +21,6 @@ export default function Footer() {
     { name: 'Projects', href: '/projects' },
     { name: 'Tools', href: '/tools' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
   ];
 
   const legalLinks = [

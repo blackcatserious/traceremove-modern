@@ -150,7 +150,6 @@ const navigationItems = [
       { href: '/legal/privacy-policy', label: 'Privacy Policy', icon: Shield }
     ]
   },
-  { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
 export default function Navigation() {
@@ -336,7 +335,7 @@ export default function Navigation() {
               damping: 15
             }}
             onClick={toggleMenu}
-            className="mobile-menu-button relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
+            className="lg:hidden mobile-menu-button relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
