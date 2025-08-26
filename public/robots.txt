@@ -18,7 +18,6 @@ Allow: /
 Allow: /about
 Allow: /research
 Allow: /tools
-Allow: /whitepapers
 Allow: /contact
 
 # Block common bot traps
