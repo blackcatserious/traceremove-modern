@@ -1,5 +1,13 @@
 'use client';
 
+export const metadata = {
+  title: "About — Artur Ziganshin",
+  description: "Profile of Artur Ziganshin: AI systems architect focused on AI ethics, privacy, and responsible AI.",
+};
+
+
+'use client';
+
 import { motion } from 'framer-motion';
 import { 
   GraduationCap, 
