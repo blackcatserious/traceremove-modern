@@ -4,7 +4,6 @@
 | --- | --- | --- |
 | https://nextjs.org | 200 | README.md |
 | https://nextjs.org/docs/app/api-reference/cli/create-next-app | 200 | README.md |
-| http://localhost:3000 | 0 (connection refused) | README.md |
 | https://nextjs.org/docs/app/building-your-application/optimizing/fonts | 200 | README.md |
 | https://vercel.com/font | 200 | README.md |
 | https://nextjs.org/docs | 200 | README.md |
