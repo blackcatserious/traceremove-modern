@@ -1,13 +1,5 @@
 'use client';
 
-export const metadata = {
-  title: "Research — AI Ethics, Agentic Systems, Privacy",
-  description: "Research highlights in AI ethics, agentic systems, and privacy-preserving technologies at Traceremove Research.",
-};
-
-
-'use client';
-
 import { motion } from 'framer-motion';
 import { 
   Search, 

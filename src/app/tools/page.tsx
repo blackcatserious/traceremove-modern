@@ -1,13 +1,5 @@
 'use client';
 
-export const metadata = {
-  title: "Tools — Traceremove Research",
-  description: "Utilities and tools developed at Traceremove Research for AI research and engineering.",
-};
-
-
-'use client';
-
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { 
