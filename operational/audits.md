@@ -1,50 +1,46 @@
-# Audit Summary
+# Audit: traceremove-modern
 
-## Routing
-- No custom `/404` page or routing cleanup; navigation needs review.
+## Summary
 
-## Content
-- Core marketing pages (Services, Pricing, Case Studies, Contact, blog) are missing.
-- Repository includes detailed page checklist in `TODO_PAGES.md`.
-- French translations for navigation, footer, and core pages are absent; English and French content require parity.
+Первичный аудит кода и инфраструктуры traceremove-modern.  
+Включает выявленные проблемы, TODO, технический долг и план поэтапных исправлений.
 
-## Localization
-- Language switcher does not preserve path or anchor and lacks distinct `/fr/...` routes.
-- Text strings for buttons, forms, and messages are hard-coded and need extraction to i18n files.
+---
 
-## UI/UX
-- Components lack a shared design system and consistent animations.
-- Accessibility polish needed: insufficient color contrast, missing alt text, and uneven spacing.
+## Найденные проблемы
 
-## SEO
-- Missing meta/OG tags, sitemap, robots.txt, canonical links, and schema.org markup.
-- `<html lang>`, `hreflang`, canonical URLs, and localized meta/OG tags are not configured for each locale.
+- **Битые или устаревшие внешние ссылки** (см. links_report.md)
+- Жёстко захардкоженные домены (`traceremove.*`) в статических ресурсах → mixed-content или ошибки при деплое на другие домены
+- Недостаток базовой SEO-разметки (нет sitemap.xml, robots.txt, meta/og)
+- Отсутствует продвинутый контроль заголовков (Referrer-Policy, X-Content-Type-Options, X-Frame-Options)
+- Верстка на ряде брейкпоинтов нестабильна (смещения карточек, проблемы с box-sizing/media)
+- Нет автоматизированной проверки ссылок в CI
+- Нет сборки release-zip
 
-## Forms
-- No contact form implementation or spam protection.
-- Validation messages, placeholders, and success/error states are not localized for EN/FR.
+---
 
-## Performance
-- Asset optimization (minification, responsive images, lazy loading) not in place.
-- `npm run build` terminated early; module type warnings repeated.
+## План фиксов (по этапам/PR):
 
-## Security
-- `.env.example` absent and security headers not configured.
+1. **PR #1:**  
+   - Документировать найденные проблемы и broken links  
+   - Добавить CI для link-check + артефакт
 
-## Broken Links
-- None detected after removing the `http://localhost:3000` reference from `README.md`.
+2. **PR #2:**  
+   - Исправить абсолютные ссылки на относительные для всей статики  
+   - Минимальный CSS-патч для layout, box-sizing, responsive, overflow
 
-## Lint Warnings
-- `npm run lint` reports unused variables and missing React hook dependencies in several components.
+3. **PR #3:**  
+   - Добавить public/sitemap.xml, robots.txt, базовые <title>/<meta> и OG, canonical
 
-## Plan for Next PRs
-1. **routing/404** – fix routes, add localized EN/FR 404 pages, update README "Routes".
-2. **content/core-pages** – build Services, Pricing (USD), Case Studies, Contact, and blog pages with EN/FR parity and a working language switcher.
-3. **ui/animations** – create UI kit with lightweight animations and shared styling tokens.
-4. **seo/basics** – meta/OG tags, sitemap.xml, robots.txt, canonical links, schema.org, and `hreflang` for each locale.
-5. **forms/contact** – validation, localized EN/FR messages, Turnstile/hCaptcha via `.env`, mock Notion/Sheets integration, and "Thank you" pages.
-6. **perf/optimize** – minify assets, responsive & lazy images, WebP/AVIF; produce `/operational/perf_report.md`.
-7. **security/hardening** – `.env.example`, security headers, restrict admin access, remove leftover files.
-8. **docs/deploy** – update README, add DEPLOY.md with cPanel Git deploy and ZIP build to `/build/artifacts/traceremove.zip`.
-9. **qa** – verify zero broken links, localized 404 pages, and meet Lighthouse goals (Perf ≥ 85, SEO ≥ 90).
+4. **PR #4:**  
+   - vercel.json — cache/security headers (Referrer-Policy, X-Content-Type-Options, X-Frame-Options)
 
+5. **PR #5 (optional):**  
+   - CI для сборки artifacts/traceremove-dev.zip (release-zip)
+
+---
+
+## Примечания
+
+- Не менять стек/архитектуру.
+- Все фиксы — отдельными, прозрачными коммитами и PR.
