@@ -3272,3 +3272,10 @@ code, .code, pre {
 .perspective-1000 {
   perspective: 1000px;
 }
+/* Stage 2: minimal CSS patch */
+img, video { max-width: 100%; height: auto; display: block; }
+:root { overflow-wrap: anywhere; }
+h1 { font-size: clamp(2rem, 2vw + 1.5rem, 3.25rem); line-height: 1.1; }
+h2 { font-size: clamp(1.5rem, 1.2vw + 1rem, 2.25rem); line-height: 1.2; }
+.cards-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.hero, .glass-card-premium { overflow: hidden; }
