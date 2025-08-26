@@ -1,0 +1,37 @@
+name: Release ZIP
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare artifact folder
+        run: |
+          mkdir -p build/artifacts
+          zip -r build/artifacts/traceremove-dev.zip .next public package.json next.config.ts || true
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: traceremove-dev-zip
+          path: build/artifacts/traceremove-dev.zip
