@@ -108,10 +108,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://traceremove.dev",
-    languages: {
-      "en-US": "https://traceremove.dev",
-      "ru-RU": "https://traceremove.dev/ru",
-    },
   },
   category: "technology",
 };
