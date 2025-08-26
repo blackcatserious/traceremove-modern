@@ -14,9 +14,9 @@ export default function Home() {
   return (
     <div className="min-h-screen relative">
       {/* Premium Background Layers */}
-      <VantaBackground variant="hero" className="fixed inset-0 z-[-10]" />
-      <GeometricMesh variant="research" density="medium" className="fixed inset-0 z-[-9]" />
-      <DynamicLabBackground intensity="medium" className="fixed inset-0 z-[-8]" />
+      <VantaBackground variant="hero" className="fixed inset-0 pointer-events-none" />
+      <GeometricMesh variant="research" density="medium" className="fixed inset-0 pointer-events-none" />
+      <DynamicLabBackground intensity="medium" className="fixed inset-0 pointer-events-none" />
       {/* Hero Section with Premium Glass Effect */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Premium Content Overlay */}
