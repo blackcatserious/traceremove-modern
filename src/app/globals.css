@@ -250,28 +250,28 @@ a {
   pointer-events: none;
   z-index: 0;
   background-repeat: no-repeat;
-  background-size: 600px 600px, 500px 500px;
+  background-size: 480px 480px, 380px 380px;
   background-position: 10% 15%, 85% 80%;
-  opacity: 0.35;
-  filter: blur(50px) saturate(1.2);
+  opacity: 0.24;
+  filter: blur(32px) saturate(1.05);
 }
 .decorative-blobs::before {
   background-image:
-    radial-gradient(closest-side, rgba(108, 99, 255, 0.25), transparent 70%),
-    radial-gradient(closest-side, rgba(112, 86, 230, 0.20), transparent 70%);
+    radial-gradient(closest-side, rgba(108, 99, 255, 0.18), transparent 70%),
+    radial-gradient(closest-side, rgba(112, 86, 230, 0.14), transparent 70%);
 }
 .decorative-blobs::after {
   background-image:
-    radial-gradient(closest-side, rgba(139, 92, 246, 0.18), transparent 70%),
-    radial-gradient(closest-side, rgba(6, 182, 212, 0.14), transparent 70%);
-  animation: blobsDrift 24s ease-in-out infinite;
-  opacity: 0.28;
+    radial-gradient(closest-side, rgba(139, 92, 246, 0.12), transparent 70%),
+    radial-gradient(closest-side, rgba(6, 182, 212, 0.08), transparent 70%);
+  animation: blobsDrift 52s ease-in-out infinite;
+  opacity: 0.12;
 }
 @keyframes blobsDrift {
   0%, 100% { transform: translate3d(0,0,0) scale(1); }
-  25% { transform: translate3d(12px,-10px,0) scale(1.02); }
-  50% { transform: translate3d(-10px,10px,0) scale(0.98); }
-  75% { transform: translate3d(8px,6px,0) scale(1.01); }
+  25% { transform: translate3d(10px,-8px,0) scale(1.01); }
+  50% { transform: translate3d(-8px,8px,0) scale(0.99); }
+  75% { transform: translate3d(6px,5px,0) scale(1.005); }
 }
 
 /* Elevation helpers to keep content above decorative layers */
@@ -3306,3 +3306,13 @@ h1 { font-size: clamp(2rem, 2vw + 1.5rem, 3.25rem); line-height: 1.1; }
 h2 { font-size: clamp(1.5rem, 1.2vw + 1rem, 2.25rem); line-height: 1.2; }
 .cards-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .hero, .glass-card-premium { overflow: hidden; }
+
+/* Mobile polish for decorative layers and link affordances */
+@media (max-width: 640px) {
+  .decorative-blobs::before,
+  .decorative-blobs::after {
+    background-size: 360px 360px, 280px 280px;
+    opacity: 0.1;
+  }
+}
+a[href]:hover { text-decoration: underline; }
