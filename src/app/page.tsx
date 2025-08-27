@@ -14,9 +14,9 @@ export default function Home() {
       {/* Hero Section with Premium Glass Effect */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
         {/* Premium Content Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.04),transparent_60%)] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.04),transparent_60%)] z-10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
           <div className="text-center">
@@ -109,7 +109,7 @@ export default function Home() {
 
       {/* Research Areas Section with Premium Glass Effect */}
       <section className="relative py-24 decorative-blobs">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
