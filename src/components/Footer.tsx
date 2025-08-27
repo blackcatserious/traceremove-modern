@@ -9,7 +9,7 @@ export default function Footer() {
   
   const socialLinks = [
     { name: 'LinkedIn', href: 'https://linkedin.com/in/arthur-ziganshin', icon: Linkedin },
-    { name: 'GitHub', href: 'https://github.com/arthur-ziganshin', icon: Github },
+    { name: 'GitHub', href: 'https://github.com/blackcatserious', icon: Github },
     { name: 'Google Scholar', href: 'https://scholar.google.com/citations?user=ArthurZiganshin', icon: Globe },
     { name: 'ORCID', href: 'https://orcid.org/0000-0002-1234-5678', icon: Globe },
     { name: 'ResearchGate', href: 'https://www.researchgate.net/profile/Arthur-Ziganshin', icon: Globe },

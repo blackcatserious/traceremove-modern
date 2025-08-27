@@ -1,3 +1,19 @@
+Final polish (production) — link and UX fixes
+- Mapped missing GitHub org/repo links to internal tool pages to avoid 404s
+- Updated Footer GitHub to https://github.com/blackcatserious
+- Replaced Academia.edu profile with internal /academic to avoid external 404
+- Verified internal routes for homepage Feature/Research/Info cards and full-card clickability
+- Kept lightweight CSS backgrounds and SVG lab imagery
+
+Next verification:
+- Run linkinator on prod with skips for bot-protected domains:
+  npx --yes linkinator https://traceremove.dev --recurse --format csv --skip "https://scholar\\.google\\.com/.*|https://philpeople\\.org/.*|https://(www\\.)?researchgate\\.net/.*|https://linkedin\\.com/.*"
+
+DoD:
+- 0 internal 4xx/5xx
+- All cards fully clickable across pages
+- Subtle animations only; no heavy canvas/WebGL
+
 Final Production Verification (in progress)
 - Running recursive link audit on https://traceremove.dev with skips for bot-protected domains.
 - Any internal 4xx/5xx will be fixed immediately via route handlers or link corrections and documented below.

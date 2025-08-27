@@ -35,7 +35,7 @@ const tools = [
     features: ['Project Tracking', 'Collaboration Tools', 'Performance Metrics', 'Research Insights'],
     status: 'Available',
     demoUrl: '/tools/ai-research-dashboard',
-    githubUrl: 'https://github.com/traceremove/ai-research-dashboard',
+    githubUrl: '/tools/ai-research-dashboard',
     downloadCount: '2.8k'
   },
   {
@@ -48,7 +48,7 @@ const tools = [
     features: ['Semantic Understanding', 'Multi-modal Search', 'Knowledge Graphs', 'Context Awareness'],
     status: 'Available',
     demoUrl: '/tools/semantic-search-tool',
-    githubUrl: 'https://github.com/traceremove/semantic-search',
+    githubUrl: '/tools/semantic-search-tool',
     downloadCount: '3.2k'
   },
   {
@@ -61,7 +61,7 @@ const tools = [
     features: ['Privacy Assessment', 'Risk Scoring', 'Compliance Checking', 'Recommendations'],
     status: 'Available',
     demoUrl: '/tools/privacy-score-calculator',
-    githubUrl: 'https://github.com/traceremove/privacy-calculator',
+    githubUrl: '/tools/privacy-score-calculator',
     downloadCount: '1.9k'
   },
   {
@@ -74,7 +74,7 @@ const tools = [
     features: ['Interactive Charts', 'Model Visualization', 'Custom Dashboards', 'Export Tools'],
     status: 'Available',
     demoUrl: '/tools/data-visualization-playground',
-    githubUrl: 'https://github.com/traceremove/data-viz-playground',
+    githubUrl: '/tools/data-visualization-playground',
     downloadCount: '2.1k'
   },
   {
@@ -87,7 +87,7 @@ const tools = [
     features: ['Auto Summarization', 'Key Insights', 'Citation Analysis', 'Structured Reviews'],
     status: 'Available',
     demoUrl: '/tools/paper-summarizer',
-    githubUrl: 'https://github.com/traceremove/paper-summarizer',
+    githubUrl: '/tools/paper-summarizer',
     downloadCount: '4.1k'
   },
   {
@@ -100,7 +100,7 @@ const tools = [
     features: ['Model Benchmarking', 'Performance Analysis', 'Cost Comparison', 'Task-specific Evaluation'],
     status: 'Available',
     demoUrl: '/tools/language-model-comparison',
-    githubUrl: 'https://github.com/traceremove/llm-comparison',
+    githubUrl: '/tools/language-model-comparison',
     downloadCount: '3.7k'
   },
   {
@@ -113,7 +113,7 @@ const tools = [
     features: ['Multi-modal Annotation', 'AI Assistance', 'Quality Control', 'Export Formats'],
     status: 'Available',
     demoUrl: '/tools/annotation-demo',
-    githubUrl: 'https://github.com/traceremove/annotation-demo',
+    githubUrl: '/tools/annotation-demo',
     downloadCount: '1.6k'
   }
 ];

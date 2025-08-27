@@ -102,7 +102,7 @@ const socialLinks = [
   },
   { 
     name: "GitHub", 
-    url: "https://github.com/arthur-ziganshin", 
+    url: "https://github.com/blackcatserious", 
     icon: Github,
     description: "Open source projects and code repositories"
   }
@@ -117,7 +117,7 @@ const academicLinks = [
   },
   { 
     name: "Academia.edu", 
-    url: "https://university.academia.edu/ArthurZiganshin", 
+    url: "/academic", 
     icon: GraduationCap,
     description: "Academic papers and research sharing"
   }
