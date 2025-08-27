@@ -1,3 +1,14 @@
+Final Production Verification (in progress)
+- Running recursive link audit on https://traceremove.dev with skips for bot-protected domains.
+- Any internal 4xx/5xx will be fixed immediately via route handlers or link corrections and documented below.
+- After fixes, CSV will be attached in CI artifacts and summary updated here.
+Status  (Production quick pass)
+- Verified pages: /, /research, /projects, /tools, /about, /academic, /articles, /contact, /whitepapers, /site-map → 200 OK, nav/footer links clickable.
+- SEO endpoints: /robots.txt and /sitemap.xml → 200 OK, correct content.
+- Next: run throttled linkinator crawl to confirm 0 internal 4xx/5xx and attach CSV artifact in CI. 
+
+
+
 Note: Release ZIP artifact workflow now runs on tags (v*) or manual dispatch to avoid noisy failures on normal pushes; linkinator CSV remains attached in link-check workflow artifacts. 
 
 
