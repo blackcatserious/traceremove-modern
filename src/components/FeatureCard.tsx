@@ -42,7 +42,7 @@ export default function FeatureCard({
         stiffness: 300,
         damping: 20
       }}
-      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none ${className}`}
+      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none lab-card lab-card-minh ${className}`}
       style={{ perspective: '1000px' }}
       aria-label={title}
     >
@@ -51,7 +51,7 @@ export default function FeatureCard({
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/5 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple/50 via-accent-lab-purple/50 to-accent-ai-purple/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
       <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-xl"></div>
-      <div className="relative p-8 text-center">
+      <div className="relative p-8 text-center lab-card-padding">
         <motion.div
           whileHover={{ 
             scale: 1.1, 
@@ -89,7 +89,7 @@ export default function FeatureCard({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-2xl font-bold text-white mb-4 font-ibm-sans tracking-tight"
+          className="text-2xl font-bold lab-card-title text-research-text mb-4"
         >
           {title}
         </motion.h3>
@@ -97,7 +97,7 @@ export default function FeatureCard({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-slate-300 font-inter leading-relaxed text-sm"
+          className="lab-card-text-secondary font-inter leading-relaxed text-sm"
         >
           {description}
         </motion.p>

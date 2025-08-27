@@ -144,7 +144,7 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai">
         
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10 pointer-events-none" />

@@ -42,7 +42,7 @@ export default function ResearchCard({
         stiffness: 200,
         damping: 15
       }}
-      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none ${className}`}
+      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none lab-card-lg lab-card-minh ${className}`}
       style={{ perspective: '1200px' }}
       aria-label={title}
     >
@@ -66,7 +66,7 @@ export default function ResearchCard({
         className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"
       />
       <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-2xl"></div>
-      <div className="relative p-10 text-center">
+      <div className="relative p-10 text-center lab-card-padding">
         <motion.div
           whileHover={{ 
             scale: 1.15, 
@@ -104,7 +104,7 @@ export default function ResearchCard({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-3xl font-bold text-white mb-6 font-ibm-sans tracking-tight leading-tight"
+          className="text-3xl font-bold lab-card-title text-research-text mb-6 leading-tight"
         >
           {title}
         </motion.h3>
@@ -112,7 +112,7 @@ export default function ResearchCard({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-slate-300 font-inter leading-relaxed text-base mb-6"
+          className="lab-card-text font-inter leading-relaxed text-base mb-6"
         >
           {description}
         </motion.p>

@@ -38,7 +38,7 @@ export default function InfoCard({
         stiffness: 150,
         damping: 20
       }}
-      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none ${className}`}
+      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none lab-card-lg lab-card-minh ${className}`}
       style={{ perspective: '1500px' }}
       aria-label={title}
     >
@@ -65,7 +65,7 @@ export default function InfoCard({
         }}
       />
       <div className="absolute inset-[1px] rounded-4xl bg-gradient-to-br from-slate-900/98 via-slate-800/95 to-slate-900/98 backdrop-blur-3xl"></div>
-      <div className="relative p-12">
+      <div className="relative p-12 lab-card-padding">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <motion.div
@@ -86,7 +86,7 @@ export default function InfoCard({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl lg:text-5xl font-bold text-white mb-6 font-ibm-sans tracking-tight leading-tight"
+              className="text-4xl lg:text-5xl font-bold lab-card-title text-research-text mb-6 leading-tight"
             >
               {title}
             </motion.h2>
@@ -94,7 +94,7 @@ export default function InfoCard({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl text-slate-300 font-inter leading-relaxed"
+              className="text-xl lab-card-text font-inter leading-relaxed"
             >
               {description}
             </motion.p>

@@ -3306,3 +3306,44 @@ a[href]:hover { text-decoration: underline; }
 @layer components {
   .nav-link-premium { white-space: nowrap; }
 }
+/* Lab card utilities and nav spacing */
+@layer components {
+  .lab-card { border-radius: 1.5rem; }
+  .lab-card-lg { border-radius: 1.75rem; }
+  .lab-card-padding { padding: 2rem; }
+  .lab-card-minh { min-height: 20rem; }
+  .lab-card-title { font-family: var(--font-ibm-sans); letter-spacing: -0.01em; }
+  .lab-card-text { color: var(--research-text); }
+  .lab-card-text-secondary { color: var(--research-text-secondary); }
+  .nav-link-premium { white-space: nowrap; gap: .375rem; display: inline-flex; align-items: center; }
+}
+
+/* Decorative AI imagery, lightweight */
+.decorative-ai {
+  position: relative;
+  isolation: isolate;
+}
+.decorative-ai::after {
+  content:"";
+  position:absolute;
+  inset:-12%;
+  pointer-events:none;
+  z-index:0;
+  opacity:.10;
+  background-image:
+    url('/images/lab/lab-hero-1.svg'),
+    radial-gradient(closest-side, rgba(124,58,237,.10), transparent 70%),
+    radial-gradient(closest-side, rgba(6,182,212,.06), transparent 70%);
+  background-repeat:no-repeat,no-repeat,no-repeat;
+  background-position: 12% 18%, 78% 76%, 25% 85%;
+  background-size: 520px auto, 380px 380px, 300px 300px;
+  animation: aiFloat 60s ease-in-out infinite;
+}
+@keyframes aiFloat {
+  0%,100% { transform: translate3d(0,0,0); }
+  33% { transform: translate3d(8px,-6px,0); }
+  66% { transform: translate3d(-6px,8px,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .decorative-ai::after { animation: none; }
+}

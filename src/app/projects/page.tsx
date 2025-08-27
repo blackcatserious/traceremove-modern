@@ -161,7 +161,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai">
         {/* Dynamic Background System */}
         
         {/* Background Elements */}

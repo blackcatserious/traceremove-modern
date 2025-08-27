@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Section with Premium Glass Effect */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai">
         {/* Premium Content Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10 pointer-events-none" />
@@ -43,12 +43,12 @@ export default function Home() {
               transition={{ duration: 1, ease: "easeOut" }}
               className="mb-8"
             >
-              <h1 className="hero-title text-white mb-8 typography-premium">
+              <h1 className="hero-title text-research-text mb-8 typography-premium">
                 Advancing AI for a<br />
                 Better Future
               </h1>
               
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto mb-16 typography-premium leading-relaxed">
+              <p className="text-xl text-research-text-secondary max-w-3xl mx-auto mb-16 typography-premium leading-relaxed">
                 Traceremove is committed to exploring the intersection of artificial intelligence, 
                 ethics, and human understanding for responsible innovation.
               </p>
@@ -108,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-24 decorative-blobs">
+      <section className="relative py-24 decorative-blobs decorative-ai">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
           <motion.div
@@ -118,10 +118,10 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="section-title text-white mb-6 typography-premium">
+            <h2 className="section-title text-research-text mb-6 typography-premium">
               Research Areas
             </h2>
-            <p className="text-xl text-slate-300 max-w-4xl mx-auto typography-premium leading-relaxed">
+            <p className="text-xl text-research-text-secondary max-w-4xl mx-auto typography-premium leading-relaxed">
               Focusing on academic rigor and ethical integrity to build transparent and interpretable AI systems.
             </p>
           </motion.div>
@@ -188,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* About Artur Ziganshin Section */}
-      <section className="relative py-24 decorative-blobs">
+      <section className="relative py-24 decorative-blobs decorative-ai">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
