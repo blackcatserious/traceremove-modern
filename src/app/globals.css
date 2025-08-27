@@ -175,18 +175,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  background: 
-    radial-gradient(ellipse 120% 80% at 20% 0%, rgba(30, 58, 138, 0.4), transparent 70%),
-    radial-gradient(ellipse 100% 60% at 80% 20%, rgba(124, 58, 237, 0.3), transparent 60%),
-    radial-gradient(ellipse 80% 100% at 40% 80%, rgba(139, 92, 246, 0.2), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%),
-    conic-gradient(from 180deg at 50% 50%, rgba(30, 58, 138, 0.1) 0deg, rgba(124, 58, 237, 0.1) 120deg, rgba(139, 92, 246, 0.1) 240deg, rgba(30, 58, 138, 0.1) 360deg);
-  background-attachment: fixed, fixed, fixed, fixed, scroll;
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%;
-  background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%, 0% 0%;
   min-height: 100vh;
-  color: var(--research-text);
-  animation: backgroundShift 20s ease-in-out infinite;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -197,20 +186,6 @@ a {
   text-decoration: none;
 }
 
-@keyframes backgroundShift {
-  0%, 100% { 
-    background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%, 0% 0%; 
-  }
-  25% { 
-    background-position: 10% 10%, 90% 10%, 40% 90%, 0% 0%, 25% 25%; 
-  }
-  50% { 
-    background-position: 20% 5%, 80% 20%, 60% 80%, 0% 0%, 50% 50%; 
-  }
-  75% { 
-    background-position: 5% 15%, 95% 5%, 45% 95%, 0% 0%, 75% 75%; 
-  }
-}
 
 /* WOW Background Animations */
 @keyframes wowGradientShift {
