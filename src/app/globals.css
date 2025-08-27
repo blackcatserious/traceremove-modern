@@ -325,17 +325,6 @@ a {
   }
 }
 
-/* Advanced Background Layer System */
-.background-layers {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -10;
-  overflow: hidden;
-}
 
 /* Main Content Positioning */
 main {
@@ -2855,9 +2844,6 @@ code, .code, pre {
     line-height: 1.1;
   }
   
-  .background-layers {
-    transform: scale(1.1);
-  }
 }
 
 /* Responsive Typography */
@@ -2886,9 +2872,6 @@ code, .code, pre {
 
 /* Responsive Animations - Reduce motion on mobile */
 @media (max-width: 767px) {
-  .background-layers {
-    animation-duration: 30s;
-  }
   
   .floating-card {
     transition-duration: 0.2s;
