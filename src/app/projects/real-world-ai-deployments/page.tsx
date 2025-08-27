@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 
 const realWorldDeploymentArchitecture = `
 graph TD

@@ -26,7 +26,6 @@ import {
   TrendingUp
 } from 'lucide-react';
 import Link from 'next/link';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const projects = [
   {

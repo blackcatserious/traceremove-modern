@@ -14,8 +14,6 @@ import {
   TrendingUp
 } from 'lucide-react';
 import Link from 'next/link';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 
 const whitepapers = [
   {

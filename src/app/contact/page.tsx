@@ -17,8 +17,6 @@ import {
   AlertCircle,
   Loader2
 } from 'lucide-react';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 import PremiumButton from '@/components/PremiumButton';
 
 const socialLinks = [

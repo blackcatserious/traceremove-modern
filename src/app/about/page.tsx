@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveChart from '@/components/InteractiveChart';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const expertise = [
   { area: "AI Ethics", description: "Developing ethical frameworks for AI systems and responsible technology deployment" },
