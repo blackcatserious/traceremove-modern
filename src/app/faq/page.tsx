@@ -182,8 +182,6 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={75} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

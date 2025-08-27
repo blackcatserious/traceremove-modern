@@ -322,8 +322,6 @@ class RealWorldAIDeploymentFramework:
 export default function RealWorldAIDeployments() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="research" particleCount={95} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">
@@ -468,7 +466,7 @@ export default function RealWorldAIDeployments() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Production Performance & Scalability</h2>
+              <h2 className="section-title text-research-text mb-6">Production Performance &amp; Scalability</h2>
               <p className="body-text text-research-text-secondary mb-8">
                 Comprehensive analysis of our production AI deployments demonstrates exceptional performance 
                 across multiple dimensions including throughput, latency, reliability, and cost efficiency. 
@@ -567,7 +565,7 @@ export default function RealWorldAIDeployments() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Enterprise Case Studies & Success Stories</h2>
+              <h2 className="section-title text-research-text mb-6">Enterprise Case Studies &amp; Success Stories</h2>
               <div className="space-y-6">
                 <div className="border-l-4 border-blue-500 pl-6">
                   <h3 className="text-lg font-semibold text-research-text mb-2">Global E-commerce Recommendation Engine</h3>
@@ -607,7 +605,7 @@ export default function RealWorldAIDeployments() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Technical Innovations & Best Practices</h2>
+              <h2 className="section-title text-research-text mb-6">Technical Innovations &amp; Best Practices</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="academic-card p-6">
                   <h3 className="text-lg font-semibold text-research-text mb-3">Intelligent Auto-Scaling</h3>
@@ -638,7 +636,7 @@ export default function RealWorldAIDeployments() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Future Enhancements & Roadmap</h2>
+              <h2 className="section-title text-research-text mb-6">Future Enhancements &amp; Roadmap</h2>
               <div className="space-y-6">
                 <div className="border-l-4 border-accent-ai-purple pl-6">
                   <h3 className="text-lg font-semibold text-research-text mb-2">Edge AI Deployment</h3>
@@ -674,7 +672,7 @@ export default function RealWorldAIDeployments() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Project Impact & Industry Transformation</h2>
+              <h2 className="section-title text-research-text mb-6">Project Impact &amp; Industry Transformation</h2>
               <p className="body-text text-research-text-secondary mb-6">
                 The Real-World AI Deployments project has fundamentally transformed how organizations approach 
                 AI implementation, bridging the gap between research and production. Our frameworks have enabled 

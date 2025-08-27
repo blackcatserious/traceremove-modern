@@ -308,8 +308,6 @@ class AIResearchDashboard:
 export default function AIResearchDashboard() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="data" particleCount={120} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

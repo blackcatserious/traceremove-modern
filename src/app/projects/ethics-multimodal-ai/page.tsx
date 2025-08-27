@@ -322,8 +322,6 @@ class EthicsMultimodalAIFramework:
 export default function EthicsMultimodalAI() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={85} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">
@@ -354,7 +352,7 @@ export default function EthicsMultimodalAI() {
                 </div>
                 <div className="flex items-center">
                   <BookOpen className="h-4 w-4 mr-1" />
-                  Project Status: Research & Implementation
+                  Project Status: Research &amp; Implementation
                 </div>
                 <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
                   <Share2 className="h-4 w-4 mr-1" />

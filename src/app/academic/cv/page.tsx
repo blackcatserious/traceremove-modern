@@ -296,8 +296,6 @@ class ArturZiganshinCV:
 export default function CV() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={120} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

@@ -193,8 +193,6 @@ class LanguageCodeInteroperabilityFramework:
 export default function LanguageCodeInteroperability() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="research" particleCount={85} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">
