@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 import PremiumButton from '@/components/PremiumButton';
 
 const digitalIdentityArchitecture = `
@@ -312,8 +310,6 @@ class DigitalIdentityAgencyFramework:
 export default function DigitalIdentityAgency() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="data" particleCount={75} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveChart from '@/components/InteractiveChart';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const expertise = [
   { area: "AI Ethics", description: "Developing ethical frameworks for AI systems and responsible technology deployment" },
@@ -192,7 +191,6 @@ export default function About() {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Dynamic Background System */}
-        <BackgroundLayers variant="about" className="absolute inset-0 z-0" />
         
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-1" />

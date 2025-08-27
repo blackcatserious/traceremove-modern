@@ -19,7 +19,6 @@ import {
   X
 } from 'lucide-react';
 import Link from 'next/link';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const researchArticles = [
   {
@@ -235,7 +234,6 @@ export default function ArticlesPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Dynamic Background System */}
-        <BackgroundLayers variant="research" className="absolute inset-0 z-0" />
         
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10" />

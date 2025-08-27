@@ -5,8 +5,6 @@ import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
-import VantaBackground from "@/components/VantaBackground";
-import DynamicLabBackground from "@/components/DynamicLabBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -208,8 +206,6 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
       >
         <BackgroundProvider>
-          <VantaBackground variant="hero" />
-          <DynamicLabBackground intensity="medium" />
           <Navigation />
           <Breadcrumb />
           <main className="relative pt-24 pb-16 z-20">

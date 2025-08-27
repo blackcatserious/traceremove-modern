@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 
 const teachingMaterialsArchitecture = `
 graph TD
@@ -285,8 +283,6 @@ class TeachingMaterialsManager:
 export default function TeachingMaterials() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="research" particleCount={100} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

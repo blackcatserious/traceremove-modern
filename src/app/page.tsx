@@ -6,17 +6,10 @@ import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'luci
 import FeatureCard from '@/components/FeatureCard';
 import ResearchCard from '@/components/ResearchCard';
 import InfoCard from '@/components/InfoCard';
-import VantaBackground from '@/components/VantaBackground';
-import GeometricMesh from '@/components/GeometricMesh';
-import DynamicLabBackground from '@/components/DynamicLabBackground';
 
 export default function Home() {
   return (
     <div className="min-h-screen relative">
-      {/* Premium Background Layers */}
-      <VantaBackground variant="hero" className="fixed inset-0 z-[-10]" />
-      <GeometricMesh variant="research" density="medium" className="fixed inset-0 z-[-9]" />
-      <DynamicLabBackground intensity="medium" className="fixed inset-0 z-[-8]" />
       {/* Hero Section with Premium Glass Effect */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Premium Content Overlay */}

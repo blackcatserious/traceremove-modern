@@ -4,7 +4,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, TrendingUp, Users, Shield, Heart, Brain, Scale, Globe, BookOpen, Code, Network, Lightbulb } from 'lucide-react';
-import BackgroundLayers from '@/components/BackgroundLayers';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import InteractiveChart from '@/components/InteractiveChart';
@@ -134,7 +133,6 @@ class HumanDignityFramework:
 export default function AIHumanDignity() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <BackgroundLayers />
       
       <section className="relative z-10 pt-32 pb-20">
         <div className="container mx-auto px-6">
@@ -148,11 +146,11 @@ export default function AIHumanDignity() {
             >
               <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-full border border-accent-ai-purple/30 mb-6">
                 <Heart className="h-4 w-4 text-accent-ai-purple mr-2" />
-                <span className="text-sm font-medium text-accent-ai-purple">AI Ethics & Human Values</span>
+                <span className="text-sm font-medium text-accent-ai-purple">AI Ethics &amp; Human Values</span>
               </div>
               
               <h1 className="hero-title text-research-text mb-6">
-                AI & Human Dignity
+                AI &amp; Human Dignity
               </h1>
               
               <p className="text-xl text-research-text-secondary max-w-3xl mx-auto leading-relaxed">

@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 import PremiumButton from '@/components/PremiumButton';
 
 const collaborationNetwork = `
@@ -299,8 +297,6 @@ class AcademicCollaborations:
 export default function Collaborations() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={140} />
       
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16">

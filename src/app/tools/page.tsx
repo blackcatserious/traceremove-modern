@@ -22,7 +22,6 @@ import {
   Target
 } from 'lucide-react';
 import Link from 'next/link';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const tools = [
   {
@@ -145,8 +144,6 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
-        {/* Dynamic Background System */}
-        <BackgroundLayers variant="research" className="absolute inset-0 z-0" />
         
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10" />
@@ -164,7 +161,7 @@ export default function ToolsPage() {
             >
               <Code className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                AI Tools & Demos
+                AI Tools &amp; Demos
               </span>
             </motion.div>
 
@@ -181,7 +178,7 @@ export default function ToolsPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="block text-accent-deep-blue mb-2"
                 >
-                  AI Tools &
+                  AI Tools &amp;
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
