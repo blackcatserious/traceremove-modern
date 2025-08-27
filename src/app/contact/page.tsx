@@ -43,7 +43,7 @@ const socialLinks = [
   },
   {
     name: 'Google Scholar',
-    url: 'https://scholar.google.com/citations?user=example',
+    url: 'https://scholar.google.com/citations?user=ArthurZiganshin',
     icon: Globe,
     description: 'Citation metrics and academic papers',
     gradient: 'from-red-600 to-red-700'

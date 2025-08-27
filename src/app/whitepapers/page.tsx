@@ -27,8 +27,8 @@ const whitepapers = [
     downloads: '3.2k',
     featured: true,
     tags: ['Agentic AI', 'Architecture', 'Tool Integration', 'Scalability'],
-    pdfUrl: '/whitepapers/agentic-systems-architecture.pdf',
-    previewUrl: '/whitepapers/agentic-systems-architecture/preview',
+    pdfUrl: '/whitepapers',
+    previewUrl: '/whitepapers',
     abstract: 'As AI systems evolve beyond simple input-output models, the need for robust architectural patterns becomes critical. This paper introduces a comprehensive framework for building agentic systems that can autonomously reason, plan, and execute complex tasks while maintaining reliability and interpretability.',
     gradient: 'from-blue-500 to-purple-600'
   },
@@ -43,8 +43,8 @@ const whitepapers = [
     downloads: '2.8k',
     featured: true,
     tags: ['Privacy', 'Cryptography', 'Differential Privacy', 'Homomorphic Encryption'],
-    pdfUrl: '/whitepapers/privacy-preserving-ai.pdf',
-    previewUrl: '/whitepapers/privacy-preserving-ai/preview',
+    pdfUrl: '/whitepapers',
+    previewUrl: '/whitepapers',
     abstract: 'This whitepaper explores advanced cryptographic techniques that enable privacy-preserving machine learning. We present practical implementations and performance evaluations of differential privacy, homomorphic encryption, and secure multi-party computation in real-world AI applications.',
     gradient: 'from-green-500 to-teal-600'
   },
@@ -59,8 +59,8 @@ const whitepapers = [
     downloads: '4.1k',
     featured: false,
     tags: ['AI Ethics', 'Governance', 'Bias Mitigation', 'Transparency'],
-    pdfUrl: '/whitepapers/ai-ethics-governance.pdf',
-    previewUrl: '/whitepapers/ai-ethics-governance/preview',
+    pdfUrl: '/whitepapers',
+    previewUrl: '/whitepapers',
     abstract: 'This paper presents a comprehensive framework for ethical AI development, addressing key challenges in bias mitigation, algorithmic transparency, and governance structures. We provide practical guidelines for implementing responsible AI practices in research and industry.',
     gradient: 'from-purple-500 to-pink-600'
   },
@@ -75,8 +75,8 @@ const whitepapers = [
     downloads: '2.3k',
     featured: false,
     tags: ['Multimodal AI', 'Optimization', 'Resource Management', 'Performance'],
-    pdfUrl: '/whitepapers/multimodal-optimization.pdf',
-    previewUrl: '/whitepapers/multimodal-optimization/preview',
+    pdfUrl: '/whitepapers',
+    previewUrl: '/whitepapers',
     abstract: 'This whitepaper addresses the challenges of deploying multimodal AI systems in resource-constrained environments. We present novel optimization techniques and architectural patterns that maintain performance while reducing computational and memory requirements.',
     gradient: 'from-orange-500 to-red-600'
   },
@@ -91,8 +91,8 @@ const whitepapers = [
     downloads: '1.9k',
     featured: false,
     tags: ['Academic Research', 'Infrastructure', 'Cost Optimization', 'Resource Sharing'],
-    pdfUrl: '/whitepapers/academic-ai-infrastructure.pdf',
-    previewUrl: '/whitepapers/academic-ai-infrastructure/preview',
+    pdfUrl: '/whitepapers',
+    previewUrl: '/whitepapers',
     abstract: 'Academic institutions face unique challenges in building AI infrastructure due to budget constraints and diverse research needs. This paper provides practical strategies for creating cost-effective, scalable AI infrastructure that supports collaborative research.',
     gradient: 'from-indigo-500 to-blue-600'
   }

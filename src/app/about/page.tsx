@@ -129,7 +129,7 @@ const publications = [
     journal: "Journal of AI Ethics",
     year: "2024",
     type: "Journal Article",
-    url: "/publications/ethical-frameworks-ai-2024.pdf",
+    url: "/articles/guardrails-ux-safety",
     abstract: "Comprehensive analysis of ethical considerations in autonomous AI system design and deployment."
   },
   {
@@ -137,7 +137,7 @@ const publications = [
     conference: "International Conference on AI Safety",
     year: "2023",
     type: "Conference Paper",
-    url: "/publications/privacy-retrieval-llm-2023.pdf",
+    url: "/research/privacy-preserving-retrieval",
     abstract: "Novel approaches to maintaining privacy while enabling effective information retrieval in LLMs."
   },
   {
@@ -145,7 +145,7 @@ const publications = [
     journal: "Philosophy & Technology",
     year: "2023",
     type: "Journal Article",
-    url: "/publications/agentic-systems-philosophy-2023.pdf",
+    url: "/research/agentic-systems-tool-use",
     abstract: "Philosophical examination of agency and tool use in artificial intelligence systems."
   },
   {
@@ -153,7 +153,7 @@ const publications = [
     conference: "European Conference on AI",
     year: "2022",
     type: "Conference Paper",
-    url: "/publications/transparency-ai-decisions-2022.pdf",
+    url: "/research/ethical-ai-architecture",
     abstract: "Methods for improving transparency and interpretability in AI decision-making processes."
   }
 ];
@@ -340,9 +340,7 @@ export default function About() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  href="/cv/Arthur_Ziganshin_CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/academic/cv"
                   className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-bold rounded-2xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300 hover:from-accent-lab-purple hover:to-accent-ai-purple font-ibm-sans text-lg"
                 >
                   <Download className="mr-3 h-6 w-6 text-white group-hover:animate-bounce" />
@@ -356,9 +354,7 @@ export default function About() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  href="/cv/Arthur_Ziganshin_CV.docx"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/academic/cv"
                   className="group inline-flex items-center px-8 py-4 bg-white/90 backdrop-blur-sm text-accent-deep-blue font-bold rounded-2xl border border-accent-ai-purple/30 shadow-lab-card hover:shadow-card-hover transition-all duration-300 hover:bg-gradient-to-r hover:from-accent-ai-purple/10 hover:to-accent-lab-purple/10 font-ibm-sans text-lg"
                 >
                   <Download className="mr-3 h-6 w-6 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
