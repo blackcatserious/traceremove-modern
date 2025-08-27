@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 
 const semanticPipelineArchitecture = `
 graph TD
@@ -311,11 +309,9 @@ class SemanticDataPipelineFramework:
 export default function SemanticDataPipelines() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={90} />
       
       {/* Header */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
+      <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div

@@ -22,7 +22,6 @@ import {
   Target
 } from 'lucide-react';
 import Link from 'next/link';
-import BackgroundLayers from '@/components/BackgroundLayers';
 
 const tools = [
   {
@@ -144,16 +143,14 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
-        {/* Dynamic Background System */}
-        <BackgroundLayers variant="research" className="absolute inset-0 z-0" />
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
         
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)] z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)] z-10" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 decorative-content">
           <div className="text-center">
             {/* Badge */}
             <motion.div
@@ -164,7 +161,7 @@ export default function ToolsPage() {
             >
               <Code className="w-5 h-5 text-accent-ai-purple mr-2" />
               <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                AI Tools & Demos
+                AI Tools &amp; Demos
               </span>
             </motion.div>
 
@@ -181,7 +178,7 @@ export default function ToolsPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="block text-accent-deep-blue mb-2"
                 >
-                  AI Tools &
+                  AI Tools &amp;
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}

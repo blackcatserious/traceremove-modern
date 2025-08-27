@@ -7,8 +7,6 @@ import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import CodeBlock from '@/components/CodeBlock';
-import BackgroundLayers from '@/components/BackgroundLayers';
-import ParticleSystem from '@/components/ParticleSystem';
 
 const siteMapArchitecture = `
 graph TD
@@ -460,11 +458,9 @@ continuous_improvements = site_map.continuous_improvement()
 export default function SiteMap() {
   return (
     <div className="min-h-screen relative">
-      <BackgroundLayers variant="research" />
-      <ParticleSystem variant="neural" particleCount={75} />
       
       {/* Header */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
+      <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -541,7 +537,7 @@ export default function SiteMap() {
             >
               <div className="flex items-center mb-6">
                 <Map className="h-8 w-8 text-accent-ai-purple mr-3" />
-                <h2 className="section-title text-research-text">Platform Overview & Structure</h2>
+                <h2 className="section-title text-research-text">Platform Overview &amp; Structure</h2>
               </div>
               
               <LottieAnimation 
@@ -889,7 +885,7 @@ export default function SiteMap() {
               viewport={{ once: true }}
               className="glass-card-premium p-8 mb-12"
             >
-              <h2 className="section-title text-research-text mb-6">Navigation Statistics & Usage Analytics</h2>
+              <h2 className="section-title text-research-text mb-6">Navigation Statistics &amp; Usage Analytics</h2>
               
               <InteractiveChart
                 dataFile="site_navigation_metrics.json"
@@ -920,7 +916,7 @@ export default function SiteMap() {
                   </div>
                 </div>
                 <div className="academic-card p-6">
-                  <h3 className="text-lg font-semibold text-research-text mb-3">Search & Discovery</h3>
+                  <h3 className="text-lg font-semibold text-research-text mb-3">Search &amp; Discovery</h3>
                   <div className="space-y-2 text-sm text-research-text-secondary">
                     <p>• Internal search usage: 15% of visitors</p>
                     <p>• Most searched terms: AI ethics, research</p>
@@ -930,7 +926,7 @@ export default function SiteMap() {
                   </div>
                 </div>
                 <div className="academic-card p-6">
-                  <h3 className="text-lg font-semibold text-research-text mb-3">Accessibility & Performance</h3>
+                  <h3 className="text-lg font-semibold text-research-text mb-3">Accessibility &amp; Performance</h3>
                   <div className="space-y-2 text-sm text-research-text-secondary">
                     <p>• WCAG 2.1 AA compliance: 98%</p>
                     <p>• Average page load time: 1.2 seconds</p>
@@ -969,7 +965,7 @@ export default function SiteMap() {
                     </div>
                   </div>
                   <div className="academic-card p-4">
-                    <h3 className="text-lg font-semibold text-research-text mb-3">Tools & Resources</h3>
+                    <h3 className="text-lg font-semibold text-research-text mb-3">Tools &amp; Resources</h3>
                     <div className="space-y-2 text-sm">
                       <Link href="/tools" className="block text-accent-ai-purple hover:underline">Interactive Tools</Link>
                       <Link href="/academic/cv" className="block text-accent-ai-purple hover:underline">Curriculum Vitae</Link>

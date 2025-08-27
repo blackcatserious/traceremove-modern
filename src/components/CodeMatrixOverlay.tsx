@@ -126,7 +126,7 @@ export default function CodeMatrixOverlay({ variant = 'subtle', className = '' }
   };
 
   return (
-    <div className={`fixed inset-0 pointer-events-none z-[-8] ${className}`}>
+    <div className={`fixed inset-0 pointer-events-none ${className}`}>
       <canvas
         ref={canvasRef}
         className={`w-full h-full ${getOpacity()}`}

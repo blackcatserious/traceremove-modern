@@ -172,7 +172,7 @@ export default function GeometricMesh({
   };
 
   return (
-    <div className={`fixed inset-0 pointer-events-none z-[-7] ${className}`}>
+    <div className={`fixed inset-0 pointer-events-none ${className}`} style={{ zIndex: -7 }}>
       <svg
         ref={svgRef}
         className="w-full h-full"
