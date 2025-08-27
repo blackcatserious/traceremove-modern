@@ -232,7 +232,7 @@ export default function ArticlesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
+      <section className="relative decorative-blobs overflow-hidden py-24 sm:py-32 lg:py-40">
         {/* Dynamic Background System */}
         
         {/* Background Elements */}
@@ -240,7 +240,7 @@ export default function ArticlesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)] z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)] z-10" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
           <div className="text-center">
             {/* Badge */}
             <motion.div
