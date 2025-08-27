@@ -187,13 +187,13 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="nav-logo-icon"
             >
-              <Brain className="w-5 h-5 text-white" />
+              <img src="/brand/black-cat.svg" alt="Traceremove" className="w-5 h-5" />
             </motion.div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold text-white font-ibm-sans">
+              <span className="text-xl font-bold text-white font-ibm-sans whitespace-nowrap">
                 Traceremove
               </span>
-              <span className="text-xs text-white/70 font-medium tracking-wider">
+              <span className="text-xs text-white/70 font-medium tracking-wider whitespace-nowrap">
                 AI Research Lab
               </span>
             </div>
@@ -213,7 +213,7 @@ export default function Navigation() {
               >
                 <Link
                   href={item.href}
-                  className={`nav-link-premium ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
+                  className={`nav-link-premium whitespace-nowrap ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}

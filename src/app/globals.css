@@ -3299,3 +3299,10 @@ h2 { font-size: clamp(1.5rem, 1.2vw + 1rem, 2.25rem); line-height: 1.2; }
   }
 }
 a[href]:hover { text-decoration: underline; }
+@layer components {
+  .nav-link-premium { white-space: nowrap; }
+}
+
+@layer components {
+  .nav-link-premium { white-space: nowrap; }
+}
