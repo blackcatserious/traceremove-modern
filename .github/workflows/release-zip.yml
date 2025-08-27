@@ -3,8 +3,8 @@ name: Release ZIP
 on:
   workflow_dispatch:
   push:
-    branches:
-      - "**"
+    tags:
+      - "v*"
 
 jobs:
   build-zip:
@@ -19,18 +19,26 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Skip on non-release refs
+        if: ${{ github.event_name != 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/v') }}
+        run: echo "Skipping release artifact on non-release ref"
+
       - name: Install deps
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') }}
         run: npm install --no-audit --no-fund
 
       - name: Build
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') }}
         run: npm run build
 
       - name: Prepare artifact folder
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') }}
         run: |
           mkdir -p build/artifacts
           zip -r build/artifacts/traceremove-dev.zip .next public package.json next.config.ts || true
 
       - name: Upload ZIP artifact
+        if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v') }}
         uses: actions/upload-artifact@v4
         with:
           name: traceremove-dev-zip

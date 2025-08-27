@@ -1,3 +1,6 @@
+Note: Release ZIP artifact workflow now runs on tags (v*) or manual dispatch to avoid noisy failures on normal pushes; linkinator CSV remains attached in link-check workflow artifacts. 
+
+
 Additions in prod hotfix to eliminate internal 404s:
 - Added route-based redirects:
   - /publications → /academic/publications-archive
