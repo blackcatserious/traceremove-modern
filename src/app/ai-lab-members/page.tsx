@@ -60,7 +60,7 @@ const teamMembers = {
       projects: ["Traceremove Platform", "Rarematrix", "Equality Initiative", "Ethical AI Framework"],
       social: {
         linkedin: "https://linkedin.com/in/artur-ziganshin",
-        github: "https://github.com/zikzk1394",
+        github: "https://github.com/blackcatserious",
         scholar: "https://scholar.google.com/citations?user=artur-ziganshin"
       }
     }
