@@ -1,3 +1,18 @@
+Additions in prod hotfix to eliminate internal 404s:
+- Added route-based redirects:
+  - /publications → /academic/publications-archive
+  - /cv → /academic/cv
+  - /cv/Arthur_Ziganshin_CV.pdf → /academic/cv
+  - /cv/Arthur_Ziganshin_CV.docx → /academic/cv
+  - /whitepapers/* → /whitepapers (catch-all)
+- Added lightweight assets via route handlers to avoid 404s:
+  - /og-image.png (200 placeholder)
+  - /apple-touch-icon.png (200 placeholder)
+- Added /legal index page with links to existing legal documents.
+- Added public/favicon.svg.
+
+Validation: rerun linkinator on https://traceremove.dev and confirm 0 internal 4xx/5xx.
+
 Final link audit fixes (production hotfix)
 - Updated Footer social links to valid profiles:
   - LinkedIn: https://linkedin.com/in/arthur-ziganshin
