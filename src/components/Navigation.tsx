@@ -138,18 +138,6 @@ const navigationItems = [
   },
   { href: '/about', label: 'About', icon: User },
   { href: '/whitepapers', label: 'Whitepapers', icon: FileText },
-  { 
-    href: '/more', 
-    label: 'More', 
-    icon: Menu,
-    dropdown: [
-      { href: '/ai-lab-members', label: 'AI Lab Members', icon: Users },
-      { href: '/faq', label: 'FAQ', icon: HelpCircle },
-      { href: '/site-map', label: 'Site Map', icon: Map },
-      { href: '/legal/ethics-statement', label: 'Ethics Statement', icon: Scale },
-      { href: '/legal/privacy-policy', label: 'Privacy Policy', icon: Shield }
-    ]
-  },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
 

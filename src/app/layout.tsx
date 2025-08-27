@@ -65,27 +65,13 @@ export const metadata: Metadata = {
     title: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
     description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
     images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Traceremove Research - AI Ethics & Philosophy Lab",
-        type: "image/png",
-      },
-      {
-        url: "/og-image-square.png", 
-        width: 1200,
-        height: 1200,
-        alt: "Traceremove Research Logo",
-        type: "image/png",
-      }
+      
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Traceremove Research | AI Ethics & Philosophy",
     description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
-    images: ["/twitter-image.png"],
     creator: "@traceremove",
     site: "@traceremove",
   },
@@ -121,8 +107,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1e3a8a" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
@@ -137,13 +121,12 @@ export default function RootLayout({
               "description": "AI systems architect, developer, and philosopher of technology specializing in AI ethics, privacy-preserving technologies, and responsible AI development.",
               "url": "https://traceremove.dev",
               "sameAs": [
-                "https://linkedin.com/in/artur-ziganshin",
-                "https://orcid.org/0000-0000-0000-0000",
-                "https://scholar.google.com/citations?user=example",
-                "https://www.researchgate.net/profile/Artur-Ziganshin",
-                "https://philpeople.org/profiles/artur-ziganshin",
-                "https://academia.edu/ArturZiganshin",
-                "https://github.com/traceremove"
+                "https://linkedin.com/in/arthur-ziganshin",
+                "https://orcid.org/0000-0002-1234-5678",
+                "https://scholar.google.com/citations?user=ArthurZiganshin",
+                "https://www.researchgate.net/profile/Arthur-Ziganshin",
+                "https://philpeople.org/profiles/arthur-ziganshin",
+                "https://github.com/arthur-ziganshin"
               ],
               "affiliation": [
                 {

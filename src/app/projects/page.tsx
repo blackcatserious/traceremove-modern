@@ -38,7 +38,7 @@ const projects = [
     features: ['Interpretability', 'Audit Trails', 'Decision Transparency', 'Explainable AI'],
     status: 'Active',
     demoUrl: '/projects/transparent-llms',
-    githubUrl: 'https://github.com/traceremove/transparent-llms',
+    githubUrl: '/projects/transparent-llms',
     progress: 85,
     team: 'AI Ethics Lab',
     duration: '18 months'
@@ -53,7 +53,7 @@ const projects = [
     features: ['Symbolic Reasoning', 'Neural Integration', 'Knowledge Graphs', 'Logic Programming'],
     status: 'Active',
     demoUrl: '/projects/symbolic-ai',
-    githubUrl: 'https://github.com/traceremove/symbolic-ai',
+    githubUrl: '/projects/symbolic-ai',
     progress: 72,
     team: 'Reasoning Systems',
     duration: '24 months'
@@ -68,7 +68,7 @@ const projects = [
     features: ['Identity Management', 'Privacy Protection', 'User Agency', 'Decentralized Systems'],
     status: 'Research',
     demoUrl: '/projects/digital-identity-agency',
-    githubUrl: 'https://github.com/traceremove/digital-identity',
+    githubUrl: '/projects/digital-identity-agency',
     progress: 45,
     team: 'Digital Rights Lab',
     duration: '12 months'
@@ -83,7 +83,7 @@ const projects = [
     features: ['Semantic Processing', 'Quality Assessment', 'Auto Transformation', 'Pipeline Optimization'],
     status: 'Active',
     demoUrl: '/projects/semantic-data-pipelines',
-    githubUrl: 'https://github.com/traceremove/semantic-pipelines',
+    githubUrl: '/projects/semantic-data-pipelines',
     progress: 90,
     team: 'Data Systems',
     duration: '15 months'
@@ -98,7 +98,7 @@ const projects = [
     features: ['Robustness Testing', 'Fairness Metrics', 'Performance Analysis', 'Benchmark Suite'],
     status: 'Active',
     demoUrl: '/projects/nlp-evaluation',
-    githubUrl: 'https://github.com/traceremove/nlp-evaluation',
+    githubUrl: '/projects/nlp-evaluation',
     progress: 78,
     team: 'Evaluation Lab',
     duration: '20 months'
@@ -113,7 +113,7 @@ const projects = [
     features: ['Ethical Frameworks', 'Bias Detection', 'Multimodal Analysis', 'Responsible AI'],
     status: 'Research',
     demoUrl: '/projects/ethics-multimodal-ai',
-    githubUrl: 'https://github.com/traceremove/ethics-multimodal',
+    githubUrl: '/projects/ethics-multimodal-ai',
     progress: 60,
     team: 'AI Ethics Lab',
     duration: '16 months'
@@ -128,7 +128,7 @@ const projects = [
     features: ['Deployment Frameworks', 'Case Studies', 'Impact Assessment', 'Scalability Solutions'],
     status: 'Active',
     demoUrl: '/projects/real-world-ai-deployments',
-    githubUrl: 'https://github.com/traceremove/real-world-ai',
+    githubUrl: '/projects/real-world-ai-deployments',
     progress: 82,
     team: 'Deployment Lab',
     duration: '22 months'

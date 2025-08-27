@@ -20,7 +20,7 @@ jobs:
           node-version: 20
 
       - name: Run linkinator against traceremove.dev
-        run: npx --yes linkinator https://traceremove.dev/ --recurse --format csv --skip "https://scholar\\.google\\.com/.*|https://philpeople\\.org/.*" | tee linkinator.csv
+        run: npx --yes linkinator https://traceremove.dev/ --recurse --format csv --skip "https://scholar\\.google\\.com/.*|https://philpeople\\.org/.*|https://(www\\.)?researchgate\\.net/.*" | tee linkinator.csv
 
       - name: Upload linkinator.csv artifact
         uses: actions/upload-artifact@v4
