@@ -273,101 +273,96 @@ export default function ToolsPage() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group"
               >
-                <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 overflow-hidden border border-accent-ai-purple/10 hover:border-accent-ai-purple/30">
-                  {/* Gradient Header */}
-                  <div className="h-2 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600" />
-                  
-                  {/* Background Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative p-8">
-                    {/* Icon and Status */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="w-14 h-14 bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-2xl flex items-center justify-center shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
-                        <tool.icon className="h-7 w-7 text-white" />
-                      </div>
-                      <span className={`px-3 py-1 text-xs font-bold rounded-full font-ibm-sans ${
-                        tool.status === 'Available' ? 'bg-green-100 text-green-700 border border-green-200' :
-                        tool.status === 'Beta' ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' :
-                        'bg-gray-100 text-gray-700 border border-gray-200'
-                      }`}>
-                        {tool.status}
-                      </span>
-                    </div>
-
-                    {/* Title and Description */}
-                    <h3 className="text-xl font-bold text-accent-deep-blue mb-4 group-hover:text-accent-ai-purple transition-colors duration-300 font-ibm-sans">
-                      {tool.title}
-                    </h3>
-                    <p className="text-research-600 leading-relaxed mb-6 font-ibm-sans">
-                      {tool.description}
-                    </p>
-
-                    {/* Category */}
-                    <div className="mb-6">
-                      <span className="inline-flex items-center px-3 py-1 text-sm font-semibold bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 text-accent-ai-purple border border-accent-ai-purple/20 rounded-full font-ibm-sans">
-                        {tool.category}
-                      </span>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mb-8">
-                      <div className="flex flex-wrap gap-2">
-                        {tool.features.slice(0, 3).map((feature) => (
-                          <span
-                            key={feature}
-                            className="text-xs font-medium text-research-600 bg-research-100 px-3 py-1 rounded-full border border-research-200 font-ibm-sans"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                        {tool.features.length > 3 && (
-                          <span className="text-xs text-accent-ai-purple font-semibold font-ibm-sans">
-                            +{tool.features.length - 3} more
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex space-x-3">
-                        {tool.demoUrl && (
-                          <Link
-                            href={tool.demoUrl}
-                            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white text-sm font-bold rounded-xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300 font-ibm-sans"
-                          >
-                            <Play className="h-4 w-4 mr-2" />
-                            Demo
-                          </Link>
-                        )}
-                        <a
-                          href={tool.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm text-accent-ai-purple text-sm font-bold rounded-xl border border-accent-ai-purple/20 hover:border-accent-ai-purple/40 shadow-lab-card hover:shadow-card-hover transition-all duration-300 font-ibm-sans"
-                        >
-                          <Code className="h-4 w-4 mr-2" />
-                          Code
-                        </a>
-                      </div>
-                      
-                      {tool.downloadCount && (
-                        <div className="flex items-center px-3 py-1 bg-white/80 backdrop-blur-sm rounded-xl border border-accent-ai-purple/20 shadow-soft">
-                          <Download className="h-4 w-4 mr-2 text-accent-ai-purple" />
-                          <span className="text-sm font-semibold text-research-600 font-ibm-sans">{tool.downloadCount}</span>
+                <Link
+                  href={tool.demoUrl}
+                  aria-label={tool.title}
+                  className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ai-purple rounded-3xl"
+                >
+                  <div className="relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 overflow-hidden border border-accent-ai-purple/10 hover:border-accent-ai-purple/30">
+                    <div className="h-2 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="relative p-8">
+                      <div className="flex items-start justify-between mb-6">
+                        <div className="w-14 h-14 bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-2xl flex items-center justify-center shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
+                          <tool.icon className="h-7 w-7 text-white" />
                         </div>
-                      )}
+                        <span className={`px-3 py-1 text-xs font-bold rounded-full font-ibm-sans ${
+                          tool.status === 'Available' ? 'bg-green-100 text-green-700 border border-green-200' :
+                          tool.status === 'Beta' ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' :
+                          'bg-gray-100 text-gray-700 border border-gray-200'
+                        }`}>
+                          {tool.status}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-accent-deep-blue mb-4 group-hover:text-accent-ai-purple transition-colors duration-300 font-ibm-sans">
+                        {tool.title}
+                      </h3>
+                      <p className="text-research-600 leading-relaxed mb-6 font-ibm-sans">
+                        {tool.description}
+                      </p>
+
+                      <div className="mb-6">
+                        <span className="inline-flex items-center px-3 py-1 text-sm font-semibold bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 text-accent-ai-purple border border-accent-ai-purple/20 rounded-full font-ibm-sans">
+                          {tool.category}
+                        </span>
+                      </div>
+
+                      <div className="mb-8">
+                        <div className="flex flex-wrap gap-2">
+                          {tool.features.slice(0, 3).map((feature) => (
+                            <span
+                              key={feature}
+                              className="text-xs font-medium text-research-600 bg-research-100 px-3 py-1 rounded-full border border-research-200 font-ibm-sans"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                          {tool.features.length > 3 && (
+                            <span className="text-xs text-accent-ai-purple font-semibold font-ibm-sans">
+                              +{tool.features.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex space-x-3">
+                          {tool.demoUrl && (
+                            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white text-sm font-bold rounded-xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300 font-ibm-sans">
+                              <Play className="h-4 w-4 mr-2" />
+                              Demo
+                            </div>
+                          )}
+                          <a
+                            href={tool.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm text-accent-ai-purple text-sm font-bold rounded-xl border border-accent-ai-purple/20 hover:border-accent-ai-purple/40 shadow-lab-card hover:shadow-card-hover transition-all duration-300 font-ibm-sans"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Code className="h-4 w-4 mr-2" />
+                            Code
+                          </a>
+                        </div>
+                        
+                        {tool.downloadCount && (
+                          <div className="flex items-center px-3 py-1 bg-white/80 backdrop-blur-sm rounded-xl border border-accent-ai-purple/20 shadow-soft">
+                            <Download className="h-4 w-4 mr-2 text-accent-ai-purple" />
+                            <span className="text-sm font-semibold text-research-600 font-ibm-sans">{tool.downloadCount}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
+                         style={{ padding: '1px' }}>
+                      <div className="w-full h-full bg-white rounded-3xl" />
                     </div>
                   </div>
-
-                  {/* Hover Border Effect */}
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
-                       style={{ padding: '1px' }}>
-                    <div className="w-full h-full bg-white rounded-3xl" />
-                  </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
