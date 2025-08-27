@@ -14,6 +14,15 @@ DoD:
 - All cards fully clickable across pages
 - Subtle animations only; no heavy canvas/WebGL
 
+Production verification — 0 internal 4xx/5xx (Aug 27, 2025)
+- Verified via linkinator on https://traceremove.dev with skips for bot-protected domains
+- Internal routes: all 200 OK across /, /about, /research/*, /projects/*, /tools/*, /articles/*, /site-map, /legal/*
+- External known issues (non-blocking):
+  - academia.edu profile 404 (replaced with internal /academic)
+  - legacy GitHub profiles 404 (footer now points to https://github.com/blackcatserious)
+  - traceremove org repos 404 (tool “Code” links mapped to internal demo routes)
+- CSV attached in repository root as linkinator.csv
+
 Final Production Verification (in progress)
 - Running recursive link audit on https://traceremove.dev with skips for bot-protected domains.
 - Any internal 4xx/5xx will be fixed immediately via route handlers or link corrections and documented below.
