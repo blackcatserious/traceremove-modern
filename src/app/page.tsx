@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'lucide-react';
 import FeatureCard from '@/components/FeatureCard';
 import ResearchCard from '@/components/ResearchCard';
@@ -51,6 +52,18 @@ export default function Home() {
                 Traceremove is committed to exploring the intersection of artificial intelligence, 
                 ethics, and human understanding for responsible innovation.
               </p>
+            <div className="hidden md:grid grid-cols-3 gap-4 max-w-4xl mx-auto mb-10 opacity-90">
+              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
+                <Image src="/images/lab/lab-hero-1.svg" alt="AI Lab workspace gradient" fill sizes="(max-width: 768px) 100vw, 33vw" priority={false} className="object-cover" />
+              </div>
+              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
+                <Image src="/images/lab/lab-setup-analytics.svg" alt="Analytics setup abstract" fill sizes="(max-width: 768px) 100vw, 33vw" priority={false} className="object-cover" />
+              </div>
+              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
+                <Image src="/images/lab/lab-whiteboard-research.svg" alt="Research whiteboard abstract" fill sizes="(max-width: 768px) 100vw, 33vw" priority={false} className="object-cover" />
+              </div>
+            </div>
+
             </motion.div>
 
             {/* Main Feature Cards */}
@@ -67,6 +80,7 @@ export default function Home() {
                 gradient="from-blue-900/40 to-purple-900/40"
                 borderColor="border-blue-500/20"
                 iconGradient="from-blue-500 to-blue-600"
+                href="/about"
               />
               
               <FeatureCard
@@ -76,6 +90,7 @@ export default function Home() {
                 gradient="from-purple-900/40 to-violet-900/40"
                 borderColor="border-purple-500/20"
                 iconGradient="from-purple-500 to-purple-600"
+                href="/site-map"
               />
               
               <FeatureCard
@@ -85,6 +100,7 @@ export default function Home() {
                 gradient="from-violet-900/40 to-indigo-900/40"
                 borderColor="border-violet-500/20"
                 iconGradient="from-violet-500 to-violet-600"
+                href="/articles"
               />
             </motion.div>
           </div>
@@ -130,6 +146,7 @@ export default function Home() {
                 gradient="from-blue-900/40 to-cyan-900/40"
                 borderColor="border-blue-500/20"
                 iconGradient="from-blue-500 to-cyan-500"
+                href="/research/human-centered-ai"
               />
             </motion.div>
             
@@ -146,6 +163,7 @@ export default function Home() {
                 gradient="from-purple-900/40 to-pink-900/40"
                 borderColor="border-purple-500/20"
                 iconGradient="from-purple-500 to-pink-500"
+                href="/research/big-data-interpretability"
               />
             </motion.div>
             
@@ -162,6 +180,7 @@ export default function Home() {
                 gradient="from-violet-900/40 to-indigo-900/40"
                 borderColor="border-violet-500/20"
                 iconGradient="from-violet-500 to-indigo-500"
+                href="/research/agentic-systems-tool-use"
               />
             </motion.div>
           </motion.div>
@@ -182,6 +201,7 @@ export default function Home() {
               description="Learn about the background and expertise of our principal investigator."
               gradient="from-blue-900/40 to-purple-900/40"
               borderColor="border-blue-500/20"
+              href="/about"
             />
           </motion.div>
         </div>

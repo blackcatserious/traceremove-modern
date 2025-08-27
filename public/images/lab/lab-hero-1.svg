@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI lab abstract hero">
+  <defs>
+    <radialGradient id="g1" cx="30%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#6C63FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="70%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="#7056E6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#7056E6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="none"/>
+  <circle cx="250" cy="180" r="260" fill="url(#g1)"/>
+  <circle cx="930" cy="620" r="240" fill="url(#g2)"/>
+  <circle cx="600" cy="420" r="220" fill="url(#g3)"/>
+</svg>

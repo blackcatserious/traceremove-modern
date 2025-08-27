@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 interface InfoCardProps {
   title: string;
@@ -21,7 +22,7 @@ export default function InfoCard({
   className = "",
   href
 }: InfoCardProps) {
-  return (
+  const Card = (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -37,15 +38,13 @@ export default function InfoCard({
         stiffness: 150,
         damping: 20
       }}
-      className={`relative group cursor-pointer ${className}`}
+      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none ${className}`}
       style={{ perspective: '1500px' }}
+      aria-label={title}
     >
-      {/* Sophisticated Background Layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.15] via-white/[0.10] to-white/[0.05] rounded-4xl backdrop-blur-3xl border border-white/25 shadow-3xl"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/25 via-accent-lab-purple/15 to-transparent rounded-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-800"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/8 to-accent-lab-purple/15 rounded-4xl blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-600"></div>
-      
-      {/* Animated Mesh Overlay */}
       <motion.div
         animate={{ 
           backgroundPosition: ['0% 0%', '100% 100%'],
@@ -65,14 +64,10 @@ export default function InfoCard({
           backgroundSize: '100px 100px'
         }}
       />
-      
       <div className="absolute inset-[1px] rounded-4xl bg-gradient-to-br from-slate-900/98 via-slate-800/95 to-slate-900/98 backdrop-blur-3xl"></div>
-      
-      {/* Content Container */}
       <div className="relative p-12">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            {/* Floating Sparkle Indicator */}
             <motion.div
               animate={{ 
                 y: [0, -5, 0],
@@ -87,8 +82,6 @@ export default function InfoCard({
             >
               <Sparkles className="w-4 h-4 text-white" />
             </motion.div>
-
-            {/* Enhanced Info Typography */}
             <motion.h2 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -97,7 +90,6 @@ export default function InfoCard({
             >
               {title}
             </motion.h2>
-            
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -106,8 +98,6 @@ export default function InfoCard({
             >
               {description}
             </motion.p>
-
-            {/* Action Indicator */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -127,8 +117,6 @@ export default function InfoCard({
               </motion.div>
             </motion.div>
           </div>
-          
-          {/* Interactive Arrow with Advanced Animation */}
           <motion.div
             whileHover={{ 
               scale: 1.2, 
@@ -144,17 +132,12 @@ export default function InfoCard({
             }}
             className="ml-12 relative"
           >
-            {/* Arrow Background Glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/50 to-accent-lab-purple/50 rounded-full blur-lg scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            {/* Arrow Container */}
             <div className="relative w-16 h-16 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-full flex items-center justify-center shadow-2xl">
               <ArrowRight className="w-8 h-8 text-white drop-shadow-lg" />
             </div>
           </motion.div>
         </div>
-
-        {/* Bottom Progress Line */}
         <motion.div
           initial={{ width: 0 }}
           whileHover={{ width: '100%' }}
@@ -162,11 +145,14 @@ export default function InfoCard({
           className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-full"
         />
       </div>
-
-      {/* Ambient Corner Elements */}
       <div className="absolute top-8 right-8 w-4 h-4 bg-accent-ai-purple rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-400"></div>
       <div className="absolute top-12 right-12 w-2 h-2 bg-accent-lab-purple rounded-full opacity-40 group-hover:opacity-80 transition-opacity duration-400"></div>
       <div className="absolute bottom-8 left-8 w-3 h-3 bg-accent-lab-purple rounded-full opacity-50 group-hover:opacity-90 transition-opacity duration-400"></div>
     </motion.div>
   );
+  return href ? (
+    <Link href={href} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-ai-purple rounded-4xl">
+      {Card}
+    </Link>
+  ) : Card;
 }
