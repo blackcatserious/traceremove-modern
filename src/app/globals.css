@@ -3285,8 +3285,8 @@ code, .code, pre {
 /* Stage 2: minimal CSS patch */
 img, video { max-width: 100%; height: auto; display: block; }
 :root { overflow-wrap: anywhere; }
-h1 { font-size: clamp(2rem, 2vw + 1.5rem, 3.25rem); line-height: 1.1; }
-h2 { font-size: clamp(1.5rem, 1.2vw + 1rem, 2.25rem); line-height: 1.2; }
+h1 { font-size: clamp(2.25rem, 2.2vw + 1.5rem, 3.5rem); line-height: 1.08; }
+h2 { font-size: clamp(1.6rem, 1.4vw + 1rem, 2.5rem); line-height: 1.15; }
 .cards-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .hero, .glass-card-premium { overflow: hidden; }
 
@@ -3346,4 +3346,35 @@ a[href]:hover { text-decoration: underline; }
 }
 @media (prefers-reduced-motion: reduce) {
   .decorative-ai::after { animation: none; }
+}
+/* Decorative AI imagery — richer variant */
+.decorative-ai-rich {
+  position: relative;
+  isolation: isolate;
+}
+.decorative-ai-rich::after {
+  content:"";
+  position:absolute;
+  inset:-12%;
+  pointer-events:none;
+  z-index:0;
+  opacity:.12;
+  background-image:
+    url('/images/lab/lab-hero-1.svg'),
+    url('/images/lab/lab-whiteboard-research.svg'),
+    radial-gradient(closest-side, rgba(124,58,237,.10), transparent 70%),
+    radial-gradient(closest-side, rgba(6,182,212,.06), transparent 70%);
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
+  background-position: 10% 18%, 85% 75%, 78% 76%, 25% 85%;
+  background-size: 540px auto, 520px auto, 380px 380px, 300px 300px;
+  animation: aiFloat2 70s ease-in-out infinite;
+}
+@keyframes aiFloat2 {
+  0%,100% { transform: translate3d(0,0,0); }
+  25% { transform: translate3d(10px,-8px,0); }
+  50% { transform: translate3d(-8px,6px,0); }
+  75% { transform: translate3d(6px,8px,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .decorative-ai-rich::after { animation: none; }
 }
