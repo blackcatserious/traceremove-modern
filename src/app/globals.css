@@ -3426,6 +3426,8 @@ a[href]:hover { text-decoration: underline; }
   text-shadow: 0 0 12px rgba(124,58,237,.25);
 }
 .nav-premium .nav-link-premium.active .w-5 { color: #fff; }
+.nav-premium .nav-link-premium svg { display: block; vertical-align: middle; }
+.nav-premium .nav-link-premium { line-height: 1; }
 
 /* About page readability */
 .about-hero-overlay {
