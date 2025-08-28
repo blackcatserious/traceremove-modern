@@ -187,7 +187,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="nav-logo-icon"
             >
-              <img src="/brand/black-cat.svg" alt="Traceremove" className="w-5 h-5" />
+              <img src="/brand/black-cat-solid.svg" alt="Traceremove" className="w-6 h-6" />
             </motion.div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white font-ibm-sans whitespace-nowrap">
@@ -219,9 +219,9 @@ export default function Navigation() {
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <item.icon className="w-5 h-5 mr-2 text-white/90 group-hover:text-white transition-colors duration-300" />
+                    <item.icon className="w-5 h-5 mr-2 text-white drop-shadow-[0_0_6px_rgba(0,0,0,0.3)] group-hover:text-white transition-colors duration-300" />
                   </motion.div>
-                  <span className="font-ibm-sans text-white/90 group-hover:text-white transition-colors duration-300 tracking-tight">{item.label}</span>
+                  <span className="font-ibm-sans text-white group-hover:text-white transition-colors duration-300 tracking-tight">{item.label}</span>
                   
                   {/* Dropdown indicator */}
                   {item.dropdown && (

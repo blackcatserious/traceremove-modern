@@ -216,12 +216,12 @@ export default function About() {
               transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               className="mb-8"
             >
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-ibm-sans mb-6">
+              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-ibm-sans mb-6 text-black">
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
-                  className="block text-accent-deep-blue mb-2"
+                  className="block text-black mb-2"
                 >
                   Arthur
                 </motion.span>
@@ -229,7 +229,7 @@ export default function About() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
-                  className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 bg-clip-text text-transparent"
+                  className="block text-black"
                 >
                   Ziganshin
                 </motion.span>
@@ -249,7 +249,7 @@ export default function About() {
                 </span>
               </div>
               
-              <p className="text-xl sm:text-2xl text-research-600 max-w-4xl mx-auto mb-8 leading-relaxed font-ibm-sans">
+              <p className="text-xl sm:text-2xl text-neutral-800 max-w-4xl mx-auto mb-8 leading-relaxed font-ibm-sans">
                 Founder of Traceremove, Rarematrix, and Equality
               </p>
             </motion.div>

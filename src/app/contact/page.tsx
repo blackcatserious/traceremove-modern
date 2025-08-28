@@ -68,8 +68,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'arthur@traceremove.dev',
-    href: 'mailto:arthur@traceremove.dev',
+    value: 'artur@tracermove.com',
+    href: 'mailto:artur@tracermove.com',
     gradient: 'from-blue-500 to-purple-600'
   },
   {

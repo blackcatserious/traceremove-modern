@@ -3435,3 +3435,7 @@ a[href]:hover { text-decoration: underline; }
               radial-gradient(600px 200px at 30% 80%, rgba(124,58,237,.10), transparent 70%);
   backdrop-filter: blur(2px);
 }
+/* About hero text override for darker copy */
+.about-hero-dark .decorative-content,
+.about-hero-dark h1,
+.about-hero-dark p { color: #0a0a0a; }

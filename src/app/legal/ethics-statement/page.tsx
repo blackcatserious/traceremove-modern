@@ -814,9 +814,9 @@ export default function EthicsStatement() {
                   <div className="academic-card p-6">
                     <h3 className="text-lg font-semibold text-research-text mb-3">Contact Information</h3>
                     <div className="space-y-2 text-sm text-research-text-secondary">
-                      <p>• Ethics Committee: ethics@traceremove.dev</p>
-                      <p>• Research Director: research@traceremove.dev</p>
-                      <p>• General Inquiries: info@traceremove.dev</p>
+                      <p>• Ethics Committee: ethics@tracermove.com</p>
+                      <p>• Research Director: research@tracermove.com</p>
+                      <p>• General Inquiries: info@tracermove.com</p>
                       <p>• Anonymous Reporting: Available via website</p>
                     </div>
                   </div>

@@ -808,10 +808,10 @@ export default function PrivacyPolicy() {
                   <div className="academic-card p-6">
                     <h3 className="text-lg font-semibold text-research-text mb-3">Contact Information</h3>
                     <div className="space-y-2 text-sm text-research-text-secondary">
-                      <p>• Data Protection Officer: privacy@traceremove.dev</p>
-                      <p>• Privacy Requests: requests@traceremove.dev</p>
-                      <p>• General Inquiries: info@traceremove.dev</p>
-                      <p>• Security Issues: security@traceremove.dev</p>
+                      <p>• Data Protection Officer: privacy@tracermove.com</p>
+                      <p>• Privacy Requests: requests@tracermove.com</p>
+                      <p>• General Inquiries: info@tracermove.com</p>
+                      <p>• Security Issues: security@tracermove.com</p>
                     </div>
                   </div>
                   <div className="academic-card p-6">
