@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Section with Premium Glass Effect */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai-rich">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai-rich decorative-ai-motion">
         {/* Premium Content Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10 pointer-events-none" />

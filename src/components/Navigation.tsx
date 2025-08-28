@@ -200,7 +200,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-2 whitespace-nowrap">
             {navigationItems.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -221,7 +221,7 @@ export default function Navigation() {
                   >
                     <item.icon className="w-5 h-5 mr-2 text-white/90 group-hover:text-white transition-colors duration-300" />
                   </motion.div>
-                  <span className="font-ibm-sans text-white/90 group-hover:text-white transition-colors duration-300">{item.label}</span>
+                  <span className="font-ibm-sans text-white/90 group-hover:text-white transition-colors duration-300 tracking-tight">{item.label}</span>
                   
                   {/* Dropdown indicator */}
                   {item.dropdown && (

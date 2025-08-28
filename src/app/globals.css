@@ -3378,3 +3378,60 @@ a[href]:hover { text-decoration: underline; }
 @media (prefers-reduced-motion: reduce) {
   .decorative-ai-rich::after { animation: none; }
 }
+/* Additional decorative AI motion with dual-layer parallax */
+.decorative-ai-motion { position: relative; isolation: isolate; }
+.decorative-ai-motion::before,
+.decorative-ai-motion::after {
+  content:""; position:absolute; inset:-14%; pointer-events:none; z-index:0; opacity:.10;
+  background-repeat:no-repeat;
+  will-change: transform;
+}
+.decorative-ai-motion::before {
+  background-image:
+    url('/images/lab/lab-hero-1.svg'),
+    radial-gradient(closest-side, rgba(124,58,237,.10), transparent 70%);
+  background-position: 8% 20%, 78% 76%;
+  background-size: 520px auto, 360px 360px;
+  animation: aiParallaxSlow 80s ease-in-out infinite;
+}
+.decorative-ai-motion::after {
+  background-image:
+    url('/images/lab/lab-whiteboard-research.svg'),
+    radial-gradient(closest-side, rgba(6,182,212,.06), transparent 70%);
+  background-position: 85% 78%, 25% 85%;
+  background-size: 500px auto, 300px 300px;
+  animation: aiParallaxFast 55s ease-in-out infinite;
+}
+@keyframes aiParallaxSlow {
+  0%,100% { transform: translate3d(0,0,0); }
+  25% { transform: translate3d(12px,-10px,0); }
+  50% { transform: translate3d(-10px,8px,0); }
+  75% { transform: translate3d(8px,10px,0); }
+}
+@keyframes aiParallaxFast {
+  0%,100% { transform: translate3d(0,0,0); }
+  20% { transform: translate3d(-14px,10px,0); }
+  50% { transform: translate3d(12px,-12px,0) scale(1.01); }
+  80% { transform: translate3d(-8px,6px,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .decorative-ai-motion::before,
+  .decorative-ai-motion::after { animation: none; }
+}
+
+/* Navigation polish: stronger active state and nowrap guarantee */
+.nav-premium .nav-link-premium { white-space: nowrap; }
+.nav-premium .nav-link-premium.active {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(124,58,237,.25);
+}
+.nav-premium .nav-link-premium.active .w-5 { color: #fff; }
+
+/* About page readability */
+.about-hero-overlay {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(1200px 400px at 50% -10%, rgba(255,255,255,.7), transparent 60%),
+              linear-gradient(to bottom, rgba(255,255,255,.35), transparent 30%),
+              radial-gradient(600px 200px at 30% 80%, rgba(124,58,237,.10), transparent 70%);
+  backdrop-filter: blur(2px);
+}
