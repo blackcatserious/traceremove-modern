@@ -11,7 +11,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen">
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="relative aspect-[16/6] rounded-2xl overflow-hidden mb-8 decorative-blobs decorative-ai">
+        <div className="relative aspect-[16/6] rounded-2xl overflow-hidden mb-8 decorative-blobs decorative-ai-rich">
           <Image
             src="/images/lab/lab-hero-1.svg"
             alt="About visual"
