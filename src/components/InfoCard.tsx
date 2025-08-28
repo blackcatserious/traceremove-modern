@@ -38,7 +38,7 @@ export default function InfoCard({
         stiffness: 150,
         damping: 20
       }}
-      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none lab-card-lg lab-card-minh ${className}`}
+      className={`relative group cursor-pointer motion-reduce:transform-none motion-reduce:transition-none lab-card-lg lab-card-minh overflow-visible ${className}`}
       style={{ perspective: '1500px' }}
       aria-label={title}
     >
@@ -65,7 +65,7 @@ export default function InfoCard({
         }}
       />
       <div className="absolute inset-[1px] rounded-4xl bg-gradient-to-br from-slate-900/98 via-slate-800/95 to-slate-900/98 backdrop-blur-3xl"></div>
-      <div className="relative p-12 lab-card-padding">
+      <div className="relative p-12 pr-16 lab-card-padding">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <motion.div
@@ -119,18 +119,15 @@ export default function InfoCard({
           </div>
           <motion.div
             whileHover={{ 
-              scale: 1.2, 
-              rotate: -15,
-              x: 10,
-              y: -10
+              scale: 1.06
             }}
             transition={{ 
-              duration: 0.4,
+              duration: 0.25,
               type: "spring",
-              stiffness: 400,
-              damping: 15
+              stiffness: 350,
+              damping: 20
             }}
-            className="ml-12 relative"
+            className="ml-12 relative shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/50 to-accent-lab-purple/50 rounded-full blur-lg scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="relative w-16 h-16 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-full flex items-center justify-center shadow-2xl">
