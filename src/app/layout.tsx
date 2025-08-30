@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { BackgroundProvider } from "@/components/BackgroundTester";
 import VantaBackground from "@/components/VantaBackground";
 import DynamicLabBackground from "@/components/DynamicLabBackground";
@@ -235,6 +236,7 @@ export default function RootLayout({
             </div>
           </main>
           <Footer />
+          <ChatWidget />
         </BackgroundProvider>
       </body>
     </html>
