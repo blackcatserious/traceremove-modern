@@ -1,14 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { OpenAI } from 'openai';
 import { getPersonaByHost, detectLanguage } from '@/lib/bot.config';
 import { getContext } from '@/lib/rag';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-function getOpenAIClient() {
+async function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey || apiKey.includes('your_') || apiKey === '') {
+    throw new Error('OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.');
+  }
+  
+  const { OpenAI } = await import('openai');
   return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: apiKey,
   });
 }
 
@@ -60,7 +65,7 @@ export async function POST(request: NextRequest) {
     
     messages.push({ role: 'user', content: message });
     
-    const openai = getOpenAIClient();
+    const openai = await getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages,

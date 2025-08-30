@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Client as NotionClient } from '@notionhq/client';
-import { OpenAI } from 'openai';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
@@ -9,9 +8,15 @@ const notion = new NotionClient({
   auth: process.env.NOTION_TOKEN,
 });
 
-function getOpenAIClient() {
+async function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey || apiKey.includes('your_') || apiKey === '') {
+    throw new Error('OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.');
+  }
+  
+  const { OpenAI } = await import('openai');
   return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: apiKey,
   });
 }
 
@@ -107,7 +112,7 @@ async function generateDailyTasks(): Promise<SchedulerTask[]> {
   
   for (const promptConfig of prompts) {
     try {
-      const openai = getOpenAIClient();
+      const openai = await getOpenAIClient();
       const completion = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
