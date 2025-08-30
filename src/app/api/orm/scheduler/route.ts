@@ -9,9 +9,11 @@ const notion = new NotionClient({
   auth: process.env.NOTION_TOKEN,
 });
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 interface SchedulerTask {
   type: 'social_post' | 'pr_response' | 'content_plan';
@@ -105,6 +107,7 @@ async function generateDailyTasks(): Promise<SchedulerTask[]> {
   
   for (const promptConfig of prompts) {
     try {
+      const openai = getOpenAIClient();
       const completion = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [

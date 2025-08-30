@@ -6,9 +6,11 @@ import { getContext } from '@/lib/rag';
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,6 +60,7 @@ export async function POST(request: NextRequest) {
     
     messages.push({ role: 'user', content: message });
     
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages,
