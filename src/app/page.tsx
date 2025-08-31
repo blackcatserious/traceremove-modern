@@ -1,4 +1,7 @@
 'use client';
+import dynamic from 'next/dynamic';
+import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+
 
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -206,6 +209,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+      {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AskTraceremoveAI compact />}
     </div>
   );
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { 
@@ -465,6 +467,7 @@ export default function ToolsPage() {
           </motion.div>
         </div>
       </section>
+      {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AskTraceremoveAI compact />}
     </div>
   );
 }
