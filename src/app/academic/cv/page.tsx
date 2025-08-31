@@ -401,7 +401,7 @@ export default function CV() {
                   <div>
                     <h3 className="text-lg font-semibold text-research-text mb-2">Professional Contact</h3>
                     <div className="space-y-2 text-research-text-secondary">
-                      <p>Email: artur@tracermove.com</p>
+                      <p>Email: artur@traceremove.com</p>
                       <p>Website: traceremove.dev</p>
                       <p>Location: International (Remote)</p>
                     </div>

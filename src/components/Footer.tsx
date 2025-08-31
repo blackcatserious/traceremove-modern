@@ -76,7 +76,7 @@ export default function Footer() {
               >
                 <Mail className="w-5 h-5 text-accent-ai-purple mr-3" />
                 <span className="text-slate-300 font-ibm-sans group-hover:text-white transition-colors duration-300">
-                  artur@tracermove.com
+                  artur@traceremove.com
                 </span>
               </motion.div>
             </motion.div>
