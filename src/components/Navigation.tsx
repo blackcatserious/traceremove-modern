@@ -219,7 +219,7 @@ export default function Navigation() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <item.icon className="w-5 h-5 mr-2 shrink-0 align-middle text-white drop-shadow-[0_0_6px_rgba(0,0,0,0.3)] group-hover:text-white transition-colors duration-300" />
+                    <item.icon strokeWidth={2.2} className="w-5 h-5 mr-2 shrink-0 align-middle text-white drop-shadow-[0_0_6px_rgba(0,0,0,0.35)] group-hover:text-white transition-colors duration-300" />
                   </motion.div>
                   <span className="font-ibm-sans text-white leading-none group-hover:text-white transition-colors duration-300 tracking-tight">{item.label}</span>
                   
