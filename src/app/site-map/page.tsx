@@ -142,6 +142,31 @@ const siteStructure = {
       title: "Digital Rights & AI",
       path: "/research/digital-rights-ai",
       description: "Protecting digital rights and freedoms in the age of artificial intelligence."
+    },
+    {
+      title: "Interpretability Case Studies",
+      path: "/research/interpretability-case-studies",
+      description: "Real-world interpretability investigations across complex AI systems."
+    },
+    {
+      title: "RLHF Alternatives",
+      path: "/research/rlhf-alternatives",
+      description: "Exploring reinforcement learning alternatives for aligning AI systems."
+    },
+    {
+      title: "Robustness Benchmarks",
+      path: "/research/robustness-benchmarks",
+      description: "Benchmarking AI system robustness under distributional shift and adversarial settings."
+    },
+    {
+      title: "Privacy Attacks & Defenses",
+      path: "/research/privacy-attacks-defenses",
+      description: "Survey of privacy attacks and defense strategies for modern AI systems."
+    },
+    {
+      title: "Societal Impacts of AI",
+      path: "/research/societal-impacts",
+      description: "Analyzing broad societal implications of AI deployment at scale."
     }
   ],
   projects: [
@@ -179,6 +204,31 @@ const siteStructure = {
       title: "Real-World AI Deployments",
       path: "/projects/real-world-ai-deployments",
       description: "Case studies and best practices for deploying AI systems in production environments."
+    },
+    {
+      title: "Ethical Evaluation Suite",
+      path: "/projects/ethical-eval-suite",
+      description: "Evaluation suite for ethical alignment and safety in AI systems."
+    },
+    {
+      title: "Dataset Curation Tool",
+      path: "/projects/dataset-curation-tool",
+      description: "Interactive tool for curating high-quality, compliant datasets."
+    },
+    {
+      title: "Agent Sandbox",
+      path: "/projects/agent-sandbox",
+      description: "Safe experimentation environment for agentic AI behaviors."
+    },
+    {
+      title: "Long-Context Explorer",
+      path: "/projects/long-context-explorer",
+      description: "Exploring model behavior and retrieval over very long contexts."
+    },
+    {
+      title: "Transparency Dashboard",
+      path: "/projects/transparency-dashboard",
+      description: "Unified dashboard for model transparency, provenance, and oversight."
     }
   ],
   tools: [
@@ -258,6 +308,31 @@ const siteStructure = {
       title: "Reading List",
       path: "/academic/reading-list",
       description: "Curated reading lists for AI research, ethics, and philosophy of technology."
+    },
+    {
+      title: "Tutorials",
+      path: "/academic/tutorials",
+      description: "Hands-on tutorials and guides for students and practitioners."
+    },
+    {
+      title: "Workshops",
+      path: "/academic/workshops",
+      description: "Interactive workshops and masterclasses on AI research topics."
+    },
+    {
+      title: "Grants",
+      path: "/academic/grants",
+      description: "Funding programs and grants for AI research initiatives."
+    },
+    {
+      title: "Collaboration Call",
+      path: "/academic/collaboration-call",
+      description: "Open call for research collaborations and joint projects."
+    },
+    {
+      title: "Media Kit",
+      path: "/academic/media-kit",
+      description: "Brand assets, bios, and speaking information for media use."
     }
   ],
   articles: [
@@ -310,6 +385,31 @@ const siteStructure = {
       title: "Case Study: AI in Social Systems",
       path: "/articles/case-study-ai-social-systems",
       description: "Real-world case study of AI integration in complex social and organizational systems."
+    },
+    {
+      title: "AI and Democracy",
+      path: "/articles/ai-and-democracy",
+      description: "Exploring AI’s impact on democratic processes and institutions."
+    },
+    {
+      title: "UX vs Safety in AI Systems",
+      path: "/articles/ux-vs-safety",
+      description: "Balancing delightful user experience with robust safety guardrails."
+    },
+    {
+      title: "Data Governance for LLMs",
+      path: "/articles/data-governance-llms",
+      description: "Policies and practices for dataset sourcing, consent, and accountability."
+    },
+    {
+      title: "Agentic Evaluation Methods",
+      path: "/articles/agentic-eval-methods",
+      description: "Evaluating tool-using, multi-step agents beyond simple win rates."
+    },
+    {
+      title: "Open vs Closed Models — Part II",
+      path: "/articles/open-vs-closed-2",
+      description: "Tradeoffs across safety, capability, governance, and ecosystem health."
     }
   ],
   additionalPages: [
