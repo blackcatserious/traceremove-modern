@@ -229,7 +229,7 @@ export default function Navigation() {
                       animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown className="w-4 h-4 ml-1 transition-colors duration-300" />
+                      <ChevronDown strokeWidth={2.2} className="w-4 h-4 ml-1 transition-colors duration-300" />
                     </motion.div>
                   )}
                   
@@ -274,7 +274,7 @@ export default function Navigation() {
                                   whileHover={{ scale: 1.1, rotate: 5 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
-                                  <dropdownItem.icon className="w-5 h-5 mr-3 text-accent-ai-purple/70 group-hover:text-accent-ai-purple transition-colors duration-200" />
+                                  <dropdownItem.icon strokeWidth={2.1} className="w-5 h-5 mr-3 text-accent-ai-purple/70 group-hover:text-accent-ai-purple transition-colors duration-200" />
                                 </motion.div>
                                 <span className="font-medium text-sm">{dropdownItem.label}</span>
                                 
@@ -322,7 +322,7 @@ export default function Navigation() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="w-6 h-6" />
+                  <X strokeWidth={2.2} className="w-6 h-6" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -332,7 +332,7 @@ export default function Navigation() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className="w-6 h-6" />
+                  <Menu strokeWidth={2.2} className="w-6 h-6" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -385,7 +385,7 @@ export default function Navigation() {
                     
                     {/* Dropdown indicator for mobile */}
                     {item.dropdown && (
-                      <ChevronDown className="w-4 h-4 ml-2 text-accent-ai-purple/70" />
+                      <ChevronDown strokeWidth={2.2} className="w-4 h-4 ml-2 text-accent-ai-purple/70" />
                     )}
                   </Link>
                   
