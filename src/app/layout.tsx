@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
+import AskTraceremoveAI from "@/components/AskTraceremoveAI";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -196,6 +197,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </BackgroundProvider>
+        {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
+          <AskTraceremoveAI compact />
+        )}
       </body>
     </html>
   );
