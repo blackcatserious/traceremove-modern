@@ -215,29 +215,17 @@ export default function Navigation() {
                   href={item.href}
                   className={`nav-link-premium inline-flex items-center gap-2 leading-none whitespace-nowrap group ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.06 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    <span className="inline-flex items-center justify-center w-8 h-8 mr-2 rounded-xl bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow-md">
-                      <item.icon strokeWidth={2.8} className="w-6 h-6 shrink-0 align-middle text-white drop-shadow-[0_0_12px_rgba(0,0,0,0.6)] transition-colors duration-300" />
-                    </span>
-                  </motion.div>
-                  <span className="font-ibm-sans text-white leading-none group-hover:text-white transition-colors duration-300 tracking-tight drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]">{item.label}</span>
-                  
-                  {/* Dropdown indicator */}
+                  <span className="font-ibm-sans text-white leading-none group-hover:text-white transition-colors duration-300 tracking-tight drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]">
+                    {item.label}
+                  </span>
                   {item.dropdown && (
                     <motion.div
                       animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <span className="inline-flex items-center justify-center w-6 h-6 ml-1 rounded-lg bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow">
-                        <ChevronDown strokeWidth={2.6} className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
-                      </span>
+                      <ChevronDown strokeWidth={2.6} className="w-4 h-4 ml-1 text-white group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
                     </motion.div>
                   )}
-                  
-                  {/* Active indicator */}
                   {isActive(item.href) && (
                     <motion.div
                       layoutId="activeTab"
@@ -246,9 +234,6 @@ export default function Navigation() {
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />
                   )}
-                  
-                  {/* Hover glow effect */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent-ai-purple/0 via-accent-ai-purple/5 to-accent-lab-purple/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
 
                 {/* Dropdown Menu */}
