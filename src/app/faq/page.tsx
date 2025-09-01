@@ -71,7 +71,7 @@ const faqData = [
       {
         id: 4,
         question: "How can I get involved with Traceremove?",
-        answer: "There are several ways to get involved: (1) Follow our research through publications and updates, (2) Participate in our research studies when opportunities arise, (3) Collaborate on research projects if you're an academic or industry researcher, (4) Engage with our open-source tools and provide feedback, (5) Join our community discussions and workshops. Contact us at info@traceremove.dev to explore collaboration opportunities."
+        answer: "There are several ways to get involved: (1) Follow our research through publications and updates, (2) Participate in our research studies when opportunities arise, (3) Collaborate on research projects if you're an academic or industry researcher, (4) Engage with our open-source tools and provide feedback, (5) Join our community discussions and workshops. Contact us at artur@traceremove.com to explore collaboration opportunities."
       }
     ]
   },
@@ -121,7 +121,7 @@ const faqData = [
       {
         id: 12,
         question: "How do I report technical issues or provide feedback?",
-        answer: "We welcome your feedback and are committed to resolving issues promptly: (1) Technical issues: support@traceremove.dev, (2) General feedback: feedback@traceremove.dev, (3) Research inquiries: research@traceremove.dev, (4) Privacy concerns: privacy@traceremove.dev, (5) Use our contact form for detailed reports, (6) Follow up on GitHub for open-source projects, and (7) Participate in user surveys and feedback sessions."
+        answer: "We welcome your feedback and are committed to resolving issues promptly: write to artur@traceremove.com or use the contact form. You can also follow up on GitHub for open-source projects and participate in user surveys and feedback sessions."
       }
     ]
   },
@@ -502,11 +502,11 @@ export default function FAQ() {
                   <div className="academic-card p-6">
                     <h3 className="text-lg font-semibold text-research-text mb-3">Contact Options</h3>
                     <div className="space-y-2 text-sm text-research-text-secondary">
-                      <p>• General inquiries: info@traceremove.dev</p>
-                      <p>• Research questions: research@traceremove.dev</p>
-                      <p>• Technical support: support@traceremove.dev</p>
-                      <p>• Collaboration: partnerships@traceremove.dev</p>
-                      <p>• Media inquiries: media@traceremove.dev</p>
+                      <p>• General inquiries: artur@traceremove.com</p>
+                      <p>• Research questions: artur@traceremove.com</p>
+                      <p>• Technical support: artur@traceremove.com</p>
+                      <p>• Collaboration: artur@traceremove.com</p>
+                      <p>• Media inquiries: artur@traceremove.com</p>
                     </div>
                   </div>
                   <div className="academic-card p-6">
