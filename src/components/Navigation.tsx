@@ -259,6 +259,14 @@ export default function Navigation() {
                                 href={dropdownItem.href}
                                 className="flex items-center px-4 py-3 rounded-xl text-research-text hover:text-accent-ai-purple hover:bg-accent-ai-purple/10 transition-all duration-200 group"
                               >
+                                <motion.div
+                                  whileHover={{ scale: 1.1, rotate: 5 }}
+                                  whileTap={{ scale: 0.9 }}
+                                >
+                                  <span className="inline-flex items-center justify-center w-8 h-8 mr-3 rounded-xl bg-white/12 ring-1 ring-white/20 backdrop-blur-sm shadow">
+                                    <dropdownItem.icon strokeWidth={2.6} className="w-5 h-5 text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]" />
+                                  </span>
+                                </motion.div>
                                 <span className="font-medium text-sm">{dropdownItem.label}</span>
                                 <motion.div
                                   initial={{ width: 0 }}
@@ -345,6 +353,14 @@ export default function Navigation() {
                     onClick={() => setIsOpen(false)}
                     className="mobile-menu-link"
                   >
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow-md">
+                        <item.icon strokeWidth={2.8} className={`w-6 h-6 transition-colors duration-300 ${isActive(item.href) ? 'text-white' : 'text-white group-hover:text-white'} drop-shadow-[0_0_12px_rgba(0,0,0,0.6)]`} />
+                      </span>
+                    </motion.div>
                     <span className="font-ibm-sans text-lg">{item.label}</span>
                     {isActive(item.href) && (
                       <motion.div
@@ -373,6 +389,9 @@ export default function Navigation() {
                             onClick={() => setIsOpen(false)}
                             className="flex items-center px-3 py-2 rounded-lg text-research-text-secondary hover:text-accent-ai-purple hover:bg-accent-ai-purple/5 transition-all duration-200 group"
                           >
+                            <span className="inline-flex items-center justify-center w-8 h-8 mr-3 rounded-xl bg-white/12 ring-1 ring-white/20 backdrop-blur-sm shadow">
+                              <dropdownItem.icon strokeWidth={2.6} className="w-4 h-4 text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.45)]" />
+                            </span>
                             <span className="text-sm font-medium">{dropdownItem.label}</span>
                           </Link>
                         </motion.div>
