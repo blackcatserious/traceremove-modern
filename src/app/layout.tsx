@@ -198,7 +198,10 @@ export default function RootLayout({
           <Footer />
         </BackgroundProvider>
         {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
-          <AskTraceremoveAI compact />
+          <>
+            <AskTraceremoveAI compact />
+            <img src="/brand/black-cat-geo.svg" alt="" aria-hidden="true" className="cat-geo" />
+          </>
         )}
       </body>
     </html>
