@@ -176,7 +176,7 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`nav-premium ${scrolled ? 'scrolled' : ''}`}
+      className={`nav-premium z-50 ${scrolled ? 'scrolled' : ''}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -219,7 +219,9 @@ export default function Navigation() {
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.96 }}
                   >
-                    <item.icon strokeWidth={2.6} className="w-5 h-5 mr-2 shrink-0 align-middle text-white group-hover:text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-colors duration-300" />
+                    <span className="inline-flex items-center justify-center w-8 h-8 mr-2 rounded-xl bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow-md">
+                      <item.icon strokeWidth={2.8} className="w-6 h-6 shrink-0 align-middle text-white drop-shadow-[0_0_12px_rgba(0,0,0,0.6)] transition-colors duration-300" />
+                    </span>
                   </motion.div>
                   <span className="font-ibm-sans text-white leading-none group-hover:text-white transition-colors duration-300 tracking-tight drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]">{item.label}</span>
                   
@@ -229,7 +231,9 @@ export default function Navigation() {
                       animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown strokeWidth={2.6} className="w-4 h-4 ml-1 text-white group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
+                      <span className="inline-flex items-center justify-center w-6 h-6 ml-1 rounded-lg bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow">
+                        <ChevronDown strokeWidth={2.6} className="w-4 h-4 text-white group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
+                      </span>
                     </motion.div>
                   )}
                   
@@ -274,7 +278,9 @@ export default function Navigation() {
                                   whileHover={{ scale: 1.1, rotate: 5 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
-                                  <dropdownItem.icon strokeWidth={2.4} className="w-5 h-5 mr-3 text-white group-hover:text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.45)]" />
+                                  <span className="inline-flex items-center justify-center w-8 h-8 mr-3 rounded-xl bg-white/12 ring-1 ring-white/20 backdrop-blur-sm shadow">
+                                    <dropdownItem.icon strokeWidth={2.6} className="w-5 h-5 text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]" />
+                                  </span>
                                 </motion.div>
                                 <span className="font-medium text-sm">{dropdownItem.label}</span>
                                 
@@ -368,9 +374,9 @@ export default function Navigation() {
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <item.icon strokeWidth={2.6} className={`w-6 h-6 transition-colors duration-300 ${
-                        isActive(item.href) ? 'text-white' : 'text-white group-hover:text-white'
-                      } drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]`} />
+                      <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/12 ring-1 ring-white/25 backdrop-blur-sm shadow-md">
+                        <item.icon strokeWidth={2.8} className={`w-6 h-6 transition-colors duration-300 ${isActive(item.href) ? 'text-white' : 'text-white group-hover:text-white'} drop-shadow-[0_0_12px_rgba(0,0,0,0.6)]`} />
+                      </span>
                     </motion.div>
                     <span className="font-ibm-sans text-lg">{item.label}</span>
                     
@@ -385,7 +391,7 @@ export default function Navigation() {
                     
                     {/* Dropdown indicator for mobile */}
                     {item.dropdown && (
-                      <ChevronDown strokeWidth={2.4} className="w-4 h-4 ml-2 text-white/80" />
+                      <ChevronDown strokeWidth={2.4} className="w-4 h-4 ml-2 text-white" />
                     )}
                   </Link>
                   
@@ -404,7 +410,9 @@ export default function Navigation() {
                             onClick={() => setIsOpen(false)}
                             className="flex items-center px-3 py-2 rounded-lg text-research-text-secondary hover:text-accent-ai-purple hover:bg-accent-ai-purple/5 transition-all duration-200 group"
                           >
-                            <dropdownItem.icon className="w-4 h-4 mr-3 text-accent-ai-purple/50 group-hover:text-accent-ai-purple transition-colors duration-200" />
+                            <span className="inline-flex items-center justify-center w-8 h-8 mr-3 rounded-xl bg-white/12 ring-1 ring-white/20 backdrop-blur-sm shadow">
+                              <dropdownItem.icon strokeWidth={2.6} className="w-4 h-4 text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.45)]" />
+                            </span>
                             <span className="text-sm font-medium">{dropdownItem.label}</span>
                           </Link>
                         </motion.div>

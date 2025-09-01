@@ -3422,14 +3422,17 @@ a[href]:hover { text-decoration: underline; }
 }
 
 /* Navigation polish: stronger active state and nowrap guarantee */
-.nav-premium .nav-link-premium { white-space: nowrap; }
+.nav-premium .nav-link-premium { white-space: nowrap; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,.35); line-height: 1; }
 .nav-premium .nav-link-premium.active {
   color: #fff;
   text-shadow: 0 0 12px rgba(124,58,237,.25);
 }
-.nav-premium .nav-link-premium.active .w-5 { color: #fff; }
-.nav-premium .nav-link-premium svg { display: block; vertical-align: middle; }
-.nav-premium .nav-link-premium { line-height: 1; }
+.nav-premium .nav-link-premium .w-5,
+.nav-premium .nav-link-premium svg { color: #fff; }
+.nav-premium .nav-link-premium svg { display: block; vertical-align: middle; filter: drop-shadow(0 0 10px rgba(0,0,0,.5)); }
+.nav-premium .nav-link-premium .inline-flex.bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+.nav-premium .nav-link-premium .ring-white\/25 { box-shadow: 0 0 0 1px rgba(255,255,255,0.25) inset; }
+.nav-premium .nav-link-premium svg { stroke: #fff; }
 
 /* About page readability */
 .about-hero-overlay {
@@ -3439,6 +3442,8 @@ a[href]:hover { text-decoration: underline; }
               radial-gradient(600px 200px at 30% 80%, rgba(124,58,237,.10), transparent 70%);
   backdrop-filter: blur(2px);
 }
+/* Mobile chevron and label visibility */
+.mobile-menu-premium .mobile-menu-link .w-4.h-4 { color:#fff; filter: drop-shadow(0 0 8px rgba(0,0,0,.45)); }
 /* About hero text override for darker copy */
 .about-hero-dark .decorative-content,
 .about-hero-dark h1,
