@@ -198,11 +198,11 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="relative rounded-3xl p-8 sm:p-10 bg-white/10 backdrop-blur-xl border border-white/15 shadow-xl hover:shadow-2xl transition-shadow">
+            <div className="about-card relative rounded-3xl p-8 sm:p-10 bg-white border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <img src="/brand/black-cat-solid.svg" alt="" aria-hidden className="w-7 h-7 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
-                  <h3 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                     About Artur Ziganshin
                   </h3>
                 </div>
@@ -213,23 +213,26 @@ export default function Home() {
                 </div>
               </div>
 
-              <p className="mt-4 text-base sm:text-lg text-white/90">
+              <p className="mt-4 text-base sm:text-lg text-gray-900/90">
                 “The struggle itself toward the heights is enough to fill a person&rsquo;s heart. One must imagine Sisyphus happy.” — Albert Camus
               </p>
 
-              <p className="mt-3 text-sm sm:text-base text-white/80">
+              <p className="mt-3 text-sm sm:text-base text-gray-800/90">
                 Learn about the background and expertise of our principal investigator.
               </p>
 
               <div className="mt-6">
-                <a href="/about" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800 transition-colors shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-ai-purple">
+                <a href="/about" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-black transition-colors shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900">
                   <span className="font-medium">Learn More</span>
                   <svg viewBox="0 0 24 24" className="w-4 h-4"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
               </div>
             </div>
+            <img src="/brand/black-cat-geo.svg" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
+
           </motion.div>
         </div>
+
       </section>
       {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AskTraceremoveAI compact />}
     </div>

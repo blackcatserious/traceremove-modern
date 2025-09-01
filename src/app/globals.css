@@ -3443,3 +3443,34 @@ a[href]:hover { text-decoration: underline; }
 .about-hero-dark .decorative-content,
 .about-hero-dark h1,
 .about-hero-dark p { color: #0a0a0a; }
+/* Cat runner: traverse across homepage when About card is hovered or focused */
+@keyframes cat-run-path {
+  0%   { transform: translate(-10%, 5vh) scale(1) rotate(0deg);   opacity: .95; }
+  20%  { transform: translate(10%, 0vh) scale(1.02) rotate(3deg); }
+  40%  { transform: translate(35%, -4vh) scale(1.04) rotate(-2deg); }
+  60%  { transform: translate(60%, 1vh) scale(1.02) rotate(1deg); }
+  80%  { transform: translate(82%, -3vh) scale(1.03) rotate(-2deg); }
+  100% { transform: translate(105%, 0vh) scale(1) rotate(0deg);   opacity: .95; }
+}
+.cat-runner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  z-index: 30;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,.45));
+  opacity: 0;
+}
+.about-card:hover ~ .cat-runner,
+.about-card:focus-within ~ .cat-runner {
+  opacity: 1;
+  animation: cat-run-path 3.2s cubic-bezier(.3,.7,.2,1) 1 both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-card:hover ~ .cat-runner,
+  .about-card:focus-within ~ .cat-runner {
+    animation: none;
+  }
+}

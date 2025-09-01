@@ -216,12 +216,12 @@ export default function Navigation() {
                   className={`nav-link-premium inline-flex items-center gap-2 leading-none whitespace-nowrap group ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
                 >
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.96 }}
                   >
-                    <item.icon strokeWidth={2.4} className="w-5 h-5 mr-2 shrink-0 align-middle text-white/95 group-hover:text-white drop-shadow-[0_0_8px_rgba(0,0,0,0.45)] transition-colors duration-300" />
+                    <item.icon strokeWidth={2.6} className="w-5 h-5 mr-2 shrink-0 align-middle text-white group-hover:text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-colors duration-300" />
                   </motion.div>
-                  <span className="font-ibm-sans text-white/95 leading-none group-hover:text-white transition-colors duration-300 tracking-tight">{item.label}</span>
+                  <span className="font-ibm-sans text-white leading-none group-hover:text-white transition-colors duration-300 tracking-tight drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]">{item.label}</span>
                   
                   {/* Dropdown indicator */}
                   {item.dropdown && (
@@ -229,7 +229,7 @@ export default function Navigation() {
                       animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown strokeWidth={2.4} className="w-4 h-4 ml-1 text-white/90 group-hover:text-white transition-colors duration-300" />
+                      <ChevronDown strokeWidth={2.6} className="w-4 h-4 ml-1 text-white group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
                     </motion.div>
                   )}
                   
@@ -274,7 +274,7 @@ export default function Navigation() {
                                   whileHover={{ scale: 1.1, rotate: 5 }}
                                   whileTap={{ scale: 0.9 }}
                                 >
-                                  <dropdownItem.icon strokeWidth={2.2} className="w-5 h-5 mr-3 text-white/90 group-hover:text-white transition-colors duration-200 drop-shadow-[0_0_6px_rgba(0,0,0,0.35)]" />
+                                  <dropdownItem.icon strokeWidth={2.4} className="w-5 h-5 mr-3 text-white group-hover:text-white transition-colors duration-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.45)]" />
                                 </motion.div>
                                 <span className="font-medium text-sm">{dropdownItem.label}</span>
                                 
@@ -368,9 +368,9 @@ export default function Navigation() {
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <item.icon strokeWidth={2.4} className={`w-6 h-6 transition-colors duration-300 ${
-                        isActive(item.href) ? 'text-white' : 'text-white/90 group-hover:text-white'
-                      }`} />
+                      <item.icon strokeWidth={2.6} className={`w-6 h-6 transition-colors duration-300 ${
+                        isActive(item.href) ? 'text-white' : 'text-white group-hover:text-white'
+                      } drop-shadow-[0_0_10px_rgba(0,0,0,0.5)]`} />
                     </motion.div>
                     <span className="font-ibm-sans text-lg">{item.label}</span>
                     
