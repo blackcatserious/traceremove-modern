@@ -358,6 +358,8 @@ export default function About() {
               </motion.div>
             </motion.div>
           </div>
+        <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
+
         </div>
       </section>
 
