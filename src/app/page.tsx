@@ -201,7 +201,9 @@ export default function Home() {
             <div className="about-card relative rounded-3xl p-8 sm:p-10 bg-white border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <img src="/brand/black-cat-solid.svg" alt="" aria-hidden className="w-7 h-7 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]" />
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white shadow-md ring-1 ring-black/5">
+                    <img src="/brand/black-cat-solid.svg?v=2" alt="" aria-hidden className="w-6 h-6" />
+                  </span>
                   <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                     About Artur Ziganshin
                   </h3>
@@ -228,7 +230,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <img src="/brand/black-cat-geo.svg" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
+            <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
 
           </motion.div>
         </div>
