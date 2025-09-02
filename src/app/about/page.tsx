@@ -358,7 +358,7 @@ export default function About() {
               </motion.div>
             </motion.div>
           </div>
-        <img src="/brand/icon.svg?v=2" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
+        <img src="/brand/icon.svg?v=3" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
 
         </div>
       </section>

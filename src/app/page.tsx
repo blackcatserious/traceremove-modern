@@ -230,7 +230,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <img src="/brand/icon.svg?v=2" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
+            <img src="/brand/icon.svg?v=3" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
 
           </motion.div>
         </div>
