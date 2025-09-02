@@ -107,8 +107,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1e3a8a" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
@@ -201,7 +201,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
           <>
             <AskTraceremoveAI compact />
-            <img src="/brand/black-cat-geo.svg" alt="" aria-hidden="true" className="cat-geo" />
+            <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-geo" />
           </>
         )}
       </body>
