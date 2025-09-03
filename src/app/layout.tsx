@@ -201,8 +201,8 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
           <>
             <AskTraceremoveAI compact />
-            <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-geo" />
-          </>
+            <img src="/brand/icon.svg?v=3" alt="" aria-hidden="true" className="cat-geo" />
+          
         )}
       </body>
     </html>
