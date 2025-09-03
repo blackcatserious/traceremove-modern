@@ -187,7 +187,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="nav-logo-icon"
             >
-              <img src="/brand/black-cat-solid.svg?v=2" alt="Traceremove" className="w-7 h-7" />
+              <img src="/brand/icon.svg?v=3" alt="Traceremove" className="w-7 h-7" />
             </motion.div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white font-ibm-sans whitespace-nowrap">

@@ -202,7 +202,7 @@ export default function Home() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white shadow-md ring-1 ring-black/5">
-                    <img src="/brand/black-cat-solid.svg?v=2" alt="" aria-hidden className="w-6 h-6" />
+                    <img src="/brand/icon.svg?v=3" alt="" aria-hidden className="w-6 h-6" />
                   </span>
                   <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                     About Artur Ziganshin
