@@ -228,9 +228,12 @@ export default function RootLayout({
         } as React.CSSProperties}
       >
         <BackgroundProvider>
+          <a href="#main-content" className="skip-to-content">
+            Skip to main content
+          </a>
           <Navigation />
           <Breadcrumb />
-          <main className="relative pt-24 pb-16 z-20">
+          <main id="main-content" className="relative pt-24 pb-16 z-20" tabIndex={-1}>
             {children}
           </main>
           <Footer />

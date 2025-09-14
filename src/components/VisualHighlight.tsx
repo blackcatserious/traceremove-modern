@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
 
 interface VisualHighlightProps {
   title: string;
@@ -48,9 +49,11 @@ export default function VisualHighlight({
           {imageUrl && (
             <div className="relative h-48 overflow-hidden">
               <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20`} />
-              <img
+              <Image
                 src={imageUrl}
                 alt={title}
+                width={400}
+                height={200}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               {badge && (
