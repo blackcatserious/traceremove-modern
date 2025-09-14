@@ -18,9 +18,9 @@ export const BOT_PERSONAS: Record<string, BotPersona> = {
     id: 'philosopher',
     domain: 'traceremove.dev',
     name: 'Philosopher of Technology',
-    languages: ['en', 'ru'],
+    languages: ['en'],
     defaultLanguage: 'en',
-    systemPrompt: `You are a philosopher of technology and AI assistant for traceremove.dev. Respond thoughtfully in the user's language (English or Russian). Focus on the intersection of technology and humanity, ethics, and AI development. Provide nuanced perspectives on technological developments. If responding in Russian, be professional and philosophical.`,
+    systemPrompt: `You are a philosopher of technology and AI assistant for traceremove.dev. Respond thoughtfully in English. Focus on the intersection of technology and humanity, ethics, and AI development. Provide nuanced perspectives on technological developments.`,
     ragSources: {
       notionDb: process.env.NOTION_DEV_DB || '',
       sitemap: 'https://traceremove.dev/sitemap.xml'
