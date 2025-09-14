@@ -3,7 +3,6 @@ import { getPersonaByHost, detectLanguage } from '@/lib/bot.config';
 import { getContext } from '@/lib/rag';
 
 export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY;

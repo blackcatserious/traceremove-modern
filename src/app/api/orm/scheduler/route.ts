@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Client as NotionClient } from '@notionhq/client';
 
 export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 const notion = new NotionClient({
   auth: process.env.NOTION_TOKEN,
