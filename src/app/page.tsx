@@ -76,6 +76,30 @@ export default function Home() {
       {/* Hero Section with Premium Glass Effect */}
       <section className="glass-card-premium relative overflow-hidden py-32 sm:py-40 lg:py-48 mx-6 lg:mx-8 mb-8">
         
+        {/* Animated Cat Mascot */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.2, delay: 0.5 }}
+          className="absolute top-8 right-8 z-30"
+        >
+          <motion.img
+            src="/cat-mascot.png"
+            alt="TraceRemove Cat Mascot"
+            className="w-16 h-16 md:w-20 md:h-20"
+            animate={{ 
+              y: [0, -10, 0],
+              rotate: [0, 5, -5, 0]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            whileHover={{ scale: 1.1, rotate: 15 }}
+          />
+        </motion.div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
           <div className="text-center">
             {/* Platform Badge */}

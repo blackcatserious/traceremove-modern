@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { BackgroundProvider } from "@/components/BackgroundTester";
 import VantaBackground from "@/components/VantaBackground";
 import DynamicLabBackground from "@/components/DynamicLabBackground";
@@ -38,8 +39,8 @@ const ibmPlexSerif = IBM_Plex_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.com'),
   title: {
-    default: "TraceRemove — AI Reputation Firewall",
-    template: "%s | TraceRemove"
+    default: "TraceRemove — AI Research Lab with Cat Assistant",
+    template: "%s | TraceRemove Cat AI"
   },
   description: "Negative link removal, reputation management, AI monitoring and brand protection system. Professional ORM services, deindexing, legal support.",
   keywords: [
@@ -235,6 +236,7 @@ export default function RootLayout({
             </div>
           </main>
           <Footer />
+          <ChatWidget />
         </BackgroundProvider>
       </body>
     </html>
