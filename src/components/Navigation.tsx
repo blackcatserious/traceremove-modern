@@ -198,7 +198,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="nav-logo-icon"
             >
-              <Brain className="w-5 h-5 text-white" />
+              <img src="/cat-mascot.png" alt="Cat Mascot" className="w-5 h-5" />
             </motion.div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white font-ibm-sans">

@@ -130,7 +130,7 @@ export default function ChatWidget() {
         }`}
         aria-label="Open chat"
       >
-        <MessageCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+        <img src="/cat-mascot.png" alt="Cat Assistant" className="w-6 h-6 group-hover:scale-110 transition-transform" />
       </button>
       
       {/* Chat Window */}

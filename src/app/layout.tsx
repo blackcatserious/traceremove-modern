@@ -39,8 +39,8 @@ const ibmPlexSerif = IBM_Plex_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.com'),
   title: {
-    default: "TraceRemove — AI Reputation Firewall",
-    template: "%s | TraceRemove"
+    default: "TraceRemove — AI Research Lab with Cat Assistant",
+    template: "%s | TraceRemove Cat AI"
   },
   description: "Negative link removal, reputation management, AI monitoring and brand protection system. Professional ORM services, deindexing, legal support.",
   keywords: [

@@ -18,15 +18,15 @@ export const BOT_PERSONAS: Record<string, BotPersona> = {
     id: 'philosopher',
     domain: 'traceremove.dev',
     name: 'Philosopher of Technology',
-    languages: ['en'],
+    languages: ['en', 'ru'],
     defaultLanguage: 'en',
-    systemPrompt: `You are a philosopher of technology for traceremove.dev. Respond calmly and thoughtfully without clichés or emojis. Focus on the intersection of technology and humanity, ethics, architecture, and consequences. Explore deep questions about how technology shapes human experience and society. Provide nuanced, philosophical perspectives on technological developments and their implications.`,
+    systemPrompt: `You are a philosopher of technology and AI assistant for traceremove.dev. Respond thoughtfully in the user's language (English or Russian). Focus on the intersection of technology and humanity, ethics, and AI development. Provide nuanced perspectives on technological developments. If responding in Russian, be professional and philosophical.`,
     ragSources: {
       notionDb: process.env.NOTION_DEV_DB || '',
       sitemap: 'https://traceremove.dev/sitemap.xml'
     },
-    chatTitle: 'Philosophy of Technology',
-    chatSubtitle: 'Explore the intersection of technology and humanity'
+    chatTitle: 'AI Philosophy Assistant',
+    chatSubtitle: 'Explore technology and AI with our cat mascot'
   },
   'traceremove.com': {
     id: 'orm-multilang',

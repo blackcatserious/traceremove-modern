@@ -10,10 +10,12 @@ const notion = new NotionClient({
   auth: process.env.NOTION_TOKEN,
 });
 
-const vectorIndex = new Index({
-  url: process.env.UPSTASH_VECTOR_REST_URL!,
-  token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
-});
+const vectorIndex = process.env.UPSTASH_VECTOR_REST_URL && process.env.UPSTASH_VECTOR_REST_TOKEN 
+  ? new Index({
+      url: process.env.UPSTASH_VECTOR_REST_URL!,
+      token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
+    })
+  : null;
 
 export interface DocumentChunk {
   id: string;
@@ -176,6 +178,11 @@ function extractTitleFromHtml(html: string): string {
 
 export async function reindexPersona(personaId: string, notionDbId: string, sitemapUrl: string): Promise<void> {
   try {
+    if (!vectorIndex) {
+      console.log('Vector index not available, skipping reindexing');
+      return;
+    }
+    
     console.log(`Reindexing persona: ${personaId}`);
     
     const [notionDocs, siteDocs] = await Promise.all([
@@ -219,6 +226,11 @@ export async function reindexPersona(personaId: string, notionDbId: string, site
 
 export async function getContext(query: string, personaId: string, limit: number = 5): Promise<string> {
   try {
+    if (!vectorIndex) {
+      console.log('Vector index not available, skipping RAG context');
+      return '';
+    }
+    
     const queryEmbedding = await embedText(query);
     
     const results = await vectorIndex.query({
