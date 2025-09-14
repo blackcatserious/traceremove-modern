@@ -2,7 +2,7 @@ import { OpenAI } from 'openai';
 import { Client as NotionClient } from '@notionhq/client';
 import { Index } from '@upstash/vector';
 
-const openai = new OpenAI({
+export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
