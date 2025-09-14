@@ -2,9 +2,11 @@ import { OpenAI } from 'openai';
 import { Client as NotionClient } from '@notionhq/client';
 import { Index } from '@upstash/vector';
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+export const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null;
 
 const notion = new NotionClient({
   auth: process.env.NOTION_TOKEN,
@@ -30,6 +32,10 @@ export interface DocumentChunk {
 
 export async function embedText(text: string): Promise<number[]> {
   try {
+    if (!openai) {
+      throw new Error('OpenAI client not initialized - API key missing');
+    }
+    
     const response = await openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: text,
@@ -183,6 +189,11 @@ export async function reindexPersona(personaId: string, notionDbId: string, site
       return;
     }
     
+    if (!openai) {
+      console.log('OpenAI client not available, skipping reindexing');
+      return;
+    }
+    
     console.log(`Reindexing persona: ${personaId}`);
     
     const [notionDocs, siteDocs] = await Promise.all([
@@ -228,6 +239,11 @@ export async function getContext(query: string, personaId: string, limit: number
   try {
     if (!vectorIndex) {
       console.log('Vector index not available, skipping RAG context');
+      return '';
+    }
+    
+    if (!openai) {
+      console.log('OpenAI client not available, skipping RAG context');
       return '';
     }
     
