@@ -28,6 +28,45 @@ export default function Footer() {
     { name: 'Privacy Policy', href: '/legal/privacy-policy' },
     { name: 'Ethics Statement', href: '/legal/ethics-statement' },
   ];
+
+  const usefulLinks = [
+    { 
+      name: 'traceremove.dev', 
+      href: 'https://traceremove.dev', 
+      description: 'лаборатория' 
+    },
+    { 
+      name: 'traceremove.net', 
+      href: 'https://traceremove.net', 
+      description: 'Полноценный ИИ-ассистент, интегрированный в лабораторию traceremove.dev',
+      isIntegrated: true
+    },
+    { 
+      name: 'GitHub профиль', 
+      href: 'https://github.com/blackcatserious', 
+      icon: Github 
+    },
+    { 
+      name: 'ORCID', 
+      href: 'https://orcid.org/0009-0003-8406-9303', 
+      icon: Globe 
+    },
+    { 
+      name: 'PhilPeople публикации', 
+      href: 'https://philpeople.org/profiles/artur-ziganshin/publications', 
+      icon: Globe 
+    },
+    { 
+      name: 'Vercel Deploy: traceremove-social-bot', 
+      href: 'https://vercel.com/blackcatserious-projects/traceremove-social-bot', 
+      icon: Globe 
+    },
+    { 
+      name: 'Vercel Deploy: traceremove-modern', 
+      href: 'https://vercel.com/blackcatserious-projects/traceremove-modern', 
+      icon: Globe 
+    }
+  ];
   
   return (
     <motion.footer 
@@ -51,7 +90,7 @@ export default function Footer() {
 
       <div className="relative glass-card-premium border-t border-accent-ai-purple/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Lab Info */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -136,6 +175,79 @@ export default function Footer() {
                     </span>
                     <ArrowUpRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                   </motion.a>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Useful Links */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+            >
+              <h3 className="text-xl font-bold text-white mb-6 font-ibm-sans">Useful Links</h3>
+              <div className="space-y-4">
+                {usefulLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 1.2 + index * 0.1 }}
+                  >
+                    {link.isIntegrated ? (
+                      // Special styling for traceremove.net
+                      <div className="group">
+                        <motion.a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.02, x: 3 }}
+                          className="inline-flex items-center text-accent-ai-purple hover:text-white transition-all duration-300 font-inter font-semibold"
+                        >
+                          <span className="group-hover:translate-x-1 transition-transform duration-300">
+                            {link.name}
+                          </span>
+                          <ArrowUpRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                        </motion.a>
+                        <p className="text-xs text-slate-400 mt-1 font-inter leading-relaxed">
+                          {link.description}
+                        </p>
+                      </div>
+                    ) : link.description ? (
+                      // Links with simple descriptions (like traceremove.dev)
+                      <div className="group">
+                        <motion.a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05, x: 3 }}
+                          className="inline-flex items-center text-slate-300 hover:text-white transition-all duration-300 font-inter"
+                        >
+                          <span className="group-hover:translate-x-1 transition-transform duration-300">
+                            {link.name}
+                          </span>
+                          <ArrowUpRight className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                        </motion.a>
+                        <p className="text-xs text-slate-400 mt-1 font-inter">
+                          {link.description}
+                        </p>
+                      </div>
+                    ) : (
+                      <motion.a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, x: 5 }}
+                        className="group inline-flex items-center text-slate-300 hover:text-white transition-all duration-300 font-inter"
+                      >
+                        {link.icon && <link.icon className="w-4 h-4 mr-3 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />}
+                        <span className="group-hover:translate-x-1 transition-transform duration-300 text-sm">
+                          {link.name}
+                        </span>
+                        <ArrowUpRight className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                      </motion.a>
+                    )}
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
