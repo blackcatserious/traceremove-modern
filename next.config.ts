@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
@@ -12,8 +11,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: '',
-  distDir: 'out'
 };
 
 export default nextConfig;
