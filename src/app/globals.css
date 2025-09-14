@@ -1,6 +1,9 @@
+/* Removed Google Fonts imports - using system fonts for build stability */
+/* TODO: Re-enable when Google Fonts access is available
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+*/
 
 @tailwind base;
 @tailwind components;
@@ -1182,14 +1185,14 @@ nav {
     0 3px 10px rgba(139, 92, 246, 0.4);
 }
 
-/* Mobile Menu Premium */
+/* Mobile Menu Premium - Enhanced for better mobile UX */
 .mobile-menu-premium {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 40;
+  z-index: 60;
   background: linear-gradient(135deg, 
     rgba(15, 23, 42, 0.98) 0%, 
     rgba(30, 58, 138, 0.95) 30%, 
@@ -1197,6 +1200,9 @@ nav {
     rgba(124, 58, 237, 0.93) 100%);
   backdrop-filter: blur(40px) saturate(1.5);
   padding-top: 80px;
+  /* Improved mobile scrolling */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-menu-link {
@@ -1209,14 +1215,21 @@ nav {
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Better touch targets for mobile */
+  min-height: 60px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.mobile-menu-link:hover {
+.mobile-menu-link:hover,
+.mobile-menu-link:focus,
+.mobile-menu-link:active {
   color: rgba(255, 255, 255, 1);
   background: linear-gradient(135deg, 
     rgba(255, 255, 255, 0.05) 0%, 
     rgba(255, 255, 255, 0.02) 100%);
   transform: translateX(8px);
+  outline: none;
 }
 
 .hamburger-premium {
@@ -2889,15 +2902,69 @@ code, .code, pre {
   .background-layers {
     animation-duration: 30s;
   }
+
+  /* Reduce complex animations on mobile for performance */
+  .floating-card-enhanced:hover {
+    transform: translateY(-8px) scale(1.02);
+    transition-duration: 0.2s;
+  }
+
+  /* Better mobile card layouts */
+  .glass-card-premium,
+  .glass-card-hero,
+  .floating-card-enhanced {
+    margin: 1rem 0;
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  /* Mobile-optimized touch targets */
+  button, 
+  .nav-link-premium,
+  .mobile-menu-link,
+  .premium-button,
+  a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Improved mobile typography */
+  .section-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .body-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Mobile navigation improvements */
+  .mobile-menu-premium {
+    padding-top: 70px;
+  }
+
+  /* Prevent horizontal scroll on mobile */
+  .container,
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: calc(100vw - 2rem);
+  }
+}
   
-  .floating-card {
+    .floating-card {
     transition-duration: 0.2s;
   }
   
   .floating-card:hover {
     transform: translateY(-4px) scale(1.01);
   }
-}
 
 /* High DPI / Retina Display Optimizations */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

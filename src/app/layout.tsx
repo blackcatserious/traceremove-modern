@@ -80,18 +80,18 @@ export const metadata: Metadata = {
     description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.svg",
         width: 1200,
         height: 630,
         alt: "Traceremove Research - AI Ethics & Philosophy Lab",
-        type: "image/png",
+        type: "image/svg+xml",
       },
       {
-        url: "/og-image-square.png", 
+        url: "/og-image-square.svg", 
         width: 1200,
         height: 1200,
         alt: "Traceremove Research Logo",
-        type: "image/png",
+        type: "image/svg+xml",
       }
     ],
   },
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Traceremove Research | AI Ethics & Philosophy",
     description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
-    images: ["/twitter-image.png"],
+    images: ["/twitter-image.svg"],
     creator: "@traceremove",
     site: "@traceremove",
   },
