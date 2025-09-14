@@ -85,11 +85,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Chat API error:', error);
     return NextResponse.json({
-      reply: 'I apologize, but I encountered an error processing your request. Please try again.',
+      reply: 'Извините, произошла ошибка при обработке вашего запроса. Попробуйте еще раз.',
       persona: 'traceremove.dev',
-      lang: 'en',
-      chatTitle: 'AI Philosophy Assistant',
-      chatSubtitle: 'Explore technology and AI with our cat mascot'
+      lang: 'ru',
+      chatTitle: 'Философ технологий',
+      chatSubtitle: 'Исследуем технологии, этику и цифровые последствия'
     });
   }
 }
