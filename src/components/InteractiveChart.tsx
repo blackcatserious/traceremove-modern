@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,6 +15,7 @@ import {
 } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 
+// Register required Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,8 +37,17 @@ interface InteractiveChartProps {
 
 export default function InteractiveChart({ dataFile, chartType, title, className = '' }: InteractiveChartProps) {
   const chartRef = useRef(null);
+  // Use state to store current chart data. Initialize with default values so chart renders immediately.
+  const [chartData, setChartData] = useState(getDefaultChartData());
 
+  /**
+   * Helper to build chart datasets based on the contents of the fetched JSON file.
+   * Accepts either an array of metrics objects or null/undefined and returns
+   * an object conforming to Chart.js expected format. Fallbacks to default
+   * chart data when metrics are absent.
+   */
   const getChartData = useCallback((data: unknown) => {
+    // Workflow metrics: success rates across task types
     if (dataFile.includes('workflow_metrics')) {
       const metrics = Array.isArray(data) ? data[0] : null;
       if (!metrics) return getDefaultChartData();
@@ -63,6 +73,7 @@ export default function InteractiveChart({ dataFile, chartType, title, className
       };
     }
 
+    // Privacy metrics: fixed benchmark values for encryption, latency, score and accuracy
     if (dataFile.includes('privacy_metrics')) {
       return {
         labels: ['Encryption Overhead', 'Query Latency', 'Privacy Score', 'Accuracy'],
@@ -79,6 +90,7 @@ export default function InteractiveChart({ dataFile, chartType, title, className
       };
     }
 
+    // Budget tiers: monthly cost across tiers
     if (dataFile.includes('budget_tiers')) {
       return {
         labels: ['Starter', 'Research', 'Enterprise'],
@@ -102,22 +114,32 @@ export default function InteractiveChart({ dataFile, chartType, title, className
       };
     }
 
+    // Default fallback when no specific dataset is recognized
     return getDefaultChartData();
   }, [dataFile]);
 
-  const getDefaultChartData = () => ({
-    labels: ['Data 1', 'Data 2', 'Data 3'],
-    datasets: [
-      {
-        label: 'Sample Data',
-        data: [65, 59, 80],
-        backgroundColor: 'rgba(108, 99, 255, 0.8)',
-        borderColor: 'rgba(108, 99, 255, 1)',
-        borderWidth: 2,
-      },
-    ],
-  });
+  /**
+   * Provide a basic sample dataset so the component can render immediately
+   * even before remote data has loaded. This avoids initial layout shift.
+   */
+  function getDefaultChartData() {
+    return {
+      labels: ['Data 1', 'Data 2', 'Data 3'],
+      datasets: [
+        {
+          label: 'Sample Data',
+          data: [65, 59, 80],
+          backgroundColor: 'rgba(108, 99, 255, 0.8)',
+          borderColor: 'rgba(108, 99, 255, 1)',
+          borderWidth: 2,
+        },
+      ],
+    };
+  }
 
+  /**
+   * Chart display options. Adjust colours, legends, scales etc. Consistent across chart types.
+   */
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -165,48 +187,38 @@ export default function InteractiveChart({ dataFile, chartType, title, className
     } : undefined,
   };
 
+  // Load JSON data when the file name changes and update chart state
   useEffect(() => {
     const loadData = async () => {
       try {
         const response = await fetch(`/data/${dataFile}`);
         const data = await response.json();
-        
-        if (chartRef.current) {
-          getChartData(data);
-        }
+        // Update chart data using fetched metrics
+        setChartData(getChartData(data));
       } catch (error) {
         console.error('Error loading chart data:', error);
       }
     };
-
     loadData();
   }, [dataFile, getChartData]);
 
-  const sampleData = getChartData([{
-    simple_tasks: 0.94,
-    complex_tasks: 0.78,
-    multi_step_tasks: 0.65
-  }]);
-
+  // Choose appropriate chart component based on chart type prop
   const ChartComponent = chartType === 'bar' ? Bar : chartType === 'line' ? Line : Doughnut;
 
   return (
     <div className={`relative group ${className}`}>
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
-      
       <div className="relative glass-card-research p-8">
         {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent-lab-purple/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
         <div className="relative h-80">
-          <ChartComponent ref={chartRef} data={sampleData} options={chartOptions} />
+          {/* Render the chosen chart component with dynamic data */}
+          <ChartComponent ref={chartRef} data={chartData} options={chartOptions} />
         </div>
-        
         {/* Hover Border Effect */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
-             style={{ padding: '1px' }}>
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" style={{ padding: '1px' }}>
           <div className="w-full h-full bg-white rounded-3xl" />
         </div>
       </div>
