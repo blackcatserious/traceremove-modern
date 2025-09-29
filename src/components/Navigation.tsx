@@ -11,8 +11,9 @@ import {
   BookOpen, 
   User, 
   Wrench, 
-  FileText, 
+  FileText,
   Mail,
+  Send,
   Brain,
   Zap,
   ChevronDown,
@@ -268,7 +269,7 @@ export default function Navigation() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full left-0 mt-2 w-80 bg-white/10 backdrop-blur-xl border border-accent-ai-purple/20 rounded-2xl shadow-2xl shadow-accent-ai-purple/10 z-50"
+                        className="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white/10 backdrop-blur-xl border border-accent-ai-purple/20 rounded-2xl shadow-2xl shadow-accent-ai-purple/10 z-50"
                       >
                         <div className="p-4 space-y-1">
                           {item.dropdown.map((dropdownItem, dropdownIndex) => (
@@ -316,6 +317,13 @@ export default function Navigation() {
                 )}
               </motion.div>
             ))}
+            <Link
+              href="/contact"
+              className="nav-cta-premium ml-4"
+            >
+              <Send className="w-4 h-4" />
+              <span className="font-ibm-sans text-sm uppercase tracking-wide">Connect</span>
+            </Link>
           </div>
 
           {/* Mobile menu button */}

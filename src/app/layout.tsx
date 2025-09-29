@@ -39,16 +39,15 @@ const ibmPlexSerif = IBM_Plex_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.com'),
   title: {
-    default: "TraceRemove — AI Research Lab with Cat Assistant",
-    template: "%s | TraceRemove Cat AI"
+    default: "TraceRemove — Philosophy-Driven AI Research Lab",
+    template: "%s | TraceRemove AI Philosophy Lab"
   },
-  description: "Negative link removal, reputation management, AI monitoring and brand protection system. Professional ORM services, deindexing, legal support.",
+  description: "TraceRemove operates as an ultra-modern laboratory exploring the philosophy of artificial intelligence, ethical research frameworks, and real-world AI deployment strategy.",
   keywords: [
-    "reputation management", "negative link removal", "ORM", "deindexing", "brand protection", 
-    "reputation monitoring", "AI tools", "legal support", "online reputation", 
-    "negative reviews", "SEO reputation", "crisis management", "reputation audit", 
-    "TraceRemove", "search removal", "right to be forgotten", "GDPR",
-    "reputation risks", "brand monitoring", "digital reputation", "internet reputation"
+    "AI philosophy", "technology ethics", "responsible AI", "research laboratory",
+    "multimodal reasoning", "epistemic safety", "agentic systems", "digital rights",
+    "TraceRemove", "AI governance", "philosophy of mind", "AI research",
+    "ultra modern lab", "computational ethics", "human-centered AI"
   ],
   authors: [{ name: "TraceRemove Team", url: "https://traceremove.com/about" }],
   creator: "TraceRemove",
@@ -62,9 +61,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
     url: "https://traceremove.com",
-    siteName: "TraceRemove",
-    title: "TraceRemove — AI Reputation Firewall",
-    description: "Professional reputation management: negative link removal, deindexing, brand monitoring using AI technologies.",
+    siteName: "TraceRemove Philosophy Lab",
+    title: "TraceRemove — Philosophy-Driven AI Research",
+    description: "Exploring AI ethics, interpretability, governance, and advanced research tooling inside an ultra-modern laboratory.",
     images: [
       {
         url: "/og-image.png",
@@ -84,8 +83,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TraceRemove — AI Reputation Firewall",
-    description: "Professional reputation management and brand protection using AI technologies.",
+    title: "TraceRemove — Philosophy-Driven AI Research",
+    description: "Ethical AI, epistemic safety, and human-centered innovation from an ultra-modern research lab.",
     images: ["/twitter-image.png"],
     creator: "@traceremove",
     site: "@traceremove",
@@ -138,8 +137,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "TraceRemove",
-              "alternateName": "TraceRemove — AI Reputation Firewall",
-              "description": "Professional reputation management services: negative link removal, deindexing, brand monitoring using AI technologies.",
+              "alternateName": "TraceRemove — Philosophy-Driven AI Lab",
+              "description": "Ultra-modern laboratory researching the philosophy of artificial intelligence, ethics, interpretability, and socio-technical impact.",
               "url": "https://traceremove.com",
               "logo": "https://traceremove.com/logo.png",
               "image": "https://traceremove.com/og-image.png",
@@ -161,12 +160,12 @@ export default function RootLayout({
                 "https://wa.me/79XXXXXXXXX"
               ],
               "serviceType": [
-                "Online Reputation Management",
-                "Negative Link Removal",
-                "Search Engine Deindexing",
-                "Brand Monitoring",
-                "Legal Support",
-                "AI-powered Reputation Tools"
+                "AI philosophy research",
+                "Responsible AI governance",
+                "Interpretability & transparency studies",
+                "Human-centered AI design",
+                "Agentic systems evaluation",
+                "Ethical deployment strategy"
               ],
               "areaServed": {
                 "@type": "Country",
@@ -174,46 +173,38 @@ export default function RootLayout({
               },
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Reputation Management Services",
+                "name": "AI Philosophy & Research Programs",
                 "itemListElement": [
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "ORM - Online Reputation Management",
-                      "description": "Comprehensive online reputation management"
+                      "name": "Ethics & Governance Studio",
+                      "description": "Frameworks for aligning AI systems with human values and policy guidance"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Deindex - Search Removal",
-                      "description": "Deindexing negative materials from search engines"
+                      "name": "Interpretability Observatory",
+                      "description": "Research on explainability, epistemic safety, and multimodal transparency"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Legal Support",
-                      "description": "Legal support for reputation issues"
+                      "name": "Agentic Systems Lab",
+                      "description": "Evaluation of agentic AI architectures and responsible deployment playbooks"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Monitoring",
-                      "description": "Reputation and brand monitoring on the internet"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "AI Tools",
-                      "description": "AI tools for reputation management"
+                      "name": "AI & Society Initiative",
+                      "description": "Collaborative research on digital rights, governance, and socio-technical resilience"
                     }
                   }
                 ]

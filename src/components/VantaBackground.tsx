@@ -139,7 +139,7 @@ export default function VantaBackground({ variant = 'default', className = '' }:
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoaded ? 0.6 : 0.8 }}
         transition={{ duration: 2 }}
-        className="fixed inset-0 pointer-events-none"
+        className="lab-fixed-surface fixed inset-0 pointer-events-none"
         style={{ zIndex: -9 }}
       >
         {/* Primary Gradient Layer */}
@@ -188,7 +188,10 @@ export default function VantaBackground({ variant = 'default', className = '' }:
       </motion.div>
 
       {/* Floating Orbs - Constrained within viewport */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: -8 }}>
+      <div
+        className="lab-fixed-surface fixed inset-0 pointer-events-none overflow-hidden"
+        style={{ zIndex: -8 }}
+      >
         <motion.div
           animate={{
             x: [0, 50, 0],

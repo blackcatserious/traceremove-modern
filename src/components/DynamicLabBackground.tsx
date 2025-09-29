@@ -120,7 +120,10 @@ export default function DynamicLabBackground({ intensity = 'medium', className =
   }, [intensity]);
 
   return (
-    <div className={`fixed inset-0 pointer-events-none overflow-hidden ${className}`} style={{ zIndex: -7 }}>
+    <div
+      className={`lab-fixed-surface fixed inset-0 pointer-events-none overflow-hidden ${className}`}
+      style={{ zIndex: -7 }}
+    >
       <canvas
         ref={canvasRef}
         className="absolute inset-0"

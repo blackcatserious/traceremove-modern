@@ -165,7 +165,7 @@ export default function ParticleSystem({
   }, [particleCount, variant]);
 
   return (
-    <div className={`fixed inset-0 pointer-events-none z-[-6] ${className}`}>
+    <div className={`lab-fixed-surface fixed inset-0 pointer-events-none z-[-6] ${className}`}>
       <canvas
         ref={canvasRef}
         className="w-full h-full opacity-40"
