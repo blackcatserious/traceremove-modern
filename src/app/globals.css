@@ -120,7 +120,7 @@ canvas {
 }
 
 .vanta-background,
-.fixed.inset-0 {
+.lab-fixed-surface {
   width: 100vw;
   height: 100vh;
   max-width: 100vw;
