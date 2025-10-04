@@ -90,9 +90,9 @@ const navigationItems = [
       { href: '/projects/real-world-ai-deployments', label: 'Real-World AI Deployments', icon: Globe }
     ]
   },
-  { 
-    href: '/tools', 
-    label: 'Tools', 
+  {
+    href: '/tools',
+    label: 'Tools',
     icon: Wrench,
     dropdown: [
       { href: '/tools/ai-research-dashboard', label: 'AI Research Dashboard', icon: BarChart3 },
@@ -104,9 +104,21 @@ const navigationItems = [
       { href: '/tools/annotation-demo', label: 'Annotation Demo', icon: Target }
     ]
   },
-  { 
-    href: '/academic', 
-    label: 'Academic', 
+  {
+    href: '/atlas',
+    label: 'Atlas',
+    icon: Map,
+    dropdown: [
+      { href: '/atlas', label: 'Experience Atlas Overview', icon: Sparkles },
+      { href: '/atlas/transparent-ai-governance-global-initiative', label: 'Transparent Governance · Global', icon: Shield },
+      { href: '/atlas/human-centered-safety-systems-healthcare-alliance', label: 'Safety Systems · Healthcare', icon: Heart },
+      { href: '/atlas/planetary-compute-stewardship-climate-tech', label: 'Compute Stewardship · Climate', icon: Globe },
+      { href: '/atlas/civic-tech-participation-civic-consortium', label: 'Civic Participation · Consortium', icon: Users }
+    ]
+  },
+  {
+    href: '/academic',
+    label: 'Academic',
     icon: GraduationCap,
     dropdown: [
       { href: '/academic/cv', label: 'Curriculum Vitae', icon: User },
