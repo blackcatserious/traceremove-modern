@@ -1,0 +1,292 @@
+import type { AIGenerateRequest, AIGenerateResponse, AIMessage } from './types';
+
+type KnowledgeEntry = {
+  id: string;
+  title: string;
+  summary: string;
+  keywords: string[];
+  metrics: string[];
+  toolchain: string[];
+  playbooks: string[];
+  followUps: string[];
+};
+
+const KNOWLEDGE_BASE: KnowledgeEntry[] = [
+  {
+    id: 'metrics-and-observability',
+    title: 'Metrics instrumentation & observability stack',
+    summary:
+      'Traceremove captures every experiment, user journey, and deployment with layered telemetry: ingestion at the edge, model health probes, and product impact dashboards that drive weekly governance.',
+    keywords: [
+      'metric',
+      'metrics',
+      'analytics',
+      'observability',
+      'telemetry',
+      'kpi',
+      'dashboard',
+      'measurement',
+      'monitoring',
+    ],
+    metrics: [
+      'North-star signals: mission engagement rate, completion velocity, ethical compliance index.',
+      'Model health: drift delta under 1.5%, latency budget at sub-120ms p95 across assistants.',
+      'Business impact: attributable revenue lift dashboards segmented by client region and blueprint.',
+    ],
+    toolchain: [
+      'Unified telemetry lake synthesised from Atlas blueprints, Snowflake marts, and streaming feature stores.',
+      'Motion-aware dashboards rendered through the cinematic hero scenes and exported to OKR reviews.',
+      'Automated alerts routed into Traceremove Ops Center with playbook links for on-call engineers.',
+    ],
+    playbooks: [
+      'Stand up metrics councils with weekly review cadences and automated variance annotations.',
+      'Instrument feature toggles with experiment IDs so product, research, and compliance teams share lineage.',
+      'Pair every KPI with a guardrail metric to keep Atlas-driven growth aligned with responsible AI mandates.',
+    ],
+    followUps: [
+      'How do we extend the observability lake to a new geographic region?',
+      'What KPIs gate promotion of an experimental algorithm into production?',
+      'How are ethical guardrails encoded into the telemetry pipeline?',
+    ],
+  },
+  {
+    id: 'algorithms-and-evaluation',
+    title: 'Algorithm experimentation & evaluation loops',
+    summary:
+      'Every algorithm lives inside Atlas blueprints with end-to-end evaluation: dataset provenance, automated benchmarking, human-in-the-loop review, and deployment readiness scoring.',
+    keywords: [
+      'algorithm',
+      'algorithms',
+      'model',
+      'models',
+      'evaluation',
+      'benchmark',
+      'research',
+      'experimentation',
+      'ml',
+      'machine learning',
+    ],
+    metrics: [
+      'Evaluation boards publish accuracy, fairness, safety, and carbon footprint indices per release.',
+      'Experiment tracker records uplift deltas with Bayesian credible intervals, not just point estimates.',
+      'Launch committee scoring rubric spans readiness, resilience, responsiveness, and regulation (the 4Rs).',
+    ],
+    toolchain: [
+      'Atlas Scenario Lab for sandboxed simulations with controllable abstract motion environments.',
+      'Mermaid-driven algorithm lineage diagrams embedded on research, projects, and academic pages.',
+      'InteractiveCharts powering live benchmark rollups for each hero section and detail page.',
+    ],
+    playbooks: [
+      'Codify evaluation recipes as reusable Atlas modules that the assistant can reference on demand.',
+      'Gate production pushes through adaptive quality bars tied to the KPIs surfaced in cinematic heroes.',
+      'Blend synthetic and human review cohorts to audit algorithm bias before rollout.',
+    ],
+    followUps: [
+      'Show the benchmark deltas for the latest assistant algorithm refresh.',
+      'Which evaluation recipes secure regulatory sign-off?',
+      'How do we visualise lineage across 156 blueprint pages?',
+    ],
+  },
+  {
+    id: 'tools-and-automation',
+    title: 'Tools, automation, and operations enablement',
+    summary:
+      'Traceremove ships an integrated toolkit: deployment pipelines, compliance automations, and collaborative mega menus so every page links to the next action without friction.',
+    keywords: [
+      'tool',
+      'tools',
+      'automation',
+      'workflow',
+      'operations',
+      'pipeline',
+      'platform',
+      'integration',
+      'infrastructure',
+    ],
+    metrics: [
+      'Operational uptime sustained above 99.98% with canary rollouts tracked by the metrics stack.',
+      'Content velocity: 156 blueprint surfaces updated nightly via doc-as-code pipelines.',
+      'Assistant response assurance with fallback knowledge verifying coverage across research, tools, and metrics.',
+    ],
+    toolchain: [
+      'Mega menu surfacing tools, research, and support artefacts with animated affordances for power users.',
+      'CI pipelines orchestrating lint, build, and visual regression sweeps before publishing updates.',
+      'Ask Traceremove AI widget wired to programmatic and fallback knowledge for domain-consistent replies.',
+    ],
+    playbooks: [
+      'Bundle toolkit usage guides within each hero CTA so onboarding is anchored to the cinematic scenes.',
+      'Mirror site-map and footer taxonomies to align automated link validation with SEO goals.',
+      'Use responsive, animated components to keep desktop and mobile parity without sacrificing performance.',
+    ],
+    followUps: [
+      'Which automation reduces time-to-publish for atlas updates?',
+      'How is the mega menu structured for mobile and desktop parity?',
+      'What safeguards keep the assistant’s tool references accurate?',
+    ],
+  },
+  {
+    id: 'assistant-copilot',
+    title: 'Assistant & chatbot orchestration',
+    summary:
+      'The chatbot anchors navigation through the cinematic stack: it triages questions into metrics, tools, or algorithms and links users back into Atlas, research, or contact flows.',
+    keywords: [
+      'chatbot',
+      'assistant',
+      'conversational',
+      'chat',
+      'support',
+      'copilot',
+      'ai assistant',
+      'ask traceremove',
+    ],
+    metrics: [
+      'Engagement scoring across prompts, with satisfaction tracked via thumbs telemetry in the assistant widget.',
+      'Coverage audits to ensure every taxonomy (metrics, tools, algorithms, legal) has curated answers.',
+      'Escalation SLAs for hand-off to human experts within two minutes when the assistant can’t resolve.',
+    ],
+    toolchain: [
+      'Domain-tuned fallback knowledge base with semantic routing across 156 blueprint documents.',
+      'Edge delivery of conversation models with server-side streaming when the managed API is available.',
+      'Motion-aware launcher that adapts to reduced-motion preferences and mobile-first ergonomics.',
+    ],
+    playbooks: [
+      'Seed the assistant with recent atlas updates and research milestones every release.',
+      'Route regulatory or security inquiries straight into the contact and legal surfaces.',
+      'Log anonymous analytics for continual improvement while respecting privacy and compliance.',
+    ],
+    followUps: [
+      'What fallback does the assistant use when external AI is offline?',
+      'How does the chatbot surface atlas research on mobile?',
+      'Where do I escalate a conversation to a human specialist?',
+    ],
+  },
+];
+
+function normalise(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractUserQuery(messages: AIMessage[]): string {
+  for (let i = messages.length - 1; i >= 0; i -= 1) {
+    if (messages[i]?.role === 'user' && messages[i]?.content) {
+      return messages[i].content;
+    }
+  }
+  return '';
+}
+
+function selectEntries(query: string): KnowledgeEntry[] {
+  const normalised = normalise(query);
+  if (!normalised) {
+    return KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
+  }
+
+  const scored = KNOWLEDGE_BASE.map((entry) => {
+    const score = entry.keywords.reduce((acc, keyword) => {
+      const normalisedKeyword = normalise(keyword);
+      if (!normalisedKeyword) return acc;
+      if (normalised.includes(normalisedKeyword)) {
+        return acc + Math.max(2, normalisedKeyword.split(' ').length);
+      }
+      const words = normalisedKeyword.split(' ');
+      const matchedWords = words.filter((word) => normalised.includes(word));
+      if (matchedWords.length > 0) {
+        return acc + matchedWords.length;
+      }
+      return acc;
+    }, 0);
+    return { entry, score };
+  });
+
+  const matched = scored
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(({ entry }) => entry);
+
+  if (matched.length === 0) {
+    return KNOWLEDGE_BASE;
+  }
+
+  const limit = Math.min(3, matched.length);
+  return matched.slice(0, limit);
+}
+
+function formatEntry(entry: KnowledgeEntry): string {
+  const sections: string[] = [`### ${entry.title}`, entry.summary];
+
+  if (entry.metrics.length > 0) {
+    sections.push('', '**Key metrics**');
+    sections.push(...entry.metrics.map((item) => `- ${item}`));
+  }
+
+  if (entry.toolchain.length > 0) {
+    sections.push('', '**Toolchain & automation**');
+    sections.push(...entry.toolchain.map((item) => `- ${item}`));
+  }
+
+  if (entry.playbooks.length > 0) {
+    sections.push('', '**Playbooks**');
+    sections.push(...entry.playbooks.map((item) => `- ${item}`));
+  }
+
+  return sections.join('\n');
+}
+
+export function generateFallbackResponse(
+  req: AIGenerateRequest,
+  error?: unknown,
+): AIGenerateResponse {
+  const query = extractUserQuery(req.messages ?? []);
+  const entries = selectEntries(query);
+  const headerParts: string[] = [];
+
+  if (query) {
+    headerParts.push(`**Query understood:** ${query.trim()}`);
+  }
+
+  if (error) {
+    headerParts.push(
+      'Live generative services are reconnecting, so I\'m answering from the on-site Traceremove knowledge base.',
+    );
+  } else if (!process.env.TRACEREMOVE_NET_API_URL || !process.env.TRACEREMOVE_NET_API_KEY) {
+    headerParts.push(
+      'Live generative services are not configured, so here\'s a response grounded in the Traceremove atlas.',
+    );
+  } else {
+    headerParts.push('Here\'s how the Traceremove blueprint approaches this topic.');
+  }
+
+  const content = [
+    headerParts.join('\n\n'),
+    ...entries.map((entry) => formatEntry(entry)),
+  ].join('\n\n');
+
+  const followUps = Array.from(
+    new Set(entries.flatMap((entry) => entry.followUps)).values(),
+  ).slice(0, 4);
+
+  const followUpSection =
+    followUps.length > 0
+      ? `\n\n_Ask for more detail on: ${followUps.join(' · ')}._`
+      : '';
+
+  return {
+    id: 'traceremove-knowledge-fallback',
+    created: Date.now(),
+    model: 'traceremove-knowledge-base',
+    choices: [
+      {
+        index: 0,
+        message: {
+          role: 'assistant',
+          content: `${content}${followUpSection}`,
+        },
+      },
+    ],
+  };
+}
+

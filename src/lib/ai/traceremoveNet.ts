@@ -1,21 +1,8 @@
 'use server';
 
-export type AIMessage = { role: 'user' | 'assistant' | 'system'; content: string };
-
-export interface AIGenerateRequest {
-  messages: AIMessage[];
-  model?: string;
-  temperature?: number;
-  max_tokens?: number;
-}
-
-export interface AIGenerateResponse {
-  id: string;
-  created: number;
-  model: string;
-  choices: { index: number; message: AIMessage }[];
-  usage?: unknown;
-}
+import { generateFallbackResponse } from './knowledgeBase';
+import type { AIGenerateRequest, AIGenerateResponse } from './types';
+export type { AIMessage, AIGenerateRequest, AIGenerateResponse } from './types';
 
 const API_URL = process.env.TRACEREMOVE_NET_API_URL;
 const API_KEY = process.env.TRACEREMOVE_NET_API_KEY;
@@ -35,17 +22,7 @@ async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
 
 export async function aiGenerate(req: AIGenerateRequest, signal?: AbortSignal): Promise<AIGenerateResponse> {
   if (!API_URL || !API_KEY) {
-    return {
-      id: 'stub',
-      created: Date.now(),
-      model: req.model ?? 'traceremove-net',
-      choices: [
-        {
-          index: 0,
-          message: { role: 'assistant', content: 'Traceremove AI is initializing. Please try again later.' },
-        },
-      ],
-    };
+    return generateFallbackResponse(req);
   }
 
   const body = JSON.stringify(req);
@@ -69,7 +46,11 @@ export async function aiGenerate(req: AIGenerateRequest, signal?: AbortSignal): 
 
   try {
     return await withTimeout(attempt(), 20000);
-  } catch (_e) {
-    return await withTimeout(attempt(), 20000);
+  } catch (firstError) {
+    try {
+      return await withTimeout(attempt(), 20000);
+    } catch (retryError) {
+      return generateFallbackResponse(req, retryError ?? firstError);
+    }
   }
 }
