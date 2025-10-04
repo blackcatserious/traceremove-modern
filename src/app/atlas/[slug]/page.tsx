@@ -4,11 +4,9 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, Clock, Globe2, Sparkles, Users2 } from 'lucide-react';
 
 import BackgroundLayers from '@/components/BackgroundLayers';
-import { atlasBlueprints, getAtlasBlueprint } from '@/lib/atlasCatalog';
+import { getAtlasBlueprint } from '@/lib/atlasCatalog';
 
-export function generateStaticParams() {
-  return atlasBlueprints.map((blueprint) => ({ slug: blueprint.slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
@@ -40,8 +38,13 @@ export async function generateMetadata({
   };
 }
 
-export default function AtlasBlueprintPage({ params }: { params: { slug: string } }) {
-  const blueprint = getAtlasBlueprint(params.slug);
+export default async function AtlasBlueprintPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const blueprint = getAtlasBlueprint(slug);
 
   if (!blueprint) {
     notFound();

@@ -49,6 +49,7 @@ import {
   BookOpenCheck,
   HelpCircle,
   Map,
+  Sparkles,
   Users as TeamIcon
 } from 'lucide-react';
 
