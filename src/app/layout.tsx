@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
 import AskTraceremoveAI from "@/components/AskTraceremoveAI";
+import PageScene from "@/components/PageScene";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -193,8 +194,8 @@ export default function RootLayout({
         <BackgroundProvider>
           <Navigation />
           <Breadcrumb />
-          <main className="relative pt-24 pb-16 z-20">
-            {children}
+          <main className="relative z-20 pt-24 pb-16">
+            <PageScene>{children}</PageScene>
           </main>
           <Footer />
         </BackgroundProvider>
