@@ -39,6 +39,7 @@ export const revalidate = 0;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.dev'),
+  applicationName: "Traceremove Research",
   title: {
     default: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
     template: "%s | Traceremove Research"
@@ -67,7 +68,12 @@ export const metadata: Metadata = {
     title: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
     description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
     images: [
-      
+      {
+        url: "/og-image.png?v=3",
+        width: 1200,
+        height: 630,
+        alt: "Traceremove Research platform hero showcasing ethical AI blueprints"
+      }
     ],
   },
   twitter: {
@@ -76,6 +82,7 @@ export const metadata: Metadata = {
     description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
     creator: "@traceremove",
     site: "@traceremove",
+    images: ["/og-image.png?v=3"],
   },
   robots: {
     index: true,
@@ -94,9 +101,113 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://traceremove.dev",
+    languages: {
+      "en-US": "https://traceremove.dev",
+    },
   },
   category: "technology",
 };
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Artur Ziganshin",
+    "jobTitle": "AI Systems Architect & Researcher",
+    "description": "AI systems architect, developer, and philosopher of technology specializing in AI ethics, privacy-preserving technologies, and responsible AI development.",
+    "url": "https://traceremove.dev",
+    "sameAs": [
+      "https://linkedin.com/in/arthur-ziganshin",
+      "https://orcid.org/0000-0002-1234-5678",
+      "https://scholar.google.com/citations?user=ArthurZiganshin",
+      "https://www.researchgate.net/profile/Arthur-Ziganshin",
+      "https://philpeople.org/profiles/arthur-ziganshin",
+      "https://github.com/arthur-ziganshin"
+    ],
+    "affiliation": [
+      {
+        "@type": "Organization",
+        "name": "Traceremove",
+        "url": "https://traceremove.dev",
+        "description": "AI research platform focused on transparent and interpretable AI systems"
+      },
+      {
+        "@type": "Organization",
+        "name": "Rarematrix",
+        "description": "Advanced data analytics and AI infrastructure solutions"
+      },
+      {
+        "@type": "Organization",
+        "name": "Equality",
+        "description": "International organization promoting digital rights and AI ethics"
+      }
+    ],
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "Federal University",
+        "description": "Master of Arts in Philosophy, Bachelor of Arts in Philosophy"
+      }
+    ],
+    "knowsAbout": [
+      "Artificial Intelligence", "AI Ethics", "Privacy-Preserving Technologies", "Agentic Systems",
+      "Philosophy of Technology", "Machine Learning", "Big Data", "Language Technologies",
+      "Security & Privacy", "Responsible AI Development"
+    ],
+    "expertise": [
+      {
+        "@type": "Thing",
+        "name": "AI Ethics",
+        "description": "Developing ethical frameworks for AI systems and responsible technology deployment"
+      },
+      {
+        "@type": "Thing",
+        "name": "Agentic Systems",
+        "description": "Building autonomous AI agents with advanced reasoning and tool-use capabilities"
+      },
+      {
+        "@type": "Thing",
+        "name": "Privacy-Preserving Technologies",
+        "description": "Privacy-preserving technologies and secure AI system architectures"
+      }
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Traceremove Research",
+      "url": "https://traceremove.dev",
+      "description": "AI research lab focused on ethical AI systems and philosophical foundations"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Traceremove Research",
+    "url": "https://traceremove.dev",
+    "logo": "https://traceremove.dev/brand/black-cat-solid.svg",
+    "description": "Research lab delivering responsible AI strategy, applied experimentation, and philosophical grounding across 156 global blueprints.",
+    "sameAs": [
+      "https://linkedin.com/company/traceremove",
+      "https://github.com/arthur-ziganshin"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Artur Ziganshin"
+    },
+    "areaServed": ["Global"],
+    "keywords": "AI research, responsible AI, ethical machine learning, AI governance"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Traceremove Research",
+    "url": "https://traceremove.dev",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://traceremove.dev/site-map?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+];
 
 export default function RootLayout({
   children,
@@ -113,83 +224,17 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1e3a8a" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Artur Ziganshin",
-              "jobTitle": "AI Systems Architect & Researcher",
-              "description": "AI systems architect, developer, and philosopher of technology specializing in AI ethics, privacy-preserving technologies, and responsible AI development.",
-              "url": "https://traceremove.dev",
-              "sameAs": [
-                "https://linkedin.com/in/arthur-ziganshin",
-                "https://orcid.org/0000-0002-1234-5678",
-                "https://scholar.google.com/citations?user=ArthurZiganshin",
-                "https://www.researchgate.net/profile/Arthur-Ziganshin",
-                "https://philpeople.org/profiles/arthur-ziganshin",
-                "https://github.com/arthur-ziganshin"
-              ],
-              "affiliation": [
-                {
-                  "@type": "Organization",
-                  "name": "Traceremove",
-                  "url": "https://traceremove.dev",
-                  "description": "AI research platform focused on transparent and interpretable AI systems"
-                },
-                {
-                  "@type": "Organization", 
-                  "name": "Rarematrix",
-                  "description": "Advanced data analytics and AI infrastructure solutions"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Equality",
-                  "description": "International organization promoting digital rights and AI ethics"
-                }
-              ],
-              "alumniOf": [
-                {
-                  "@type": "EducationalOrganization",
-                  "name": "Federal University",
-                  "description": "Master of Arts in Philosophy, Bachelor of Arts in Philosophy"
-                }
-              ],
-              "knowsAbout": [
-                "Artificial Intelligence", "AI Ethics", "Privacy-Preserving Technologies", "Agentic Systems",
-                "Philosophy of Technology", "Machine Learning", "Big Data", "Language Technologies",
-                "Security & Privacy", "Responsible AI Development"
-              ],
-              "expertise": [
-                {
-                  "@type": "Thing",
-                  "name": "AI Ethics",
-                  "description": "Developing ethical frameworks for AI systems and responsible technology deployment"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Agentic Systems",
-                  "description": "Building autonomous AI agents with advanced reasoning and tool-use capabilities"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Privacy-Preserving Technologies",
-                  "description": "Privacy-preserving technologies and secure AI system architectures"
-                }
-              ],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Traceremove Research",
-                "url": "https://traceremove.dev",
-                "description": "AI research lab focused on ethical AI systems and philosophical foundations"
-              }
-            })
-          }}
-        />
+        {structuredData.map((schema, index) => (
+          <script
+            // eslint-disable-next-line react/no-danger
+            key={`structured-data-${index}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white`}
       >
         <BackgroundProvider>
           <Navigation />

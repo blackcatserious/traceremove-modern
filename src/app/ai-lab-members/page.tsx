@@ -1,343 +1,201 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, Tag, Share2, Users, Award, MapPin, Linkedin, Github, BookOpen, Calendar, Shield, ExternalLink, Eye, MessageSquare, Zap } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Sparkles, Users, ShieldCheck, Globe, Github, Linkedin, BookOpen, ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import InteractiveChart from '@/components/InteractiveChart';
-import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
-import CodeBlock from '@/components/CodeBlock';
 
 const labArchitecture = `
-graph TD
-    A[AI Lab Team] --> B[Leadership]
-    A --> C[Research Team]
-    A --> D[Collaborators]
-    B --> E[Founder & Director]
-    B --> F[Advisory Board]
-    B --> G[Strategic Partners]
-    C --> H[Core Researchers]
-    C --> I[PhD Students]
-    C --> J[Visiting Scholars]
-    D --> K[Academic Partners]
-    D --> L[Industry Collaborators]
-    D --> M[International Network]
-    E --> N[Strategic Direction]
-    F --> N
-    G --> N
-    H --> O[Innovation & Discovery]
-    I --> O
-    J --> O
-    K --> P[Knowledge Exchange]
-    L --> P
-    M --> P
-    N --> Q[World-Class AI Lab]
-    O --> Q
-    P --> Q
-    Q --> R{Research Impact?}
-    R -->|Academic| S[Publications & Papers]
-    R -->|Industry| T[Real-World Applications]
-    R -->|Society| U[Ethical AI Development]
-    S --> V[Global Research Impact]
-    T --> V
-    U --> V
-    
-    style A fill:#3B82F6,stroke:#2563EB,color:#fff
-    style Q fill:#10B981,stroke:#059669,color:#fff
-    style V fill:#8B5CF6,stroke:#7C3AED,color:#fff
+flowchart LR
+  A[Traceremove AI Lab] --> B[Leadership]
+  A --> C[Research Programmes]
+  A --> D[Collaborators]
+  B --> B1[Artur Ziganshin]
+  C --> C1[Ethics]
+  C --> C2[Systems]
+  C --> C3[Infrastructure]
+  D --> D1[Academic Network]
+  D --> D2[Industry Partners]
+  D --> D3[Civic Coalitions]
+  B1 --> E[Strategic Direction]
+  C1 --> E
+  C2 --> E
+  C3 --> E
 `;
 
-const teamMembers = {
-  leadership: [
-    {
-      name: "Artur Ziganshin",
-      role: "Founder & Director",
-      title: "AI Systems Architect, Developer, Philosopher of Technology",
-      location: "Kazan, Russia / International",
-      bio: "Artur Ziganshin is the founder and director of the Traceremove AI Research Lab, bringing together expertise in AI systems architecture, software development, and philosophy of technology. With a background in philosophy from Kazan Federal University and extensive experience in AI ethics, big data, and language technologies, Artur leads interdisciplinary research that bridges technical innovation with ethical considerations. His work focuses on transparency, responsibility, and human-centered approaches to AI development.",
-      expertise: ["AI Ethics", "Systems Architecture", "Philosophy of Technology", "Big Data", "Language Technologies", "Security", "Transparency"],
-      languages: ["Russian", "English", "Tatar", "Serbian", "Spanish"],
-      projects: ["Traceremove Platform", "Rarematrix", "Equality Initiative", "Ethical AI Framework"],
-      social: {
-        linkedin: "https://linkedin.com/in/artur-ziganshin",
-        github: "https://github.com/blackcatserious",
-        scholar: "https://scholar.google.com/citations?user=artur-ziganshin"
-      }
-    }
-  ]
+const leadership = {
+  name: 'Artur Ziganshin',
+  role: 'Founder & Director',
+  description:
+    'Artur unites philosophical critique and systems engineering to orchestrate Traceremove’s responsible AI programmes. His work spans ethics, interpretability, data stewardship, and community-centred innovation.',
+  languages: ['Russian', 'English', 'Tatar', 'Serbian', 'Spanish'],
+  focus: ['AI ethics', 'Systems architecture', 'Philosophy of technology', 'Digital rights'],
+  social: {
+    linkedin: 'https://linkedin.com/in/arthur-ziganshin',
+    github: 'https://github.com/blackcatserious',
+    scholar: 'https://scholar.google.com/citations?user=artur-ziganshin'
+  }
 };
 
+const collaborationPillars = [
+  {
+    title: 'Research residencies',
+    description: 'Joint investigations with universities and institutes exploring ethics, interpretability, and infrastructure.',
+    icon: BookOpen
+  },
+  {
+    title: 'Civic coalitions',
+    description: 'Partnerships with public institutions and NGOs to deploy atlas blueprints with governance guardrails.',
+    icon: ShieldCheck
+  },
+  {
+    title: 'Industry engagements',
+    description: 'Applied programmes with organisations committed to transparent, accountable intelligence.',
+    icon: Users
+  }
+];
+
+const languageBadges = leadership.languages;
+const expertiseHighlights = leadership.focus;
+
 export default function AILabMembers() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <div className="min-h-screen relative">
-      
-      {/* Header */}
-      <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
-        <div className="relative decorative-content max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center text-accent-ai-purple hover:text-accent-lab-purple font-medium mb-8 transition-colors duration-200"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Link>
+    <div className="relative overflow-hidden bg-slate-950 text-white">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_82%_22%,rgba(56,189,248,0.16),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,26,48,0.9)_45%,rgba(17,24,39,0.95)_100%)]" />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.55, scale: 1 } : { opacity: 0.85, scale: 1, rotate: [0, 8, -6, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.2 : 18, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
+            className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-gradient-to-br from-indigo-500/35 via-sky-400/25 to-emerald-400/25 blur-3xl"
+          />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.4, scale: 1 } : { opacity: 0.65, scale: 1, rotate: [0, -10, 8, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.4 : 20, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut', delay: 0.6 }}
+            className="absolute -bottom-28 right-8 h-80 w-80 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-purple-500/25 to-cyan-400/25 blur-3xl"
+          />
+        </div>
 
-            <div className="mb-8">
-              <h1 className="hero-title text-research-text mb-6">
-                AI Lab Members &amp; Collaborators
-              </h1>
-              
-              <div className="flex flex-wrap items-center gap-4 text-sm text-research-text-secondary mb-6">
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  Updated Dec 2024
-                </div>
-                <div className="flex items-center">
-                  <Eye className="h-4 w-4 mr-1" />
-                  12 min read
-                </div>
-                <div className="flex items-center">
-                  <MessageSquare className="h-4 w-4 mr-1" />
-                  Team
-                </div>
-                <button className="flex items-center hover:text-accent-ai-purple transition-colors duration-200">
-                  <Share2 className="h-4 w-4 mr-1" />
-                  Share Team
-                </button>
-              </div>
-
-              <div className="flex flex-wrap gap-2 mb-8">
-                {['Team', 'Research', 'Collaboration', 'AI Lab', 'Academia', 'Innovation'].map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent-ai-purple/10 text-accent-ai-purple border border-accent-ai-purple/20"
-                  >
-                    <Tag className="h-3 w-3 mr-1" />
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <p className="section-title text-research-text-secondary leading-relaxed">
-                Meet the diverse team of researchers, scholars, and collaborators 
-                who drive innovation at the Traceremove AI Research Lab. Our 
-                international team combines expertise in AI ethics, technical 
-                research, and interdisciplinary collaboration to advance 
-                responsible AI development.
-              </p>
-            </div>
-          </motion.div>
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+          <Link href="/" className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/60 transition-colors duration-300 hover:text-white">
+            <ArrowLeft className="h-4 w-4" />
+            Return home
+          </Link>
+          <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+            <Sparkles className="h-5 w-5 text-indigo-200" />
+            <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Traceremove AI lab</span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
+          </div>
+          <div className="mt-8 space-y-6">
+            <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl">
+              Meet the leadership guiding Traceremove’s responsible intelligence practice.
+            </h1>
+            <p className="text-lg text-white/75">
+              The lab is a transdisciplinary network of researchers, philosophers, designers, and engineers. Artur Ziganshin leads the constellation, blending theory and delivery to stage equitable AI.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none">
-            {/* Overview */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02, y: -8 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
-            >
-              <div className="flex items-center mb-6">
-                <Users className="h-8 w-8 text-accent-ai-purple mr-3" />
-                <h2 className="section-title text-research-text">Lab Overview &amp; Mission</h2>
-              </div>
-              
-              <LottieAnimation 
-                animationFile="team-collaboration.json"
-                className="mx-auto mb-8"
-                width={600}
-                height={400}
-              />
-              
-              <p className="body-text text-research-text-secondary mb-6">
-                The Traceremove AI Research Lab brings together a diverse team 
-                of researchers, scholars, and collaborators from around the world. 
-                Our team combines technical expertise with ethical considerations, 
-                interdisciplinary perspectives, and a commitment to responsible 
-                AI development that benefits all of humanity.
-              </p>
-              
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="academic-card p-6">
-                  <h3 className="text-lg font-semibold text-research-text mb-3">Team Size</h3>
-                  <div className="text-3xl font-bold text-accent-ai-purple mb-2">12+</div>
-                  <p className="text-sm text-research-text-secondary">Active researchers &amp; collaborators</p>
+      <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_36px_120px_rgba(15,23,42,0.55)] backdrop-blur-2xl">
+            <div className="grid gap-8 md:grid-cols-[0.65fr_0.35fr] md:items-start">
+              <div className="space-y-6 text-left">
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">Leadership</p>
+                  <h2 className="text-3xl font-semibold text-white">{leadership.name}</h2>
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">{leadership.role}</p>
                 </div>
-                <div className="academic-card p-6">
-                  <h3 className="text-lg font-semibold text-research-text mb-3">Countries</h3>
-                  <div className="text-3xl font-bold text-accent-ai-purple mb-2">10</div>
-                  <p className="text-sm text-research-text-secondary">International representation</p>
-                </div>
-                <div className="academic-card p-6">
-                  <h3 className="text-lg font-semibold text-research-text mb-3">Expertise Areas</h3>
-                  <div className="text-3xl font-bold text-accent-ai-purple mb-2">15+</div>
-                  <p className="text-sm text-research-text-secondary">Specialized research domains</p>
+                <p className="text-sm text-white/70">{leadership.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {expertiseHighlights.map((highlight) => (
+                    <span key={highlight} className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
+                      {highlight}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-
-            {/* Lab Architecture */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02, y: -8 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
-            >
-              <h2 className="section-title text-research-text mb-6">Lab Team Architecture</h2>
-              <p className="body-text text-research-text-secondary mb-8">
-                Our lab team integrates leadership, research team, and collaborators 
-                to create comprehensive research mechanisms. The system emphasizes 
-                strategic direction, innovation &amp; discovery, and knowledge exchange 
-                through structured collaboration delivery and world-class AI research 
-                lab development.
-              </p>
-              
-              <MermaidDiagram chart={labArchitecture} className="mb-8" />
-              
-              <p className="body-text text-research-text-secondary">
-                The lab team operates through four integrated layers: (1) leadership 
-                including founder, advisory board, and strategic partners, (2) research 
-                team covering core researchers, PhD students, and visiting scholars, 
-                (3) collaborators featuring academic partners and industry collaborators, 
-                and (4) comprehensive AI lab team leading to global research impact.
-              </p>
-            </motion.div>
-
-            {/* Leadership */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02, y: -8 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="glass-card-premium p-8 mb-12"
-            >
-              <div className="flex items-center mb-6">
-                <Award className="h-6 w-6 text-accent-ai-purple mr-3" />
-                <h2 className="section-title text-research-text">Leadership Team</h2>
-              </div>
-              
-              <div className="space-y-8">
-                {teamMembers.leadership.map((member, index) => (
-                  <div key={index} className="expertise-card p-8">
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex-shrink-0">
-                        <div className="w-32 h-32 bg-gradient-to-br from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-2xl flex items-center justify-center">
-                          <Users className="h-16 w-16 text-accent-ai-purple" />
-                        </div>
-                      </div>
-                      <div className="flex-grow">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="text-2xl font-bold text-research-text mb-2">{member.name}</h3>
-                            <p className="text-lg text-accent-ai-purple font-semibold mb-1">{member.role}</p>
-                            <p className="text-md text-research-text-secondary mb-2">{member.title}</p>
-                            <div className="flex items-center text-sm text-research-text-secondary mb-4">
-                              <MapPin className="h-4 w-4 mr-1" />
-                              {member.location}
-                            </div>
-                          </div>
-                          <div className="flex gap-2">
-                            {member.social.linkedin && (
-                              <a href={member.social.linkedin} className="text-accent-ai-purple hover:text-accent-lab-purple transition-colors duration-200">
-                                <Linkedin className="h-5 w-5" />
-                              </a>
-                            )}
-                            {member.social.github && (
-                              <a href={member.social.github} className="text-accent-ai-purple hover:text-accent-lab-purple transition-colors duration-200">
-                                <Github className="h-5 w-5" />
-                              </a>
-                            )}
-                            {member.social.scholar && (
-                              <a href={member.social.scholar} className="text-accent-ai-purple hover:text-accent-lab-purple transition-colors duration-200">
-                                <BookOpen className="h-5 w-5" />
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                        
-                        <p className="body-text text-research-text-secondary mb-6">{member.bio}</p>
-                        
-                        <div className="grid md:grid-cols-2 gap-6">
-                          <div>
-                            <h4 className="text-lg font-semibold text-research-text mb-3">Expertise</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {member.expertise.map((skill, skillIndex) => (
-                                <span key={skillIndex} className="px-3 py-1 bg-accent-ai-purple/10 text-accent-ai-purple rounded-full text-sm">
-                                  {skill}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <h4 className="text-lg font-semibold text-research-text mb-3">Languages</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {member.languages.map((lang, langIndex) => (
-                                <span key={langIndex} className="px-3 py-1 bg-accent-lab-purple/10 text-accent-lab-purple rounded-full text-sm">
-                                  {lang}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="mt-6">
-                          <h4 className="text-lg font-semibold text-research-text mb-3">Key Projects</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {member.projects.map((project, projectIndex) => (
-                              <span key={projectIndex} className="px-3 py-1 bg-white/10 text-research-text border border-accent-ai-purple/20 rounded-full text-sm">
-                                {project}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">Languages</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {languageBadges.map((language) => (
+                      <span key={language} className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
+                        {language}
+                      </span>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">Connect</p>
+                  <div className="flex flex-col gap-2 text-sm text-white/70">
+                    <Link href={leadership.social.linkedin} className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-white">
+                      <Linkedin className="h-4 w-4" /> LinkedIn
+                    </Link>
+                    <Link href={leadership.social.github} className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-white">
+                      <Github className="h-4 w-4" /> GitHub
+                    </Link>
+                    <Link href={leadership.social.scholar} className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-white">
+                      <BookOpen className="h-4 w-4" /> Google Scholar
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Navigation */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="border-t border-accent-ai-purple/20 pt-8"
-            >
-              <div className="flex justify-between items-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center px-6 py-3 bg-white/10 text-research-text font-medium rounded-2xl border border-accent-ai-purple/20 hover:border-accent-ai-purple/40 backdrop-blur-sm transition-all duration-300"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
-                </Link>
-                
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-medium rounded-2xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300"
-                >
-                  Join Our Team
-                  <Users className="h-4 w-4 ml-2" />
-                </Link>
-              </div>
-            </motion.div>
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Collaboration pillars</h2>
+            <p className="mt-3 text-lg text-white/70">Traceremove thrives through partnerships across academia, public institutions, and industry.</p>
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {collaborationPillars.map((pillar) => (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <pillar.icon className="h-6 w-6 text-white/70" />
+                <h3 className="mt-4 text-lg font-semibold text-white">{pillar.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{pillar.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Lab architecture</h2>
+          <p className="mt-3 text-lg text-white/70">Understand how leadership, programmes, and collaborators interlink to deliver responsible AI.</p>
+          <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+            <MermaidDiagram chart={labArchitecture} />
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-white/70">
+            <Link href="/contact" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 transition-colors duration-300 hover:text-white">
+              Partner with the lab
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/projects" className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 transition-colors duration-300 hover:text-white">
+              Explore active programmes
+            </Link>
           </div>
         </div>
       </section>

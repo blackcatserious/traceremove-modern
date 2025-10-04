@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 import {
   Menu,
@@ -83,6 +83,11 @@ type NavigationItem = {
     description: string;
     highlight?: NavigationHighlight;
   };
+};
+
+type DropdownMetrics = {
+  left: number;
+  width: number;
 };
 
 const navigationItems: NavigationItem[] = [
@@ -291,7 +296,47 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActive, setMobileActive] = useState<string | null>(null);
+  const [dropdownMetrics, setDropdownMetrics] = useState<DropdownMetrics>({ left: 0, width: 680 });
+  const prefersReducedMotion = useReducedMotion();
   const pathname = usePathname();
+  const navRailRef = useRef<HTMLDivElement | null>(null);
+  const navItemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const updateDropdownMetrics = useCallback(
+    (label: string) => {
+      const rail = navRailRef.current;
+      const trigger = navItemRefs.current[label];
+
+      if (!rail || !trigger) return;
+
+      const railRect = rail.getBoundingClientRect();
+      const triggerRect = trigger.getBoundingClientRect();
+      const viewportPadding = 24;
+      const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : railRect.width;
+      const maxAvailable = Math.max(Math.min(railRect.width, viewportWidth) - viewportPadding * 2, 320);
+      const desiredWidth = Math.max(triggerRect.width + 320, 420);
+      const width = Math.min(760, Math.min(desiredWidth, maxAvailable));
+      const halfWidth = width / 2;
+      const triggerCenter = triggerRect.left + triggerRect.width / 2 - railRect.left;
+      const minCenter = halfWidth + viewportPadding / 2;
+      const maxCenter = railRect.width - halfWidth - viewportPadding / 2;
+
+      const clampedCenter = maxCenter <= minCenter
+        ? railRect.width / 2
+        : Math.min(Math.max(triggerCenter, minCenter), maxCenter);
+
+      setDropdownMetrics({ left: clampedCenter, width });
+    },
+    []
+  );
+
+  const registerNavItem = useCallback(
+    (label: string) => (element: HTMLDivElement | null) => {
+      navItemRefs.current[label] = element;
+    },
+    []
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -302,6 +347,19 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!activeDropdown) return;
+    updateDropdownMetrics(activeDropdown);
+  }, [activeDropdown, updateDropdownMetrics]);
+
+  useEffect(() => {
+    if (!activeDropdown) return;
+
+    const handleResize = () => updateDropdownMetrics(activeDropdown);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [activeDropdown, updateDropdownMetrics]);
 
   useEffect(() => {
     setIsOpen(false);
@@ -318,6 +376,14 @@ export default function Navigation() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (closeTimeout.current) {
+        clearTimeout(closeTimeout.current);
+      }
+    };
+  }, []);
+
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     return pathname.startsWith(href);
@@ -326,11 +392,27 @@ export default function Navigation() {
   const toggleMenu = () => setIsOpen((value) => !value);
 
   const handleDropdownEnter = (label: string) => {
+    if (closeTimeout.current) {
+      clearTimeout(closeTimeout.current);
+      closeTimeout.current = null;
+    }
+
     setActiveDropdown(label);
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => updateDropdownMetrics(label));
+    } else {
+      updateDropdownMetrics(label);
+    }
   };
 
   const handleDropdownLeave = () => {
-    setActiveDropdown(null);
+    if (closeTimeout.current) {
+      clearTimeout(closeTimeout.current);
+    }
+
+    closeTimeout.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 200);
   };
 
   const toggleMobileSection = (label: string) => {
@@ -342,31 +424,33 @@ export default function Navigation() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
+      role="navigation"
+      aria-label="Primary navigation"
       className={`nav-premium relative z-50 overflow-visible ${scrolled ? 'scrolled' : ''}`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.span
           aria-hidden
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{
+          animate={prefersReducedMotion ? { opacity: 0.9, scale: 1 } : {
             opacity: 1,
             scale: 1,
             x: [0, 20, -10, 0],
             y: [0, 10, -6, 0]
           }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          transition={prefersReducedMotion ? { duration: 0.6, ease: 'easeOut' } : { duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute -top-32 left-16 h-64 w-64 rounded-full bg-gradient-to-br from-accent-ai-purple/30 via-accent-lab-purple/20 to-sky-500/20 blur-3xl"
         />
         <motion.span
           aria-hidden
           initial={{ opacity: 0, scale: 0.95 }}
-          animate={{
+          animate={prefersReducedMotion ? { opacity: 0.85, scale: 1 } : {
             opacity: 1,
             scale: 1,
             x: [0, -30, 10, 0],
             y: [0, -12, 8, 0]
           }}
-          transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+          transition={prefersReducedMotion ? { duration: 0.8, ease: 'easeOut' } : { duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
           className="absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-gradient-to-br from-sky-500/25 via-blue-500/15 to-emerald-400/20 blur-3xl"
         />
       </div>
@@ -395,10 +479,19 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden flex-1 items-center justify-center lg:flex">
-            <div className="flex items-center gap-1 rounded-3xl border border-white/10 bg-white/5 px-2 py-1 backdrop-blur-xl">
+            <div
+              ref={navRailRef}
+              className="relative flex items-center gap-1 rounded-3xl border border-white/10 bg-white/5 px-2 py-1 backdrop-blur-xl"
+              onMouseLeave={() => {
+                if (!activeDropdown) return;
+                handleDropdownLeave();
+              }}
+            >
               {navigationItems.map((item, index) => {
                 const Icon = item.icon;
                 const isDropdownActive = activeDropdown === item.label;
+                const navItemId = item.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const dropdownId = `mega-${navItemId}`;
 
                 return (
                   <motion.div
@@ -407,10 +500,12 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
                     className="relative"
+                    ref={registerNavItem(item.label)}
                     onMouseEnter={() => item.dropdown && handleDropdownEnter(item.label)}
                     onMouseLeave={() => item.dropdown && handleDropdownLeave()}
                     onFocus={() => item.dropdown && handleDropdownEnter(item.label)}
                     onBlur={(event) => {
+                      if (!item.dropdown) return;
                       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
                         handleDropdownLeave();
                       }
@@ -418,12 +513,20 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
-                      onClick={() => setActiveDropdown(null)}
+                      onClick={() => {
+                        if (closeTimeout.current) {
+                          clearTimeout(closeTimeout.current);
+                          closeTimeout.current = null;
+                        }
+                        setActiveDropdown(null);
+                      }}
                       className={`nav-link-premium group relative inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold tracking-tight text-white/80 transition-all duration-300 ${
                         isActive(item.href) ? 'text-white' : ''
                       }`}
                       aria-haspopup={item.dropdown ? 'true' : undefined}
                       aria-expanded={item.dropdown ? isDropdownActive : undefined}
+                      aria-controls={item.dropdown ? dropdownId : undefined}
+                      aria-current={isActive(item.href) ? 'page' : undefined}
                     >
                       <span className={`absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${item.accent}`}></span>
                       <span className="absolute inset-0 rounded-2xl bg-white/5 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
@@ -451,127 +554,151 @@ export default function Navigation() {
                         />
                       )}
                     </Link>
-
-                    {item.dropdown && (
-                      <AnimatePresence>
-                        {isDropdownActive && (
-                          <motion.div
-                            key={`${item.label}-dropdown`}
-                            initial={{ opacity: 0, y: -10, scale: 0.97 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -10, scale: 0.97 }}
-                            transition={{ duration: 0.18, ease: 'easeOut' }}
-                            className="nav-mega absolute left-1/2 top-full z-50 mt-4 w-[760px] -translate-x-1/2"
-                          >
-                            <motion.div
-                              layout
-                              className="relative overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 p-1 shadow-[0_40px_80px_rgba(15,23,42,0.55)] backdrop-blur-3xl"
-                            >
-                              <div className="absolute -top-32 right-10 h-64 w-64 rounded-full bg-gradient-to-br from-white/10 via-white/0 to-white/0 blur-3xl" />
-                              <div className="absolute -bottom-36 left-14 h-72 w-72 rounded-full bg-gradient-to-br from-white/0 via-white/0 to-white/10 blur-3xl" />
-                              <div className="relative grid gap-6 p-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
-                                {item.meta && (
-                                  <div className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
-                                    <div className="space-y-2">
-                                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
-                                        {item.meta.tagline}
-                                      </p>
-                                      <p className="text-base font-medium text-white/80">
-                                        {item.meta.description}
-                                      </p>
-                                    </div>
-                                    {item.meta.highlight && (
-                                      <Link
-                                        href={item.meta.highlight.href}
-                                        onClick={() => setActiveDropdown(null)}
-                                        className="group block"
-                                      >
-                                        <motion.div
-                                          whileHover={{ y: -4, scale: 1.01 }}
-                                          whileTap={{ scale: 0.99 }}
-                                          className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${item.meta.highlight.accent} p-5 text-white shadow-[0_20px_45px_rgba(15,23,42,0.45)]`}
-                                          style={{ boxShadow: item.meta.highlight.glow }}
-                                        >
-                                          <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
-                                          <div className="flex items-start justify-between gap-3">
-                                            <div className="space-y-3">
-                                              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
-                                                {item.meta.highlight.badge && <span>{item.meta.highlight.badge}</span>}
-                                              </div>
-                                              <div>
-                                                <p className="text-lg font-semibold leading-tight">{item.meta.highlight.title}</p>
-                                                <p className="mt-2 text-sm text-white/80">
-                                                  {item.meta.highlight.description}
-                                                </p>
-                                              </div>
-                                            </div>
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
-                                              <item.meta.highlight.icon className="h-6 w-6" strokeWidth={2.2} />
-                                            </div>
-                                          </div>
-                                          <motion.div
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            className="mt-4 flex items-center gap-2 text-sm font-semibold"
-                                          >
-                                            <span>Open blueprint</span>
-                                            <ArrowRight className="h-4 w-4" />
-                                          </motion.div>
-                                        </motion.div>
-                                      </Link>
-                                    )}
-                                  </div>
-                                )}
-
-                                <div className="grid gap-3 sm:grid-cols-2">
-                                  {item.dropdown.map((dropdownItem, dropdownIndex) => (
-                                    <motion.div
-                                      key={dropdownItem.href}
-                                      initial={{ opacity: 0, y: 8 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      transition={{ duration: 0.2, delay: dropdownIndex * 0.03 }}
-                                    >
-                                      <Link
-                                        href={dropdownItem.href}
-                                        onClick={() => setActiveDropdown(null)}
-                                        className="group flex h-full flex-col gap-3 rounded-3xl border border-white/5 bg-white/5 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-                                      >
-                                        <div className="flex items-center gap-3">
-                                          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-white/15 via-white/5 to-white/0 text-white">
-                                            <dropdownItem.icon className="h-5 w-5" strokeWidth={2.4} />
-                                          </span>
-                                          <div className="flex-1">
-                                            <p className="text-sm font-semibold text-white">{dropdownItem.label}</p>
-                                            <p className="text-xs text-white/70">{dropdownItem.description}</p>
-                                          </div>
-                                          <motion.span
-                                            initial={{ opacity: 0, x: -8 }}
-                                            animate={{ opacity: 0.5, x: 0 }}
-                                            className="text-sm text-white"
-                                          >
-                                            <ArrowRight className="h-4 w-4" />
-                                          </motion.span>
-                                        </div>
-                                        {dropdownItem.badge && (
-                                          <span className="inline-flex items-center gap-2 self-start rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/70">
-                                            {dropdownItem.badge}
-                                          </span>
-                                        )}
-                                      </Link>
-                                    </motion.div>
-                                  ))}
-                                </div>
-                              </div>
-                            </motion.div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    )}
                   </motion.div>
                 );
               })}
-            </div>
+              <AnimatePresence>
+                {(() => {
+                  const activeItemData = navigationItems.find((item) => item.label === activeDropdown);
+                  if (!activeItemData || !activeItemData.dropdown) return null;
+                  const dropdownId = `mega-${activeItemData.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+                  const highlightMeta = activeItemData.meta?.highlight;
+                  const HighlightIcon = highlightMeta?.icon;
+
+                  return (
+                    <motion.div
+                      key={`${activeItemData.label}-dropdown`}
+                      initial={{ opacity: 0, y: -10, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                      transition={{ duration: 0.18, ease: 'easeOut' }}
+                      className="nav-mega pointer-events-auto absolute top-full z-50 mt-4"
+                      id={dropdownId}
+                      role="menu"
+                      aria-label={`${activeItemData.label} mega menu`}
+                      onMouseEnter={() => handleDropdownEnter(activeItemData.label)}
+                      onMouseLeave={handleDropdownLeave}
+                      style={{
+                        left: dropdownMetrics.left,
+                        transform: 'translateX(-50%)',
+                        width: dropdownMetrics.width,
+                        minWidth: dropdownMetrics.width
+                      }}
+                    >
+                      <motion.div
+                        layout
+                        className="relative overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 p-1 shadow-[0_40px_80px_rgba(15,23,42,0.55)] backdrop-blur-3xl"
+                      >
+                        <div className="absolute -top-32 right-10 h-64 w-64 rounded-full bg-gradient-to-br from-white/10 via-white/0 to-white/0 blur-3xl" />
+                        <div className="absolute -bottom-36 left-14 h-72 w-72 rounded-full bg-gradient-to-br from-white/0 via-white/0 to-white/10 blur-3xl" />
+                        <div className="relative grid gap-6 p-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
+                          {activeItemData.meta && (
+                            <div className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
+                              <div className="space-y-2">
+                                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
+                                  {activeItemData.meta.tagline}
+                                </p>
+                                <p className="text-base font-medium text-white/80">
+                                  {activeItemData.meta.description}
+                                </p>
+                              </div>
+                              {highlightMeta && HighlightIcon && (
+                                <Link
+                                  href={highlightMeta.href}
+                                  onClick={() => {
+                                    if (closeTimeout.current) {
+                                      clearTimeout(closeTimeout.current);
+                                      closeTimeout.current = null;
+                                    }
+                                    setActiveDropdown(null);
+                                  }}
+                                  className="group block"
+                                >
+                                  <motion.div
+                                    whileHover={{ y: -4, scale: 1.01 }}
+                                    whileTap={{ scale: 0.99 }}
+                                    className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${highlightMeta.accent} p-5 text-white shadow-[0_20px_45px_rgba(15,23,42,0.45)]`}
+                                    style={{ boxShadow: highlightMeta.glow }}
+                                  >
+                                    <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
+                                    <div className="flex items-start justify-between gap-3">
+                                      <div className="space-y-3">
+                                        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
+                                          {highlightMeta.badge && <span>{highlightMeta.badge}</span>}
+                                        </div>
+                                        <div>
+                                          <p className="text-lg font-semibold leading-tight">{highlightMeta.title}</p>
+                                          <p className="mt-2 text-sm text-white/80">
+                                            {highlightMeta.description}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
+                                        <HighlightIcon className="h-6 w-6" strokeWidth={2.2} />
+                                      </div>
+                                    </div>
+                                    <motion.div
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      className="mt-4 flex items-center gap-2 text-sm font-semibold"
+                                    >
+                                      <span>Open blueprint</span>
+                                      <ArrowRight className="h-4 w-4" />
+                                    </motion.div>
+                                  </motion.div>
+                                </Link>
+                              )}
+                            </div>
+                          )}
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {activeItemData.dropdown.map((dropdownItem) => (
+                              <motion.div
+                                key={dropdownItem.href}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.18 }}
+                                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
+                              >
+                                <Link
+                                  href={dropdownItem.href}
+                                  onClick={() => {
+                                    if (closeTimeout.current) {
+                                      clearTimeout(closeTimeout.current);
+                                      closeTimeout.current = null;
+                                    }
+                                    setActiveDropdown(null);
+                                  }}
+                                  className="flex items-start gap-4"
+                                  role="menuitem"
+                                >
+                                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                                    <dropdownItem.icon className="h-6 w-6" strokeWidth={2.2} />
+                                  </span>
+                                  <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-base font-semibold text-white">
+                                        {dropdownItem.label}
+                                      </span>
+                                      {dropdownItem.badge && (
+                                        <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+                                          {dropdownItem.badge}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p className="text-sm text-white/70">{dropdownItem.description}</p>
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })()}
+            </AnimatePresence>
           </div>
+        </div>
 
           <div className="hidden items-center gap-3 lg:flex">
             <PremiumButton
