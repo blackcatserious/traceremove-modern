@@ -6,16 +6,17 @@ import { ArrowLeft, ArrowUpRight, Clock, Globe2, Sparkles, Users2 } from 'lucide
 import BackgroundLayers from '@/components/BackgroundLayers';
 import { atlasBlueprints, getAtlasBlueprint } from '@/lib/atlasCatalog';
 
-interface AtlasPageProps {
-  params: { slug: string };
-}
-
 export function generateStaticParams() {
   return atlasBlueprints.map((blueprint) => ({ slug: blueprint.slug }));
 }
 
-export function generateMetadata({ params }: AtlasPageProps): Metadata {
-  const blueprint = getAtlasBlueprint(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const blueprint = getAtlasBlueprint(slug);
 
   if (!blueprint) {
     return {
@@ -39,7 +40,7 @@ export function generateMetadata({ params }: AtlasPageProps): Metadata {
   };
 }
 
-export default function AtlasBlueprintPage({ params }: AtlasPageProps) {
+export default function AtlasBlueprintPage({ params }: { params: { slug: string } }) {
   const blueprint = getAtlasBlueprint(params.slug);
 
   if (!blueprint) {
