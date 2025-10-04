@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+import KnowledgeBaseExplorer from '@/components/KnowledgeBaseExplorer';
 
 const assistantHighlights = [
   {
@@ -224,6 +225,15 @@ export default function AssistantPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="relative border-t border-white/5 bg-slate-950/90 py-20">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <KnowledgeBaseExplorer
+            title="Assistant knowledge briefs"
+            description="Inspect the curated metrics, tooling, and algorithm dossiers that the Traceremove assistant references before it answers complex prompts."
+          />
         </div>
       </section>
     </div>

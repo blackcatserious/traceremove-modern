@@ -1,20 +1,30 @@
 import type { AIGenerateRequest, AIGenerateResponse, AIMessage } from './types';
 
-type KnowledgeEntry = {
+export type KnowledgeQuickPrompt = {
+  label: string;
+  prompt: string;
+};
+
+export type KnowledgeEntry = {
   id: string;
   title: string;
   summary: string;
+  category: string;
   keywords: string[];
   metrics: string[];
   toolchain: string[];
   playbooks: string[];
   followUps: string[];
+  quickPrompts: KnowledgeQuickPrompt[];
+  cta: { label: string; href: string };
+  accent: string;
 };
 
-const KNOWLEDGE_BASE: KnowledgeEntry[] = [
+const KNOWLEDGE_BASE: ReadonlyArray<KnowledgeEntry> = [
   {
     id: 'metrics-and-observability',
     title: 'Metrics instrumentation & observability stack',
+    category: 'Metrics & Observability',
     summary:
       'Traceremove captures every experiment, user journey, and deployment with layered telemetry: ingestion at the edge, model health probes, and product impact dashboards that drive weekly governance.',
     keywords: [
@@ -48,10 +58,23 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
       'What KPIs gate promotion of an experimental algorithm into production?',
       'How are ethical guardrails encoded into the telemetry pipeline?',
     ],
+    quickPrompts: [
+      {
+        label: 'Deploy the KPI ritual',
+        prompt: 'Walk me through the KPI governance ritual that keeps Traceremove dashboards accountable.',
+      },
+      {
+        label: 'Extend telemetry',
+        prompt: 'How does Traceremove expand its observability lake into a new region while preserving compliance?',
+      },
+    ],
+    cta: { label: 'View metrics playbook', href: '/research/big-data-interpretability' },
+    accent: 'from-sky-500 via-indigo-500 to-purple-500',
   },
   {
     id: 'algorithms-and-evaluation',
     title: 'Algorithm experimentation & evaluation loops',
+    category: 'Algorithms & Evaluation',
     summary:
       'Every algorithm lives inside Atlas blueprints with end-to-end evaluation: dataset provenance, automated benchmarking, human-in-the-loop review, and deployment readiness scoring.',
     keywords: [
@@ -86,10 +109,23 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
       'Which evaluation recipes secure regulatory sign-off?',
       'How do we visualise lineage across 156 blueprint pages?',
     ],
+    quickPrompts: [
+      {
+        label: 'Benchmarks pulse',
+        prompt: 'Summarise the latest benchmark deltas from Traceremove’s assistant algorithms.',
+      },
+      {
+        label: 'Evaluation recipes',
+        prompt: 'Which evaluation recipes does Traceremove use to secure regulatory sign-off?',
+      },
+    ],
+    cta: { label: 'Explore evaluation lab', href: '/research/agentic-systems-tool-use' },
+    accent: 'from-purple-500 via-fuchsia-500 to-pink-500',
   },
   {
     id: 'tools-and-automation',
     title: 'Tools, automation, and operations enablement',
+    category: 'Tools & Automation',
     summary:
       'Traceremove ships an integrated toolkit: deployment pipelines, compliance automations, and collaborative mega menus so every page links to the next action without friction.',
     keywords: [
@@ -123,10 +159,23 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
       'How is the mega menu structured for mobile and desktop parity?',
       'What safeguards keep the assistant’s tool references accurate?',
     ],
+    quickPrompts: [
+      {
+        label: 'Automation layers',
+        prompt: 'Detail the automation layers that keep the Traceremove atlas updated nightly.',
+      },
+      {
+        label: 'Mega menu ops',
+        prompt: 'How is the Traceremove mega menu structured for parity across desktop and mobile?',
+      },
+    ],
+    cta: { label: 'See tooling runway', href: '/tools' },
+    accent: 'from-emerald-500 via-teal-500 to-cyan-500',
   },
   {
     id: 'assistant-copilot',
     title: 'Assistant & chatbot orchestration',
+    category: 'Assistant Operations',
     summary:
       'The chatbot anchors navigation through the cinematic stack: it triages questions into metrics, tools, or algorithms and links users back into Atlas, research, or contact flows.',
     keywords: [
@@ -159,8 +208,35 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
       'How does the chatbot surface atlas research on mobile?',
       'Where do I escalate a conversation to a human specialist?',
     ],
+    quickPrompts: [
+      {
+        label: 'Fallback pathways',
+        prompt: 'Explain how the Traceremove assistant responds when external AI services are offline.',
+      },
+      {
+        label: 'Escalation guardrails',
+        prompt: 'How does the assistant orchestrate human hand-offs for complex research questions?',
+      },
+    ],
+    cta: { label: 'Meet the copilot', href: '/assistant' },
+    accent: 'from-blue-500 via-sky-500 to-indigo-500',
   },
 ];
+
+export const KNOWLEDGE_ENTRIES: KnowledgeEntry[] = KNOWLEDGE_BASE.map((entry) => ({
+  ...entry,
+  metrics: [...entry.metrics],
+  toolchain: [...entry.toolchain],
+  playbooks: [...entry.playbooks],
+  followUps: [...entry.followUps],
+  quickPrompts: entry.quickPrompts.map((prompt) => ({ ...prompt })),
+  cta: { ...entry.cta },
+}));
+
+type SearchOptions = {
+  limit?: number;
+  fallbackToAll?: boolean;
+};
 
 function normalise(text: string): string {
   return text
@@ -179,10 +255,15 @@ function extractUserQuery(messages: AIMessage[]): string {
   return '';
 }
 
-function selectEntries(query: string): KnowledgeEntry[] {
+function selectEntries(query: string, options: SearchOptions = {}): KnowledgeEntry[] {
+  const { limit = 3, fallbackToAll = true } = options;
   const normalised = normalise(query);
   if (!normalised) {
-    return KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
+    const entries = KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
+    if (!Number.isFinite(limit)) {
+      return entries.slice();
+    }
+    return entries.slice(0, limit);
   }
 
   const scored = KNOWLEDGE_BASE.map((entry) => {
@@ -208,11 +289,21 @@ function selectEntries(query: string): KnowledgeEntry[] {
     .map(({ entry }) => entry);
 
   if (matched.length === 0) {
-    return KNOWLEDGE_BASE;
+    return fallbackToAll ? KNOWLEDGE_BASE.slice() : [];
   }
 
-  const limit = Math.min(3, matched.length);
-  return matched.slice(0, limit);
+  if (!Number.isFinite(limit)) {
+    return matched;
+  }
+
+  return matched.slice(0, Math.min(limit, matched.length));
+}
+
+export function searchKnowledgeEntries(query: string, options?: SearchOptions): KnowledgeEntry[] {
+  return selectEntries(query, {
+    limit: options?.limit ?? KNOWLEDGE_BASE.length,
+    fallbackToAll: options?.fallbackToAll ?? true,
+  });
 }
 
 function formatEntry(entry: KnowledgeEntry): string {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Send, Loader2 } from 'lucide-react';
 
@@ -16,6 +16,7 @@ function Chat({
   loading,
   prompts,
   onSelectPrompt,
+  inputRef,
 }: {
   messages: Msg[];
   input: string;
@@ -24,6 +25,7 @@ function Chat({
   loading: boolean;
   prompts: QuickPrompt[];
   onSelectPrompt: (prompt: string) => void;
+  inputRef: RefObject<HTMLInputElement | null>;
 }) {
   return (
     <div>
@@ -71,6 +73,7 @@ function Chat({
           }}
           placeholder="Ask Traceremove AI..."
           className="flex-1 px-4 py-3 rounded-xl bg-white/90 text-slate-900 placeholder-slate-500 focus:outline-none"
+          ref={inputRef}
         />
         <button
           onClick={send}
@@ -109,17 +112,26 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const messagesRef = useRef<Msg[]>(messages);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const focusInput = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  }, []);
 
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
 
-  async function ask(query: string) {
-    const trimmed = query.trim();
-    if (!trimmed || loading) return;
+  const ask = useCallback(
+    async (query: string) => {
+      const trimmed = query.trim();
+      if (!trimmed || loading) return;
 
-    const userMsg: Msg = { role: 'user', content: trimmed };
-    const history = [...messagesRef.current, userMsg];
+      const userMsg: Msg = { role: 'user', content: trimmed };
+      const history = [...messagesRef.current, userMsg];
     messagesRef.current = history;
     setMessages(history);
     setInput('');
@@ -151,10 +163,12 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
       const nextHistory = [...history, fallbackMsg];
       messagesRef.current = nextHistory;
       setMessages(nextHistory);
-    } finally {
-      setLoading(false);
-    }
-  }
+      } finally {
+        setLoading(false);
+      }
+    },
+    [loading],
+  );
 
   const send = () => {
     void ask(input);
@@ -163,6 +177,38 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
   const handlePromptSelect = (prompt: string) => {
     void ask(prompt);
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    type PromptDetail = { prompt?: string };
+
+    const handler = (event: Event) => {
+      const custom = event as CustomEvent<PromptDetail>;
+      const detail = custom.detail;
+      if (!detail?.prompt) {
+        return;
+      }
+
+      if (compact) {
+        setOpen(true);
+      }
+
+      setInput('');
+      focusInput();
+
+      if (!loading) {
+        void ask(detail.prompt);
+      } else {
+        setInput(detail.prompt);
+      }
+    };
+
+    window.addEventListener('traceremove-chat-prompt', handler as EventListener);
+    return () => {
+      window.removeEventListener('traceremove-chat-prompt', handler as EventListener);
+    };
+    }, [ask, compact, focusInput, loading]);
 
   if (compact) {
     return (
@@ -188,6 +234,7 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
               loading={loading}
               prompts={QUICK_PROMPTS}
               onSelectPrompt={handlePromptSelect}
+              inputRef={inputRef}
             />
           </motion.div>
         )}
@@ -205,6 +252,7 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
         loading={loading}
         prompts={QUICK_PROMPTS}
         onSelectPrompt={handlePromptSelect}
+        inputRef={inputRef}
       />
     </div>
   );
