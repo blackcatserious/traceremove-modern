@@ -787,12 +787,12 @@ const narrativeContexts: NarrativeContext[] = [
   }
 ];
 
-const enrichMetric = (metric: AtlasMetric, angle: NarrativeContext): AtlasMetric => ({
+const enrichMetric = (metric: AtlasMetric, persona: string): AtlasMetric => ({
   ...metric,
-  description: `${metric.description}. Tailored for ${angle.persona.toLowerCase()}.`
+  description: `${metric.description}. Tailored for ${persona.toLowerCase()}.`
 });
 
-export const atlasBlueprints: AtlasBlueprint[] = focusAreas.flatMap((focus) =>
+const coreAtlasBlueprints: AtlasBlueprint[] = focusAreas.flatMap((focus) =>
   narrativeContexts.map((angle) => ({
     slug: `${focus.slug}-${angle.slug}`,
     title: `${focus.name} for ${angle.label}`,
@@ -816,13 +816,194 @@ export const atlasBlueprints: AtlasBlueprint[] = focusAreas.flatMap((focus) =>
     momentum: angle.energy,
     commitments: [...angle.commitments, ...focus.highlights.slice(0, 1)],
     highlights: focus.highlights,
-    metrics: focus.metrics.map((metric) => enrichMetric(metric, angle)),
+    metrics: focus.metrics.map((metric) => enrichMetric(metric, angle.persona)),
     programs: focus.programs,
     experiences: focus.experiences,
     signals: angle.recommendedSignals,
     callToAction: `${focus.callToAction} ${angle.activation}`
   }))
 );
+
+type SpotlightTemplate = {
+  suffix: string;
+  title: (focus: FocusArea) => string;
+  eyebrow: string;
+  heading: (focus: FocusArea) => string;
+  subheading: (focus: FocusArea) => string;
+  summary: (focus: FocusArea) => string;
+  story: (focus: FocusArea) => string;
+  momentum: string;
+  commitments: (focus: FocusArea) => string[];
+  signals: (focus: FocusArea) => string[];
+  callToAction: (focus: FocusArea) => string;
+  visualCue: string;
+  contextLabel: string;
+  cluster: string;
+  persona: string;
+  ecosystem: string;
+  timeHorizon: string;
+};
+
+const spotlightTemplates: SpotlightTemplate[] = [
+  {
+    suffix: 'motion-lab',
+    title: (focus) => `${focus.name} Motion Intelligence Lab`,
+    eyebrow: 'Cinematic Motion Lab',
+    heading: (focus) => `${focus.name} Motion Intelligence Lab`,
+    subheading: (focus) => `Animate ${focus.tagline.toLowerCase()} with GPU-accelerated previews.`,
+    summary: (focus) =>
+      `Rapidly choreograph ${focus.name.toLowerCase()} storyboards with performance diagnostics and responsive cues.`,
+    story: (focus) =>
+      `Immersive instrumentation keeps ${focus.promise.toLowerCase()} anchored in responsive motion and real-time observability.`,
+    momentum: 'Rapid prototyping energy with GPU-accelerated surfaces.',
+    commitments: (focus) => [
+      `Prototype choreographies that express ${focus.mission.toLowerCase()}.`,
+      'Instrument each animation with telemetry for accessibility and frame pacing.',
+      'Publish responsive motion specs that adapt to reduced-motion preferences.',
+    ],
+    signals: () => [
+      'Motion QA dashboards measuring frame pacing and layout stability.',
+      'Heatmaps revealing focus moments inside the cinematic header journeys.',
+      'Accessibility playback reviews capturing reduced-motion outcomes.',
+    ],
+    callToAction: (focus) =>
+      `Book a motion systems pairing session to animate ${focus.name.toLowerCase()} rollouts.`,
+    visualCue: 'Holographic motion boards with parallax grids and orbiting nodes.',
+    contextLabel: 'Spotlight Journey',
+    cluster: 'Immersive Acceleration',
+    persona: 'Motion systems directors',
+    ecosystem: 'Motion designers, AI engineers, compliance partners, and storytellers.',
+    timeHorizon: '6-week cinematic prototype arc',
+  },
+  {
+    suffix: 'field-kit',
+    title: (focus) => `${focus.name} Field Deployment Kit`,
+    eyebrow: 'Field Deployment Kit',
+    heading: (focus) => `${focus.name} Field Deployment Kit`,
+    subheading: (focus) => `Operationalize ${focus.tagline.toLowerCase()} across hybrid teams.`,
+    summary: (focus) =>
+      `Portable rituals that translate ${focus.name.toLowerCase()} practices into on-site activation with cinematic fidelity.`,
+    story: (focus) =>
+      `Guided enablement ensures ${focus.promise.toLowerCase()} arrives with documentation, training, and trust across every location.`,
+    momentum: 'Hands-on enablement energy with quickstart rituals.',
+    commitments: () => [
+      'Deliver modular enablement crates with offline-first motion documentation.',
+      'Codify onboarding ceremonies so each location mirrors the core experience.',
+      'Measure adoption with shared success dashboards and readiness scorecards.',
+    ],
+    signals: () => [
+      'Field readiness snapshots capturing enablement progress by location.',
+      'Checklist automation linking QA gates to on-site instrumentation.',
+      'Community feedback loops summarised in weekly activation digests.',
+    ],
+    callToAction: (focus) =>
+      `Schedule a field kit activation for your ${focus.name.toLowerCase()} coalition.`,
+    visualCue: 'Portable pelican cases with glowing instruments and tactile UI tiles.',
+    contextLabel: 'Spotlight Journey',
+    cluster: 'Operational Enablement',
+    persona: 'Program deployment leads',
+    ecosystem: 'Implementation partners, site leads, community liaisons, and compliance reviewers.',
+    timeHorizon: '90-day adoption runway',
+  },
+  {
+    suffix: 'impact-observatory',
+    title: (focus) => `${focus.name} Impact Observatory`,
+    eyebrow: 'Impact Review Observatory',
+    heading: (focus) => `${focus.name} Impact Observatory`,
+    subheading: (focus) => `Quantify how ${focus.tagline.toLowerCase()} shifts behaviour, trust, and outcomes.`,
+    summary: (focus) =>
+      `Longitudinal insight programs that connect ${focus.name.toLowerCase()} metrics to lived outcomes and civic trust.`,
+    story: (focus) =>
+      `Evidence studios stitch ${focus.promise.toLowerCase()} into executive, civic, and community scorecards that update in real time.`,
+    momentum: 'Insight-driven energy with evidence-backed storytelling.',
+    commitments: () => [
+      'Publish living scoreboards that merge qualitative and quantitative insight.',
+      'Host monthly evidence salons with stakeholders across the ecosystem.',
+      'Archive decision trails alongside the metrics that informed them.',
+    ],
+    signals: () => [
+      'Narrative analytics correlating trust shifts with deployment cadence.',
+      'Outcome telemetry blending quantitative signals with qualitative diaries.',
+      'Regulator-ready packets generated automatically after each review.',
+    ],
+    callToAction: (focus) =>
+      `Commission an impact observatory to keep ${focus.name.toLowerCase()} accountable.`,
+    visualCue: 'Observatory domes with layered dashboards and floating evidence tiles.',
+    contextLabel: 'Spotlight Journey',
+    cluster: 'Evidence Architecture',
+    persona: 'Insights and accountability stewards',
+    ecosystem: 'Executives, auditors, resident councils, and research fellows.',
+    timeHorizon: '12-month evidence cadence',
+  },
+  {
+    suffix: 'executive-bridge',
+    title: (focus) => `${focus.name} Executive Bridge`,
+    eyebrow: 'Executive Immersion Briefing',
+    heading: (focus) => `${focus.name} Executive Bridge`,
+    subheading: (focus) => `Align leadership on ${focus.tagline.toLowerCase()} with actionable guardrails.`,
+    summary: (focus) =>
+      `Immersive leadership briefings translating ${focus.name.toLowerCase()} decisions into shared accountability and motion prototypes.`,
+    story: (focus) =>
+      `Boardroom immersions rehearse ${focus.promise.toLowerCase()} with scenario planning, governance ledgers, and cinematic walkthroughs.`,
+    momentum: 'Strategic leadership energy tuned for fast alignment.',
+    commitments: () => [
+      'Author executive playbooks that map decisions to accountability rituals.',
+      'Simulate critical moments with motion prototypes and mitigation options.',
+      'Track commitments with governance ledgers that surface drift instantly.',
+    ],
+    signals: () => [
+      'Executive pulse surveys capturing clarity, confidence, and stewardship.',
+      'Scenario rehearsal footage annotated with decision checkpoints.',
+      'Governance ledger alerts summarising pending obligations.',
+    ],
+    callToAction: (focus) =>
+      `Book an executive bridge to align leadership on ${focus.name.toLowerCase()} commitments.`,
+    visualCue: 'Boardroom horizon lines with holographic agendas and kinetic lighting.',
+    contextLabel: 'Spotlight Journey',
+    cluster: 'Strategic Stewardship',
+    persona: 'Executive transformation partners',
+    ecosystem: 'Boards, chiefs of staff, policy leads, and product owners.',
+    timeHorizon: 'Quarterly governance sync',
+  },
+];
+
+const atlasSpotlightBlueprints: AtlasBlueprint[] = focusAreas
+  .slice(0, 5)
+  .flatMap((focus) =>
+    spotlightTemplates.map((template) => ({
+      slug: `${focus.slug}-${template.suffix}`,
+      title: template.title(focus),
+      hero: {
+        eyebrow: template.eyebrow,
+        heading: template.heading(focus),
+        subheading: template.subheading(focus),
+        visualCue: template.visualCue,
+        gradientFrom: focus.gradientFrom,
+        gradientTo: focus.gradientTo,
+        accent: focus.accent,
+      },
+      summary: template.summary(focus),
+      story: template.story(focus),
+      focusArea: focus.name,
+      contextLabel: template.contextLabel,
+      cluster: template.cluster,
+      persona: template.persona,
+      ecosystem: template.ecosystem,
+      timeHorizon: template.timeHorizon,
+      momentum: template.momentum,
+      commitments: template.commitments(focus),
+      highlights: focus.highlights,
+      metrics: focus.metrics.map((metric) => enrichMetric(metric, template.persona)),
+      programs: focus.programs,
+      experiences: focus.experiences,
+      signals: template.signals(focus),
+      callToAction: template.callToAction(focus),
+    }))
+  );
+
+export const atlasBlueprints: AtlasBlueprint[] = [...coreAtlasBlueprints, ...atlasSpotlightBlueprints];
+
+export const ATLAS_BLUEPRINT_TOTAL = coreAtlasBlueprints.length + atlasSpotlightBlueprints.length;
 
 export const getAtlasBlueprint = (slug: string): AtlasBlueprint | undefined =>
   atlasBlueprints.find((blueprint) => blueprint.slug === slug);

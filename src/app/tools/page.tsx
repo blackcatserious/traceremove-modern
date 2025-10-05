@@ -249,7 +249,7 @@ export default function ToolsPage() {
                 Operational tools for governable, cinematic intelligence.
               </h1>
               <p className="max-w-2xl text-lg text-white/80">
-                Automate governance, surface insight, and narrate progress with a suite of motion-rich utilities. Every tool connects to the 156 blueprint atlas and can be deployed across research, policy, and product teams within minutes.
+                Automate governance, surface insight, and narrate progress with a suite of motion-rich utilities. Every tool connects to the 176 blueprint atlas and can be deployed across research, policy, and product teams within minutes.
               </p>
             </motion.div>
 

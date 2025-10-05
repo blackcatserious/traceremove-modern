@@ -19,7 +19,7 @@ import KnowledgeBaseExplorerShell from '@/components/KnowledgeBaseExplorerShell'
 const assistantHighlights = [
   {
     title: 'Atlas-native reasoning',
-    description: 'Draws from 156 cinematic research blueprints, methodology notes, and tooling manuals curated by the Traceremove lab.',
+    description: 'Draws from 176 cinematic research blueprints, methodology notes, and tooling manuals curated by the Traceremove lab.',
     icon: Compass
   },
   {

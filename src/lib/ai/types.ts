@@ -5,6 +5,8 @@ export interface AIGenerateRequest {
   model?: string;
   temperature?: number;
   max_tokens?: number;
+  promptId?: string;
+  domain?: string;
 }
 
 export interface AIGenerateResponse {

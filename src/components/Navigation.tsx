@@ -194,7 +194,7 @@ const navigationItems: NavigationItem[] = [
     accent: 'from-fuchsia-500/80 via-purple-500/70 to-indigo-500/80',
     meta: {
       tagline: 'Global Atlas',
-      description: '156 immersive case studies capturing civic tech, policy, and product coalitions reshaping intelligence responsibly.',
+      description: '176 immersive case studies capturing civic tech, policy, and product coalitions reshaping intelligence responsibly.',
       highlight: {
         title: 'Experience Atlas Overview',
         description: 'Survey the full atlas, filter by sector, and step into cinematic narratives.',
@@ -400,6 +400,21 @@ export default function Navigation() {
   }, [isOpen]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false);
+        setMobileActive(null);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (closeTimeout.current) {
         clearTimeout(closeTimeout.current);
@@ -426,7 +441,14 @@ export default function Navigation() {
     return pathname.startsWith(href);
   };
 
-  const toggleMenu = () => setIsOpen((value) => !value);
+  const toggleMenu = () =>
+    setIsOpen((value) => {
+      if (value) {
+        setMobileActive(null);
+        setActiveDropdown(null);
+      }
+      return !value;
+    });
 
   const handleDropdownEnter = (label: string) => {
     if (closeTimeout.current) {
@@ -456,6 +478,12 @@ export default function Navigation() {
     setMobileActive((current) => (current === label ? null : label));
   };
 
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+    setMobileActive(null);
+    setActiveDropdown(null);
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -465,32 +493,34 @@ export default function Navigation() {
       aria-label="Primary navigation"
       className={`nav-premium relative z-50 overflow-visible ${scrolled ? 'scrolled' : ''}`}
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <motion.span
-          aria-hidden
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={prefersReducedMotion ? { opacity: 0.9, scale: 1 } : {
-            opacity: 1,
-            scale: 1,
-            x: [0, 20, -10, 0],
-            y: [0, 10, -6, 0]
-          }}
-          transition={prefersReducedMotion ? { duration: 0.6, ease: 'easeOut' } : { duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-32 left-16 h-64 w-64 rounded-full bg-gradient-to-br from-accent-ai-purple/30 via-accent-lab-purple/20 to-sky-500/20 blur-3xl"
-        />
-        <motion.span
-          aria-hidden
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={prefersReducedMotion ? { opacity: 0.85, scale: 1 } : {
-            opacity: 1,
-            scale: 1,
-            x: [0, -30, 10, 0],
-            y: [0, -12, 8, 0]
-          }}
-          transition={prefersReducedMotion ? { duration: 0.8, ease: 'easeOut' } : { duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-          className="absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-gradient-to-br from-sky-500/25 via-blue-500/15 to-emerald-400/20 blur-3xl"
-        />
-      </div>
+      {!prefersReducedMotion && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: [0, 20, -10, 0],
+              y: [0, 10, -6, 0],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -top-32 left-16 h-64 w-64 rounded-full bg-gradient-to-br from-accent-ai-purple/30 via-accent-lab-purple/20 to-sky-500/20 blur-3xl"
+          />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: [0, -30, 10, 0],
+              y: [0, -12, 8, 0],
+            }}
+            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+            className="absolute -bottom-32 right-20 h-72 w-72 rounded-full bg-gradient-to-br from-sky-500/25 via-blue-500/15 to-emerald-400/20 blur-3xl"
+          />
+        </div>
+      )}
 
       <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 w-full items-center justify-between gap-6">
@@ -809,7 +839,7 @@ export default function Navigation() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm lg:hidden"
-            onClick={() => setIsOpen(false)}
+            onClick={closeMenu}
           />
         )}
       </AnimatePresence>
@@ -819,11 +849,11 @@ export default function Navigation() {
           <motion.div
             id="mobile-navigation"
             key="mobile-menu"
-            initial={{ opacity: 0, height: 0, y: -16 }}
-            animate={{ opacity: 1, height: 'auto', y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -16 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="mobile-menu-premium relative z-50 border-t border-white/10 bg-slate-950/95 px-6 py-6 shadow-[0_24px_64px_rgba(15,23,42,0.45)] backdrop-blur-3xl lg:hidden"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.28, ease: 'easeOut' }}
+            className="mobile-menu-premium fixed inset-x-4 top-[88px] bottom-4 z-50 overflow-y-auto rounded-3xl border border-white/10 bg-slate-950/95 px-6 py-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] shadow-[0_24px_64px_rgba(15,23,42,0.55)] backdrop-blur-3xl lg:hidden"
           >
             <div className="space-y-4">
               {navigationItems.map((item, index) => {
@@ -841,7 +871,7 @@ export default function Navigation() {
                     <div className="flex items-center gap-3">
                       <Link
                         href={item.href}
-                        onClick={() => setIsOpen(false)}
+                        onClick={closeMenu}
                         className="flex flex-1 items-center gap-3"
                       >
                         <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-white">
@@ -885,7 +915,7 @@ export default function Navigation() {
                               <Link
                                 key={`${dropdownItem.href}-mobile`}
                                 href={dropdownItem.href}
-                                onClick={() => setIsOpen(false)}
+                                onClick={closeMenu}
                                 className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-3 transition-all duration-200 hover:bg-white/10"
                               >
                                 <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white">

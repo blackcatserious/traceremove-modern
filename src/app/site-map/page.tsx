@@ -7,7 +7,7 @@ import MermaidDiagram from '@/components/MermaidDiagram';
 
 const heroHighlights = [
   {
-    value: '156',
+    value: '176',
     label: 'Atlas blueprints',
     detail: 'Immersive case studies spanning civic tech, healthcare, climate, and policy coalitions.'
   },
@@ -51,7 +51,7 @@ const topLevelRoutes = [
   {
     title: 'Atlas',
     path: '/atlas',
-    description: '156 blueprint narratives with filters, spotlight journeys, and context-rich storytelling.',
+    description: '176 blueprint narratives with filters, spotlight journeys, and context-rich storytelling.',
     icon: Map
   },
   {

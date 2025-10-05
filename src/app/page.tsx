@@ -22,7 +22,7 @@ import PremiumButton from '@/components/PremiumButton';
 
 const heroStats = [
   {
-    value: '156',
+    value: '176',
     label: 'Research blueprints',
     description:
       'Immersive case studies documenting civic, climate, healthcare, and product coalitions adopting responsible intelligence.'
@@ -140,7 +140,7 @@ export default function Home() {
                   Responsible intelligence, staged for motion and accountability.
                 </h1>
                 <p className="max-w-2xl text-lg text-white/80 sm:text-xl">
-                  Traceremove is the research studio translating philosophical rigor and systems engineering into deployable AI experiences. We choreograph 156 evidence-led blueprints so teams can design, govern, and scale intelligence with confidence.
+                  Traceremove is the research studio translating philosophical rigor and systems engineering into deployable AI experiences. We choreograph 176 evidence-led blueprints so teams can design, govern, and scale intelligence with confidence.
                 </p>
               </motion.div>
 
@@ -297,7 +297,7 @@ export default function Home() {
           >
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/60">Atlas Spotlights</p>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              156 cinematic pages stitched across civic, academic, and product realities
+              176 cinematic pages stitched across civic, academic, and product realities
             </h2>
             <p className="mt-4 max-w-3xl mx-auto text-base text-white/70 sm:text-lg">
               Dive into richly produced hero narratives, governance checklists, and motion-enhanced visuals that make complex AI deployments legible for teams and stakeholders alike.
@@ -356,7 +356,7 @@ export default function Home() {
             <FeatureCard
               icon={Info}
               title="Platform Map"
-              description="Navigate 156 atlas entries, research areas, and interactive tools from a single overview."
+              description="Navigate 176 atlas entries, research areas, and interactive tools from a single overview."
               gradient="from-purple-900/40 to-violet-900/40"
               borderColor="border-purple-500/20"
               iconGradient="from-purple-500 to-purple-600"

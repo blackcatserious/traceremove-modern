@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -8,32 +7,6 @@ import { BackgroundProvider } from "@/components/BackgroundTester";
 import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const ibmPlexSerif = IBM_Plex_Serif({
-  variable: "--font-ibm-plex-serif",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -185,7 +158,7 @@ const structuredData = [
     "name": "Traceremove Research",
     "url": "https://traceremove.dev",
     "logo": "https://traceremove.dev/brand/black-cat-solid.svg",
-    "description": "Research lab delivering responsible AI strategy, applied experimentation, and philosophical grounding across 156 global blueprints.",
+    "description": "Research lab delivering responsible AI strategy, applied experimentation, and philosophical grounding across 176 global blueprints.",
     "sameAs": [
       "https://linkedin.com/company/traceremove",
       "https://github.com/arthur-ziganshin"
@@ -218,8 +191,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
         <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
@@ -234,9 +205,7 @@ export default function RootLayout({
           />
         ))}
       </head>
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white`}
-      >
+      <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white">
         <MotionProvider>
           <BackgroundProvider>
             <Navigation />

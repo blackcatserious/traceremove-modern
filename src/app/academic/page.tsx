@@ -144,7 +144,7 @@ const categories = [
 const academicMetrics = [
   {
     label: 'Research outputs',
-    value: '156+',
+    value: '176+',
     caption: 'Peer-reviewed works and public scholarship',
     icon: TrendingUp
   },

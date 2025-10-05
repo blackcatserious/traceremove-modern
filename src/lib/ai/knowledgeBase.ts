@@ -107,7 +107,7 @@ const KNOWLEDGE_BASE: ReadonlyArray<KnowledgeEntry> = [
     followUps: [
       'Show the benchmark deltas for the latest assistant algorithm refresh.',
       'Which evaluation recipes secure regulatory sign-off?',
-      'How do we visualise lineage across 156 blueprint pages?',
+      'How do we visualise lineage across 176 blueprint pages?',
     ],
     quickPrompts: [
       {
@@ -141,7 +141,7 @@ const KNOWLEDGE_BASE: ReadonlyArray<KnowledgeEntry> = [
     ],
     metrics: [
       'Operational uptime sustained above 99.98% with canary rollouts tracked by the metrics stack.',
-      'Content velocity: 156 blueprint surfaces updated nightly via doc-as-code pipelines.',
+      'Content velocity: 176 blueprint surfaces updated nightly via doc-as-code pipelines.',
       'Assistant response assurance with fallback knowledge verifying coverage across research, tools, and metrics.',
     ],
     toolchain: [
@@ -194,7 +194,7 @@ const KNOWLEDGE_BASE: ReadonlyArray<KnowledgeEntry> = [
       'Escalation SLAs for hand-off to human experts within two minutes when the assistant can’t resolve.',
     ],
     toolchain: [
-      'Domain-tuned fallback knowledge base with semantic routing across 156 blueprint documents.',
+      'Domain-tuned fallback knowledge base with semantic routing across 176 blueprint documents.',
       'Edge delivery of conversation models with server-side streaming when the managed API is available.',
       'Motion-aware launcher that adapts to reduced-motion preferences and mobile-first ergonomics.',
     ],

@@ -142,10 +142,11 @@ nav:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]) {
 :root {
   --background: #0F172A;
   --foreground: #F8FAFC;
-  --font-inter: var(--font-inter);
-  --font-jetbrains-mono: var(--font-jetbrains-mono);
-  --font-ibm-plex-sans: var(--font-ibm-plex-sans);
-  --font-ibm-plex-serif: var(--font-ibm-plex-serif);
+  --font-inter: 'Inter', 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', 'SFMono-Regular', 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-ibm-plex-sans: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-ibm-sans: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-ibm-plex-serif: 'IBM Plex Serif', 'Times New Roman', Times, serif;
   
   /* Research Lab Color Palette */
   --research-primary: #1e3a8a;

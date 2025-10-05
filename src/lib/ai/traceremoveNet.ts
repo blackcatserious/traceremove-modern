@@ -2,10 +2,15 @@
 
 import { generateFallbackResponse } from './knowledgeBase';
 import type { AIGenerateRequest, AIGenerateResponse } from './types';
-export type { AIMessage, AIGenerateRequest, AIGenerateResponse } from './types';
 
-const API_URL = process.env.TRACEREMOVE_NET_API_URL;
-const API_KEY = process.env.TRACEREMOVE_NET_API_KEY;
+const DEFAULT_API_URL = 'https://api.traceremove.ai';
+const DEFAULT_DOMAIN = 'traceremove.ai';
+const DEFAULT_PROMPT_ID = 'pmpt_68e27bdeed2481979f215f6d94898a5907d95b9b6609f9f2';
+
+const API_URL = (process.env.TRACEREMOVE_NET_API_URL ?? DEFAULT_API_URL).replace(/\/$/, '');
+const API_KEY = process.env.TRACEREMOVE_NET_API_KEY ?? process.env.TRACEREMOVE_NET_PROMPT_ID ?? DEFAULT_PROMPT_ID;
+const PROMPT_ID = process.env.TRACEREMOVE_NET_PROMPT_ID ?? DEFAULT_PROMPT_ID;
+const API_DOMAIN = process.env.TRACEREMOVE_NET_DOMAIN ?? DEFAULT_DOMAIN;
 
 async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
@@ -21,11 +26,17 @@ async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
 }
 
 export async function aiGenerate(req: AIGenerateRequest, signal?: AbortSignal): Promise<AIGenerateResponse> {
+  const payload: AIGenerateRequest = {
+    ...req,
+    promptId: req.promptId ?? PROMPT_ID,
+    domain: req.domain ?? API_DOMAIN,
+  };
+
   if (!API_URL || !API_KEY) {
-    return generateFallbackResponse(req);
+    return generateFallbackResponse(payload);
   }
 
-  const body = JSON.stringify(req);
+  const body = JSON.stringify(payload);
 
   const attempt = async (): Promise<AIGenerateResponse> => {
     const res = await fetch(`${API_URL}/v1/generate`, {
@@ -33,6 +44,8 @@ export async function aiGenerate(req: AIGenerateRequest, signal?: AbortSignal): 
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${API_KEY}`,
+        'X-Traceremove-Domain': payload.domain ?? API_DOMAIN,
+        'X-Traceremove-Prompt': payload.promptId ?? PROMPT_ID,
       },
       body,
       signal,
@@ -50,7 +63,7 @@ export async function aiGenerate(req: AIGenerateRequest, signal?: AbortSignal): 
     try {
       return await withTimeout(attempt(), 20000);
     } catch (retryError) {
-      return generateFallbackResponse(req, retryError ?? firstError);
+      return generateFallbackResponse(payload, retryError ?? firstError);
     }
   }
 }

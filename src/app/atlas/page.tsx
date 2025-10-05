@@ -3,13 +3,12 @@ import { Metadata } from 'next';
 import { ArrowUpRight, Filter, Search } from 'lucide-react';
 
 import BackgroundLayers from '@/components/BackgroundLayers';
-import { atlasBlueprints } from '@/lib/atlasCatalog';
+import { atlasBlueprints, ATLAS_BLUEPRINT_TOTAL } from '@/lib/atlasCatalog';
 import type { AtlasBlueprint } from '@/lib/atlasCatalog';
 
 export const metadata: Metadata = {
   title: 'Experience Atlas | Traceremove Research',
-  description:
-    '156 blueprint-grade pages detailing responsible AI, civic technology, and ethical innovation scenarios curated by Traceremove.',
+  description: `${ATLAS_BLUEPRINT_TOTAL} blueprint-grade pages detailing responsible AI, civic technology, and ethical innovation scenarios curated by Traceremove.`,
 };
 
 const groupedBlueprints = atlasBlueprints.reduce<Record<string, AtlasBlueprint[]>>((acc, blueprint) => {
@@ -39,13 +38,13 @@ export default function AtlasIndexPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">Traceremove Atlas</p>
                 <h1 className="mt-6 text-3xl sm:text-5xl font-semibold tracking-tight">Immersive Blueprints for Responsible AI Futures</h1>
                 <p className="mt-6 max-w-3xl text-base sm:text-lg text-white/80 leading-relaxed">
-                  Explore one hundred fifty-six carefully crafted pages that choreograph governance, safety, civic, and cultural innovation. Each blueprint combines narrative design, measurable outcomes, and actionable programs for leaders building trustworthy intelligence.
+                  Explore {ATLAS_BLUEPRINT_TOTAL} carefully crafted pages that choreograph governance, safety, civic, and cultural innovation. Each blueprint combines narrative design, measurable outcomes, and actionable programs for leaders building trustworthy intelligence.
                 </p>
                 <div className="mt-10 grid gap-6 sm:grid-cols-3 text-sm text-white/80">
                   <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur">
                     <Search className="h-5 w-5 text-white/70" />
                     <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Scenarios</p>
-                    <p className="mt-1 text-xl font-semibold text-white">156 Playbooks</p>
+                    <p className="mt-1 text-xl font-semibold text-white">{ATLAS_BLUEPRINT_TOTAL} Playbooks</p>
                   </div>
                   <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur">
                     <Filter className="h-5 w-5 text-white/70" />

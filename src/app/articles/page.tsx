@@ -230,7 +230,7 @@ const articleCategories = [
 const publishingMetrics = [
   {
     label: 'Published essays',
-    value: '156',
+    value: '176',
     caption: 'Research-backed narratives in the atlas',
     icon: Calendar
   },

@@ -223,7 +223,7 @@ const researchArticles = [
 const heroMetrics = [
   {
     label: 'Published Frameworks',
-    value: '156',
+    value: '176',
     caption: 'Peer-reviewed blueprints and case studies',
     icon: Layers
   },
@@ -336,7 +336,7 @@ export default function Research() {
                 Research that stages responsible intelligence for civic, planetary, and product impact.
               </h1>
               <p className="max-w-2xl text-lg text-white/80">
-                Explore 156 blueprints spanning ethics, interpretability, systems governance, and participatory AI design. Each study blends philosophical rigor with operational playbooks so teams can deploy accountable intelligence.
+                Explore 176 blueprints spanning ethics, interpretability, systems governance, and participatory AI design. Each study blends philosophical rigor with operational playbooks so teams can deploy accountable intelligence.
               </p>
             </motion.div>
 
