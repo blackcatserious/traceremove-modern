@@ -13,8 +13,8 @@ import {
   Users
 } from 'lucide-react';
 import Link from 'next/link';
-import AskTraceremoveAI from '@/components/AskTraceremoveAI';
-import KnowledgeBaseExplorer from '@/components/KnowledgeBaseExplorer';
+import AssistantWidgetShell from '@/components/AssistantWidgetShell';
+import KnowledgeBaseExplorerShell from '@/components/KnowledgeBaseExplorerShell';
 
 const assistantHighlights = [
   {
@@ -221,7 +221,7 @@ export default function AssistantPage() {
                 <p className="text-sm text-white/60">Initiate a dialogue below – reference any research blueprint, project, or philosophical theme.</p>
               </div>
               <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-4">
-                <AskTraceremoveAI />
+                <AssistantWidgetShell compact={false} fallbackClassName="w-full" />
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function AssistantPage() {
 
       <section className="relative border-t border-white/5 bg-slate-950/90 py-20">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <KnowledgeBaseExplorer
+          <KnowledgeBaseExplorerShell
             title="Assistant knowledge briefs"
             description="Inspect the curated metrics, tooling, and algorithm dossiers that the Traceremove assistant references before it answers complex prompts."
           />

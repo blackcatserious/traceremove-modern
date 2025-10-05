@@ -48,15 +48,17 @@ function highlightText(text: string, query: string): ReactNode {
   );
 }
 
+export type KnowledgeBaseExplorerProps = {
+  className?: string;
+  title?: string;
+  description?: string;
+};
+
 export default function KnowledgeBaseExplorer({
   className = '',
   title = 'Traceremove knowledge matrix',
   description = 'Browse the in-domain knowledge base that powers metrics, tooling, and algorithmic support inside the assistant.',
-}: {
-  className?: string;
-  title?: string;
-  description?: string;
-}) {
+}: KnowledgeBaseExplorerProps) {
   const categories = useMemo(() => {
     const names = Array.from(new Set(KNOWLEDGE_ENTRIES.map((entry) => entry.category)));
     names.sort();

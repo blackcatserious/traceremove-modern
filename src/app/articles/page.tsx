@@ -1,6 +1,6 @@
 'use client';
 
-import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -583,7 +583,7 @@ export default function ArticlesPage() {
         </section>
 
         <section className="rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_50px_120px_rgba(15,23,42,0.65)] backdrop-blur-3xl">
-          <AskTraceremoveAI />
+          <AssistantWidgetShell compact={false} />
         </section>
       </div>
     </div>

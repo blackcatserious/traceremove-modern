@@ -1,5 +1,5 @@
 'use client';
-import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -505,7 +505,7 @@ export default function Home() {
         </div>
 
       </section>
-      {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AskTraceremoveAI compact />}
+      {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AssistantWidgetShell compact />}
     </div>
   );
 }

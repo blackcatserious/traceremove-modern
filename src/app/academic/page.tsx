@@ -20,7 +20,7 @@ import {
   Bookmark,
   Building
 } from 'lucide-react';
-import AskTraceremoveAI from '@/components/AskTraceremoveAI';
+import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 
 const academicResources = [
   {
@@ -494,7 +494,7 @@ export default function AcademicPage() {
         </section>
 
         <section className="rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_50px_120px_rgba(15,23,42,0.65)] backdrop-blur-3xl">
-          <AskTraceremoveAI />
+          <AssistantWidgetShell compact={false} />
         </section>
       </div>
     </div>
