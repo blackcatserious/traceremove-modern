@@ -154,11 +154,24 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
       const nextHistory = [...history, assistantMsg];
       messagesRef.current = nextHistory;
       setMessages(nextHistory);
-    } catch {
+    } catch (error) {
+      let fallbackContent =
+        'Traceremove AI is momentarily offline, but the on-site knowledge base is ready—try again in a moment or explore the atlas.';
+
+      try {
+        const { generateFallbackResponse } = await import('@/lib/ai/knowledgeBase');
+        const fallbackResponse = generateFallbackResponse({ messages: history }, error);
+        const enrichedContent = fallbackResponse.choices?.[0]?.message?.content;
+        if (enrichedContent) {
+          fallbackContent = enrichedContent;
+        }
+      } catch {
+        // Ignore secondary errors and fall back to the static message above.
+      }
+
       const fallbackMsg: Msg = {
         role: 'assistant',
-        content:
-          'Traceremove AI is momentarily offline, but the on-site knowledge base is ready—try again in a moment or explore the atlas.',
+        content: fallbackContent,
       };
       const nextHistory = [...history, fallbackMsg];
       messagesRef.current = nextHistory;
