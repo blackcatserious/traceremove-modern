@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, Send, Loader2 } from 'lucide-react';
+import { DEFAULT_DOMAIN, DEFAULT_PROMPT_ID } from '@/lib/ai/config';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
@@ -113,6 +114,7 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
   const [messages, setMessages] = useState<Msg[]>([]);
   const messagesRef = useRef<Msg[]>(messages);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const focusInput = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -125,6 +127,13 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
     messagesRef.current = messages;
   }, [messages]);
 
+  useEffect(() => () => abortRef.current?.abort(), []);
+
+  useEffect(() => {
+    if (!open) return;
+    focusInput();
+  }, [open, focusInput]);
+
   const ask = useCallback(
     async (query: string) => {
       const trimmed = query.trim();
@@ -132,51 +141,69 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
 
       const userMsg: Msg = { role: 'user', content: trimmed };
       const history = [...messagesRef.current, userMsg];
-    messagesRef.current = history;
-    setMessages(history);
-    setInput('');
-    setLoading(true);
+      messagesRef.current = history;
+      setMessages(history);
+      setInput('');
+      setLoading(true);
 
-    try {
-      const res = await fetch('/api/ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
-      });
-
-      if (!res.ok) {
-        throw new Error('Assistant response failed');
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+      if (controller) {
+        abortRef.current?.abort();
+        abortRef.current = controller;
       }
-
-      const data = await res.json();
-      const content: string = data?.choices?.[0]?.message?.content ?? 'Assistant is thinking...';
-      const assistantMsg: Msg = { role: 'assistant', content };
-      const nextHistory = [...history, assistantMsg];
-      messagesRef.current = nextHistory;
-      setMessages(nextHistory);
-    } catch (error) {
-      let fallbackContent =
-        'Traceremove AI is momentarily offline, but the on-site knowledge base is ready—try again in a moment or explore the atlas.';
 
       try {
-        const { generateFallbackResponse } = await import('@/lib/ai/knowledgeBase');
-        const fallbackResponse = generateFallbackResponse({ messages: history }, error);
-        const enrichedContent = fallbackResponse.choices?.[0]?.message?.content;
-        if (enrichedContent) {
-          fallbackContent = enrichedContent;
-        }
-      } catch {
-        // Ignore secondary errors and fall back to the static message above.
-      }
+        const res = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: history,
+            promptId: DEFAULT_PROMPT_ID,
+            domain: DEFAULT_DOMAIN,
+          }),
+          signal: controller?.signal,
+        });
 
-      const fallbackMsg: Msg = {
-        role: 'assistant',
-        content: fallbackContent,
-      };
-      const nextHistory = [...history, fallbackMsg];
-      messagesRef.current = nextHistory;
-      setMessages(nextHistory);
+        if (!res.ok) {
+          throw new Error('Assistant response failed');
+        }
+
+        const data = await res.json();
+        const content: string = data?.choices?.[0]?.message?.content ?? 'Assistant is thinking...';
+        const assistantMsg: Msg = { role: 'assistant', content };
+        const nextHistory = [...history, assistantMsg];
+        messagesRef.current = nextHistory;
+        setMessages(nextHistory);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return;
+        }
+
+        let fallbackContent =
+          'Traceremove AI is momentarily offline, but the on-site knowledge base is ready—try again in a moment or explore the atlas.';
+
+        try {
+          const { generateFallbackResponse } = await import('@/lib/ai/knowledgeBase');
+          const fallbackResponse = generateFallbackResponse({ messages: history }, error);
+          const enrichedContent = fallbackResponse.choices?.[0]?.message?.content;
+          if (enrichedContent) {
+            fallbackContent = enrichedContent;
+          }
+        } catch {
+          // Ignore secondary errors and fall back to the static message above.
+        }
+
+        const fallbackMsg: Msg = {
+          role: 'assistant',
+          content: fallbackContent,
+        };
+        const nextHistory = [...history, fallbackMsg];
+        messagesRef.current = nextHistory;
+        setMessages(nextHistory);
       } finally {
+        if (abortRef.current === controller) {
+          abortRef.current = null;
+        }
         setLoading(false);
       }
     },

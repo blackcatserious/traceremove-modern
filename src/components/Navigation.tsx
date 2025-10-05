@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -306,9 +306,12 @@ export default function Navigation() {
   });
   const prefersReducedMotion = useReducedMotion();
   const pathname = usePathname();
+  const router = useRouter();
+  const navRef = useRef<HTMLElement | null>(null);
   const navRailRef = useRef<HTMLDivElement | null>(null);
   const navItemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [navHeight, setNavHeight] = useState(96);
 
   const updateDropdownMetrics = useCallback(
     (label: string) => {
@@ -329,7 +332,9 @@ export default function Navigation() {
       const minCenter = viewportPadding + width / 2;
       const maxCenter = viewportWidth - viewportPadding - width / 2;
       const clampedCenter = Math.min(Math.max(triggerCenterViewport, minCenter), maxCenter);
-      const top = Math.max(railRect.bottom + 16, 76);
+      const navRect = navRef.current?.getBoundingClientRect();
+      const navBottom = navRect?.bottom ?? railRect.bottom;
+      const top = Math.max(navBottom + 12, 72);
       const availableHeight = Math.max(viewportHeight - top - viewportPadding, 320);
 
       setDropdownMetrics({
@@ -349,6 +354,21 @@ export default function Navigation() {
     []
   );
 
+  const prefetchRoute = useCallback(
+    (href: string) => {
+      if (!href || href.startsWith('http') || href.startsWith('#')) {
+        return;
+      }
+
+      try {
+        router.prefetch(href);
+      } catch {
+        // Ignore prefetch errors (e.g. during development).
+      }
+    },
+    [router]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 12);
@@ -362,7 +382,12 @@ export default function Navigation() {
   useEffect(() => {
     if (!activeDropdown) return;
     updateDropdownMetrics(activeDropdown);
-  }, [activeDropdown, updateDropdownMetrics]);
+  }, [activeDropdown, updateDropdownMetrics, navHeight]);
+
+  useEffect(() => {
+    const staticRoutes = navigationItems.filter((item) => !item.dropdown?.length).map((item) => item.href);
+    staticRoutes.forEach((href) => prefetchRoute(href));
+  }, [prefetchRoute]);
 
   useEffect(() => {
     if (!activeDropdown) return;
@@ -389,6 +414,29 @@ export default function Navigation() {
     setActiveDropdown(null);
     setMobileActive(null);
   }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const element = navRef.current;
+    if (!element) return;
+
+    const updateHeight = () => {
+      const nextHeight = Math.round(element.getBoundingClientRect().height);
+      setNavHeight((current) => (current !== nextHeight ? nextHeight : current));
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateHeight);
+      return () => window.removeEventListener('resize', updateHeight);
+    }
+
+    const observer = new ResizeObserver(() => updateHeight());
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -457,6 +505,14 @@ export default function Navigation() {
     }
 
     setActiveDropdown(label);
+    const navItem = navigationItems.find((item) => item.label === label);
+    if (navItem) {
+      prefetchRoute(navItem.href);
+      navItem.dropdown?.forEach((entry) => prefetchRoute(entry.href));
+      if (navItem.meta?.highlight?.href) {
+        prefetchRoute(navItem.meta.highlight.href);
+      }
+    }
     if (typeof window !== 'undefined') {
       requestAnimationFrame(() => updateDropdownMetrics(label));
     } else {
@@ -486,12 +542,14 @@ export default function Navigation() {
 
   return (
     <motion.nav
+      ref={navRef}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       role="navigation"
       aria-label="Primary navigation"
       className={`nav-premium relative z-50 overflow-visible ${scrolled ? 'scrolled' : ''}`}
+      style={{ '--nav-height': `${navHeight}px` } as CSSProperties}
     >
       {!prefersReducedMotion && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -570,9 +628,19 @@ export default function Navigation() {
                     transition={{ duration: 0.4, delay: index * 0.05 }}
                     className="relative"
                     ref={registerNavItem(item.label)}
-                    onMouseEnter={() => item.dropdown && handleDropdownEnter(item.label)}
+                    onMouseEnter={() => {
+                      prefetchRoute(item.href);
+                      if (item.dropdown) {
+                        handleDropdownEnter(item.label);
+                      }
+                    }}
                     onMouseLeave={() => item.dropdown && handleDropdownLeave()}
-                    onFocus={() => item.dropdown && handleDropdownEnter(item.label)}
+                    onFocus={() => {
+                      prefetchRoute(item.href);
+                      if (item.dropdown) {
+                        handleDropdownEnter(item.label);
+                      }
+                    }}
                     onBlur={(event) => {
                       if (!item.dropdown) return;
                       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
@@ -582,6 +650,8 @@ export default function Navigation() {
                   >
                     <Link
                       href={item.href}
+                      onMouseEnter={() => prefetchRoute(item.href)}
+                      onFocus={() => prefetchRoute(item.href)}
                       onClick={() => {
                         if (closeTimeout.current) {
                           clearTimeout(closeTimeout.current);
@@ -677,6 +747,8 @@ export default function Navigation() {
                               {highlightMeta && HighlightIcon && (
                                 <Link
                                   href={highlightMeta.href}
+                                  onMouseEnter={() => prefetchRoute(highlightMeta.href)}
+                                  onFocus={() => prefetchRoute(highlightMeta.href)}
                                   onClick={() => {
                                     if (closeTimeout.current) {
                                       clearTimeout(closeTimeout.current);
@@ -733,6 +805,8 @@ export default function Navigation() {
                                 >
                                   <Link
                                     href={dropdownItem.href}
+                                    onMouseEnter={() => prefetchRoute(dropdownItem.href)}
+                                    onFocus={() => prefetchRoute(dropdownItem.href)}
                                     onClick={() => {
                                       if (closeTimeout.current) {
                                         clearTimeout(closeTimeout.current);
@@ -853,9 +927,16 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.28, ease: 'easeOut' }}
-            className="mobile-menu-premium fixed inset-x-4 top-[88px] bottom-4 z-50 overflow-y-auto rounded-3xl border border-white/10 bg-slate-950/95 px-6 py-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] shadow-[0_24px_64px_rgba(15,23,42,0.55)] backdrop-blur-3xl lg:hidden"
+            className="mobile-menu-premium fixed inset-0 z-50 flex flex-col border-t border-white/10 bg-slate-950/95 shadow-[0_24px_64px_rgba(15,23,42,0.55)] backdrop-blur-3xl lg:hidden"
+            style={
+              {
+                paddingTop: `calc(${navHeight}px + 1.25rem)`,
+                paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.75rem)',
+              } as CSSProperties
+            }
           >
-            <div className="space-y-4">
+            <div className="flex-1 overflow-y-auto px-6">
+              <div className="space-y-4">
               {navigationItems.map((item, index) => {
                 const Icon = item.icon;
                 const expanded = mobileActive === item.label;
@@ -871,6 +952,8 @@ export default function Navigation() {
                     <div className="flex items-center gap-3">
                       <Link
                         href={item.href}
+                        onMouseEnter={() => prefetchRoute(item.href)}
+                        onFocus={() => prefetchRoute(item.href)}
                         onClick={closeMenu}
                         className="flex flex-1 items-center gap-3"
                       >
@@ -915,6 +998,8 @@ export default function Navigation() {
                               <Link
                                 key={`${dropdownItem.href}-mobile`}
                                 href={dropdownItem.href}
+                                onMouseEnter={() => prefetchRoute(dropdownItem.href)}
+                                onFocus={() => prefetchRoute(dropdownItem.href)}
                                 onClick={closeMenu}
                                 className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-3 transition-all duration-200 hover:bg-white/10"
                               >
@@ -935,9 +1020,9 @@ export default function Navigation() {
                   </motion.div>
                 );
               })}
+              </div>
             </div>
-
-            <div className="mt-6 space-y-3">
+            <div className="space-y-3 px-6 pt-4">
               <PremiumButton
                 href="/atlas"
                 icon={Sparkles}
