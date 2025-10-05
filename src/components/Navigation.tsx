@@ -310,6 +310,7 @@ export default function Navigation() {
   const navRef = useRef<HTMLElement | null>(null);
   const navRailRef = useRef<HTMLDivElement | null>(null);
   const navItemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const prefetchedRoutes = useRef<Set<string>>(new Set());
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [navHeight, setNavHeight] = useState(96);
 
@@ -360,8 +361,14 @@ export default function Navigation() {
         return;
       }
 
+      const cache = prefetchedRoutes.current;
+      if (cache.has(href)) {
+        return;
+      }
+
       try {
         router.prefetch(href);
+        cache.add(href);
       } catch {
         // Ignore prefetch errors (e.g. during development).
       }
@@ -876,6 +883,7 @@ export default function Navigation() {
             className="relative inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/10 p-3 text-white transition-all duration-300 lg:hidden"
             aria-expanded={isOpen}
             aria-controls="mobile-navigation"
+            aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
           >
             <AnimatePresence mode="wait" initial={false}>
               {isOpen ? (
