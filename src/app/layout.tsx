@@ -5,8 +5,9 @@ import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
-import AskTraceremoveAI from "@/components/AskTraceremoveAI";
 import PageScene from "@/components/PageScene";
+import MotionProvider from "@/components/MotionProvider";
+import AssistantWidgetShell from "@/components/AssistantWidgetShell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -236,20 +237,29 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white`}
       >
-        <BackgroundProvider>
-          <Navigation />
-          <Breadcrumb />
-          <main className="relative z-20 pt-24 pb-16">
-            <PageScene>{children}</PageScene>
-          </main>
-          <Footer />
-        </BackgroundProvider>
-        {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
-          <>
-            <AskTraceremoveAI compact />
-            <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-geo" />
-          </>
-        )}
+        <MotionProvider>
+          <BackgroundProvider>
+            <Navigation />
+            <Breadcrumb />
+            <main className="relative z-20 pt-24 pb-16">
+              <PageScene>{children}</PageScene>
+            </main>
+            <Footer />
+          </BackgroundProvider>
+          {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
+            <>
+              <AssistantWidgetShell compact />
+              <img
+                src="/brand/black-cat-geo.svg?v=2"
+                alt=""
+                aria-hidden="true"
+                className="cat-geo"
+                loading="lazy"
+                decoding="async"
+              />
+            </>
+          )}
+        </MotionProvider>
       </body>
     </html>
   );

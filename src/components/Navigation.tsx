@@ -88,6 +88,8 @@ type NavigationItem = {
 type DropdownMetrics = {
   left: number;
   width: number;
+  top: number;
+  maxHeight: number;
 };
 
 const navigationItems: NavigationItem[] = [
@@ -296,7 +298,12 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileActive, setMobileActive] = useState<string | null>(null);
-  const [dropdownMetrics, setDropdownMetrics] = useState<DropdownMetrics>({ left: 0, width: 680 });
+  const [dropdownMetrics, setDropdownMetrics] = useState<DropdownMetrics>({
+    left: 0,
+    width: 680,
+    top: 96,
+    maxHeight: 640,
+  });
   const prefersReducedMotion = useReducedMotion();
   const pathname = usePathname();
   const navRailRef = useRef<HTMLDivElement | null>(null);
@@ -314,19 +321,23 @@ export default function Navigation() {
       const triggerRect = trigger.getBoundingClientRect();
       const viewportPadding = 24;
       const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : railRect.width;
-      const maxAvailable = Math.max(Math.min(railRect.width, viewportWidth) - viewportPadding * 2, 320);
+      const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+      const maxWidth = Math.min(760, Math.max(viewportWidth - viewportPadding * 2, 360));
       const desiredWidth = Math.max(triggerRect.width + 320, 420);
-      const width = Math.min(760, Math.min(desiredWidth, maxAvailable));
-      const halfWidth = width / 2;
-      const triggerCenter = triggerRect.left + triggerRect.width / 2 - railRect.left;
-      const minCenter = halfWidth + viewportPadding / 2;
-      const maxCenter = railRect.width - halfWidth - viewportPadding / 2;
+      const width = Math.max(360, Math.min(desiredWidth, maxWidth));
+      const triggerCenterViewport = triggerRect.left + triggerRect.width / 2;
+      const minCenter = viewportPadding + width / 2;
+      const maxCenter = viewportWidth - viewportPadding - width / 2;
+      const clampedCenter = Math.min(Math.max(triggerCenterViewport, minCenter), maxCenter);
+      const top = Math.max(railRect.bottom + 16, 76);
+      const availableHeight = Math.max(viewportHeight - top - viewportPadding, 320);
 
-      const clampedCenter = maxCenter <= minCenter
-        ? railRect.width / 2
-        : Math.min(Math.max(triggerCenter, minCenter), maxCenter);
-
-      setDropdownMetrics({ left: clampedCenter, width });
+      setDropdownMetrics({
+        left: clampedCenter,
+        width,
+        top,
+        maxHeight: availableHeight,
+      });
     },
     []
   );
@@ -362,6 +373,18 @@ export default function Navigation() {
   }, [activeDropdown, updateDropdownMetrics]);
 
   useEffect(() => {
+    if (!activeDropdown) return;
+    if (typeof window === 'undefined') return;
+    const rail = navRailRef.current;
+    if (!rail || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(() => updateDropdownMetrics(activeDropdown));
+    observer.observe(rail);
+
+    return () => observer.disconnect();
+  }, [activeDropdown, updateDropdownMetrics]);
+
+  useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
     setMobileActive(null);
@@ -382,6 +405,20 @@ export default function Navigation() {
         clearTimeout(closeTimeout.current);
       }
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveDropdown(null);
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const isActive = (href: string) => {
@@ -467,6 +504,8 @@ export default function Navigation() {
                 src="/brand/black-cat-solid.svg?v=2"
                 alt="Traceremove"
                 className="h-7 w-7"
+                loading="lazy"
+                decoding="async"
                 initial={{ rotate: 0 }}
                 whileHover={{ rotate: -10 }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -572,7 +611,7 @@ export default function Navigation() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.97 }}
                       transition={{ duration: 0.18, ease: 'easeOut' }}
-                      className="nav-mega pointer-events-auto absolute top-full z-50 mt-4"
+                      className="nav-mega pointer-events-auto fixed z-[60]"
                       id={dropdownId}
                       role="menu"
                       aria-label={`${activeItemData.label} mega menu`}
@@ -580,23 +619,26 @@ export default function Navigation() {
                       onMouseLeave={handleDropdownLeave}
                       style={{
                         left: dropdownMetrics.left,
+                        top: dropdownMetrics.top,
                         transform: 'translateX(-50%)',
                         width: dropdownMetrics.width,
-                        minWidth: dropdownMetrics.width
+                        minWidth: dropdownMetrics.width,
+                        maxHeight: dropdownMetrics.maxHeight,
                       }}
                     >
                       <motion.div
                         layout
-                        className="relative overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 p-1 shadow-[0_40px_80px_rgba(15,23,42,0.55)] backdrop-blur-3xl"
+                        className="relative flex max-h-full flex-col overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 p-1 shadow-[0_40px_80px_rgba(15,23,42,0.55)] backdrop-blur-3xl"
                       >
                         <div className="absolute -top-32 right-10 h-64 w-64 rounded-full bg-gradient-to-br from-white/10 via-white/0 to-white/0 blur-3xl" />
                         <div className="absolute -bottom-36 left-14 h-72 w-72 rounded-full bg-gradient-to-br from-white/0 via-white/0 to-white/10 blur-3xl" />
-                        <div className="relative grid gap-6 p-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
-                          {activeItemData.meta && (
-                            <div className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
-                              <div className="space-y-2">
-                                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
-                                  {activeItemData.meta.tagline}
+                        <div className="relative flex-1 overflow-y-auto p-6 lg:p-7">
+                          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
+                            {activeItemData.meta && (
+                              <div className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
+                                <div className="space-y-2">
+                                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
+                                    {activeItemData.meta.tagline}
                                 </p>
                                 <p className="text-base font-medium text-white/80">
                                   {activeItemData.meta.description}
@@ -650,46 +692,47 @@ export default function Navigation() {
                               )}
                             </div>
                           )}
-                          <div className="grid gap-3 sm:grid-cols-2">
-                            {activeItemData.dropdown.map((dropdownItem) => (
-                              <motion.div
-                                key={dropdownItem.href}
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.18 }}
-                                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
-                              >
-                                <Link
-                                  href={dropdownItem.href}
-                                  onClick={() => {
-                                    if (closeTimeout.current) {
-                                      clearTimeout(closeTimeout.current);
-                                      closeTimeout.current = null;
-                                    }
-                                    setActiveDropdown(null);
-                                  }}
-                                  className="flex items-start gap-4"
-                                  role="menuitem"
+                            <div className="grid gap-3 sm:grid-cols-2">
+                              {activeItemData.dropdown.map((dropdownItem) => (
+                                <motion.div
+                                  key={dropdownItem.href}
+                                  initial={{ opacity: 0, y: 8 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.18 }}
+                                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
                                 >
-                                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
-                                    <dropdownItem.icon className="h-6 w-6" strokeWidth={2.2} />
-                                  </span>
-                                  <div className="space-y-2">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-base font-semibold text-white">
-                                        {dropdownItem.label}
-                                      </span>
-                                      {dropdownItem.badge && (
-                                        <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
-                                          {dropdownItem.badge}
+                                  <Link
+                                    href={dropdownItem.href}
+                                    onClick={() => {
+                                      if (closeTimeout.current) {
+                                        clearTimeout(closeTimeout.current);
+                                        closeTimeout.current = null;
+                                      }
+                                      setActiveDropdown(null);
+                                    }}
+                                    className="flex items-start gap-4"
+                                    role="menuitem"
+                                  >
+                                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                                      <dropdownItem.icon className="h-6 w-6" strokeWidth={2.2} />
+                                    </span>
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-base font-semibold text-white">
+                                          {dropdownItem.label}
                                         </span>
-                                      )}
+                                        {dropdownItem.badge && (
+                                          <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+                                            {dropdownItem.badge}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-sm text-white/70">{dropdownItem.description}</p>
                                     </div>
-                                    <p className="text-sm text-white/70">{dropdownItem.description}</p>
-                                  </div>
-                                </Link>
-                              </motion.div>
-                            ))}
+                                  </Link>
+                                </motion.div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </motion.div>
