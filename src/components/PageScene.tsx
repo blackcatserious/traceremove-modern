@@ -1,8 +1,8 @@
 'use client';
 
-import { type CSSProperties, type ReactNode, useMemo } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 interface ThemePreset {
   id: string;
@@ -165,6 +165,12 @@ const fallbackTheme: ThemePreset = {
 
 export default function PageScene({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const theme = useMemo(() => {
     const preset = themePresets.find((candidate) => candidate.matcher(pathname));
@@ -190,27 +196,46 @@ export default function PageScene({ children }: { children: ReactNode }) {
     backgroundColor: theme.noiseColor,
   };
 
+  const animatedGradient = (
+    <motion.div
+      key={`${theme.id}-gradient`}
+      className={`page-gradient bg-gradient-to-br ${theme.gradient}`}
+      initial={reduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.98 }}
+      animate={reduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0.92, scale: 1 }}
+      exit={reduceMotion ? undefined : { opacity: 0, scale: 1.02 }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
+      aria-hidden
+    />
+  );
+
+  const contentWrapper = (
+    <motion.div
+      key={pathname}
+      className="page-shell"
+      initial={reduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      exit={reduceMotion ? undefined : { opacity: 0, y: -18, filter: 'blur(4px)' }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+
   return (
     <div className="page-scene" data-variant={theme.variant}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${theme.id}-gradient`}
-          className={`page-gradient bg-gradient-to-br ${theme.gradient}`}
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 0.92, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          aria-hidden
-        />
-      </AnimatePresence>
+      {reduceMotion || !mounted ? (
+        animatedGradient
+      ) : (
+        <AnimatePresence mode="wait">{animatedGradient}</AnimatePresence>
+      )}
 
       <motion.div
         key={`${theme.id}-halo`}
         className="page-halo"
         style={haloStyle}
-        initial={{ opacity: 0.2 }}
+        initial={reduceMotion ? { opacity: 0.75 } : { opacity: 0.2 }}
         animate={{ opacity: 0.75 }}
-        transition={{ duration: 1.2, ease: 'easeInOut' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeInOut' }}
         aria-hidden
       />
 
@@ -218,9 +243,9 @@ export default function PageScene({ children }: { children: ReactNode }) {
         key={`${theme.id}-beams`}
         className="page-beams"
         style={beamStyle}
-        initial={{ opacity: 0.12 }}
+        initial={reduceMotion ? { opacity: 0.24 } : { opacity: 0.12 }}
         animate={{ opacity: 0.24 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: 'easeOut' }}
         aria-hidden
       />
 
@@ -228,9 +253,9 @@ export default function PageScene({ children }: { children: ReactNode }) {
         key={`${theme.id}-mesh`}
         className="page-grid"
         style={meshStyle}
-        initial={{ opacity: 0.05 }}
+        initial={reduceMotion ? { opacity: 0.12 } : { opacity: 0.05 }}
         animate={{ opacity: 0.12 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: 'easeOut' }}
         aria-hidden
       />
 
@@ -238,24 +263,13 @@ export default function PageScene({ children }: { children: ReactNode }) {
         key={`${theme.id}-noise`}
         className="page-noise"
         style={noiseStyle as CSSProperties}
-        initial={{ opacity: 0 }}
+        initial={reduceMotion ? { opacity: 0.16 } : { opacity: 0 }}
         animate={{ opacity: 0.16 }}
-        transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
         aria-hidden
       />
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={pathname}
-          className="page-shell"
-          initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: -18, filter: 'blur(4px)' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+      {reduceMotion || !mounted ? contentWrapper : <AnimatePresence mode="wait">{contentWrapper}</AnimatePresence>}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface BackgroundLayersProps {
   variant?: 'default' | 'hero' | 'research' | 'about';
@@ -14,10 +14,20 @@ const VARIANT_COLORS: Record<NonNullable<BackgroundLayersProps['variant']>, stri
   about: ['#1f2937', '#4c1d95', '#6d28d9', '#0ea5e9', '#7c3aed'],
 };
 
+type WindowWithIdle = Window & {
+  requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
 export default function BackgroundLayers({ variant = 'default', className = '' }: BackgroundLayersProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const idleHandleRef = useRef<number | null>(null);
+  const idleTimeoutRef = useRef<number | null>(null);
   const [motionEnabled, setMotionEnabled] = useState<boolean>(true);
+  const [isIdle, setIsIdle] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -39,6 +49,58 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
       pointerQuery.removeEventListener('change', evaluate);
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const withIdle = window as WindowWithIdle;
+
+    const start = () => {
+      setIsIdle(true);
+    };
+
+    if (typeof withIdle.requestIdleCallback === 'function') {
+      idleHandleRef.current = withIdle.requestIdleCallback(start, { timeout: 250 });
+    } else {
+      idleTimeoutRef.current = window.setTimeout(start, 180);
+    }
+
+    return () => {
+      if (idleHandleRef.current !== null && typeof withIdle.cancelIdleCallback === 'function') {
+        withIdle.cancelIdleCallback(idleHandleRef.current);
+      }
+      if (idleTimeoutRef.current !== null) {
+        window.clearTimeout(idleTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        setIsVisible(Boolean(entry?.isIntersecting));
+      },
+      { root: null, rootMargin: '320px 0px', threshold: 0.05 },
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const shouldAnimate = useMemo(() => motionEnabled && isIdle && isVisible, [isIdle, isVisible, motionEnabled]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -112,7 +174,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
 
       updateDerivedMetrics();
 
-      if (!motionEnabled) {
+      if (!shouldAnimate) {
         drawStaticBackground();
       } else if (particles.length) {
         for (const particle of particles) {
@@ -125,7 +187,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    if (!motionEnabled) {
+    if (!shouldAnimate) {
       drawStaticBackground();
       return () => {
         window.removeEventListener('resize', resizeCanvas);
@@ -133,7 +195,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
     }
 
     const initialWidth = Math.max(window.innerWidth, window.innerHeight);
-    const particleBaseCount = initialWidth >= 1536 ? 110 : initialWidth >= 1024 ? 90 : initialWidth >= 768 ? 70 : 48;
+    const particleBaseCount = initialWidth >= 1536 ? 72 : initialWidth >= 1024 ? 58 : initialWidth >= 768 ? 44 : 32;
 
     const randomFromPalette = () => colors[Math.floor(Math.random() * colors.length)] ?? colors[0];
 
@@ -257,10 +319,14 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
       window.cancelAnimationFrame(particleFrame);
       window.cancelAnimationFrame(meshFrame);
     };
-  }, [motionEnabled, variant]);
+  }, [shouldAnimate, variant]);
 
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
+    <div
+      ref={containerRef}
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      aria-hidden="true"
+    >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
       <canvas ref={particleCanvasRef} className="absolute inset-0 h-full w-full" />
     </div>

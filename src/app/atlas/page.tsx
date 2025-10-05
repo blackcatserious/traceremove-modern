@@ -1,10 +1,12 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
 import { ArrowUpRight, Filter, Search } from 'lucide-react';
 
 import BackgroundLayers from '@/components/BackgroundLayers';
 import { atlasBlueprints, ATLAS_BLUEPRINT_TOTAL } from '@/lib/atlasCatalog';
 import type { AtlasBlueprint } from '@/lib/atlasCatalog';
+import ProgressiveAtlasClusters, {
+  type ProgressiveAtlasCluster,
+} from '@/components/ProgressiveAtlasClusters';
 
 export const metadata: Metadata = {
   title: 'Experience Atlas | Traceremove Research',
@@ -21,6 +23,15 @@ const groupedBlueprints = atlasBlueprints.reduce<Record<string, AtlasBlueprint[]
 }, {});
 
 const clusters = Object.keys(groupedBlueprints).sort((a, b) => a.localeCompare(b));
+
+const progressiveClusters: ProgressiveAtlasCluster[] = clusters.map((cluster) => {
+  const items = groupedBlueprints[cluster].sort((a, b) => a.title.localeCompare(b.title));
+  return {
+    id: cluster,
+    personaLabel: (items[0]?.persona ?? 'Responsible innovation leaders').toLowerCase(),
+    items,
+  };
+});
 
 export default function AtlasIndexPage() {
   return (
@@ -61,56 +72,7 @@ export default function AtlasIndexPage() {
             </div>
           </div>
 
-          <div className="mt-16 space-y-24">
-            {clusters.map((cluster) => {
-              const items = groupedBlueprints[cluster].sort((a, b) => a.title.localeCompare(b.title));
-              const personaLabel = (items[0]?.persona ?? 'Responsible innovation leaders').toLowerCase();
-
-              return (
-                <section key={cluster} className="space-y-8">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <h2 className="text-2xl sm:text-3xl font-semibold text-white">{cluster}</h2>
-                      <p className="mt-2 max-w-2xl text-sm text-white/70 leading-relaxed">
-                        Strategic experiences and programs designed for {personaLabel} and allied teams.
-                      </p>
-                    </div>
-                    <Link
-                      href="#atlas-navigation"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/70"
-                    >
-                      Cluster Index
-                    </Link>
-                  </div>
-
-                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {items.map((item) => (
-                      <Link
-                        key={item.slug}
-                        href={`/atlas/${item.slug}`}
-                        className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 transition hover:-translate-y-1 hover:border-accent-ai-purple/40 hover:shadow-2xl hover:shadow-accent-ai-purple/20"
-                      >
-                        <div className="absolute inset-0 opacity-0 transition group-hover:opacity-100" style={{ backgroundImage: 'radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.25), transparent 45%), radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.2), transparent 55%)' }} />
-                        <div className="relative">
-                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/60">{item.hero.eyebrow}</p>
-                          <h3 className="mt-4 text-xl font-semibold text-white group-hover:text-accent-ai-purple">{item.focusArea}</h3>
-                          <p className="mt-3 text-sm text-white/70 leading-relaxed">{item.summary}</p>
-                          <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-white/60">
-                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{item.contextLabel}</span>
-                            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">{item.timeHorizon}</span>
-                          </div>
-                          <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-ai-purple">
-                            View Blueprint
-                            <ArrowUpRight className="h-4 w-4" />
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
-          </div>
+          <ProgressiveAtlasClusters clusters={progressiveClusters} />
         </div>
       </div>
     </div>

@@ -8,8 +8,9 @@ import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const dynamic = 'force-static';
+export const revalidate = 3600;
+export const fetchCache = 'force-cache';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://traceremove.dev'),
