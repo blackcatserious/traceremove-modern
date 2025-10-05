@@ -1,24 +1,31 @@
 'use client';
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MessageSquare, Search, Sparkles, ArrowUpRight, NotebookPen } from 'lucide-react';
 import {
-  KNOWLEDGE_ENTRIES,
-  searchKnowledgeEntries,
-  type KnowledgeEntry,
-} from '@/lib/ai/knowledgeBase';
+  MessageSquare,
+  Search,
+  Sparkles,
+  ArrowUpRight,
+  NotebookPen,
+  Loader2,
+  RefreshCcw,
+} from 'lucide-react';
+import type { KnowledgeEntry } from '@/lib/ai/knowledgeBase';
 
-function filterEntries(
-  entries: readonly KnowledgeEntry[],
-  category: string,
-): KnowledgeEntry[] {
-  if (category === 'All') {
-    return [...entries];
-  }
-  return entries.filter((entry) => entry.category === category);
-}
+const ALL_CATEGORY = 'All';
+const REQUEST_LIMIT = 200;
+
+type KnowledgeBaseResponse = {
+  query: string;
+  category: string | null;
+  total: number;
+  returned: number;
+  categories: Record<string, number>;
+  resultCategories: Record<string, number>;
+  entries: KnowledgeEntry[];
+};
 
 function highlightText(text: string, query: string): ReactNode {
   const trimmedQuery = query.trim();
@@ -59,36 +66,136 @@ export default function KnowledgeBaseExplorer({
   title = 'Traceremove knowledge matrix',
   description = 'Browse the in-domain knowledge base that powers metrics, tooling, and algorithmic support inside the assistant.',
 }: KnowledgeBaseExplorerProps) {
-  const categories = useMemo(() => {
-    const names = Array.from(new Set(KNOWLEDGE_ENTRIES.map((entry) => entry.category)));
-    names.sort();
-    return ['All', ...names];
-  }, []);
-
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [entries, setEntries] = useState<KnowledgeEntry[]>([]);
+  const [categories, setCategories] = useState<string[]>([ALL_CATEGORY]);
+  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [resultCounts, setResultCounts] = useState<Record<string, number>>({});
+  const [meta, setMeta] = useState<{ total: number; returned: number }>({ total: 0, returned: 0 });
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
   const [lastPrompt, setLastPrompt] = useState<string | null>(null);
-
-  const matchedEntries = useMemo(() => {
-    if (!query) {
-      return KNOWLEDGE_ENTRIES;
-    }
-    return searchKnowledgeEntries(query, {
-      limit: Number.POSITIVE_INFINITY,
-      fallbackToAll: false,
-    });
-  }, [query]);
-
-  const visibleEntries = useMemo(
-    () => filterEntries(matchedEntries, activeCategory),
-    [matchedEntries, activeCategory],
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
+  const [dataSource, setDataSource] = useState<'api' | 'fallback'>('api');
 
   useEffect(() => {
     if (!lastPrompt) return;
     const timeout = window.setTimeout(() => setLastPrompt(null), 3200);
     return () => window.clearTimeout(timeout);
   }, [lastPrompt]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedQuery(query.trim()), 260);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const fetchEntries = useCallback(
+    async (search: string, category: string, signal?: AbortSignal) => {
+      setLoading(true);
+      setError(null);
+
+      const params = new URLSearchParams();
+      const trimmedQuery = search.trim();
+      if (trimmedQuery) {
+        params.set('q', trimmedQuery);
+      }
+      if (category && category !== ALL_CATEGORY) {
+        params.set('category', category);
+      }
+      params.set('limit', String(REQUEST_LIMIT));
+
+      try {
+        const response = await fetch(`/api/knowledge-base?${params.toString()}`, {
+          headers: { Accept: 'application/json' },
+          signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Knowledge base request failed with status ${response.status}`);
+        }
+
+        const data: KnowledgeBaseResponse = await response.json();
+        if (signal?.aborted) {
+          return;
+        }
+
+        const sortedCategories = Object.keys(data.categories).sort();
+        setEntries(data.entries);
+        setMeta({ total: data.total, returned: data.returned });
+        setCategoryCounts(data.categories);
+        setResultCounts(data.resultCategories);
+        setCategories([ALL_CATEGORY, ...sortedCategories]);
+        setDataSource('api');
+      } catch (apiError) {
+        if (signal?.aborted) {
+          return;
+        }
+        console.error('Failed to load knowledge base from API', apiError);
+
+        try {
+          const knowledgeModule = await import('@/lib/ai/knowledgeBase');
+          const trimmedQuery = search.trim();
+          const matches = trimmedQuery
+            ? knowledgeModule.searchKnowledgeEntries(trimmedQuery, {
+                limit: Number.POSITIVE_INFINITY,
+                fallbackToAll: false,
+              })
+            : knowledgeModule.KNOWLEDGE_ENTRIES.slice();
+
+          const queryCategoryCounts = matches.reduce<Record<string, number>>((acc, entry) => {
+            acc[entry.category] = (acc[entry.category] ?? 0) + 1;
+            return acc;
+          }, {});
+
+          const filteredEntries =
+            category === ALL_CATEGORY
+              ? matches
+              : matches.filter((entry) => entry.category === category);
+
+          const fullCategoryCounts = knowledgeModule.KNOWLEDGE_ENTRIES.reduce<Record<string, number>>((acc, entry) => {
+            acc[entry.category] = (acc[entry.category] ?? 0) + 1;
+            return acc;
+          }, {});
+
+          if (signal?.aborted) {
+            return;
+          }
+
+          setEntries(filteredEntries);
+          setMeta({ total: matches.length, returned: filteredEntries.length });
+          setCategoryCounts(fullCategoryCounts);
+          setResultCounts(queryCategoryCounts);
+          setCategories([ALL_CATEGORY, ...Object.keys(fullCategoryCounts).sort()]);
+          setError('Live knowledge service temporarily unavailable—showing cached atlas data.');
+          setDataSource('fallback');
+        } catch (fallbackError) {
+          console.error('Failed to load fallback knowledge base', fallbackError);
+          if (signal?.aborted) {
+            return;
+          }
+          setEntries([]);
+          setMeta({ total: 0, returned: 0 });
+          setCategoryCounts({});
+          setResultCounts({});
+          setError('Knowledge base is currently unavailable. Please try again shortly.');
+          setDataSource('fallback');
+        }
+      } finally {
+        if (!signal?.aborted) {
+          setLoading(false);
+        }
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void fetchEntries(debouncedQuery, activeCategory, controller.signal);
+    return () => controller.abort();
+  }, [debouncedQuery, activeCategory, fetchEntries, reloadToken]);
 
   const handlePrompt = (prompt: string) => {
     if (!prompt) return;
@@ -101,13 +208,34 @@ export default function KnowledgeBaseExplorer({
     setLastPrompt(prompt);
   };
 
-  const categoryCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    KNOWLEDGE_ENTRIES.forEach((entry) => {
-      counts.set(entry.category, (counts.get(entry.category) ?? 0) + 1);
-    });
-    return counts;
-  }, []);
+  const totalEntries = useMemo(
+    () => Object.values(categoryCounts).reduce((acc, count) => acc + count, 0),
+    [categoryCounts],
+  );
+
+  const highlightQuery = debouncedQuery || query.trim();
+  const hasQuery = highlightQuery.length > 0;
+  const summaryTotal = hasQuery ? meta.total : totalEntries || meta.total;
+  const summaryReturned = hasQuery ? meta.returned : entries.length || meta.returned;
+
+  const getCategoryCount = useCallback(
+    (category: string) => {
+      if (category === ALL_CATEGORY) {
+        return summaryTotal;
+      }
+      if (hasQuery) {
+        return resultCounts[category] ?? 0;
+      }
+      return categoryCounts[category] ?? 0;
+    },
+    [categoryCounts, hasQuery, resultCounts, summaryTotal],
+  );
+
+  const handleRetry = () => {
+    setReloadToken((value) => value + 1);
+  };
+
+  const sourceLabel = dataSource === 'api' ? 'Live knowledge service' : 'On-site atlas cache';
 
   return (
     <section
@@ -115,7 +243,7 @@ export default function KnowledgeBaseExplorer({
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(circle_at_82%_22%,rgba(217,70,239,0.14),transparent_55%),linear-gradient(145deg,rgba(15,23,42,0.95)_0%,rgba(12,21,38,0.92)_50%,rgba(15,23,42,0.98)_100%)]" />
       <div className="relative z-10 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-6">
+        <div className="flex flex-wrap items-start justify-between gap-6">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
               <Sparkles className="h-4 w-4 text-sky-200" />
@@ -137,32 +265,67 @@ export default function KnowledgeBaseExplorer({
                 Prompt sent to assistant
               </motion.div>
             )}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search metrics, tools, algorithms..."
-                className="w-64 rounded-full border border-white/10 bg-white/10 px-10 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60"
-              />
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search metrics, tools, algorithms..."
+                  className="w-64 rounded-full border border-white/10 bg-white/10 px-10 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60"
+                />
+                {loading && (
+                  <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-white/60" />
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={handleRetry}
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-white/70 transition hover:border-white/30 hover:text-white"
+                title="Refresh knowledge base"
+              >
+                <RefreshCcw className="h-4 w-4" />
+              </button>
             </div>
+            <div className="space-y-1 text-xs font-medium text-white/60">
+              <p>
+                Showing {summaryReturned} of {summaryTotal} {activeCategory === ALL_CATEGORY ? 'knowledge entries' : `${activeCategory.toLowerCase()} briefs`}
+              </p>
+              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">{sourceLabel}</p>
+            </div>
+            {error && (
+              <button
+                type="button"
+                onClick={handleRetry}
+                className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-amber-100 transition hover:border-amber-300/60"
+              >
+                <RefreshCcw className="h-3.5 w-3.5" />
+                {error}
+              </button>
+            )}
           </div>
         </div>
 
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => {
-            const count = category === 'All' ? KNOWLEDGE_ENTRIES.length : categoryCounts.get(category) ?? 0;
+            const count = getCategoryCount(category);
             const isActive = activeCategory === category;
+            const isDisabled = !isActive && hasQuery && count === 0;
+
             return (
               <button
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
+                disabled={isDisabled}
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] transition ${
                   isActive
                     ? 'border-white/60 bg-white/20 text-white'
+                    : isDisabled
+                    ? 'border-white/5 bg-white/5 text-white/30'
                     : 'border-white/10 bg-white/5 text-white/60 hover:border-white/30 hover:text-white'
                 }`}
+                title={isDisabled ? 'No entries for the current search query' : undefined}
               >
                 <span>{category}</span>
                 <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.6rem] font-semibold">{count}</span>
@@ -172,7 +335,7 @@ export default function KnowledgeBaseExplorer({
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {visibleEntries.map((entry) => (
+          {entries.map((entry) => (
             <motion.article
               key={entry.id}
               initial={{ opacity: 0, y: 24 }}
@@ -197,8 +360,8 @@ export default function KnowledgeBaseExplorer({
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, query)}</h3>
-                  <p className="text-sm text-white/70">{highlightText(entry.summary, query)}</p>
+                  <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, highlightQuery)}</h3>
+                  <p className="text-sm text-white/70">{highlightText(entry.summary, highlightQuery)}</p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -207,7 +370,7 @@ export default function KnowledgeBaseExplorer({
                     <ul className="space-y-2 text-sm text-white/75">
                       {entry.metrics.slice(0, 3).map((metric) => (
                         <li key={metric} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(metric, query)}
+                          {highlightText(metric, highlightQuery)}
                         </li>
                       ))}
                     </ul>
@@ -217,7 +380,7 @@ export default function KnowledgeBaseExplorer({
                     <ul className="space-y-2 text-sm text-white/75">
                       {[...entry.toolchain.slice(0, 1), ...entry.playbooks.slice(0, 1)].map((item) => (
                         <li key={item} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(item, query)}
+                          {highlightText(item, highlightQuery)}
                         </li>
                       ))}
                     </ul>
@@ -249,7 +412,7 @@ export default function KnowledgeBaseExplorer({
           ))}
         </div>
 
-        {visibleEntries.length === 0 && (
+        {entries.length === 0 && !loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
