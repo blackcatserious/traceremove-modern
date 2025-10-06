@@ -1,36 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
+import AICatAssistant from "@/components/AICatAssistant";
 import { BackgroundProvider } from "@/components/BackgroundTester";
 
-const inter = Inter({
+// Using fallback fonts for build compatibility in sandboxed environment
+const inter = {
   variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+  className: "font-sans",
+};
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+const jetbrainsMono = {
+  variable: "--font-jetbrains-mono", 
+  className: "font-mono",
+};
 
-const ibmPlexSans = IBM_Plex_Sans({
+const ibmPlexSans = {
   variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
+  className: "font-sans",
+};
 
-const ibmPlexSerif = IBM_Plex_Serif({
+const ibmPlexSerif = {
   variable: "--font-ibm-plex-serif",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
+  className: "font-serif", 
+};
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -212,6 +207,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <AICatAssistant />
         </BackgroundProvider>
       </body>
     </html>
