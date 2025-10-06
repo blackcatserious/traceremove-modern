@@ -92,6 +92,18 @@ type DropdownMetrics = {
   maxHeight: number;
 };
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
+type NavigatorWithConnection = Navigator & {
+  connection?: {
+    saveData?: boolean;
+    effectiveType?: string;
+  };
+};
+
 const navigationItems: NavigationItem[] = [
   {
     href: '/',
@@ -392,9 +404,78 @@ export default function Navigation() {
   }, [activeDropdown, updateDropdownMetrics, navHeight]);
 
   useEffect(() => {
-    const staticRoutes = navigationItems.filter((item) => !item.dropdown?.length).map((item) => item.href);
-    staticRoutes.forEach((href) => prefetchRoute(href));
-  }, [prefetchRoute]);
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const connection = (navigator as NavigatorWithConnection | undefined)?.connection;
+    if (connection?.saveData || connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') {
+      return;
+    }
+
+    const withIdle = window as IdleWindow;
+    const queue = Array.from(
+      new Set(
+        navigationItems
+          .flatMap((item) => [
+            item.href,
+            ...(item.dropdown?.map((entry) => entry.href) ?? []),
+            item.meta?.highlight?.href ?? null,
+          ])
+          .filter((href): href is string => Boolean(href) && href !== pathname),
+      ),
+    ).slice(0, 32);
+
+    if (!queue.length) {
+      return;
+    }
+
+    let idleHandle: number | null = null;
+    let timeoutHandle: number | null = null;
+
+    const flushQueue = (deadline?: IdleDeadline) => {
+      const shouldRun = () => {
+        if (!deadline) return true;
+        return deadline.timeRemaining() > 6 || deadline.didTimeout;
+      };
+
+      while (queue.length && shouldRun()) {
+        const next = queue.shift();
+        if (next) {
+          prefetchRoute(next);
+        }
+      }
+
+      if (queue.length) {
+        schedule();
+      }
+    };
+
+    function schedule() {
+      if (withIdle.requestIdleCallback) {
+        idleHandle = withIdle.requestIdleCallback((deadline) => {
+          idleHandle = null;
+          flushQueue(deadline);
+        }, { timeout: 1500 });
+      } else {
+        timeoutHandle = window.setTimeout(() => {
+          timeoutHandle = null;
+          flushQueue();
+        }, 240);
+      }
+    }
+
+    schedule();
+
+    return () => {
+      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+        withIdle.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
+  }, [pathname, prefetchRoute]);
 
   useEffect(() => {
     if (!activeDropdown) return;

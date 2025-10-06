@@ -7,6 +7,7 @@ import { BackgroundProvider } from "@/components/BackgroundTester";
 import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
+import PerformanceWarmup from "@/components/PerformanceWarmup";
 
 export const dynamic = 'force-static';
 export const revalidate = 3600;
@@ -209,6 +210,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white">
         <MotionProvider>
           <BackgroundProvider>
+            <PerformanceWarmup />
             <Navigation />
             <Breadcrumb />
             <main className="relative z-20 pt-24 pb-16">

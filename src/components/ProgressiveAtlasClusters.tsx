@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -16,7 +16,7 @@ export type ProgressiveAtlasCluster = ClusterPayload;
 
 const BATCH_SIZE = 3;
 
-export default function ProgressiveAtlasClusters({ clusters }: { clusters: ClusterPayload[] }) {
+function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayload[] }) {
   const [renderCount, setRenderCount] = useState(() => Math.min(BATCH_SIZE, clusters.length));
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -121,3 +121,8 @@ export default function ProgressiveAtlasClusters({ clusters }: { clusters: Clust
     </div>
   );
 }
+
+const ProgressiveAtlasClusters = memo(ProgressiveAtlasClustersComponent);
+ProgressiveAtlasClusters.displayName = 'ProgressiveAtlasClusters';
+
+export default ProgressiveAtlasClusters;
