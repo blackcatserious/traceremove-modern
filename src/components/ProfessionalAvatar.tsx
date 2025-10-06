@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { User, Award, Globe, BookOpen } from 'lucide-react';
+import Image from 'next/image';
 
 interface ProfessionalAvatarProps {
   name: string;
@@ -35,10 +36,13 @@ export default function ProfessionalAvatar({
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 p-1 animate-pulse">
             <div className="w-full h-full rounded-full bg-white p-2">
               {imageUrl ? (
-                <img
+                <Image
                   src={imageUrl}
                   alt={name}
+                  width={200}
+                  height={200}
                   className="w-full h-full rounded-full object-cover shadow-ai-glow"
+                  priority
                 />
               ) : (
                 <div className="w-full h-full rounded-full bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple flex items-center justify-center shadow-ai-glow">

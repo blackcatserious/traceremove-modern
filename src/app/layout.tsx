@@ -1,36 +1,50 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+// Temporarily disable Google Fonts due to network restrictions in build environment
+// import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundTester";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+// Use system fonts as fallback while Google Fonts are unavailable
+// const fontVariables = {
+//   "--font-inter": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+//   "--font-jetbrains-mono": "Consolas, Monaco, 'Courier New', monospace", 
+//   "--font-ibm-plex-sans": "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+//   "--font-ibm-plex-serif": "Georgia, 'Times New Roman', serif",
+// };
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+// TODO: Re-enable Google Fonts when network access is available
+// const inter = Inter({
+//   variable: "--font-inter",
+//   subsets: ["latin"],
+//   display: "swap",
+//   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+// });
 
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
+// const jetbrainsMono = JetBrains_Mono({
+//   variable: "--font-jetbrains-mono",
+//   subsets: ["latin"],
+//   display: "swap",
+//   fallback: ["Consolas", "Monaco", "Courier New", "monospace"],
+// });
 
-const ibmPlexSerif = IBM_Plex_Serif({
-  variable: "--font-ibm-plex-serif",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
+// const ibmPlexSans = IBM_Plex_Sans({
+//   variable: "--font-ibm-plex-sans",
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "600", "700"],
+//   display: "swap",
+//   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+// });
+
+// const ibmPlexSerif = IBM_Plex_Serif({
+//   variable: "--font-ibm-plex-serif",
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "600", "700"],
+//   display: "swap",
+//   fallback: ["Georgia", "Times New Roman", "serif"],
+// });
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -66,18 +80,18 @@ export const metadata: Metadata = {
     description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.svg",
         width: 1200,
         height: 630,
         alt: "Traceremove Research - AI Ethics & Philosophy Lab",
-        type: "image/png",
+        type: "image/svg+xml",
       },
       {
-        url: "/og-image-square.png", 
+        url: "/og-image-square.svg", 
         width: 1200,
         height: 1200,
         alt: "Traceremove Research Logo",
-        type: "image/png",
+        type: "image/svg+xml",
       }
     ],
   },
@@ -85,7 +99,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Traceremove Research | AI Ethics & Philosophy",
     description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
-    images: ["/twitter-image.png"],
+    images: ["/twitter-image.svg"],
     creator: "@traceremove",
     site: "@traceremove",
   },
@@ -118,8 +132,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* TODO: Re-enable when Google Fonts are accessible
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -203,12 +219,21 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
+        className="font-sans antialiased bg-white text-gray-900"
+        style={{
+          "--font-inter": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          "--font-jetbrains-mono": "Consolas, Monaco, 'Courier New', monospace", 
+          "--font-ibm-plex-sans": "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+          "--font-ibm-plex-serif": "Georgia, 'Times New Roman', serif",
+        } as React.CSSProperties}
       >
         <BackgroundProvider>
+          <a href="#main-content" className="skip-to-content">
+            Skip to main content
+          </a>
           <Navigation />
           <Breadcrumb />
-          <main className="relative pt-24 pb-16 z-20">
+          <main id="main-content" className="relative pt-24 pb-16 z-20" tabIndex={-1}>
             {children}
           </main>
           <Footer />

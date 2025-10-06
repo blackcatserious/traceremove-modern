@@ -189,15 +189,22 @@ export default function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`nav-premium ${scrolled ? 'scrolled' : ''}`}
+      role="navigation"
+      aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="nav-logo-premium">
+          <Link 
+            href="/" 
+            className="nav-logo-premium"
+            aria-label="Traceremove Research - Home"
+          >
             <motion.div 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="nav-logo-icon"
+              aria-hidden="true"
             >
               <Brain className="w-5 h-5 text-white" />
             </motion.div>
@@ -212,7 +219,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1" role="menubar">
             {navigationItems.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -222,10 +229,15 @@ export default function Navigation() {
                 className="relative"
                 onMouseEnter={() => item.dropdown && handleDropdownEnter(item.label)}
                 onMouseLeave={() => item.dropdown && handleDropdownLeave()}
+                role={item.dropdown ? "menuitem" : undefined}
               >
                 <Link
                   href={item.href}
                   className={`nav-link-premium ${isActive(item.href) ? 'active' : ''} ${item.dropdown ? 'dropdown-trigger' : ''}`}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  aria-expanded={item.dropdown && activeDropdown === item.label ? 'true' : 'false'}
+                  aria-haspopup={item.dropdown ? 'menu' : undefined}
+                  role={item.dropdown ? "button" : "link"}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -324,6 +336,9 @@ export default function Navigation() {
             whileTap={{ scale: 0.95 }}
             onClick={toggleMenu}
             className="lg:hidden relative p-3 rounded-2xl text-research-text-secondary hover:text-research-text hover:bg-white/5 transition-all duration-300"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation-menu"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -361,6 +376,9 @@ export default function Navigation() {
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="mobile-menu-premium lg:hidden"
+            id="mobile-navigation-menu"
+            role="menu"
+            aria-label="Mobile navigation menu"
           >
             <div className="px-6 py-4 space-y-2 max-h-96 overflow-y-auto">
               {navigationItems.map((item, index) => (
