@@ -10,6 +10,7 @@ import {
   writeKnowledgeSnapshot,
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse } from '@/lib/ai/knowledgeTypes';
+import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
 
 const WARM_ROUTES = [
   '/research',
@@ -52,13 +53,6 @@ type IdleWindow = Window & {
   cancelIdleCallback?: (handle: number) => void;
 };
 
-type NavigatorWithConnection = Navigator & {
-  connection?: {
-    saveData?: boolean;
-    effectiveType?: string;
-  };
-};
-
 export default function PerformanceWarmup() {
   const router = useRouter();
   const pathname = usePathname();
@@ -68,89 +62,93 @@ export default function PerformanceWarmup() {
       return;
     }
 
-    const connection = (navigator as NavigatorWithConnection | undefined)?.connection;
-    if (connection?.saveData || connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') {
-      return;
-    }
-
-    const withIdle = window as IdleWindow;
     pruneKnowledgeSnapshots();
-    const routeQueue = WARM_ROUTES.filter((href) => href !== pathname);
-    const requestQueue = WARM_REQUESTS.filter((request) => {
-      const cached = readKnowledgeSnapshot(request.query, request.category);
-      return !cached;
-    });
 
-    if (!routeQueue.length && !requestQueue.length) {
-      return;
-    }
+    return runWhenDocumentVisible(() => {
+      if (shouldDeferHeavyWork()) {
+        return;
+      }
 
-    let idleHandle: number | null = null;
-    let timeoutHandle: number | null = null;
+      const withIdle = window as IdleWindow;
+      const routeQueue = WARM_ROUTES.filter((href) => href !== pathname);
+      const requestQueue = WARM_REQUESTS.filter((request) => {
+        const cached = readKnowledgeSnapshot(request.query, request.category);
+        return !cached;
+      });
 
-    const flush = (deadline?: IdleDeadline) => {
-      const hasBudget = () => {
-        if (!deadline) return true;
-        return deadline.timeRemaining() > 6 || deadline.didTimeout;
+      if (!routeQueue.length && !requestQueue.length) {
+        return;
+      }
+
+      let idleHandle: number | null = null;
+      let timeoutHandle: number | null = null;
+
+      const flush = (deadline?: IdleDeadline) => {
+        const hasBudget = () => {
+          if (!deadline) return true;
+          return deadline.timeRemaining() > 6 || deadline.didTimeout;
+        };
+
+        while (routeQueue.length && hasBudget()) {
+          const href = routeQueue.shift();
+          if (!href) continue;
+          try {
+            if (!shouldDeferHeavyWork()) {
+              router.prefetch(href);
+            }
+          } catch {
+            // Ignore prefetch failures (e.g. unsupported in development).
+          }
+        }
+
+        if (requestQueue.length && hasBudget()) {
+          const request = requestQueue.shift();
+          if (request) {
+            fetch(request.url, { cache: 'force-cache', credentials: 'omit' })
+              .then(async (response) => {
+                if (!response.ok) {
+                  return;
+                }
+
+                const data = (await response.json()) as KnowledgeBaseApiResponse;
+                writeKnowledgeSnapshot(request.query, request.category, snapshotFromApiResponse(data));
+              })
+              .catch(() => {
+                // Ignore warmup failures; runtime requests will retry on demand.
+              });
+          }
+        }
+
+        if (routeQueue.length || requestQueue.length) {
+          schedule();
+        }
       };
 
-      while (routeQueue.length && hasBudget()) {
-        const href = routeQueue.shift();
-        if (!href) continue;
-        try {
-          router.prefetch(href);
-        } catch {
-          // Ignore prefetch failures (e.g. unsupported in development).
+      function schedule() {
+        if (withIdle.requestIdleCallback) {
+          idleHandle = withIdle.requestIdleCallback((deadline) => {
+            idleHandle = null;
+            flush(deadline);
+          }, { timeout: 2000 });
+        } else {
+          timeoutHandle = window.setTimeout(() => {
+            timeoutHandle = null;
+            flush();
+          }, 260);
         }
       }
 
-      if (requestQueue.length && hasBudget()) {
-        const request = requestQueue.shift();
-        if (request) {
-          fetch(request.url, { cache: 'force-cache', credentials: 'omit' })
-            .then(async (response) => {
-              if (!response.ok) {
-                return;
-              }
+      schedule();
 
-              const data = (await response.json()) as KnowledgeBaseApiResponse;
-              writeKnowledgeSnapshot(request.query, request.category, snapshotFromApiResponse(data));
-            })
-            .catch(() => {
-              // Ignore warmup failures; runtime requests will retry on demand.
-            });
+      return () => {
+        if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+          withIdle.cancelIdleCallback(idleHandle);
         }
-      }
-
-      if (routeQueue.length || requestQueue.length) {
-        schedule();
-      }
-    };
-
-    function schedule() {
-      if (withIdle.requestIdleCallback) {
-        idleHandle = withIdle.requestIdleCallback((deadline) => {
-          idleHandle = null;
-          flush(deadline);
-        }, { timeout: 2000 });
-      } else {
-        timeoutHandle = window.setTimeout(() => {
-          timeoutHandle = null;
-          flush();
-        }, 260);
-      }
-    }
-
-    schedule();
-
-    return () => {
-      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
-        withIdle.cancelIdleCallback(idleHandle);
-      }
-      if (timeoutHandle !== null) {
-        window.clearTimeout(timeoutHandle);
-      }
-    };
+        if (timeoutHandle !== null) {
+          window.clearTimeout(timeoutHandle);
+        }
+      };
+    });
   }, [pathname, router]);
 
   return null;

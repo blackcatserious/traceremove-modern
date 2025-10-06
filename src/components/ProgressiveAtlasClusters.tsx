@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
 import type { AtlasBlueprint } from '@/lib/atlasCatalog';
+import { isConstrainedConnection, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
 
 interface ClusterPayload {
   id: string;
@@ -17,9 +18,21 @@ export type ProgressiveAtlasCluster = ClusterPayload;
 const BATCH_SIZE = 3;
 
 function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayload[] }) {
-  const [renderCount, setRenderCount] = useState(() => Math.min(BATCH_SIZE, clusters.length));
+  const [batchSize] = useState(() => {
+    if (shouldDeferHeavyWork()) {
+      return 1;
+    }
+
+    if (isConstrainedConnection()) {
+      return 2;
+    }
+
+    return BATCH_SIZE;
+  });
+  const [renderCount, setRenderCount] = useState(() => Math.min(batchSize, clusters.length));
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const rootMargin = batchSize === 1 ? '320px 0px' : batchSize === 2 ? '400px 0px' : '480px 0px';
 
   useEffect(() => {
     if (!sentinelRef.current) {
@@ -39,12 +52,12 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
             return previous;
           }
 
-          return Math.min(previous + BATCH_SIZE, clusters.length);
+          return Math.min(previous + batchSize, clusters.length);
         });
       }
     }, {
       root: null,
-      rootMargin: '480px 0px',
+      rootMargin,
       threshold: 0,
     });
 
@@ -55,7 +68,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
       observer.disconnect();
       observerRef.current = null;
     };
-  }, [clusters.length]);
+  }, [batchSize, clusters.length, rootMargin]);
 
   useEffect(() => {
     if (renderCount >= clusters.length && observerRef.current) {

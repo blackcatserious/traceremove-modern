@@ -53,6 +53,7 @@ import {
   Hexagon
 } from 'lucide-react';
 import PremiumButton from './PremiumButton';
+import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
 
 type DropdownItem = {
   href: string;
@@ -95,13 +96,6 @@ type DropdownMetrics = {
 type IdleWindow = Window & {
   requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
   cancelIdleCallback?: (handle: number) => void;
-};
-
-type NavigatorWithConnection = Navigator & {
-  connection?: {
-    saveData?: boolean;
-    effectiveType?: string;
-  };
 };
 
 const navigationItems: NavigationItem[] = [
@@ -337,24 +331,39 @@ export default function Navigation() {
       const triggerRect = trigger.getBoundingClientRect();
       const viewportPadding = 24;
       const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : railRect.width;
+      const containerLeft = Math.max(railRect.left, viewportPadding);
+      const containerRight = Math.min(railRect.right, viewportWidth - viewportPadding);
       const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
       const maxWidth = Math.min(760, Math.max(viewportWidth - viewportPadding * 2, 360));
       const desiredWidth = Math.max(triggerRect.width + 320, 420);
       const width = Math.max(360, Math.min(desiredWidth, maxWidth));
       const triggerCenterViewport = triggerRect.left + triggerRect.width / 2;
-      const minCenter = viewportPadding + width / 2;
-      const maxCenter = viewportWidth - viewportPadding - width / 2;
+      const minCenter = containerLeft + width / 2;
+      const maxCenter = containerRight - width / 2;
       const clampedCenter = Math.min(Math.max(triggerCenterViewport, minCenter), maxCenter);
       const navRect = navRef.current?.getBoundingClientRect();
       const navBottom = navRect?.bottom ?? railRect.bottom;
       const top = Math.max(navBottom + 12, 72);
       const availableHeight = Math.max(viewportHeight - top - viewportPadding, 320);
 
-      setDropdownMetrics({
+      const nextMetrics: DropdownMetrics = {
         left: clampedCenter,
         width,
         top,
         maxHeight: availableHeight,
+      };
+
+      setDropdownMetrics((current) => {
+        if (
+          Math.abs(current.left - nextMetrics.left) < 0.5 &&
+          Math.abs(current.width - nextMetrics.width) < 0.5 &&
+          Math.abs(current.top - nextMetrics.top) < 0.5 &&
+          Math.abs(current.maxHeight - nextMetrics.maxHeight) < 0.5
+        ) {
+          return current;
+        }
+
+        return nextMetrics;
       });
     },
     []
@@ -370,6 +379,10 @@ export default function Navigation() {
   const prefetchRoute = useCallback(
     (href: string) => {
       if (!href || href.startsWith('http') || href.startsWith('#')) {
+        return;
+      }
+
+      if (shouldDeferHeavyWork()) {
         return;
       }
 
@@ -408,73 +421,74 @@ export default function Navigation() {
       return;
     }
 
-    const connection = (navigator as NavigatorWithConnection | undefined)?.connection;
-    if (connection?.saveData || connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g') {
-      return;
-    }
+    return runWhenDocumentVisible(() => {
+      if (shouldDeferHeavyWork()) {
+        return;
+      }
 
-    const withIdle = window as IdleWindow;
-    const queue = Array.from(
-      new Set(
-        navigationItems
-          .flatMap((item) => [
-            item.href,
-            ...(item.dropdown?.map((entry) => entry.href) ?? []),
-            item.meta?.highlight?.href ?? null,
-          ])
-          .filter((href): href is string => Boolean(href) && href !== pathname),
-      ),
-    ).slice(0, 32);
+      const withIdle = window as IdleWindow;
+      const queue = Array.from(
+        new Set(
+          navigationItems
+            .flatMap((item) => [
+              item.href,
+              ...(item.dropdown?.map((entry) => entry.href) ?? []),
+              item.meta?.highlight?.href ?? null,
+            ])
+            .filter((href): href is string => Boolean(href) && href !== pathname),
+        ),
+      ).slice(0, 32);
 
-    if (!queue.length) {
-      return;
-    }
+      if (!queue.length) {
+        return;
+      }
 
-    let idleHandle: number | null = null;
-    let timeoutHandle: number | null = null;
+      let idleHandle: number | null = null;
+      let timeoutHandle: number | null = null;
 
-    const flushQueue = (deadline?: IdleDeadline) => {
-      const shouldRun = () => {
-        if (!deadline) return true;
-        return deadline.timeRemaining() > 6 || deadline.didTimeout;
+      const flushQueue = (deadline?: IdleDeadline) => {
+        const shouldRun = () => {
+          if (!deadline) return true;
+          return deadline.timeRemaining() > 6 || deadline.didTimeout;
+        };
+
+        while (queue.length && shouldRun()) {
+          const next = queue.shift();
+          if (next) {
+            prefetchRoute(next);
+          }
+        }
+
+        if (queue.length) {
+          schedule();
+        }
       };
 
-      while (queue.length && shouldRun()) {
-        const next = queue.shift();
-        if (next) {
-          prefetchRoute(next);
+      function schedule() {
+        if (withIdle.requestIdleCallback) {
+          idleHandle = withIdle.requestIdleCallback((deadline) => {
+            idleHandle = null;
+            flushQueue(deadline);
+          }, { timeout: 1500 });
+        } else {
+          timeoutHandle = window.setTimeout(() => {
+            timeoutHandle = null;
+            flushQueue();
+          }, 240);
         }
       }
 
-      if (queue.length) {
-        schedule();
-      }
-    };
+      schedule();
 
-    function schedule() {
-      if (withIdle.requestIdleCallback) {
-        idleHandle = withIdle.requestIdleCallback((deadline) => {
-          idleHandle = null;
-          flushQueue(deadline);
-        }, { timeout: 1500 });
-      } else {
-        timeoutHandle = window.setTimeout(() => {
-          timeoutHandle = null;
-          flushQueue();
-        }, 240);
-      }
-    }
-
-    schedule();
-
-    return () => {
-      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
-        withIdle.cancelIdleCallback(idleHandle);
-      }
-      if (timeoutHandle !== null) {
-        window.clearTimeout(timeoutHandle);
-      }
-    };
+      return () => {
+        if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+          withIdle.cancelIdleCallback(idleHandle);
+        }
+        if (timeoutHandle !== null) {
+          window.clearTimeout(timeoutHandle);
+        }
+      };
+    });
   }, [pathname, prefetchRoute]);
 
   useEffect(() => {
@@ -668,7 +682,7 @@ export default function Navigation() {
         </div>
       )}
 
-      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 w-full items-center justify-between gap-6">
           <Link href="/" className="nav-logo-premium relative flex items-center gap-3">
             <motion.div
@@ -1021,6 +1035,7 @@ export default function Navigation() {
               {
                 paddingTop: `calc(${navHeight}px + 1.25rem)`,
                 paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.75rem)',
+                maxHeight: `calc(100vh - env(safe-area-inset-bottom, 0px))`,
               } as CSSProperties
             }
           >
