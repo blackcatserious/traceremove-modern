@@ -8,6 +8,7 @@ import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
 import PerformanceWarmup from "@/components/PerformanceWarmup";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const dynamic = 'force-static';
 export const revalidate = 3600;
@@ -231,6 +232,7 @@ export default function RootLayout({
               />
             </>
           )}
+          <SpeedInsights />
         </MotionProvider>
       </body>
     </html>

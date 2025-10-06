@@ -13,6 +13,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
     "@types/three": "^0.179.0",
+    "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.21",
     "chart.js": "^4.5.0",
     "chartjs-adapter-date-fns": "^3.0.0",
