@@ -163,14 +163,62 @@ const fallbackTheme: ThemePreset = {
   matcher: () => true,
 };
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
+
 export default function PageScene({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setHydrated(true);
+
+    if (reduceMotion) {
+      setReady(true);
+      return;
+    }
+
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const withIdle = window as IdleWindow;
+    let cancelled = false;
+    let idleHandle: number | null = null;
+    let timeoutHandle: number | null = null;
+
+    const activate = () => {
+      if (!cancelled) {
+        setReady(true);
+      }
+    };
+
+    if (typeof withIdle.requestIdleCallback === 'function') {
+      idleHandle = withIdle.requestIdleCallback(
+        () => {
+          idleHandle = null;
+          activate();
+        },
+        { timeout: 220 },
+      );
+    } else {
+      timeoutHandle = window.setTimeout(activate, 140);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+        withIdle.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
+  }, [reduceMotion]);
 
   const theme = useMemo(() => {
     const preset = themePresets.find((candidate) => candidate.matcher(pathname));
@@ -221,55 +269,85 @@ export default function PageScene({ children }: { children: ReactNode }) {
     </motion.div>
   );
 
+  const shouldAnimateLayers = ready && !reduceMotion;
+  const gradientElement = shouldAnimateLayers ? (
+    <AnimatePresence mode="wait">{animatedGradient}</AnimatePresence>
+  ) : (
+    <div className={`page-gradient bg-gradient-to-br ${theme.gradient}`} aria-hidden />
+  );
+
+  const haloElement = shouldAnimateLayers ? (
+    <motion.div
+      key={`${theme.id}-halo`}
+      className="page-halo"
+      style={haloStyle}
+      initial={{ opacity: 0.2 }}
+      animate={{ opacity: 0.75 }}
+      transition={{ duration: 1.2, ease: 'easeInOut' }}
+      aria-hidden
+    />
+  ) : (
+    <div className="page-halo" style={haloStyle} aria-hidden />
+  );
+
+  const beamElement = shouldAnimateLayers ? (
+    <motion.div
+      key={`${theme.id}-beams`}
+      className="page-beams"
+      style={beamStyle}
+      initial={{ opacity: 0.12 }}
+      animate={{ opacity: 0.24 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
+      aria-hidden
+    />
+  ) : (
+    <div className="page-beams" style={beamStyle} aria-hidden />
+  );
+
+  const meshElement = shouldAnimateLayers ? (
+    <motion.div
+      key={`${theme.id}-mesh`}
+      className="page-grid"
+      style={meshStyle}
+      initial={{ opacity: 0.05 }}
+      animate={{ opacity: 0.12 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
+      aria-hidden
+    />
+  ) : (
+    <div className="page-grid" style={meshStyle} aria-hidden />
+  );
+
+  const noiseElement = shouldAnimateLayers ? (
+    <motion.div
+      key={`${theme.id}-noise`}
+      className="page-noise"
+      style={noiseStyle as CSSProperties}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.16 }}
+      transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
+      aria-hidden
+    />
+  ) : (
+    <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />
+  );
+
+  const contentElement = shouldAnimateLayers ? (
+    <AnimatePresence mode="wait">{contentWrapper}</AnimatePresence>
+  ) : (
+    <div key={pathname} className="page-shell">
+      {children}
+    </div>
+  );
+
   return (
-    <div className="page-scene" data-variant={theme.variant}>
-      {reduceMotion || !mounted ? (
-        animatedGradient
-      ) : (
-        <AnimatePresence mode="wait">{animatedGradient}</AnimatePresence>
-      )}
-
-      <motion.div
-        key={`${theme.id}-halo`}
-        className="page-halo"
-        style={haloStyle}
-        initial={reduceMotion ? { opacity: 0.75 } : { opacity: 0.2 }}
-        animate={{ opacity: 0.75 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeInOut' }}
-        aria-hidden
-      />
-
-      <motion.div
-        key={`${theme.id}-beams`}
-        className="page-beams"
-        style={beamStyle}
-        initial={reduceMotion ? { opacity: 0.24 } : { opacity: 0.12 }}
-        animate={{ opacity: 0.24 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: 'easeOut' }}
-        aria-hidden
-      />
-
-      <motion.div
-        key={`${theme.id}-mesh`}
-        className="page-grid"
-        style={meshStyle}
-        initial={reduceMotion ? { opacity: 0.12 } : { opacity: 0.05 }}
-        animate={{ opacity: 0.12 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: 'easeOut' }}
-        aria-hidden
-      />
-
-      <motion.div
-        key={`${theme.id}-noise`}
-        className="page-noise"
-        style={noiseStyle as CSSProperties}
-        initial={reduceMotion ? { opacity: 0.16 } : { opacity: 0 }}
-        animate={{ opacity: 0.16 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
-        aria-hidden
-      />
-
-      {reduceMotion || !mounted ? contentWrapper : <AnimatePresence mode="wait">{contentWrapper}</AnimatePresence>}
+    <div className="page-scene" data-variant={theme.variant} data-hydrated={hydrated}>
+      {gradientElement}
+      {haloElement}
+      {beamElement}
+      {meshElement}
+      {noiseElement}
+      {contentElement}
     </div>
   );
 }

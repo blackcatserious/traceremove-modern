@@ -4,10 +4,33 @@ import { useCallback, useEffect, useRef, useState, type RefObject } from 'react'
 import { motion } from 'framer-motion';
 import { MessageSquare, Send, Loader2 } from 'lucide-react';
 import { DEFAULT_DOMAIN, DEFAULT_PROMPT_ID } from '@/lib/ai/config';
+import { readKnowledgeSnapshot } from '@/lib/ai/knowledgeCache';
+import type { KnowledgeSnapshot } from '@/lib/ai/knowledgeTypes';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
 type QuickPrompt = { label: string; prompt: string };
+
+const buildFallbackFromSnapshot = (snapshot: KnowledgeSnapshot, query: string): string | null => {
+  if (!snapshot.entries.length) {
+    return null;
+  }
+
+  const highlights = snapshot.entries.slice(0, 3);
+  const intro = query
+    ? `I'm routing you through Traceremove's cached atlas while the live assistant reconnects. Here are briefs covering "${query}".`
+    : "I'm routing you through Traceremove's cached atlas while the live assistant reconnects. Here are briefs worth exploring next.";
+
+  const recommendations = highlights
+    .map((entry) => {
+      const ctaLabel = entry.cta?.label ?? 'Explore blueprint';
+      const ctaHref = entry.cta?.href ?? '/atlas';
+      return `• ${entry.title}: ${entry.summary} (See ${ctaLabel} → ${ctaHref})`;
+    })
+    .join('\n');
+
+  return `${intro}\n\n${recommendations}\n\nThe full knowledge base stays available locally, so feel free to keep exploring the atlas.`;
+};
 
 function Chat({
   messages,
@@ -182,15 +205,23 @@ export default function AskTraceremoveAI({ compact = false }: { compact?: boolea
         let fallbackContent =
           'Traceremove AI is momentarily offline, but the on-site knowledge base is ready—try again in a moment or explore the atlas.';
 
-        try {
-          const { generateFallbackResponse } = await import('@/lib/ai/knowledgeBase');
-          const fallbackResponse = generateFallbackResponse({ messages: history }, error);
-          const enrichedContent = fallbackResponse.choices?.[0]?.message?.content;
-          if (enrichedContent) {
-            fallbackContent = enrichedContent;
+        const cachedSnapshot =
+          readKnowledgeSnapshot(trimmed, null) ?? readKnowledgeSnapshot('', null);
+        const cachedMessage = cachedSnapshot ? buildFallbackFromSnapshot(cachedSnapshot, trimmed) : null;
+
+        if (cachedMessage) {
+          fallbackContent = cachedMessage;
+        } else {
+          try {
+            const { generateFallbackResponse } = await import('@/lib/ai/knowledgeBase');
+            const fallbackResponse = generateFallbackResponse({ messages: history }, error);
+            const enrichedContent = fallbackResponse.choices?.[0]?.message?.content;
+            if (enrichedContent) {
+              fallbackContent = enrichedContent;
+            }
+          } catch {
+            // Ignore secondary errors and fall back to the static message above.
           }
-        } catch {
-          // Ignore secondary errors and fall back to the static message above.
         }
 
         const fallbackMsg: Msg = {

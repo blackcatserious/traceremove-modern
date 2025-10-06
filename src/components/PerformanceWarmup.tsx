@@ -3,6 +3,14 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
+import {
+  readKnowledgeSnapshot,
+  snapshotFromApiResponse,
+  pruneKnowledgeSnapshots,
+  writeKnowledgeSnapshot,
+} from '@/lib/ai/knowledgeCache';
+import type { KnowledgeBaseApiResponse } from '@/lib/ai/knowledgeTypes';
+
 const WARM_ROUTES = [
   '/research',
   '/projects',
@@ -14,10 +22,29 @@ const WARM_ROUTES = [
   '/contact',
 ];
 
-const WARM_REQUESTS = [
-  '/api/knowledge-base?limit=18',
-  '/api/knowledge-base?limit=12&category=metrics',
-  '/api/knowledge-base?limit=12&category=tooling',
+type WarmRequest = {
+  url: string;
+  query: string;
+  category: string | null;
+};
+
+const WARM_REQUESTS: WarmRequest[] = [
+  { url: '/api/knowledge-base?limit=18', query: '', category: null },
+  {
+    url: '/api/knowledge-base?limit=12&category=Metrics%20%26%20Observability',
+    query: '',
+    category: 'Metrics & Observability',
+  },
+  {
+    url: '/api/knowledge-base?limit=12&category=Tools%20%26%20Automation',
+    query: '',
+    category: 'Tools & Automation',
+  },
+  {
+    url: '/api/knowledge-base?limit=12&category=Assistant%20Operations',
+    query: '',
+    category: 'Assistant Operations',
+  },
 ];
 
 type IdleWindow = Window & {
@@ -47,8 +74,12 @@ export default function PerformanceWarmup() {
     }
 
     const withIdle = window as IdleWindow;
+    pruneKnowledgeSnapshots();
     const routeQueue = WARM_ROUTES.filter((href) => href !== pathname);
-    const requestQueue = [...WARM_REQUESTS];
+    const requestQueue = WARM_REQUESTS.filter((request) => {
+      const cached = readKnowledgeSnapshot(request.query, request.category);
+      return !cached;
+    });
 
     if (!routeQueue.length && !requestQueue.length) {
       return;
@@ -74,11 +105,20 @@ export default function PerformanceWarmup() {
       }
 
       if (requestQueue.length && hasBudget()) {
-        const endpoint = requestQueue.shift();
-        if (endpoint) {
-          fetch(endpoint, { cache: 'force-cache', credentials: 'omit' }).catch(() => {
-            // Ignore warmup failures; runtime requests will retry on demand.
-          });
+        const request = requestQueue.shift();
+        if (request) {
+          fetch(request.url, { cache: 'force-cache', credentials: 'omit' })
+            .then(async (response) => {
+              if (!response.ok) {
+                return;
+              }
+
+              const data = (await response.json()) as KnowledgeBaseApiResponse;
+              writeKnowledgeSnapshot(request.query, request.category, snapshotFromApiResponse(data));
+            })
+            .catch(() => {
+              // Ignore warmup failures; runtime requests will retry on demand.
+            });
         }
       }
 

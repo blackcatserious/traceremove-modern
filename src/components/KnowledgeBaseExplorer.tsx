@@ -13,19 +13,15 @@ import {
   RefreshCcw,
 } from 'lucide-react';
 import type { KnowledgeEntry } from '@/lib/ai/knowledgeBase';
+import {
+  readKnowledgeSnapshot,
+  snapshotFromApiResponse,
+  writeKnowledgeSnapshot,
+} from '@/lib/ai/knowledgeCache';
+import type { KnowledgeBaseApiResponse, KnowledgeSnapshot } from '@/lib/ai/knowledgeTypes';
 
 const ALL_CATEGORY = 'All';
 const REQUEST_LIMIT = 200;
-
-type KnowledgeBaseResponse = {
-  query: string;
-  category: string | null;
-  total: number;
-  returned: number;
-  categories: Record<string, number>;
-  resultCategories: Record<string, number>;
-  entries: KnowledgeEntry[];
-};
 
 function highlightText(text: string, query: string): ReactNode {
   const trimmedQuery = query.trim();
@@ -76,9 +72,20 @@ export default function KnowledgeBaseExplorer({
   const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
   const [lastPrompt, setLastPrompt] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
   const [dataSource, setDataSource] = useState<'api' | 'fallback'>('api');
+
+  const applySnapshot = useCallback((snapshot: KnowledgeSnapshot) => {
+    setEntries(snapshot.entries);
+    setMeta({ total: snapshot.total, returned: snapshot.returned });
+    setCategoryCounts(snapshot.categoryCounts);
+    setResultCounts(snapshot.resultCounts);
+    setCategories([ALL_CATEGORY, ...snapshot.categories]);
+    setDataSource(snapshot.dataSource);
+    setError(snapshot.error ?? null);
+  }, []);
 
   useEffect(() => {
     if (!lastPrompt) return;
@@ -93,16 +100,26 @@ export default function KnowledgeBaseExplorer({
 
   const fetchEntries = useCallback(
     async (search: string, category: string, signal?: AbortSignal) => {
-      setLoading(true);
-      setError(null);
+      const trimmedQuery = search.trim();
+      const normalizedCategory = category === ALL_CATEGORY ? null : category;
+      const cachedSnapshot = readKnowledgeSnapshot(trimmedQuery, normalizedCategory);
+
+      if (cachedSnapshot) {
+        applySnapshot(cachedSnapshot);
+        setRefreshing(true);
+        setLoading(false);
+      } else {
+        setLoading(true);
+        setRefreshing(false);
+        setError(null);
+      }
 
       const params = new URLSearchParams();
-      const trimmedQuery = search.trim();
       if (trimmedQuery) {
         params.set('q', trimmedQuery);
       }
-      if (category && category !== ALL_CATEGORY) {
-        params.set('category', category);
+      if (normalizedCategory) {
+        params.set('category', normalizedCategory);
       }
       params.set('limit', String(REQUEST_LIMIT));
 
@@ -116,18 +133,14 @@ export default function KnowledgeBaseExplorer({
           throw new Error(`Knowledge base request failed with status ${response.status}`);
         }
 
-        const data: KnowledgeBaseResponse = await response.json();
+        const data: KnowledgeBaseApiResponse = await response.json();
         if (signal?.aborted) {
           return;
         }
 
-        const sortedCategories = Object.keys(data.categories).sort();
-        setEntries(data.entries);
-        setMeta({ total: data.total, returned: data.returned });
-        setCategoryCounts(data.categories);
-        setResultCounts(data.resultCategories);
-        setCategories([ALL_CATEGORY, ...sortedCategories]);
-        setDataSource('api');
+        const snapshot = snapshotFromApiResponse(data);
+        applySnapshot(snapshot);
+        writeKnowledgeSnapshot(trimmedQuery, normalizedCategory, snapshot);
       } catch (apiError) {
         if (signal?.aborted) {
           return;
@@ -136,7 +149,6 @@ export default function KnowledgeBaseExplorer({
 
         try {
           const knowledgeModule = await import('@/lib/ai/knowledgeBase');
-          const trimmedQuery = search.trim();
           const matches = trimmedQuery
             ? knowledgeModule.searchKnowledgeEntries(trimmedQuery, {
                 limit: Number.POSITIVE_INFINITY,
@@ -149,10 +161,9 @@ export default function KnowledgeBaseExplorer({
             return acc;
           }, {});
 
-          const filteredEntries =
-            category === ALL_CATEGORY
-              ? matches
-              : matches.filter((entry) => entry.category === category);
+          const filteredEntries = normalizedCategory
+            ? matches.filter((entry) => entry.category === normalizedCategory)
+            : matches;
 
           const fullCategoryCounts = knowledgeModule.KNOWLEDGE_ENTRIES.reduce<Record<string, number>>((acc, entry) => {
             acc[entry.category] = (acc[entry.category] ?? 0) + 1;
@@ -163,13 +174,19 @@ export default function KnowledgeBaseExplorer({
             return;
           }
 
-          setEntries(filteredEntries);
-          setMeta({ total: matches.length, returned: filteredEntries.length });
-          setCategoryCounts(fullCategoryCounts);
-          setResultCounts(queryCategoryCounts);
-          setCategories([ALL_CATEGORY, ...Object.keys(fullCategoryCounts).sort()]);
-          setError('Live knowledge service temporarily unavailable—showing cached atlas data.');
-          setDataSource('fallback');
+          const fallbackSnapshot: KnowledgeSnapshot = {
+            entries: filteredEntries,
+            total: matches.length,
+            returned: filteredEntries.length,
+            categoryCounts: fullCategoryCounts,
+            resultCounts: queryCategoryCounts,
+            categories: Object.keys(fullCategoryCounts).sort(),
+            dataSource: 'fallback',
+            error: 'Live knowledge service temporarily unavailable—showing cached atlas data.',
+          };
+
+          applySnapshot(fallbackSnapshot);
+          writeKnowledgeSnapshot(trimmedQuery, normalizedCategory, fallbackSnapshot);
         } catch (fallbackError) {
           console.error('Failed to load fallback knowledge base', fallbackError);
           if (signal?.aborted) {
@@ -180,15 +197,17 @@ export default function KnowledgeBaseExplorer({
           setCategoryCounts({});
           setResultCounts({});
           setError('Knowledge base is currently unavailable. Please try again shortly.');
+          setCategories([ALL_CATEGORY]);
           setDataSource('fallback');
         }
       } finally {
         if (!signal?.aborted) {
           setLoading(false);
+          setRefreshing(false);
         }
       }
     },
-    [],
+    [applySnapshot],
   );
 
   useEffect(() => {
@@ -235,7 +254,12 @@ export default function KnowledgeBaseExplorer({
     setReloadToken((value) => value + 1);
   };
 
-  const sourceLabel = dataSource === 'api' ? 'Live knowledge service' : 'On-site atlas cache';
+  const busy = loading || refreshing;
+  const sourceLabel = refreshing
+    ? 'Refreshing cached knowledge…'
+    : dataSource === 'api'
+    ? 'Live knowledge service'
+    : 'On-site atlas cache';
 
   return (
     <section
@@ -274,14 +298,15 @@ export default function KnowledgeBaseExplorer({
                   placeholder="Search metrics, tools, algorithms..."
                   className="w-64 rounded-full border border-white/10 bg-white/10 px-10 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60"
                 />
-                {loading && (
+                {busy && (
                   <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-white/60" />
                 )}
               </div>
               <button
                 type="button"
                 onClick={handleRetry}
-                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-white/70 transition hover:border-white/30 hover:text-white"
+                disabled={busy}
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 p-2 text-white/70 transition hover:border-white/30 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
                 title="Refresh knowledge base"
               >
                 <RefreshCcw className="h-4 w-4" />
