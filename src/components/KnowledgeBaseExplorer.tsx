@@ -39,6 +39,17 @@ type DisplayConfig = {
   rootMargin: string;
 };
 
+type SnapshotState = {
+  entries: KnowledgeEntry[];
+  categories: string[];
+  categoryCounts: Record<string, number>;
+  resultCounts: Record<string, number>;
+  total: number;
+  returned: number;
+  dataSource: 'api' | 'fallback';
+  error: string | null;
+};
+
 function resolveDisplayConfig(): DisplayConfig {
   if (typeof window === 'undefined') {
     return { initial: 12, batch: 12, rootMargin: '480px 0px' };
@@ -96,32 +107,38 @@ export default function KnowledgeBaseExplorer({
 }: KnowledgeBaseExplorerProps) {
   const [displayConfig, setDisplayConfig] = useState<DisplayConfig>(resolveDisplayConfig);
   const [visibleCount, setVisibleCount] = useState(() => displayConfig.initial);
-  const [entries, setEntries] = useState<KnowledgeEntry[]>([]);
-  const [categories, setCategories] = useState<string[]>([ALL_CATEGORY]);
-  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
-  const [resultCounts, setResultCounts] = useState<Record<string, number>>({});
-  const [meta, setMeta] = useState<{ total: number; returned: number }>({ total: 0, returned: 0 });
+  const [snapshotState, setSnapshotState] = useState<SnapshotState>({
+    entries: [],
+    categories: [ALL_CATEGORY],
+    categoryCounts: {},
+    resultCounts: {},
+    total: 0,
+    returned: 0,
+    dataSource: 'api',
+    error: null,
+  });
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
   const [lastPrompt, setLastPrompt] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
-  const [dataSource, setDataSource] = useState<'api' | 'fallback'>('api');
   const [isPendingCategory, startCategoryTransition] = useTransition();
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const applySnapshot = useCallback((snapshot: KnowledgeSnapshot) => {
-    setEntries(snapshot.entries);
-    setMeta({ total: snapshot.total, returned: snapshot.returned });
-    setCategoryCounts(snapshot.categoryCounts);
-    setResultCounts(snapshot.resultCounts);
-    setCategories([ALL_CATEGORY, ...snapshot.categories]);
-    setDataSource(snapshot.dataSource);
-    setError(snapshot.error ?? null);
+    setSnapshotState({
+      entries: snapshot.entries,
+      categories: [ALL_CATEGORY, ...snapshot.categories],
+      categoryCounts: snapshot.categoryCounts,
+      resultCounts: snapshot.resultCounts,
+      total: snapshot.total,
+      returned: snapshot.returned,
+      dataSource: snapshot.dataSource,
+      error: snapshot.error ?? null,
+    });
   }, []);
 
   useEffect(() => {
@@ -152,7 +169,10 @@ export default function KnowledgeBaseExplorer({
       } else {
         setLoading(true);
         setRefreshing(false);
-        setError(null);
+        setSnapshotState((previous) => ({
+          ...previous,
+          error: null,
+        }));
       }
 
       const params = new URLSearchParams();
@@ -233,13 +253,16 @@ export default function KnowledgeBaseExplorer({
           if (signal?.aborted) {
             return;
           }
-          setEntries([]);
-          setMeta({ total: 0, returned: 0 });
-          setCategoryCounts({});
-          setResultCounts({});
-          setError('Knowledge base is currently unavailable. Please try again shortly.');
-          setCategories([ALL_CATEGORY]);
-          setDataSource('fallback');
+          setSnapshotState({
+            entries: [],
+            categories: [ALL_CATEGORY],
+            categoryCounts: {},
+            resultCounts: {},
+            total: 0,
+            returned: 0,
+            dataSource: 'fallback',
+            error: 'Knowledge base is currently unavailable. Please try again shortly.',
+          });
         }
       } finally {
         if (!signal?.aborted) {
@@ -259,19 +282,19 @@ export default function KnowledgeBaseExplorer({
 
   useEffect(() => {
     setVisibleCount(() => {
-      if (!entries.length) {
+      if (!snapshotState.entries.length) {
         return displayConfig.initial;
       }
-      return Math.min(displayConfig.initial, entries.length);
+      return Math.min(displayConfig.initial, snapshotState.entries.length);
     });
-  }, [entries, displayConfig.initial]);
+  }, [snapshotState.entries.length, displayConfig.initial]);
 
   useEffect(() => {
     if (!sentinelRef.current) {
       return;
     }
 
-    if (visibleCount >= entries.length) {
+    if (visibleCount >= snapshotState.entries.length) {
       if (observerRef.current) {
         observerRef.current.disconnect();
         observerRef.current = null;
@@ -280,7 +303,7 @@ export default function KnowledgeBaseExplorer({
     }
 
     if (typeof IntersectionObserver === 'undefined') {
-      setVisibleCount(entries.length);
+      setVisibleCount(snapshotState.entries.length);
       return;
     }
 
@@ -289,10 +312,10 @@ export default function KnowledgeBaseExplorer({
         const entry = entriesList[0];
         if (entry?.isIntersecting) {
           setVisibleCount((current) => {
-            if (current >= entries.length) {
+            if (current >= snapshotState.entries.length) {
               return current;
             }
-            return Math.min(entries.length, current + displayConfig.batch);
+            return Math.min(snapshotState.entries.length, current + displayConfig.batch);
           });
         }
       },
@@ -310,7 +333,7 @@ export default function KnowledgeBaseExplorer({
       observer.disconnect();
       observerRef.current = null;
     };
-  }, [displayConfig.batch, displayConfig.rootMargin, entries.length, visibleCount]);
+  }, [displayConfig.batch, displayConfig.rootMargin, snapshotState.entries.length, visibleCount]);
 
   const handlePrompt = (prompt: string) => {
     if (!prompt) return;
@@ -324,16 +347,16 @@ export default function KnowledgeBaseExplorer({
   };
 
   const totalEntries = useMemo(
-    () => Object.values(categoryCounts).reduce((acc, count) => acc + count, 0),
-    [categoryCounts],
+    () => Object.values(snapshotState.categoryCounts).reduce((acc, count) => acc + count, 0),
+    [snapshotState.categoryCounts],
   );
 
   const highlightQuery = debouncedQuery || query.trim();
   const deferredHighlightQuery = useDeferredValue(highlightQuery);
-  const deferredEntries = useDeferredValue(entries);
+  const deferredEntries = useDeferredValue(snapshotState.entries);
   const hasQuery = deferredHighlightQuery.length > 0;
-  const summaryTotal = hasQuery ? meta.total : totalEntries || meta.total;
-  const summaryReturned = hasQuery ? meta.returned : deferredEntries.length || meta.returned;
+  const summaryTotal = hasQuery ? snapshotState.total : totalEntries || snapshotState.total;
+  const summaryReturned = hasQuery ? snapshotState.returned : deferredEntries.length || snapshotState.returned;
   const visibleEntries = useMemo(() => deferredEntries.slice(0, visibleCount), [deferredEntries, visibleCount]);
   const hasMoreEntries = visibleCount < deferredEntries.length;
 
@@ -343,11 +366,11 @@ export default function KnowledgeBaseExplorer({
         return summaryTotal;
       }
       if (hasQuery) {
-        return resultCounts[category] ?? 0;
+        return snapshotState.resultCounts[category] ?? 0;
       }
-      return categoryCounts[category] ?? 0;
+      return snapshotState.categoryCounts[category] ?? 0;
     },
-    [categoryCounts, hasQuery, resultCounts, summaryTotal],
+    [hasQuery, snapshotState.categoryCounts, snapshotState.resultCounts, summaryTotal],
   );
 
   const handleRetry = () => {
@@ -357,7 +380,7 @@ export default function KnowledgeBaseExplorer({
   const busy = loading || refreshing || isPendingCategory;
   const sourceLabel = refreshing
     ? 'Refreshing cached knowledge…'
-    : dataSource === 'api'
+    : snapshotState.dataSource === 'api'
     ? 'Live knowledge service'
     : 'On-site atlas cache';
 
@@ -418,21 +441,21 @@ export default function KnowledgeBaseExplorer({
               </p>
               <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">{sourceLabel}</p>
             </div>
-            {error && (
+            {snapshotState.error && (
               <button
                 type="button"
                 onClick={handleRetry}
                 className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-amber-100 transition hover:border-amber-300/60"
               >
                 <RefreshCcw className="h-3.5 w-3.5" />
-                {error}
+                {snapshotState.error}
               </button>
             )}
           </div>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          {categories.map((category) => {
+          {snapshotState.categories.map((category) => {
             const count = getCategoryCount(category);
             const isActive = activeCategory === category;
             const isDisabled = !isActive && hasQuery && count === 0;
@@ -557,7 +580,7 @@ export default function KnowledgeBaseExplorer({
           </div>
         )}
 
-        {entries.length === 0 && !loading && (
+        {snapshotState.entries.length === 0 && !loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
