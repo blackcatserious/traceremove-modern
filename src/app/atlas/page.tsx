@@ -6,6 +6,7 @@ import { atlasBlueprints, ATLAS_BLUEPRINT_TOTAL } from '@/lib/atlasCatalog';
 import type { AtlasBlueprint } from '@/lib/atlasCatalog';
 import ProgressiveAtlasClusters, {
   type ProgressiveAtlasCluster,
+  type AtlasClusterCard,
 } from '@/components/ProgressiveAtlasClusters';
 
 export const metadata: Metadata = {
@@ -25,10 +26,20 @@ const groupedBlueprints = atlasBlueprints.reduce<Record<string, AtlasBlueprint[]
 const clusters = Object.keys(groupedBlueprints).sort((a, b) => a.localeCompare(b));
 
 const progressiveClusters: ProgressiveAtlasCluster[] = clusters.map((cluster) => {
-  const items = groupedBlueprints[cluster].sort((a, b) => a.title.localeCompare(b.title));
+  const sortedBlueprints = groupedBlueprints[cluster].slice().sort((a, b) => a.title.localeCompare(b.title));
+  const personaLabel = (sortedBlueprints[0]?.persona ?? 'Responsible innovation leaders').toLowerCase();
+  const items: AtlasClusterCard[] = sortedBlueprints.map((blueprint) => ({
+    slug: blueprint.slug,
+    heroEyebrow: blueprint.hero.eyebrow,
+    focusArea: blueprint.focusArea,
+    summary: blueprint.summary,
+    contextLabel: blueprint.contextLabel,
+    timeHorizon: blueprint.timeHorizon,
+  }));
+
   return {
     id: cluster,
-    personaLabel: (items[0]?.persona ?? 'Responsible innovation leaders').toLowerCase(),
+    personaLabel,
     items,
   };
 });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useDeferredValue, useEffect, useMemo, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -233,9 +233,11 @@ export default function KnowledgeBaseExplorer({
   );
 
   const highlightQuery = debouncedQuery || query.trim();
-  const hasQuery = highlightQuery.length > 0;
+  const deferredHighlightQuery = useDeferredValue(highlightQuery);
+  const deferredEntries = useDeferredValue(entries);
+  const hasQuery = deferredHighlightQuery.length > 0;
   const summaryTotal = hasQuery ? meta.total : totalEntries || meta.total;
-  const summaryReturned = hasQuery ? meta.returned : entries.length || meta.returned;
+  const summaryReturned = hasQuery ? meta.returned : deferredEntries.length || meta.returned;
 
   const getCategoryCount = useCallback(
     (category: string) => {
@@ -360,7 +362,7 @@ export default function KnowledgeBaseExplorer({
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {entries.map((entry) => (
+          {deferredEntries.map((entry) => (
             <motion.article
               key={entry.id}
               initial={{ opacity: 0, y: 24 }}
@@ -385,8 +387,8 @@ export default function KnowledgeBaseExplorer({
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, highlightQuery)}</h3>
-                  <p className="text-sm text-white/70">{highlightText(entry.summary, highlightQuery)}</p>
+                  <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, deferredHighlightQuery)}</h3>
+                  <p className="text-sm text-white/70">{highlightText(entry.summary, deferredHighlightQuery)}</p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -395,7 +397,7 @@ export default function KnowledgeBaseExplorer({
                     <ul className="space-y-2 text-sm text-white/75">
                       {entry.metrics.slice(0, 3).map((metric) => (
                         <li key={metric} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(metric, highlightQuery)}
+                          {highlightText(metric, deferredHighlightQuery)}
                         </li>
                       ))}
                     </ul>
@@ -405,7 +407,7 @@ export default function KnowledgeBaseExplorer({
                     <ul className="space-y-2 text-sm text-white/75">
                       {[...entry.toolchain.slice(0, 1), ...entry.playbooks.slice(0, 1)].map((item) => (
                         <li key={item} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(item, highlightQuery)}
+                          {highlightText(item, deferredHighlightQuery)}
                         </li>
                       ))}
                     </ul>

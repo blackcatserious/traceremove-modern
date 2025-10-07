@@ -4,13 +4,21 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
-import type { AtlasBlueprint } from '@/lib/atlasCatalog';
 import { isConstrainedConnection, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+
+export interface AtlasClusterCard {
+  slug: string;
+  heroEyebrow: string;
+  focusArea: string;
+  summary: string;
+  contextLabel: string;
+  timeHorizon: string;
+}
 
 interface ClusterPayload {
   id: string;
   personaLabel: string;
-  items: AtlasBlueprint[];
+  items: AtlasClusterCard[];
 }
 
 export type ProgressiveAtlasCluster = ClusterPayload;
@@ -78,6 +86,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
   }, [clusters.length, renderCount]);
 
   const visibleClusters = useMemo(() => clusters.slice(0, renderCount), [clusters, renderCount]);
+  const [prefetchLinks] = useState(() => !shouldDeferHeavyWork());
 
   return (
     <div className="mt-16 space-y-24">
@@ -103,6 +112,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
               <Link
                 key={item.slug}
                 href={`/atlas/${item.slug}`}
+                prefetch={prefetchLinks}
                 className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 transition hover:-translate-y-1 hover:border-accent-ai-purple/40 hover:shadow-2xl hover:shadow-accent-ai-purple/20"
               >
                 <div
@@ -113,7 +123,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
                   }}
                 />
                 <div className="relative">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/60">{item.hero.eyebrow}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/60">{item.heroEyebrow}</p>
                   <h3 className="mt-4 text-xl font-semibold text-white group-hover:text-accent-ai-purple">{item.focusArea}</h3>
                   <p className="mt-3 text-sm text-white/70 leading-relaxed">{item.summary}</p>
                   <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-white/60">
