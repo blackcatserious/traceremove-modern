@@ -1,6 +1,15 @@
 'use client';
 
-import { useCallback, useDeferredValue, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+  type ReactNode,
+} from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -19,9 +28,32 @@ import {
   writeKnowledgeSnapshot,
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse, KnowledgeSnapshot } from '@/lib/ai/knowledgeTypes';
+import { isConstrainedConnection, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
 
 const ALL_CATEGORY = 'All';
 const REQUEST_LIMIT = 200;
+
+type DisplayConfig = {
+  initial: number;
+  batch: number;
+  rootMargin: string;
+};
+
+function resolveDisplayConfig(): DisplayConfig {
+  if (typeof window === 'undefined') {
+    return { initial: 12, batch: 12, rootMargin: '480px 0px' };
+  }
+
+  if (shouldDeferHeavyWork()) {
+    return { initial: 4, batch: 4, rootMargin: '260px 0px' };
+  }
+
+  if (isConstrainedConnection()) {
+    return { initial: 6, batch: 6, rootMargin: '360px 0px' };
+  }
+
+  return { initial: 12, batch: 12, rootMargin: '480px 0px' };
+}
 
 function highlightText(text: string, query: string): ReactNode {
   const trimmedQuery = query.trim();
@@ -62,6 +94,8 @@ export default function KnowledgeBaseExplorer({
   title = 'Traceremove knowledge matrix',
   description = 'Browse the in-domain knowledge base that powers metrics, tooling, and algorithmic support inside the assistant.',
 }: KnowledgeBaseExplorerProps) {
+  const [displayConfig, setDisplayConfig] = useState<DisplayConfig>(resolveDisplayConfig);
+  const [visibleCount, setVisibleCount] = useState(() => displayConfig.initial);
   const [entries, setEntries] = useState<KnowledgeEntry[]>([]);
   const [categories, setCategories] = useState<string[]>([ALL_CATEGORY]);
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
@@ -76,6 +110,9 @@ export default function KnowledgeBaseExplorer({
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
   const [dataSource, setDataSource] = useState<'api' | 'fallback'>('api');
+  const [isPendingCategory, startCategoryTransition] = useTransition();
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const applySnapshot = useCallback((snapshot: KnowledgeSnapshot) => {
     setEntries(snapshot.entries);
@@ -85,6 +122,10 @@ export default function KnowledgeBaseExplorer({
     setCategories([ALL_CATEGORY, ...snapshot.categories]);
     setDataSource(snapshot.dataSource);
     setError(snapshot.error ?? null);
+  }, []);
+
+  useEffect(() => {
+    setDisplayConfig(resolveDisplayConfig());
   }, []);
 
   useEffect(() => {
@@ -216,6 +257,61 @@ export default function KnowledgeBaseExplorer({
     return () => controller.abort();
   }, [debouncedQuery, activeCategory, fetchEntries, reloadToken]);
 
+  useEffect(() => {
+    setVisibleCount(() => {
+      if (!entries.length) {
+        return displayConfig.initial;
+      }
+      return Math.min(displayConfig.initial, entries.length);
+    });
+  }, [entries, displayConfig.initial]);
+
+  useEffect(() => {
+    if (!sentinelRef.current) {
+      return;
+    }
+
+    if (visibleCount >= entries.length) {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      return;
+    }
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisibleCount(entries.length);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entriesList) => {
+        const entry = entriesList[0];
+        if (entry?.isIntersecting) {
+          setVisibleCount((current) => {
+            if (current >= entries.length) {
+              return current;
+            }
+            return Math.min(entries.length, current + displayConfig.batch);
+          });
+        }
+      },
+      {
+        root: null,
+        rootMargin: displayConfig.rootMargin,
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sentinelRef.current);
+    observerRef.current = observer;
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
+  }, [displayConfig.batch, displayConfig.rootMargin, entries.length, visibleCount]);
+
   const handlePrompt = (prompt: string) => {
     if (!prompt) return;
     if (typeof window === 'undefined') return;
@@ -238,6 +334,8 @@ export default function KnowledgeBaseExplorer({
   const hasQuery = deferredHighlightQuery.length > 0;
   const summaryTotal = hasQuery ? meta.total : totalEntries || meta.total;
   const summaryReturned = hasQuery ? meta.returned : deferredEntries.length || meta.returned;
+  const visibleEntries = useMemo(() => deferredEntries.slice(0, visibleCount), [deferredEntries, visibleCount]);
+  const hasMoreEntries = visibleCount < deferredEntries.length;
 
   const getCategoryCount = useCallback(
     (category: string) => {
@@ -256,7 +354,7 @@ export default function KnowledgeBaseExplorer({
     setReloadToken((value) => value + 1);
   };
 
-  const busy = loading || refreshing;
+  const busy = loading || refreshing || isPendingCategory;
   const sourceLabel = refreshing
     ? 'Refreshing cached knowledge…'
     : dataSource === 'api'
@@ -343,7 +441,11 @@ export default function KnowledgeBaseExplorer({
               <button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() =>
+                  startCategoryTransition(() => {
+                    setActiveCategory(category);
+                  })
+                }
                 disabled={isDisabled}
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] transition ${
                   isActive
@@ -362,7 +464,7 @@ export default function KnowledgeBaseExplorer({
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {deferredEntries.map((entry) => (
+          {visibleEntries.map((entry) => (
             <motion.article
               key={entry.id}
               initial={{ opacity: 0, y: 24 }}
@@ -438,6 +540,22 @@ export default function KnowledgeBaseExplorer({
             </motion.article>
           ))}
         </div>
+
+        <div ref={sentinelRef} aria-hidden className="h-1 w-full" />
+
+        {hasMoreEntries && (
+          <div className="flex justify-center pt-4">
+            <button
+              type="button"
+              onClick={() =>
+                setVisibleCount((current) => Math.min(deferredEntries.length, current + displayConfig.batch))
+              }
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:border-white/30 hover:text-white"
+            >
+              Load more knowledge
+            </button>
+          </div>
+        )}
 
         {entries.length === 0 && !loading && (
           <motion.div

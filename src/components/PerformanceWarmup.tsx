@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import {
@@ -56,6 +56,7 @@ type IdleWindow = Window & {
 export default function PerformanceWarmup() {
   const router = useRouter();
   const pathname = usePathname();
+  const abortControllersRef = useRef<AbortController[]>([]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -65,6 +66,8 @@ export default function PerformanceWarmup() {
     pruneKnowledgeSnapshots();
 
     return runWhenDocumentVisible(() => {
+      let cancelled = false;
+
       if (shouldDeferHeavyWork()) {
         return;
       }
@@ -84,12 +87,19 @@ export default function PerformanceWarmup() {
       let timeoutHandle: number | null = null;
 
       const flush = (deadline?: IdleDeadline) => {
+        if (cancelled) {
+          return;
+        }
+
         const hasBudget = () => {
           if (!deadline) return true;
           return deadline.timeRemaining() > 6 || deadline.didTimeout;
         };
 
         while (routeQueue.length && hasBudget()) {
+          if (cancelled) {
+            break;
+          }
           const href = routeQueue.shift();
           if (!href) continue;
           try {
@@ -104,17 +114,24 @@ export default function PerformanceWarmup() {
         if (requestQueue.length && hasBudget()) {
           const request = requestQueue.shift();
           if (request) {
-            fetch(request.url, { cache: 'force-cache', credentials: 'omit' })
+            const controller = new AbortController();
+            abortControllersRef.current.push(controller);
+            fetch(request.url, { cache: 'force-cache', credentials: 'omit', signal: controller.signal })
               .then(async (response) => {
                 if (!response.ok) {
                   return;
                 }
 
                 const data = (await response.json()) as KnowledgeBaseApiResponse;
-                writeKnowledgeSnapshot(request.query, request.category, snapshotFromApiResponse(data));
+                if (!cancelled && !controller.signal.aborted) {
+                  writeKnowledgeSnapshot(request.query, request.category, snapshotFromApiResponse(data));
+                }
               })
               .catch(() => {
                 // Ignore warmup failures; runtime requests will retry on demand.
+              })
+              .finally(() => {
+                abortControllersRef.current = abortControllersRef.current.filter((instance) => instance !== controller);
               });
           }
         }
@@ -125,6 +142,9 @@ export default function PerformanceWarmup() {
       };
 
       function schedule() {
+        if (cancelled) {
+          return;
+        }
         if (withIdle.requestIdleCallback) {
           idleHandle = withIdle.requestIdleCallback((deadline) => {
             idleHandle = null;
@@ -141,12 +161,17 @@ export default function PerformanceWarmup() {
       schedule();
 
       return () => {
+        cancelled = true;
         if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
           withIdle.cancelIdleCallback(idleHandle);
         }
         if (timeoutHandle !== null) {
           window.clearTimeout(timeoutHandle);
         }
+        abortControllersRef.current.forEach((controller) => {
+          controller.abort();
+        });
+        abortControllersRef.current = [];
       };
     });
   }, [pathname, router]);
