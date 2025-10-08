@@ -14,76 +14,25 @@ import {
   Wrench,
   FileText,
   Mail,
-  Brain,
   ChevronDown,
-  Microscope,
-  Code,
-  Shield,
-  Database,
-  Users,
+  Lightbulb,
+  Map,
   GraduationCap,
   Newspaper,
-  Scale,
-  Eye,
-  Globe,
-  Cpu,
-  Heart,
-  Lock,
-  BarChart3,
-  Search,
-  Calculator,
-  PieChart,
-  BookMarked,
-  GitCompare,
-  Target,
-  Lightbulb,
-  Network,
-  UserCheck,
-  Workflow,
-  Presentation,
-  Library,
-  ScrollText,
-  BookOpenCheck,
-  Map,
   Sparkles,
   ArrowRight,
-  Layers,
-  Compass,
-  Radar,
-  Hexagon
 } from 'lucide-react';
 import PremiumButton from './PremiumButton';
 import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import type { NavigationCatalog } from '@/lib/navigationCatalogData';
 
-type DropdownItem = {
-  href: string;
-  label: string;
-  description: string;
-  icon: LucideIcon;
-  badge?: string;
-};
-
-type NavigationHighlight = {
-  title: string;
-  description: string;
-  href: string;
-  icon: LucideIcon;
-  badge?: string;
-  accent: string;
-  glow: string;
-};
-
-type NavigationItem = {
+type BaseNavigationItem = {
+  id: string;
   href: string;
   label: string;
   icon: LucideIcon;
   accent: string;
-  dropdown?: DropdownItem[];
-  meta?: {
-    tagline: string;
-    description: string;
-    highlight?: NavigationHighlight;
-  };
+  hasMegaMenu?: boolean;
 };
 
 type DropdownMetrics = {
@@ -98,206 +47,85 @@ type IdleWindow = Window & {
   cancelIdleCallback?: (handle: number) => void;
 };
 
-const navigationItems: NavigationItem[] = [
+const baseNavigationItems: BaseNavigationItem[] = [
   {
+    id: 'home',
     href: '/',
     label: 'Home',
     icon: Home,
-    accent: 'from-sky-500/70 via-indigo-500/70 to-violet-600/70'
+    accent: 'from-sky-500/70 via-indigo-500/70 to-violet-600/70',
   },
   {
+    id: 'research',
     href: '/research',
     label: 'Research',
     icon: BookOpen,
     accent: 'from-violet-500/80 via-purple-500/70 to-sky-500/70',
-    meta: {
-      tagline: 'AI Research Blueprints',
-      description: 'Methodologies and ethical frameworks that keep intelligent systems transparent, verifiable, and human-centred.',
-      highlight: {
-        title: 'Systems Research Playbook',
-        description: 'Structured experiment ladders for building reproducible and auditable intelligent services.',
-        href: '/research/ethical-ai-architecture',
-        icon: Microscope,
-        badge: 'Featured',
-        accent: 'from-purple-500/80 via-fuchsia-500/70 to-indigo-500/80',
-        glow: '0 25px 60px rgba(139, 92, 246, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/research/ethical-ai-architecture', label: 'Ethical AI Architecture', description: 'Architectural guardrails and review rituals for responsible AI stacks.', icon: Shield },
-      { href: '/research/agentic-systems-tool-use', label: 'Agentic Systems', description: 'Tool-use patterns and orchestration for adaptive reasoning agents.', icon: Cpu },
-      { href: '/research/multimodal-reasoning', label: 'Multimodal Reasoning', description: 'Sensing, grounding, and interleaving signals across modalities.', icon: Brain },
-      { href: '/research/big-data-interpretability', label: 'Big Data Interpretability', description: 'Observability pipelines that make large-scale datasets interrogable.', icon: Database },
-      { href: '/research/language-code-interoperability', label: 'Language & Code Interoperability', description: 'Bridging natural language workflows with typed developer tooling.', icon: Code },
-      { href: '/research/privacy-preserving-ai', label: 'Privacy-Preserving AI', description: 'Federated learning, secure enclaves, and adaptive consent tooling.', icon: Lock },
-      { href: '/research/benchmarking-open-vs-closed-ai', label: 'Benchmarking Open vs Closed AI', description: 'Evidence-led comparisons to balance openness with stewardship.', icon: BarChart3 },
-      { href: '/research/opacity-responsibility-ai', label: 'Opacity & Responsibility in AI', description: 'Translating algorithmic opacity into accountable governance layers.', icon: Eye },
-      { href: '/research/ai-infrastructure-academia', label: 'AI Infrastructure for Academia', description: 'Shared compute fabrics and reproducibility services for scholars.', icon: GraduationCap },
-      { href: '/research/human-centered-ai', label: 'Human-Centered AI', description: 'Participatory design and sense-making rituals with communities.', icon: Heart },
-      { href: '/research/digital-rights-ai', label: 'Digital Rights & AI', description: 'Policy blueprints for rights-preserving data stewardship.', icon: Scale }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'projects',
     href: '/projects',
     label: 'Projects',
     icon: Lightbulb,
     accent: 'from-amber-400/80 via-orange-500/70 to-rose-500/70',
-    meta: {
-      tagline: 'Living Laboratory',
-      description: 'Applied engagements that translate critical research into deployable software, civic tools, and field experiments.',
-      highlight: {
-        title: 'Transparent LLM Studio',
-        description: 'An execution stack for tuning explainable models with governance hooks.',
-        href: '/projects/transparent-llms',
-        icon: Layers,
-        badge: 'In Production',
-        accent: 'from-amber-400/80 via-orange-500/70 to-rose-500/80',
-        glow: '0 25px 60px rgba(251, 146, 60, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/projects/transparent-llms', label: 'Transparent LLMs', description: 'Auditable LLM deployment with human-in-the-loop disclosure.', icon: Eye },
-      { href: '/projects/symbolic-ai', label: 'Symbolic AI', description: 'Hybrid neuro-symbolic systems for interpretable reasoning.', icon: Network },
-      { href: '/projects/digital-identity-agency', label: 'Digital Identity & Agency', description: 'Citizen-centric identity protocols with delegated consent.', icon: UserCheck },
-      { href: '/projects/semantic-data-pipelines', label: 'Semantic Data Pipelines', description: 'Linked-data infrastructure for institutional interoperability.', icon: Workflow },
-      { href: '/projects/nlp-evaluation', label: 'NLP Evaluation', description: 'Evaluation scaffolds that go beyond benchmark leaderboards.', icon: Target },
-      { href: '/projects/ethics-multimodal-ai', label: 'Ethics in Multimodal AI', description: 'Responsible experience design across audio, vision, and text.', icon: Shield },
-      { href: '/projects/real-world-ai-deployments', label: 'Real-World AI Deployments', description: 'Field programmes with civic, health, and climate partners.', icon: Globe }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'tools',
     href: '/tools',
     label: 'Tools',
     icon: Wrench,
     accent: 'from-cyan-400/80 via-sky-500/70 to-blue-600/70',
-    meta: {
-      tagline: 'Operational Tooling',
-      description: 'Dashboards and workflow utilities that accelerate research, compliance checks, and collaborative insight.',
-      highlight: {
-        title: 'Research Ops Dashboard',
-        description: 'Monitor experiment velocity, cost envelopes, and dataset health in real time.',
-        href: '/tools/ai-research-dashboard',
-        icon: Radar,
-        badge: 'Updated',
-        accent: 'from-cyan-400/80 via-sky-500/70 to-blue-600/80',
-        glow: '0 25px 60px rgba(59, 130, 246, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/tools/ai-research-dashboard', label: 'AI Research Dashboard', description: 'Dynamic governance cockpit for AI programmes.', icon: BarChart3 },
-      { href: '/tools/semantic-search-tool', label: 'Semantic Search Tool', description: 'Semantic embeddings to surface adjacent research signals.', icon: Search },
-      { href: '/tools/privacy-score-calculator', label: 'Privacy Score Calculator', description: 'Quantify exposure and privacy debt in deployments.', icon: Calculator },
-      { href: '/tools/data-visualization-playground', label: 'Data Visualization Playground', description: 'Interactive visual lab for storytelling with data.', icon: PieChart },
-      { href: '/tools/paper-summarizer', label: 'Paper Summarizer', description: 'Condense research papers with evidence-linked briefs.', icon: BookMarked },
-      { href: '/tools/language-model-comparison', label: 'Language Model Comparison', description: 'Side-by-side evaluation of open and closed models.', icon: GitCompare },
-      { href: '/tools/annotation-demo', label: 'Annotation Demo', description: 'High-fidelity annotation loops for human-guided labelling.', icon: Target }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'atlas',
     href: '/atlas',
     label: 'Atlas',
     icon: Map,
     accent: 'from-fuchsia-500/80 via-purple-500/70 to-indigo-500/80',
-    meta: {
-      tagline: 'Global Atlas',
-      description: '176 immersive case studies capturing civic tech, policy, and product coalitions reshaping intelligence responsibly.',
-      highlight: {
-        title: 'Experience Atlas Overview',
-        description: 'Survey the full atlas, filter by sector, and step into cinematic narratives.',
-        href: '/atlas',
-        icon: Compass,
-        badge: 'Explore',
-        accent: 'from-fuchsia-500/80 via-purple-500/70 to-indigo-500/80',
-        glow: '0 25px 60px rgba(168, 85, 247, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/atlas', label: 'Experience Atlas Overview', description: 'Interactive index of research blueprints and field notes.', icon: Sparkles, badge: 'New' },
-      { href: '/atlas/transparent-ai-governance-global-initiative', label: 'Transparent Governance · Global', description: 'International partnership sharing open compliance blueprints.', icon: Shield },
-      { href: '/atlas/human-centered-safety-systems-healthcare-alliance', label: 'Safety Systems · Healthcare', description: 'Patient-first guardrails across clinical AI deployments.', icon: Heart },
-      { href: '/atlas/planetary-compute-stewardship-climate-tech', label: 'Compute Stewardship · Climate', description: 'Scaling equitable compute for planetary intelligence teams.', icon: Globe },
-      { href: '/atlas/civic-tech-participation-civic-consortium', label: 'Civic Participation · Consortium', description: 'Community-led protocols powering civic innovation.', icon: Users }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'academic',
     href: '/academic',
     label: 'Academic',
     icon: GraduationCap,
     accent: 'from-emerald-400/80 via-teal-500/70 to-blue-500/70',
-    meta: {
-      tagline: 'Academic Collaboration',
-      description: 'Syllabi, publications, teaching assets, and invitations for joint scholarships across institutions.',
-      highlight: {
-        title: 'Academic CV',
-        description: 'Comprehensive portfolio of appointments, grants, and keynote programmes.',
-        href: '/academic/cv',
-        icon: Hexagon,
-        badge: 'Updated',
-        accent: 'from-emerald-400/80 via-teal-500/70 to-blue-500/80',
-        glow: '0 25px 60px rgba(34, 197, 94, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/academic/cv', label: 'Curriculum Vitae', description: 'Roles, research fellowships, and advisory councils.', icon: User },
-      { href: '/academic/publications-archive', label: 'Publications Archive', description: 'Peer-reviewed papers with reproducible artefacts.', icon: Library },
-      { href: '/academic/collaborations', label: 'Academic Collaborations', description: 'Joint programmes and lab exchanges currently open.', icon: Users },
-      { href: '/academic/press-coverage', label: 'Press / Media Coverage', description: 'Media interviews, op-eds, and public scholarship.', icon: Newspaper },
-      { href: '/academic/conference-talks', label: 'Conference Talks', description: 'Keynotes, panels, and workshop facilitation decks.', icon: Presentation },
-      { href: '/academic/teaching-materials', label: 'Teaching Materials', description: 'Studio syllabi, slides, and learning modules.', icon: BookOpenCheck },
-      { href: '/academic/ethics-syllabi', label: 'AI Ethics Syllabi', description: 'Ready-to-adapt frameworks for ethics courses.', icon: ScrollText },
-      { href: '/academic/reading-list', label: 'Reading List', description: 'Curated bibliographies spanning AI governance.', icon: BookOpen }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'articles',
     href: '/articles',
     label: 'Articles',
     icon: Newspaper,
     accent: 'from-rose-500/80 via-purple-500/70 to-blue-500/70',
-    meta: {
-      tagline: 'Editorial Insights',
-      description: 'Long-form analyses, dispatches, and opinion pieces unpacking responsible AI futures.',
-      highlight: {
-        title: 'Guardrails in UX Safety',
-        description: 'Designing humane guardrails for agentic systems in production.',
-        href: '/articles/guardrails-ux-safety',
-        icon: ArrowRight,
-        badge: 'Editor’s Pick',
-        accent: 'from-rose-500/80 via-purple-500/70 to-blue-500/80',
-        glow: '0 25px 60px rgba(244, 114, 182, 0.45)'
-      }
-    },
-    dropdown: [
-      { href: '/articles/guardrails-ux-safety', label: 'Guardrails in UX Safety', description: 'Field notes on calibrating UX with rigorous safety.', icon: Shield, badge: 'Featured' },
-      { href: '/articles/cost-aware-llm-serving', label: 'Cost-Aware LLM Serving', description: 'Operational intelligence for efficient inference pipelines.', icon: BarChart3 },
-      { href: '/articles/agent-evaluation-beyond-win-rates', label: 'Agent Evaluation Beyond Win-Rates', description: 'Holistic evaluation frameworks for agents and swarms.', icon: Target },
-      { href: '/articles/philosophy-machine-agency', label: 'Philosophy of Machine Agency', description: 'Ethical discourse on distributed machine agency.', icon: Brain },
-      { href: '/articles/epistemic-risks-ai', label: 'Epistemic Risks in AI', description: 'Mapping epistemic debt and mitigation strategies.', icon: Eye },
-      { href: '/articles/linguistic-symbolism-ml', label: 'Linguistic Symbolism in ML', description: 'How symbolic language shapes machine meaning.', icon: Code },
-      { href: '/articles/ai-human-dignity', label: 'AI & Human Dignity', description: 'Upholding dignity in human-machine co-creation.', icon: Heart },
-      { href: '/articles/philosophy-responsibility', label: 'Philosophy of Responsibility', description: 'Accountability frameworks for socio-technical systems.', icon: Scale },
-      { href: '/articles/comparative-llm-analysis', label: 'Comparative LLM Analysis', description: 'Comparing open and closed models beyond benchmarks.', icon: GitCompare },
-      { href: '/articles/case-study-ai-social-systems', label: 'Case Study: AI in Social Systems', description: 'Socio-technical case studies from civic deployments.', icon: Globe }
-    ]
+    hasMegaMenu: true,
   },
   {
+    id: 'about',
     href: '/about',
     label: 'About',
     icon: User,
-    accent: 'from-purple-500/70 via-violet-500/60 to-indigo-500/60'
+    accent: 'from-purple-500/70 via-violet-500/60 to-indigo-500/60',
   },
   {
+    id: 'whitepapers',
     href: '/whitepapers',
     label: 'Whitepapers',
     icon: FileText,
-    accent: 'from-blue-500/70 via-indigo-500/60 to-slate-500/60'
+    accent: 'from-blue-500/70 via-indigo-500/60 to-slate-500/60',
   },
   {
+    id: 'contact',
     href: '/contact',
     label: 'Contact',
     icon: Mail,
-    accent: 'from-emerald-500/70 via-teal-500/60 to-cyan-500/60'
-  }
+    accent: 'from-emerald-500/70 via-teal-500/60 to-cyan-500/60',
+  },
 ];
+
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -319,11 +147,14 @@ export default function Navigation() {
   const prefetchedRoutes = useRef<Set<string>>(new Set());
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [navHeight, setNavHeight] = useState(96);
+  const [catalog, setCatalog] = useState<NavigationCatalog | null>(null);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+  const catalogStatus = useRef<'idle' | 'loading' | 'loaded'>('idle');
 
   const updateDropdownMetrics = useCallback(
-    (label: string) => {
+    (id: string) => {
       const rail = navRailRef.current;
-      const trigger = navItemRefs.current[label];
+      const trigger = navItemRefs.current[id];
 
       if (!rail || !trigger) return;
 
@@ -370,8 +201,8 @@ export default function Navigation() {
   );
 
   const registerNavItem = useCallback(
-    (label: string) => (element: HTMLDivElement | null) => {
-      navItemRefs.current[label] = element;
+    (id: string) => (element: HTMLDivElement | null) => {
+      navItemRefs.current[id] = element;
     },
     []
   );
@@ -401,6 +232,28 @@ export default function Navigation() {
     [router]
   );
 
+  const ensureCatalog = useCallback(() => {
+    if (catalogStatus.current !== 'idle') {
+      return;
+    }
+
+    catalogStatus.current = 'loading';
+    setCatalogError(null);
+
+    import('@/lib/navigationCatalogData')
+      .then((mod) => {
+        catalogStatus.current = 'loaded';
+        setCatalog(mod.navigationCatalog as NavigationCatalog);
+      })
+      .catch((error) => {
+        catalogStatus.current = 'idle';
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Failed to load navigation catalog', error);
+        }
+        setCatalogError('Navigation details failed to load. Links remain available.');
+      });
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 12);
@@ -412,9 +265,69 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (shouldDeferHeavyWork()) {
+      return;
+    }
+
+    return runWhenDocumentVisible(() => {
+      if (catalogStatus.current !== 'idle') {
+        return;
+      }
+
+      const withIdle = window as IdleWindow;
+      let idleHandle: number | null = null;
+      let timeoutHandle: number | null = null;
+
+      const triggerLoad = () => {
+        idleHandle = null;
+        timeoutHandle = null;
+        ensureCatalog();
+      };
+
+      if (typeof withIdle.requestIdleCallback === 'function') {
+        idleHandle = withIdle.requestIdleCallback(
+          () => {
+            triggerLoad();
+          },
+          { timeout: 1200 },
+        );
+      } else {
+        timeoutHandle = window.setTimeout(() => {
+          triggerLoad();
+        }, 420);
+      }
+
+      return () => {
+        if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+          withIdle.cancelIdleCallback(idleHandle);
+        }
+        if (timeoutHandle !== null) {
+          window.clearTimeout(timeoutHandle);
+        }
+      };
+    });
+  }, [ensureCatalog]);
+
+  useEffect(() => {
     if (!activeDropdown) return;
     updateDropdownMetrics(activeDropdown);
   }, [activeDropdown, updateDropdownMetrics, navHeight]);
+
+  useEffect(() => {
+    if (!activeDropdown) return;
+    const entry = catalog?.[activeDropdown];
+    if (!entry) return;
+
+    entry.dropdown?.forEach((item) => prefetchRoute(item.href));
+    const highlightHref = entry.meta?.highlight?.href;
+    if (highlightHref) {
+      prefetchRoute(highlightHref);
+    }
+  }, [activeDropdown, catalog, prefetchRoute]);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -427,16 +340,15 @@ export default function Navigation() {
       }
 
       const withIdle = window as IdleWindow;
+      const destinations = baseNavigationItems.flatMap((item) => {
+        const entry = catalog?.[item.id];
+        const highlightHref = entry?.meta?.highlight?.href ?? null;
+        const dropdownHrefs = entry?.dropdown?.map((entry) => entry.href) ?? [];
+        return [item.href, ...dropdownHrefs, highlightHref];
+      });
+
       const queue = Array.from(
-        new Set(
-          navigationItems
-            .flatMap((item) => [
-              item.href,
-              ...(item.dropdown?.map((entry) => entry.href) ?? []),
-              item.meta?.highlight?.href ?? null,
-            ])
-            .filter((href): href is string => Boolean(href) && href !== pathname),
-        ),
+        new Set(destinations.filter((href): href is string => Boolean(href) && href !== pathname)),
       ).slice(0, 20);
 
       if (!queue.length) {
@@ -489,7 +401,7 @@ export default function Navigation() {
         }
       };
     });
-  }, [pathname, prefetchRoute]);
+  }, [catalog, pathname, prefetchRoute]);
 
   useEffect(() => {
     if (!activeDropdown) return;
@@ -644,25 +556,24 @@ export default function Navigation() {
       return !value;
     });
 
-  const handleDropdownEnter = (label: string) => {
+  const handleDropdownEnter = (id: string) => {
     if (closeTimeout.current) {
       clearTimeout(closeTimeout.current);
       closeTimeout.current = null;
     }
 
-    setActiveDropdown(label);
-    const navItem = navigationItems.find((item) => item.label === label);
+    ensureCatalog();
+    setActiveDropdown(id);
+
+    const navItem = baseNavigationItems.find((item) => item.id === id);
     if (navItem) {
       prefetchRoute(navItem.href);
-      navItem.dropdown?.forEach((entry) => prefetchRoute(entry.href));
-      if (navItem.meta?.highlight?.href) {
-        prefetchRoute(navItem.meta.highlight.href);
-      }
     }
+
     if (typeof window !== 'undefined') {
-      requestAnimationFrame(() => updateDropdownMetrics(label));
+      requestAnimationFrame(() => updateDropdownMetrics(id));
     } else {
-      updateDropdownMetrics(label);
+      updateDropdownMetrics(id);
     }
   };
 
@@ -676,8 +587,9 @@ export default function Navigation() {
     }, 200);
   };
 
-  const toggleMobileSection = (label: string) => {
-    setMobileActive((current) => (current === label ? null : label));
+  const toggleMobileSection = (id: string) => {
+    ensureCatalog();
+    setMobileActive((current) => (current === id ? null : id));
   };
 
   const closeMenu = useCallback(() => {
@@ -760,11 +672,15 @@ export default function Navigation() {
                 handleDropdownLeave();
               }}
             >
-              {navigationItems.map((item, index) => {
+              {baseNavigationItems.map((item, index) => {
                 const Icon = item.icon;
-                const isDropdownActive = activeDropdown === item.label;
-                const navItemId = item.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                const dropdownId = `mega-${navItemId}`;
+                const details = catalog?.[item.id];
+                const dropdown = details?.dropdown ?? [];
+                const meta = details?.meta;
+                const hasMegaContent = dropdown.length > 0 || Boolean(meta);
+                const shouldHandleMega = (item.hasMegaMenu ?? false) || hasMegaContent || Boolean(catalogError);
+                const isDropdownActive = activeDropdown === item.id;
+                const dropdownId = `mega-${item.id}`;
 
                 return (
                   <motion.div
@@ -773,22 +689,22 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
                     className="relative"
-                    ref={registerNavItem(item.label)}
+                    ref={registerNavItem(item.id)}
                     onMouseEnter={() => {
                       prefetchRoute(item.href);
-                      if (item.dropdown) {
-                        handleDropdownEnter(item.label);
+                      if (shouldHandleMega) {
+                        handleDropdownEnter(item.id);
                       }
                     }}
-                    onMouseLeave={() => item.dropdown && handleDropdownLeave()}
+                    onMouseLeave={() => shouldHandleMega && handleDropdownLeave()}
                     onFocus={() => {
                       prefetchRoute(item.href);
-                      if (item.dropdown) {
-                        handleDropdownEnter(item.label);
+                      if (shouldHandleMega) {
+                        handleDropdownEnter(item.id);
                       }
                     }}
                     onBlur={(event) => {
-                      if (!item.dropdown) return;
+                      if (!shouldHandleMega) return;
                       if (!event.currentTarget.contains(event.relatedTarget as Node)) {
                         handleDropdownLeave();
                       }
@@ -805,12 +721,10 @@ export default function Navigation() {
                         }
                         setActiveDropdown(null);
                       }}
-                      className={`nav-link-premium group relative inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold tracking-tight text-white/80 transition-all duration-300 ${
-                        isActive(item.href) ? 'text-white' : ''
-                      }`}
-                      aria-haspopup={item.dropdown ? 'true' : undefined}
-                      aria-expanded={item.dropdown ? isDropdownActive : undefined}
-                      aria-controls={item.dropdown ? dropdownId : undefined}
+                      className={`nav-link-premium group relative inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold tracking-tight text-white/80 transition-all duration-300 ${isActive(item.href) ? 'text-white' : ''}`}
+                      aria-haspopup={shouldHandleMega ? 'true' : undefined}
+                      aria-expanded={shouldHandleMega ? isDropdownActive : undefined}
+                      aria-controls={shouldHandleMega ? dropdownId : undefined}
                       aria-current={isActive(item.href) ? 'page' : undefined}
                     >
                       <span className={`absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${item.accent}`}></span>
@@ -820,7 +734,7 @@ export default function Navigation() {
                           initial={false}
                           animate={{
                             scale: isActive(item.href) ? 1.05 : 1,
-                            rotate: isActive(item.href) ? 0 : -2
+                            rotate: isActive(item.href) ? 0 : -2,
                           }}
                           transition={{ type: 'spring', stiffness: 350, damping: 20 }}
                           className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white"
@@ -830,6 +744,12 @@ export default function Navigation() {
                         <span className="font-ibm-sans text-sm uppercase tracking-[0.24em] text-[11px] text-white/80 group-hover:text-white">
                           {item.label}
                         </span>
+                        {shouldHandleMega && (
+                          <ChevronDown
+                            className={`h-3 w-3 transition-transform ${isDropdownActive ? 'rotate-180 text-white' : 'text-white/60 group-hover:text-white group-focus:text-white'}`}
+                            strokeWidth={2.2}
+                          />
+                        )}
                       </span>
                       {isActive(item.href) && (
                         <motion.span
@@ -844,15 +764,25 @@ export default function Navigation() {
               })}
               <AnimatePresence>
                 {(() => {
-                  const activeItemData = navigationItems.find((item) => item.label === activeDropdown);
-                  if (!activeItemData || !activeItemData.dropdown) return null;
-                  const dropdownId = `mega-${activeItemData.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-                  const highlightMeta = activeItemData.meta?.highlight;
+                  if (!activeDropdown) return null;
+                  const baseItem = baseNavigationItems.find((item) => item.id === activeDropdown);
+                  if (!baseItem) return null;
+                  const entry = catalog?.[activeDropdown];
+                  const dropdownItems = entry?.dropdown ?? [];
+                  const meta = entry?.meta;
+                  const highlightMeta = meta?.highlight;
                   const HighlightIcon = highlightMeta?.icon;
+                  const dropdownId = `mega-${activeDropdown}`;
+                  const showSkeleton = (baseItem.hasMegaMenu ?? false) && !entry && !catalogError;
+                  const showError = Boolean(catalogError) && !entry;
+                  const shouldRender =
+                    dropdownItems.length > 0 || Boolean(meta) || showSkeleton || showError;
+
+                  if (!shouldRender) return null;
 
                   return (
                     <motion.div
-                      key={`${activeItemData.label}-dropdown`}
+                      key={`${activeDropdown}-dropdown`}
                       initial={{ opacity: 0, y: -10, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.97 }}
@@ -860,8 +790,8 @@ export default function Navigation() {
                       className="nav-mega pointer-events-auto fixed z-[60]"
                       id={dropdownId}
                       role="menu"
-                      aria-label={`${activeItemData.label} mega menu`}
-                      onMouseEnter={() => handleDropdownEnter(activeItemData.label)}
+                      aria-label={`${baseItem.label} mega menu`}
+                      onMouseEnter={() => handleDropdownEnter(activeDropdown)}
                       onMouseLeave={handleDropdownLeave}
                       style={{
                         left: dropdownMetrics.left,
@@ -880,79 +810,19 @@ export default function Navigation() {
                         <div className="absolute -bottom-36 left-14 h-72 w-72 rounded-full bg-gradient-to-br from-white/0 via-white/0 to-white/10 blur-3xl" />
                         <div className="relative flex-1 overflow-y-auto p-6 lg:p-7">
                           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)]">
-                            {activeItemData.meta && (
+                            {meta ? (
                               <div className="space-y-6 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
                                 <div className="space-y-2">
                                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
-                                    {activeItemData.meta.tagline}
-                                </p>
-                                <p className="text-base font-medium text-white/80">
-                                  {activeItemData.meta.description}
-                                </p>
-                              </div>
-                              {highlightMeta && HighlightIcon && (
-                                <Link
-                                  href={highlightMeta.href}
-                                  onMouseEnter={() => prefetchRoute(highlightMeta.href)}
-                                  onFocus={() => prefetchRoute(highlightMeta.href)}
-                                  onClick={() => {
-                                    if (closeTimeout.current) {
-                                      clearTimeout(closeTimeout.current);
-                                      closeTimeout.current = null;
-                                    }
-                                    setActiveDropdown(null);
-                                  }}
-                                  className="group block"
-                                >
-                                  <motion.div
-                                    whileHover={{ y: -4, scale: 1.01 }}
-                                    whileTap={{ scale: 0.99 }}
-                                    className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${highlightMeta.accent} p-5 text-white shadow-[0_20px_45px_rgba(15,23,42,0.45)]`}
-                                    style={{ boxShadow: highlightMeta.glow }}
-                                  >
-                                    <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
-                                    <div className="flex items-start justify-between gap-3">
-                                      <div className="space-y-3">
-                                        <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
-                                          {highlightMeta.badge && <span>{highlightMeta.badge}</span>}
-                                        </div>
-                                        <div>
-                                          <p className="text-lg font-semibold leading-tight">{highlightMeta.title}</p>
-                                          <p className="mt-2 text-sm text-white/80">
-                                            {highlightMeta.description}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
-                                        <HighlightIcon className="h-6 w-6" strokeWidth={2.2} />
-                                      </div>
-                                    </div>
-                                    <motion.div
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      className="mt-4 flex items-center gap-2 text-sm font-semibold"
-                                    >
-                                      <span>Open blueprint</span>
-                                      <ArrowRight className="h-4 w-4" />
-                                    </motion.div>
-                                  </motion.div>
-                                </Link>
-                              )}
-                            </div>
-                          )}
-                            <div className="grid gap-3 sm:grid-cols-2">
-                              {activeItemData.dropdown.map((dropdownItem) => (
-                                <motion.div
-                                  key={dropdownItem.href}
-                                  initial={{ opacity: 0, y: 8 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ duration: 0.18 }}
-                                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
-                                >
+                                    {meta.tagline}
+                                  </p>
+                                  <p className="text-base font-medium text-white/80">{meta.description}</p>
+                                </div>
+                                {highlightMeta && HighlightIcon && (
                                   <Link
-                                    href={dropdownItem.href}
-                                    onMouseEnter={() => prefetchRoute(dropdownItem.href)}
-                                    onFocus={() => prefetchRoute(dropdownItem.href)}
+                                    href={highlightMeta.href}
+                                    onMouseEnter={() => prefetchRoute(highlightMeta.href)}
+                                    onFocus={() => prefetchRoute(highlightMeta.href)}
                                     onClick={() => {
                                       if (closeTimeout.current) {
                                         clearTimeout(closeTimeout.current);
@@ -960,28 +830,112 @@ export default function Navigation() {
                                       }
                                       setActiveDropdown(null);
                                     }}
-                                    className="flex items-start gap-4"
-                                    role="menuitem"
+                                    className="group block"
                                   >
-                                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
-                                      <dropdownItem.icon className="h-6 w-6" strokeWidth={2.2} />
-                                    </span>
-                                    <div className="space-y-2">
-                                      <div className="flex items-center gap-2">
-                                        <span className="text-base font-semibold text-white">
-                                          {dropdownItem.label}
-                                        </span>
-                                        {dropdownItem.badge && (
-                                          <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
-                                            {dropdownItem.badge}
-                                          </span>
-                                        )}
+                                    <motion.div
+                                      whileHover={{ y: -4, scale: 1.01 }}
+                                      whileTap={{ scale: 0.99 }}
+                                      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${highlightMeta.accent} p-5 text-white shadow-[0_20px_45px_rgba(15,23,42,0.45)]`}
+                                      style={{ boxShadow: highlightMeta.glow }}
+                                    >
+                                      <div className="absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
+                                      <div className="flex items-start justify-between gap-3">
+                                        <div className="space-y-3">
+                                          {highlightMeta.badge && (
+                                            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em]">
+                                              <span>{highlightMeta.badge}</span>
+                                            </div>
+                                          )}
+                                          <div>
+                                            <p className="text-lg font-semibold leading-tight">{highlightMeta.title}</p>
+                                            <p className="mt-2 text-sm text-white/80">{highlightMeta.description}</p>
+                                          </div>
+                                        </div>
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
+                                          <HighlightIcon className="h-6 w-6" strokeWidth={2.2} />
+                                        </div>
                                       </div>
-                                      <p className="text-sm text-white/70">{dropdownItem.description}</p>
-                                    </div>
+                                      <motion.div
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        className="mt-4 flex items-center gap-2 text-sm font-semibold"
+                                      >
+                                        <span>Open blueprint</span>
+                                        <ArrowRight className="h-4 w-4" />
+                                      </motion.div>
+                                    </motion.div>
                                   </Link>
-                                </motion.div>
-                              ))}
+                                )}
+                              </div>
+                            ) : showSkeleton ? (
+                              <div className="space-y-4 rounded-3xl border border-white/5 bg-white/5 p-6 backdrop-blur-xl animate-pulse">
+                                <div className="h-3 w-32 rounded-full bg-white/10" />
+                                <div className="h-4 w-48 rounded-full bg-white/10" />
+                                <div className="h-4 w-40 rounded-full bg-white/5" />
+                                <div className="h-4 w-52 rounded-full bg-white/10" />
+                              </div>
+                            ) : showError ? (
+                              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/70 backdrop-blur-xl">
+                                {catalogError}
+                              </div>
+                            ) : null}
+                            <div className="grid gap-3 sm:grid-cols-2">
+                              {dropdownItems.length > 0 ? (
+                                dropdownItems.map((dropdownItem) => (
+                                  <motion.div
+                                    key={dropdownItem.href}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.18 }}
+                                    className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
+                                  >
+                                    <Link
+                                      href={dropdownItem.href}
+                                      onMouseEnter={() => prefetchRoute(dropdownItem.href)}
+                                      onFocus={() => prefetchRoute(dropdownItem.href)}
+                                      onClick={() => {
+                                        if (closeTimeout.current) {
+                                          clearTimeout(closeTimeout.current);
+                                          closeTimeout.current = null;
+                                        }
+                                        setActiveDropdown(null);
+                                      }}
+                                      className="flex items-start gap-4"
+                                      role="menuitem"
+                                    >
+                                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                                        <dropdownItem.icon className="h-6 w-6" strokeWidth={2.2} />
+                                      </span>
+                                      <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-base font-semibold text-white">
+                                            {dropdownItem.label}
+                                          </span>
+                                          {dropdownItem.badge && (
+                                            <span className="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-white/70">
+                                              {dropdownItem.badge}
+                                            </span>
+                                          )}
+                                        </div>
+                                        <p className="text-sm text-white/70">{dropdownItem.description}</p>
+                                      </div>
+                                    </Link>
+                                  </motion.div>
+                                ))
+                              ) : showSkeleton ? (
+                                Array.from({ length: 4 }).map((_, skeletonIndex) => (
+                                  <div
+                                    key={`nav-skeleton-${skeletonIndex}`}
+                                    className="h-20 rounded-3xl border border-white/10 bg-white/5"
+                                  />
+                                ))
+                              ) : showError ? (
+                                <div className="rounded-3xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
+                                  Try refreshing the page to load this menu.
+                                </div>
+                              ) : (
+                                <p className="text-sm text-white/70">Navigation details will load shortly.</p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1085,9 +1039,15 @@ export default function Navigation() {
           >
             <div className="flex-1 overflow-y-auto px-6">
               <div className="space-y-4">
-              {navigationItems.map((item, index) => {
+              {baseNavigationItems.map((item, index) => {
                 const Icon = item.icon;
-                const expanded = mobileActive === item.label;
+                const details = catalog?.[item.id];
+                const dropdown = details?.dropdown ?? [];
+                const meta = details?.meta;
+                const expanded = mobileActive === item.id;
+                const showToggle = (item.hasMegaMenu ?? false) || dropdown.length > 0 || Boolean(meta) || Boolean(catalogError);
+                const showSkeleton = (item.hasMegaMenu ?? false) && !details && !catalogError;
+                const showError = Boolean(catalogError) && !details && (item.hasMegaMenu ?? false);
 
                 return (
                   <motion.div
@@ -1110,14 +1070,16 @@ export default function Navigation() {
                         </span>
                         <div>
                           <p className="text-base font-semibold text-white">{item.label}</p>
-                          {item.meta && (
-                            <p className="text-xs text-white/70">{item.meta.tagline}</p>
-                          )}
+                          {meta ? (
+                            <p className="text-xs text-white/70">{meta.tagline}</p>
+                          ) : showSkeleton ? (
+                            <p className="text-xs text-white/60">Loading navigation...</p>
+                          ) : null}
                         </div>
                       </Link>
-                      {item.dropdown && (
+                      {showToggle && (
                         <motion.button
-                          onClick={() => toggleMobileSection(item.label)}
+                          onClick={() => toggleMobileSection(item.id)}
                           aria-expanded={expanded}
                           className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition-transform duration-200"
                         >
@@ -1128,11 +1090,13 @@ export default function Navigation() {
                       )}
                     </div>
 
-                    {item.meta?.description && (
-                      <p className="mt-3 text-sm text-white/70">{item.meta.description}</p>
-                    )}
+                    {meta ? (
+                      <p className="mt-3 text-sm text-white/70">{meta.description}</p>
+                    ) : showSkeleton ? (
+                      <div className="mt-3 h-4 w-3/4 animate-pulse rounded bg-white/10" aria-hidden="true" />
+                    ) : null}
 
-                    {item.dropdown && (
+                    {showToggle && (
                       <AnimatePresence initial={false}>
                         {expanded && (
                           <motion.div
@@ -1142,25 +1106,40 @@ export default function Navigation() {
                             transition={{ duration: 0.24, ease: 'easeInOut' }}
                             className="mt-3 space-y-2 border-t border-white/10 pt-3"
                           >
-                            {item.dropdown.map((dropdownItem) => (
-                              <Link
-                                key={`${dropdownItem.href}-mobile`}
-                                href={dropdownItem.href}
-                                onMouseEnter={() => prefetchRoute(dropdownItem.href)}
-                                onFocus={() => prefetchRoute(dropdownItem.href)}
-                                onClick={closeMenu}
-                                className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-3 transition-all duration-200 hover:bg-white/10"
-                              >
-                                <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white">
-                                  <dropdownItem.icon className="h-4 w-4" strokeWidth={2.3} />
-                                </span>
-                                <div className="flex-1">
-                                  <p className="text-sm font-semibold text-white">{dropdownItem.label}</p>
-                                  <p className="text-xs text-white/70">{dropdownItem.description}</p>
-                                </div>
-                                <ArrowRight className="mt-1 h-4 w-4 text-white/60" />
-                              </Link>
-                            ))}
+                            {dropdown.length > 0 ? (
+                              dropdown.map((dropdownItem) => (
+                                <Link
+                                  key={`${dropdownItem.href}-mobile`}
+                                  href={dropdownItem.href}
+                                  onMouseEnter={() => prefetchRoute(dropdownItem.href)}
+                                  onFocus={() => prefetchRoute(dropdownItem.href)}
+                                  onClick={closeMenu}
+                                  className="flex items-start gap-3 rounded-2xl border border-white/5 bg-white/5 px-3 py-3 transition-all duration-200 hover:bg-white/10"
+                                >
+                                  <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white">
+                                    <dropdownItem.icon className="h-4 w-4" strokeWidth={2.3} />
+                                  </span>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-semibold text-white">{dropdownItem.label}</p>
+                                    <p className="text-xs text-white/70">{dropdownItem.description}</p>
+                                  </div>
+                                  <ArrowRight className="mt-1 h-4 w-4 text-white/60" />
+                                </Link>
+                              ))
+                            ) : showSkeleton ? (
+                              Array.from({ length: 3 }).map((_, skeletonIndex) => (
+                                <div
+                                  key={`mobile-skeleton-${skeletonIndex}`}
+                                  className="h-12 rounded-2xl border border-white/10 bg-white/5"
+                                />
+                              ))
+                            ) : showError ? (
+                              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-sm text-white/70">
+                                Try refreshing to load this menu.
+                              </div>
+                            ) : (
+                              <p className="text-xs text-white/70">Navigation details will load shortly.</p>
+                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
