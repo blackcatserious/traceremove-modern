@@ -11,6 +11,11 @@ import {
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse } from '@/lib/ai/knowledgeTypes';
 import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import {
+  hasPrefetchedRoute,
+  markRoutePrefetched,
+  prunePrefetchedRoutes,
+} from '@/lib/navigationPrefetchCache';
 
 const WARM_ROUTES = [
   '/research',
@@ -64,6 +69,7 @@ export default function PerformanceWarmup() {
     }
 
     pruneKnowledgeSnapshots();
+    prunePrefetchedRoutes();
 
     return runWhenDocumentVisible(() => {
       let cancelled = false;
@@ -73,7 +79,7 @@ export default function PerformanceWarmup() {
       }
 
       const withIdle = window as IdleWindow;
-      const routeQueue = WARM_ROUTES.filter((href) => href !== pathname);
+      const routeQueue = WARM_ROUTES.filter((href) => href !== pathname && !hasPrefetchedRoute(href));
       const requestQueue = WARM_REQUESTS.filter((request) => {
         const cached = readKnowledgeSnapshot(request.query, request.category);
         return !cached;
@@ -102,10 +108,18 @@ export default function PerformanceWarmup() {
           }
           const href = routeQueue.shift();
           if (!href) continue;
+          if (shouldDeferHeavyWork()) {
+            continue;
+          }
           try {
-            if (!shouldDeferHeavyWork()) {
-              router.prefetch(href);
-            }
+            const maybePromise = router.prefetch(href);
+            void Promise.resolve(maybePromise)
+              .then(() => {
+                markRoutePrefetched(href);
+              })
+              .catch(() => {
+                // Ignore failed prefetches; they can retry on demand.
+              });
           } catch {
             // Ignore prefetch failures (e.g. unsupported in development).
           }

@@ -108,10 +108,10 @@ canvas {
 /* Removed overly restrictive max-width rule that was causing positioning issues */
 
 /* Universal overflow prevention for all elements - preserve content visibility */
-div:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-section:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-main:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-article:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
+div:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+section:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+main:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+article:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
 aside:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
 header:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
 footer:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
@@ -126,6 +126,24 @@ nav:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]) {
 }
 
 /* Removed overly restrictive negative positioning rule that was causing content to be offscreen */
+
+/* Content visibility helpers to keep large sections lightweight until scrolled into view */
+.content-auto,
+.content-auto-card {
+  contain: layout paint style;
+}
+
+@supports (content-visibility: auto) {
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 600px;
+  }
+
+  .content-auto-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 320px;
+  }
+}
 
 /* Fix floating navigation and background elements */
 .vanta-background, .fixed.inset-0 {

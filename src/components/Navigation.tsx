@@ -25,6 +25,11 @@ import {
 import PremiumButton from './PremiumButton';
 import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
 import type { NavigationCatalog } from '@/lib/navigationCatalogData';
+import {
+  hasPrefetchedRoute,
+  markRoutePrefetched,
+  prunePrefetchedRoutes,
+} from '@/lib/navigationPrefetchCache';
 
 type BaseNavigationItem = {
   id: string;
@@ -208,8 +213,13 @@ export default function Navigation() {
   );
 
   const prefetchRoute = useCallback(
-    (href: string) => {
+    (href: string | null | undefined) => {
       if (!href || href.startsWith('http') || href.startsWith('#')) {
+        return;
+      }
+
+      const cache = prefetchedRoutes.current;
+      if (cache.has(href) || hasPrefetchedRoute(href)) {
         return;
       }
 
@@ -217,16 +227,19 @@ export default function Navigation() {
         return;
       }
 
-      const cache = prefetchedRoutes.current;
-      if (cache.has(href)) {
-        return;
-      }
+      cache.add(href);
 
       try {
-        router.prefetch(href);
-        cache.add(href);
+        const maybePromise = router.prefetch(href);
+        void Promise.resolve(maybePromise)
+          .then(() => {
+            markRoutePrefetched(href);
+          })
+          .catch(() => {
+            cache.delete(href);
+          });
       } catch {
-        // Ignore prefetch errors (e.g. during development).
+        cache.delete(href);
       }
     },
     [router]
@@ -262,6 +275,10 @@ export default function Navigation() {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    prunePrefetchedRoutes();
   }, []);
 
   useEffect(() => {

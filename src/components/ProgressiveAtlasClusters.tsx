@@ -91,7 +91,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
   return (
     <div className="mt-16 space-y-24">
       {visibleClusters.map((cluster) => (
-        <section key={cluster.id} className="space-y-8">
+        <section key={cluster.id} className="space-y-8 content-auto">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 className="text-2xl sm:text-3xl font-semibold text-white">{cluster.id}</h2>
@@ -113,7 +113,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
                 key={item.slug}
                 href={`/atlas/${item.slug}`}
                 prefetch={prefetchLinks}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 transition hover:-translate-y-1 hover:border-accent-ai-purple/40 hover:shadow-2xl hover:shadow-accent-ai-purple/20"
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/70 p-6 transition hover:-translate-y-1 hover:border-accent-ai-purple/40 hover:shadow-2xl hover:shadow-accent-ai-purple/20 content-auto-card"
               >
                 <div
                   className="absolute inset-0 opacity-0 transition group-hover:opacity-100"

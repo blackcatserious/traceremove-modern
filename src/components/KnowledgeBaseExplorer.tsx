@@ -386,7 +386,7 @@ export default function KnowledgeBaseExplorer({
 
   return (
     <section
-      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl ${className}`}
+      className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl content-auto ${className}`}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(circle_at_82%_22%,rgba(217,70,239,0.14),transparent_55%),linear-gradient(145deg,rgba(15,23,42,0.95)_0%,rgba(12,21,38,0.92)_50%,rgba(15,23,42,0.98)_100%)]" />
       <div className="relative z-10 space-y-6">
@@ -494,7 +494,7 @@ export default function KnowledgeBaseExplorer({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6"
+              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 content-auto-card"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${entry.accent} opacity-[0.18]`} />
               <div className="relative space-y-5">
