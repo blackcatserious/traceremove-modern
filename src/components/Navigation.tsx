@@ -407,7 +407,7 @@ export default function Navigation() {
     };
 
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -437,7 +437,7 @@ export default function Navigation() {
             ])
             .filter((href): href is string => Boolean(href) && href !== pathname),
         ),
-      ).slice(0, 32);
+      ).slice(0, 20);
 
       if (!queue.length) {
         return;
@@ -522,6 +522,50 @@ export default function Navigation() {
     const element = navRef.current;
     if (!element) return;
 
+    const withIdle = window as IdleWindow;
+    let cancelled = false;
+    let idleHandle: number | null = null;
+    let timeoutHandle: number | null = null;
+
+    const updateHeight = () => {
+      if (!cancelled) {
+        const nextHeight = Math.round(element.getBoundingClientRect().height);
+        setNavHeight((current) => (current !== nextHeight ? nextHeight : current));
+      }
+    };
+
+    if (withIdle.requestIdleCallback) {
+      idleHandle = withIdle.requestIdleCallback(() => {
+        idleHandle = null;
+        updateHeight();
+      }, { timeout: 300 });
+    } else {
+      timeoutHandle = window.setTimeout(() => {
+        timeoutHandle = null;
+        updateHeight();
+      }, 160);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+        withIdle.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen && !activeDropdown) {
+      return;
+    }
+
+    if (typeof window === 'undefined') return;
+    const element = navRef.current;
+    if (!element) return;
+
     const updateHeight = () => {
       const nextHeight = Math.round(element.getBoundingClientRect().height);
       setNavHeight((current) => (current !== nextHeight ? nextHeight : current));
@@ -538,7 +582,7 @@ export default function Navigation() {
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, []);
+  }, [activeDropdown, isOpen]);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;

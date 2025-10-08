@@ -1,6 +1,8 @@
 const SLOW_CONNECTION_TYPES = new Set(['slow-2g', '2g']);
 const CONSERVATIVE_CONNECTION_TYPES = new Set(['3g']);
 
+let cachedReducedDataPreference: boolean | null = null;
+
 export type NavigatorConnection = {
   saveData?: boolean;
   effectiveType?: string;
@@ -24,6 +26,17 @@ function readNavigator(): ExtendedNavigator | undefined {
 
 export function readConnection(): NavigatorConnection | undefined {
   return readNavigator()?.connection;
+}
+
+export function prefersReducedData(): boolean {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return cachedReducedDataPreference ?? false;
+  }
+
+  const query = window.matchMedia('(prefers-reduced-data: reduce)');
+  cachedReducedDataPreference = query.matches;
+
+  return cachedReducedDataPreference;
 }
 
 export function isDataSaverEnabled(): boolean {
@@ -82,7 +95,17 @@ export function isLowPowerDevice(): boolean {
 }
 
 export function shouldDeferHeavyWork(): boolean {
-  return isDataSaverEnabled() || isSlowConnection() || isLowPowerDevice();
+  if (cachedReducedDataPreference === null) {
+    // Ensure the reduced data preference is evaluated on the client when available.
+    cachedReducedDataPreference = prefersReducedData();
+  }
+
+  return (
+    isDataSaverEnabled() ||
+    isSlowConnection() ||
+    isLowPowerDevice() ||
+    Boolean(cachedReducedDataPreference)
+  );
 }
 
 export function runWhenDocumentVisible(effect: () => Cleanup): () => void {
