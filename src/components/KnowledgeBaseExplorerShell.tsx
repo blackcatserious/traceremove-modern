@@ -1,15 +1,36 @@
 'use client';
 
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { KnowledgeBaseExplorerProps } from './KnowledgeBaseExplorer';
 
-const KnowledgeBaseExplorerLazy = lazy(() => import('./KnowledgeBaseExplorer'));
+import { scheduleIdlePreload } from '@/lib/idlePreload';
 
-function KnowledgeBaseExplorerFallback({ className = '' }: { className?: string }) {
+let knowledgeExplorerPromise: Promise<typeof import('./KnowledgeBaseExplorer')> | null = null;
+
+function preloadKnowledgeExplorer() {
+  if (!knowledgeExplorerPromise) {
+    knowledgeExplorerPromise = import('./KnowledgeBaseExplorer');
+  }
+
+  return knowledgeExplorerPromise;
+}
+
+const KnowledgeBaseExplorerLazy = lazy(() => preloadKnowledgeExplorer());
+
+function KnowledgeBaseExplorerFallback({
+  className = '',
+  onIntent,
+}: {
+  className?: string;
+  onIntent?: () => void;
+}) {
   return (
     <section
       className={`relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.55)] backdrop-blur-xl ${className}`}
+      onPointerEnter={onIntent}
+      onFocusCapture={onIntent}
+      onTouchStart={onIntent}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.18),transparent_60%),radial-gradient(circle_at_82%_22%,rgba(217,70,239,0.14),transparent_55%),linear-gradient(145deg,rgba(15,23,42,0.95)_0%,rgba(12,21,38,0.92)_50%,rgba(15,23,42,0.98)_100%)]" />
       <div className="relative z-10 space-y-6 animate-pulse">
@@ -48,7 +69,69 @@ export default function KnowledgeBaseExplorerShell(props: KnowledgeBaseExplorerP
     setIsClient(true);
   }, []);
 
-  const fallback = <KnowledgeBaseExplorerFallback className={props.className} />;
+  useEffect(() => {
+    if (!isClient) {
+      return;
+    }
+
+    const cancel = scheduleIdlePreload(() => {
+      void preloadKnowledgeExplorer();
+    }, { timeout: 1000 });
+
+    return cancel;
+  }, [isClient]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    let triggered = false;
+
+    const detach = () => {
+      window.removeEventListener('pointerdown', handlePointer);
+      window.removeEventListener('touchstart', handlePointer);
+      window.removeEventListener('keydown', handleKeydown, true);
+    };
+
+    const trigger = () => {
+      if (triggered) {
+        return;
+      }
+      triggered = true;
+      void preloadKnowledgeExplorer();
+      detach();
+    };
+
+    function handlePointer() {
+      trigger();
+    }
+
+    function handleKeydown(event: KeyboardEvent) {
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      if (event.key === 'Enter' || event.key === ' ') {
+        trigger();
+      }
+    }
+
+    window.addEventListener('pointerdown', handlePointer, { passive: true });
+    window.addEventListener('touchstart', handlePointer, { passive: true });
+    window.addEventListener('keydown', handleKeydown, true);
+
+    return detach;
+  }, []);
+
+  const handleIntent = useCallback(() => {
+    void preloadKnowledgeExplorer();
+  }, []);
+
+  const fallback = useMemo(
+    () => <KnowledgeBaseExplorerFallback className={props.className} onIntent={handleIntent} />,
+    [handleIntent, props.className],
+  );
 
   if (!isClient) {
     return fallback;
