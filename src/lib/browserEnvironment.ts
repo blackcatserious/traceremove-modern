@@ -7,6 +7,11 @@ export type NavigatorConnection = {
   saveData?: boolean;
   effectiveType?: string;
   downlink?: number;
+  onchange?: () => void;
+  addEventListener?: (type: string, listener: () => void) => void;
+  removeEventListener?: (type: string, listener: () => void) => void;
+  addListener?: (listener: () => void) => void;
+  removeListener?: (listener: () => void) => void;
 };
 
 type ExtendedNavigator = Navigator & {

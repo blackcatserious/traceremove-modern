@@ -10,12 +10,13 @@ import {
   writeKnowledgeSnapshot,
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse } from '@/lib/ai/knowledgeTypes';
-import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import { runWhenDocumentVisible } from '@/lib/browserEnvironment';
 import {
   hasPrefetchedRoute,
   markRoutePrefetched,
   prunePrefetchedRoutes,
 } from '@/lib/navigationPrefetchCache';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 const WARM_ROUTES = [
   '/research',
@@ -62,6 +63,7 @@ export default function PerformanceWarmup() {
   const router = useRouter();
   const pathname = usePathname();
   const abortControllersRef = useRef<AbortController[]>([]);
+  const { deferHeavyWork } = usePerformanceProfile();
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -71,12 +73,12 @@ export default function PerformanceWarmup() {
     pruneKnowledgeSnapshots();
     prunePrefetchedRoutes();
 
+    if (deferHeavyWork) {
+      return;
+    }
+
     return runWhenDocumentVisible(() => {
       let cancelled = false;
-
-      if (shouldDeferHeavyWork()) {
-        return;
-      }
 
       const withIdle = window as IdleWindow;
       const routeQueue = WARM_ROUTES.filter((href) => href !== pathname && !hasPrefetchedRoute(href));
@@ -108,7 +110,7 @@ export default function PerformanceWarmup() {
           }
           const href = routeQueue.shift();
           if (!href) continue;
-          if (shouldDeferHeavyWork()) {
+          if (deferHeavyWork) {
             continue;
           }
           try {
@@ -150,7 +152,7 @@ export default function PerformanceWarmup() {
           }
         }
 
-        if (routeQueue.length || requestQueue.length) {
+        if (!deferHeavyWork && (routeQueue.length || requestQueue.length)) {
           schedule();
         }
       };
@@ -188,7 +190,7 @@ export default function PerformanceWarmup() {
         abortControllersRef.current = [];
       };
     });
-  }, [pathname, router]);
+  }, [deferHeavyWork, pathname, router]);
 
   return null;
 }

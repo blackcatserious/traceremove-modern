@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+
 interface BackgroundLayersProps {
   variant?: 'default' | 'hero' | 'research' | 'about';
   className?: string;
@@ -28,6 +30,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
   const [motionEnabled, setMotionEnabled] = useState<boolean>(true);
   const [isIdle, setIsIdle] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const { deferHeavyWork, reducedMotion } = usePerformanceProfile();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -36,7 +39,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
     const pointerQuery = window.matchMedia('(pointer: coarse)');
 
     const evaluate = () => {
-      setMotionEnabled(!motionQuery.matches && !pointerQuery.matches);
+      setMotionEnabled(!motionQuery.matches && !pointerQuery.matches && !deferHeavyWork);
     };
 
     evaluate();
@@ -48,10 +51,13 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
       motionQuery.removeEventListener('change', evaluate);
       pointerQuery.removeEventListener('change', evaluate);
     };
-  }, []);
+  }, [deferHeavyWork]);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || deferHeavyWork || reducedMotion) {
+      setIsIdle(false);
+      return;
+    }
 
     const withIdle = window as WindowWithIdle;
 
@@ -73,7 +79,7 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
         window.clearTimeout(idleTimeoutRef.current);
       }
     };
-  }, []);
+  }, [deferHeavyWork, reducedMotion]);
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -100,7 +106,10 @@ export default function BackgroundLayers({ variant = 'default', className = '' }
     };
   }, []);
 
-  const shouldAnimate = useMemo(() => motionEnabled && isIdle && isVisible, [isIdle, isVisible, motionEnabled]);
+  const shouldAnimate = useMemo(
+    () => motionEnabled && isIdle && isVisible && !deferHeavyWork && !reducedMotion,
+    [deferHeavyWork, isIdle, isVisible, motionEnabled, reducedMotion],
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;

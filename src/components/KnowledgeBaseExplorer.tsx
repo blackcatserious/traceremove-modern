@@ -28,7 +28,7 @@ import {
   writeKnowledgeSnapshot,
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse, KnowledgeSnapshot } from '@/lib/ai/knowledgeTypes';
-import { isConstrainedConnection, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 const ALL_CATEGORY = 'All';
 const REQUEST_LIMIT = 200;
@@ -50,16 +50,12 @@ type SnapshotState = {
   error: string | null;
 };
 
-function resolveDisplayConfig(): DisplayConfig {
-  if (typeof window === 'undefined') {
-    return { initial: 12, batch: 12, rootMargin: '480px 0px' };
-  }
-
-  if (shouldDeferHeavyWork()) {
+function resolveDisplayConfig(deferHeavyWork: boolean, constrainedConnection: boolean): DisplayConfig {
+  if (deferHeavyWork) {
     return { initial: 4, batch: 4, rootMargin: '260px 0px' };
   }
 
-  if (isConstrainedConnection()) {
+  if (constrainedConnection) {
     return { initial: 6, batch: 6, rootMargin: '360px 0px' };
   }
 
@@ -105,7 +101,11 @@ export default function KnowledgeBaseExplorer({
   title = 'Traceremove knowledge matrix',
   description = 'Browse the in-domain knowledge base that powers metrics, tooling, and algorithmic support inside the assistant.',
 }: KnowledgeBaseExplorerProps) {
-  const [displayConfig, setDisplayConfig] = useState<DisplayConfig>(resolveDisplayConfig);
+  const { constrainedConnection, deferHeavyWork } = usePerformanceProfile();
+  const displayConfig = useMemo(
+    () => resolveDisplayConfig(deferHeavyWork, constrainedConnection),
+    [constrainedConnection, deferHeavyWork],
+  );
   const [visibleCount, setVisibleCount] = useState(() => displayConfig.initial);
   const [snapshotState, setSnapshotState] = useState<SnapshotState>({
     entries: [],
@@ -139,10 +139,6 @@ export default function KnowledgeBaseExplorer({
       dataSource: snapshot.dataSource,
       error: snapshot.error ?? null,
     });
-  }, []);
-
-  useEffect(() => {
-    setDisplayConfig(resolveDisplayConfig());
   }, []);
 
   useEffect(() => {

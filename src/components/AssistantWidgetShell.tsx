@@ -3,6 +3,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import { scheduleIdlePreload } from '@/lib/idlePreload';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 let assistantModulePromise: Promise<typeof import('./AskTraceremoveAI')> | null = null;
 
@@ -62,9 +63,10 @@ export default function AssistantWidgetShell({
   fallbackClassName?: string;
 }) {
   const [isClient, setIsClient] = useState(false);
+  const { deferHeavyWork } = usePerformanceProfile();
 
   useEffect(() => {
-    if (!isClient) {
+    if (!isClient || deferHeavyWork) {
       return;
     }
 
@@ -73,10 +75,10 @@ export default function AssistantWidgetShell({
     }, { timeout: 900 });
 
     return cancel;
-  }, [isClient]);
+  }, [deferHeavyWork, isClient]);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === 'undefined' || deferHeavyWork) {
       return undefined;
     }
 
@@ -89,7 +91,7 @@ export default function AssistantWidgetShell({
     };
 
     const trigger = () => {
-      if (triggered) {
+      if (triggered || deferHeavyWork) {
         return;
       }
       triggered = true;
@@ -116,15 +118,18 @@ export default function AssistantWidgetShell({
     window.addEventListener('keydown', handleKeydown, true);
 
     return detach;
-  }, []);
+  }, [deferHeavyWork]);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   const handleIntent = useCallback(() => {
+    if (deferHeavyWork) {
+      return;
+    }
     void preloadAssistantWidget();
-  }, []);
+  }, [deferHeavyWork]);
 
   const resolvedFallback = useMemo(
     () =>

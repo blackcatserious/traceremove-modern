@@ -23,13 +23,14 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import PremiumButton from './PremiumButton';
-import { runWhenDocumentVisible, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import { runWhenDocumentVisible } from '@/lib/browserEnvironment';
 import type { NavigationCatalog } from '@/lib/navigationCatalogData';
 import {
   hasPrefetchedRoute,
   markRoutePrefetched,
   prunePrefetchedRoutes,
 } from '@/lib/navigationPrefetchCache';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 type BaseNavigationItem = {
   id: string;
@@ -143,7 +144,9 @@ export default function Navigation() {
     top: 96,
     maxHeight: 640,
   });
-  const prefersReducedMotion = useReducedMotion();
+  const reducedMotionSystem = useReducedMotion();
+  const { deferHeavyWork, reducedMotion: profileReducedMotion } = usePerformanceProfile();
+  const prefersReducedMotion = profileReducedMotion || reducedMotionSystem;
   const pathname = usePathname();
   const router = useRouter();
   const navRef = useRef<HTMLElement | null>(null);
@@ -223,7 +226,7 @@ export default function Navigation() {
         return;
       }
 
-      if (shouldDeferHeavyWork()) {
+      if (deferHeavyWork) {
         return;
       }
 
@@ -242,7 +245,7 @@ export default function Navigation() {
         cache.delete(href);
       }
     },
-    [router]
+    [deferHeavyWork, router]
   );
 
   const ensureCatalog = useCallback(() => {
@@ -282,11 +285,7 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    if (shouldDeferHeavyWork()) {
+    if (typeof window === 'undefined' || deferHeavyWork) {
       return;
     }
 
@@ -327,7 +326,7 @@ export default function Navigation() {
         }
       };
     });
-  }, [ensureCatalog]);
+  }, [deferHeavyWork, ensureCatalog]);
 
   useEffect(() => {
     if (!activeDropdown) return;
@@ -351,11 +350,12 @@ export default function Navigation() {
       return;
     }
 
-    return runWhenDocumentVisible(() => {
-      if (shouldDeferHeavyWork()) {
-        return;
-      }
+    if (deferHeavyWork) {
+      return;
+    }
 
+    return runWhenDocumentVisible(() => {
+      
       const withIdle = window as IdleWindow;
       const destinations = baseNavigationItems.flatMap((item) => {
         const entry = catalog?.[item.id];
@@ -418,7 +418,7 @@ export default function Navigation() {
         }
       };
     });
-  }, [catalog, pathname, prefetchRoute]);
+  }, [catalog, deferHeavyWork, pathname, prefetchRoute]);
 
   useEffect(() => {
     if (!activeDropdown) return;

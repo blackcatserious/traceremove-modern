@@ -4,6 +4,8 @@ import { type CSSProperties, type ReactNode, useEffect, useMemo, useState } from
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+
 interface ThemePreset {
   id: string;
   variant: 'default' | 'hero' | 'research' | 'about';
@@ -170,14 +172,16 @@ type IdleWindow = Window & {
 
 export default function PageScene({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
+  const systemReduceMotion = useReducedMotion();
+  const { deferHeavyWork, reducedMotion: profileReducedMotion } = usePerformanceProfile();
+  const shouldReduceMotion = profileReducedMotion || systemReduceMotion;
   const [hydrated, setHydrated] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
 
-    if (reduceMotion) {
+    if (shouldReduceMotion || deferHeavyWork) {
       setReady(true);
       return;
     }
@@ -218,7 +222,7 @@ export default function PageScene({ children }: { children: ReactNode }) {
         window.clearTimeout(timeoutHandle);
       }
     };
-  }, [reduceMotion]);
+  }, [deferHeavyWork, shouldReduceMotion]);
 
   const theme = useMemo(() => {
     const preset = themePresets.find((candidate) => candidate.matcher(pathname));
@@ -248,10 +252,10 @@ export default function PageScene({ children }: { children: ReactNode }) {
     <motion.div
       key={`${theme.id}-gradient`}
       className={`page-gradient bg-gradient-to-br ${theme.gradient}`}
-      initial={reduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.98 }}
-      animate={reduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0.92, scale: 1 }}
-      exit={reduceMotion ? undefined : { opacity: 0, scale: 1.02 }}
-      transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
+      initial={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.98 }}
+      animate={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0.92, scale: 1 }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 1.02 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
       aria-hidden
     />
   );
@@ -260,16 +264,16 @@ export default function PageScene({ children }: { children: ReactNode }) {
     <motion.div
       key={pathname}
       className="page-shell"
-      initial={reduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
+      initial={shouldReduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      exit={reduceMotion ? undefined : { opacity: 0, y: -18, filter: 'blur(4px)' }}
-      transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, y: -18, filter: 'blur(4px)' }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
     >
       {children}
     </motion.div>
   );
 
-  const shouldAnimateLayers = ready && !reduceMotion;
+  const shouldAnimateLayers = ready && !shouldReduceMotion && !deferHeavyWork;
   const gradientElement = shouldAnimateLayers ? (
     <AnimatePresence mode="wait">{animatedGradient}</AnimatePresence>
   ) : (

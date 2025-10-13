@@ -4,7 +4,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
-import { isConstrainedConnection, shouldDeferHeavyWork } from '@/lib/browserEnvironment';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 export interface AtlasClusterCard {
   slug: string;
@@ -26,21 +26,22 @@ export type ProgressiveAtlasCluster = ClusterPayload;
 const BATCH_SIZE = 3;
 
 function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayload[] }) {
-  const [batchSize] = useState(() => {
-    if (shouldDeferHeavyWork()) {
-      return 1;
-    }
-
-    if (isConstrainedConnection()) {
-      return 2;
-    }
-
-    return BATCH_SIZE;
-  });
+  const { constrainedConnection, deferHeavyWork } = usePerformanceProfile();
+  const batchSize = deferHeavyWork ? 1 : constrainedConnection ? 2 : BATCH_SIZE;
   const [renderCount, setRenderCount] = useState(() => Math.min(batchSize, clusters.length));
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const rootMargin = batchSize === 1 ? '320px 0px' : batchSize === 2 ? '400px 0px' : '480px 0px';
+  const rootMargin = useMemo(
+    () => (batchSize === 1 ? '320px 0px' : batchSize === 2 ? '400px 0px' : '480px 0px'),
+    [batchSize],
+  );
+
+  useEffect(() => {
+    setRenderCount((current) => {
+      const minimum = Math.min(batchSize, clusters.length);
+      return current < minimum ? minimum : current;
+    });
+  }, [batchSize, clusters.length]);
 
   useEffect(() => {
     if (!sentinelRef.current) {
@@ -86,7 +87,7 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
   }, [clusters.length, renderCount]);
 
   const visibleClusters = useMemo(() => clusters.slice(0, renderCount), [clusters, renderCount]);
-  const [prefetchLinks] = useState(() => !shouldDeferHeavyWork());
+  const prefetchLinks = !deferHeavyWork;
 
   return (
     <div className="mt-16 space-y-24">

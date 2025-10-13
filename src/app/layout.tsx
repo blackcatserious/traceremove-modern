@@ -8,6 +8,7 @@ import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
 import PerformanceWarmup from "@/components/PerformanceWarmup";
+import PerformanceProfileProvider from "@/components/PerformanceProfileProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const dynamic = 'force-static';
@@ -209,31 +210,33 @@ export default function RootLayout({
         ))}
       </head>
       <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white">
-        <MotionProvider>
-          <BackgroundProvider>
-            <PerformanceWarmup />
-            <Navigation />
-            <Breadcrumb />
-            <main className="relative z-20 pt-24 pb-16">
-              <PageScene>{children}</PageScene>
-            </main>
-            <Footer />
-          </BackgroundProvider>
-          {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
-            <>
-              <AssistantWidgetShell compact />
-              <img
-                src="/brand/black-cat-geo.svg?v=2"
-                alt=""
-                aria-hidden="true"
-                className="cat-geo"
-                loading="lazy"
-                decoding="async"
-              />
-            </>
-          )}
-          <SpeedInsights />
-        </MotionProvider>
+        <PerformanceProfileProvider>
+          <MotionProvider>
+            <BackgroundProvider>
+              <PerformanceWarmup />
+              <Navigation />
+              <Breadcrumb />
+              <main className="relative z-20 pt-24 pb-16">
+                <PageScene>{children}</PageScene>
+              </main>
+              <Footer />
+            </BackgroundProvider>
+            {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
+              <>
+                <AssistantWidgetShell compact />
+                <img
+                  src="/brand/black-cat-geo.svg?v=2"
+                  alt=""
+                  aria-hidden="true"
+                  className="cat-geo"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </>
+            )}
+            <SpeedInsights />
+          </MotionProvider>
+        </PerformanceProfileProvider>
       </body>
     </html>
   );
