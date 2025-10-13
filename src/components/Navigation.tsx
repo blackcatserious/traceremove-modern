@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import PremiumButton from './PremiumButton';
 import { runWhenDocumentVisible } from '@/lib/browserEnvironment';
+import { scheduleIdlePreload } from '@/lib/idlePreload';
 import type { NavigationCatalog } from '@/lib/navigationCatalogData';
 import type { MegaMenuMetrics } from '@/components/navigation/MegaMenuPanel';
 import {
@@ -349,6 +350,16 @@ export default function Navigation() {
   useEffect(() => {
     prunePrefetchedRoutes();
   }, []);
+
+  useEffect(() => {
+    if (deferHeavyWork) {
+      return;
+    }
+
+    return scheduleIdlePreload(() => {
+      void import('./navigation/MegaMenuPanel');
+    }, { timeout: 900 });
+  }, [deferHeavyWork]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || deferHeavyWork) {

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { KNOWLEDGE_ENTRIES, searchKnowledgeEntries } from '@/lib/ai/knowledgeBase';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
 
 const CATEGORY_COUNTS: Record<string, number> = KNOWLEDGE_ENTRIES.reduce((acc, entry) => {
   acc[entry.category] = (acc[entry.category] ?? 0) + 1;
