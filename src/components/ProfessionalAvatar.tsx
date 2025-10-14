@@ -39,6 +39,8 @@ export default function ProfessionalAvatar({
                   src={imageUrl}
                   alt={name}
                   className="w-full h-full rounded-full object-cover shadow-ai-glow"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div className="w-full h-full rounded-full bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple flex items-center justify-center shadow-ai-glow">

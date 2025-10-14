@@ -25,6 +25,7 @@ interface MegaMenuPanelProps {
   onLeave: () => void;
   onNavigate: () => void;
   prefetchRoute: (href: string) => void;
+  disableMotion?: boolean;
 }
 
 export default function MegaMenuPanel({
@@ -39,6 +40,7 @@ export default function MegaMenuPanel({
   onLeave,
   onNavigate,
   prefetchRoute,
+  disableMotion = false,
 }: MegaMenuPanelProps) {
   const dropdownItems = entry?.dropdown ?? [];
   const meta = entry?.meta;
@@ -60,10 +62,10 @@ export default function MegaMenuPanel({
   return (
     <motion.div
       key={`${dropdownId}-panel`}
-      initial={{ opacity: 0, y: -10, scale: 0.97 }}
+      initial={disableMotion ? false : { opacity: 0, y: -10, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -10, scale: 0.97 }}
-      transition={{ duration: 0.18, ease: 'easeOut' }}
+      exit={disableMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -10, scale: 0.97 }}
+      transition={disableMotion ? undefined : { duration: 0.18, ease: 'easeOut' }}
       className="nav-mega pointer-events-auto fixed z-[60]"
       id={dropdownId}
       role="menu"
@@ -80,7 +82,7 @@ export default function MegaMenuPanel({
       }}
     >
       <motion.div
-        layout
+        layout={!disableMotion}
         className="relative flex max-h-full flex-col overflow-hidden rounded-4xl border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 p-1 shadow-[0_40px_80px_rgba(15,23,42,0.55)] backdrop-blur-3xl"
       >
         <div className="absolute -top-32 right-10 h-64 w-64 rounded-full bg-gradient-to-br from-white/10 via-white/0 to-white/0 blur-3xl" />
@@ -106,8 +108,8 @@ export default function MegaMenuPanel({
                     className="group block"
                   >
                     <motion.div
-                      whileHover={{ y: -4, scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
+                      whileHover={disableMotion ? undefined : { y: -4, scale: 1.01 }}
+                      whileTap={disableMotion ? undefined : { scale: 0.99 }}
                       className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${highlightMeta.accent} p-5 text-white shadow-[0_20px_45px_rgba(15,23,42,0.45)]`}
                       style={{ boxShadow: highlightMeta.glow }}
                     >
@@ -129,7 +131,7 @@ export default function MegaMenuPanel({
                         </div>
                       </div>
                       <motion.div
-                        initial={{ opacity: 0, x: -10 }}
+                        initial={disableMotion ? false : { opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="mt-4 flex items-center gap-2 text-sm font-semibold"
                       >
@@ -157,9 +159,9 @@ export default function MegaMenuPanel({
                 dropdownItems.map((dropdownItem) => (
                   <motion.div
                     key={dropdownItem.href}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={disableMotion ? false : { opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.18 }}
+                    transition={disableMotion ? undefined : { duration: 0.18 }}
                     className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
                   >
                     <Link

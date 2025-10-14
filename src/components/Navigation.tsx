@@ -203,8 +203,14 @@ export default function Navigation() {
     maxHeight: 640,
   });
   const reducedMotionSystem = useReducedMotion();
-  const { deferHeavyWork, reducedMotion: profileReducedMotion } = usePerformanceProfile();
+  const {
+    deferHeavyWork,
+    reducedMotion: profileReducedMotion,
+    slowConnection,
+    constrainedConnection,
+  } = usePerformanceProfile();
   const prefersReducedMotion = profileReducedMotion || reducedMotionSystem;
+  const disableFancyMotion = Boolean(deferHeavyWork || prefersReducedMotion);
   const pathname = usePathname();
   const router = useRouter();
   const navRef = useRef<HTMLElement | null>(null);
@@ -284,7 +290,7 @@ export default function Navigation() {
         return;
       }
 
-      if (deferHeavyWork) {
+      if (deferHeavyWork || slowConnection || constrainedConnection) {
         return;
       }
 
@@ -303,7 +309,7 @@ export default function Navigation() {
         cache.delete(href);
       }
     },
-    [deferHeavyWork, router]
+    [constrainedConnection, deferHeavyWork, router, slowConnection]
   );
 
   const handleMegaLinkNavigate = useCallback(() => {
@@ -352,17 +358,22 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
-    if (deferHeavyWork) {
+    if (deferHeavyWork || slowConnection) {
       return;
     }
 
     return scheduleIdlePreload(() => {
       void import('./navigation/MegaMenuPanel');
     }, { timeout: 900 });
-  }, [deferHeavyWork]);
+  }, [deferHeavyWork, slowConnection]);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || deferHeavyWork) {
+    if (
+      typeof window === 'undefined' ||
+      deferHeavyWork ||
+      slowConnection ||
+      constrainedConnection
+    ) {
       return;
     }
 
@@ -403,7 +414,7 @@ export default function Navigation() {
         }
       };
     });
-  }, [deferHeavyWork, ensureCatalog]);
+  }, [constrainedConnection, deferHeavyWork, ensureCatalog, slowConnection]);
 
   useEffect(() => {
     if (!activeDropdown) return;
@@ -427,7 +438,7 @@ export default function Navigation() {
       return;
     }
 
-    if (deferHeavyWork) {
+    if (deferHeavyWork || slowConnection || constrainedConnection) {
       return;
     }
 
@@ -441,9 +452,10 @@ export default function Navigation() {
         return [item.href, ...dropdownHrefs, highlightHref];
       });
 
+      const maxBatch = slowConnection || constrainedConnection ? 6 : 20;
       const queue = Array.from(
         new Set(destinations.filter((href): href is string => Boolean(href) && href !== pathname)),
-      ).slice(0, 20);
+      ).slice(0, maxBatch);
 
       if (!queue.length) {
         return;
@@ -495,7 +507,7 @@ export default function Navigation() {
         }
       };
     });
-  }, [catalog, deferHeavyWork, pathname, prefetchRoute]);
+  }, [catalog, constrainedConnection, deferHeavyWork, pathname, prefetchRoute, slowConnection]);
 
   useEffect(() => {
     if (!activeDropdown) return;
@@ -695,15 +707,15 @@ export default function Navigation() {
   return (
     <motion.nav
       ref={navRef}
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      initial={disableFancyMotion ? false : { y: -80, opacity: 0 }}
+      animate={disableFancyMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
+      transition={disableFancyMotion ? undefined : { duration: 0.6, ease: 'easeOut' }}
       role="navigation"
       aria-label="Primary navigation"
       className={`nav-premium relative z-50 overflow-visible ${scrolled ? 'scrolled' : ''}`}
       style={{ '--nav-height': `${navHeight}px` } as CSSProperties}
     >
-      {!prefersReducedMotion && (
+      {!disableFancyMotion && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <motion.span
             aria-hidden
@@ -736,8 +748,8 @@ export default function Navigation() {
         <div className="flex h-20 w-full items-center justify-between gap-6">
           <Link href="/" className="nav-logo-premium relative flex items-center gap-3">
             <motion.div
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={disableFancyMotion ? undefined : { scale: 1.05, rotate: 5 }}
+              whileTap={disableFancyMotion ? undefined : { scale: 0.95 }}
               className="nav-logo-icon relative flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xl"
             >
               <motion.img
@@ -746,9 +758,9 @@ export default function Navigation() {
                 className="h-7 w-7"
                 loading="lazy"
                 decoding="async"
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: -10 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+                initial={disableFancyMotion ? false : { rotate: 0 }}
+                whileHover={disableFancyMotion ? undefined : { rotate: -10 }}
+                transition={disableFancyMotion ? undefined : { duration: 0.4, ease: 'easeOut' }}
               />
             </motion.div>
             <div className="flex flex-col text-white">
@@ -779,9 +791,11 @@ export default function Navigation() {
                 return (
                   <motion.div
                     key={item.href}
-                    initial={{ opacity: 0, y: -12 }}
+                    initial={disableFancyMotion ? false : { opacity: 0, y: -12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    transition={
+                      disableFancyMotion ? undefined : { duration: 0.4, delay: index * 0.05 }
+                    }
                     className="relative"
                     ref={registerNavItem(item.id)}
                     onMouseEnter={() => {
@@ -828,9 +842,13 @@ export default function Navigation() {
                           initial={false}
                           animate={{
                             scale: isActive(item.href) ? 1.05 : 1,
-                            rotate: isActive(item.href) ? 0 : -2,
+                            rotate: disableFancyMotion ? 0 : isActive(item.href) ? 0 : -2,
                           }}
-                          transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                          transition={
+                            disableFancyMotion
+                              ? undefined
+                              : { type: 'spring', stiffness: 350, damping: 20 }
+                          }
                           className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white"
                         >
                           <Icon className="h-4 w-4" strokeWidth={2.4} />
@@ -846,11 +864,15 @@ export default function Navigation() {
                         )}
                       </span>
                       {isActive(item.href) && (
-                        <motion.span
-                          layoutId="navActiveGlow"
-                          className="pointer-events-none absolute inset-0 rounded-2xl border border-white/40"
-                          transition={{ type: 'spring', stiffness: 420, damping: 30 }}
-                        />
+                        disableFancyMotion ? (
+                          <span className="pointer-events-none absolute inset-0 rounded-2xl border border-white/40" />
+                        ) : (
+                          <motion.span
+                            layoutId="navActiveGlow"
+                            className="pointer-events-none absolute inset-0 rounded-2xl border border-white/40"
+                            transition={{ type: 'spring', stiffness: 420, damping: 30 }}
+                          />
+                        )
                       )}
                     </Link>
                   </motion.div>
@@ -903,6 +925,7 @@ export default function Navigation() {
                         onLeave={handleDropdownLeave}
                         onNavigate={handleMegaLinkNavigate}
                         prefetchRoute={prefetchRoute}
+                        disableMotion={disableFancyMotion}
                       />
                     </Suspense>
                   );
@@ -934,37 +957,45 @@ export default function Navigation() {
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={disableFancyMotion ? undefined : { scale: 1.05 }}
+            whileTap={disableFancyMotion ? undefined : { scale: 0.95 }}
             onClick={toggleMenu}
             className="relative inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/10 p-3 text-white transition-all duration-300 lg:hidden"
             aria-expanded={isOpen}
             aria-controls="mobile-navigation"
             aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {isOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X strokeWidth={2.2} className="h-6 w-6" />
-                </motion.div>
+            {disableFancyMotion ? (
+              isOpen ? (
+                <X strokeWidth={2.2} className="h-6 w-6" />
               ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu strokeWidth={2.2} className="h-6 w-6" />
-                </motion.div>
-              )}
-            </AnimatePresence>
+                <Menu strokeWidth={2.2} className="h-6 w-6" />
+              )
+            ) : (
+              <AnimatePresence mode="wait" initial={false}>
+                {isOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X strokeWidth={2.2} className="h-6 w-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu strokeWidth={2.2} className="h-6 w-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
           </motion.button>
         </div>
       </div>
@@ -973,10 +1004,10 @@ export default function Navigation() {
         {isOpen && (
           <motion.div
             key="mobile-overlay"
-            initial={{ opacity: 0 }}
+            initial={disableFancyMotion ? { opacity: 0.8 } : { opacity: 0 }}
             animate={{ opacity: 0.8 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={disableFancyMotion ? { opacity: 0.8 } : { opacity: 0 }}
+            transition={disableFancyMotion ? undefined : { duration: 0.2 }}
             className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm lg:hidden"
             onClick={closeMenu}
           />
@@ -988,10 +1019,10 @@ export default function Navigation() {
           <motion.div
             id="mobile-navigation"
             key="mobile-menu"
-            initial={{ opacity: 0, y: -12 }}
+            initial={disableFancyMotion ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.28, ease: 'easeOut' }}
+            exit={disableFancyMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+            transition={disableFancyMotion ? undefined : { duration: 0.28, ease: 'easeOut' }}
             className="mobile-menu-premium fixed inset-0 z-50 flex flex-col border-t border-white/10 bg-slate-950/95 shadow-[0_24px_64px_rgba(15,23,42,0.55)] backdrop-blur-3xl lg:hidden"
             style={
               {

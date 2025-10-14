@@ -52,6 +52,8 @@ export default function VisualHighlight({
                 src={imageUrl}
                 alt={title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
+                decoding="async"
               />
               {badge && (
                 <div className="absolute top-4 left-4">
