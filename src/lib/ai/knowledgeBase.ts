@@ -246,6 +246,32 @@ function normalise(text: string): string {
     .trim();
 }
 
+type KnowledgeSearchIndexEntry = {
+  entry: KnowledgeEntry;
+  phrases: string[];
+  phraseTokens: string[][];
+};
+
+const KNOWLEDGE_SEARCH_INDEX: KnowledgeSearchIndexEntry[] = KNOWLEDGE_BASE.map((entry) => {
+  const phrases = Array.from(
+    new Set(
+      entry.keywords
+        .map((keyword) => normalise(keyword))
+        .filter((keyword): keyword is string => Boolean(keyword)),
+    ),
+  );
+
+  const phraseTokens = phrases.map((phrase) => phrase.split(' ').filter(Boolean));
+
+  return {
+    entry,
+    phrases,
+    phraseTokens,
+  };
+});
+
+const DEFAULT_FALLBACK_ENTRIES = KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
+
 function extractUserQuery(messages: AIMessage[]): string {
   for (let i = messages.length - 1; i >= 0; i -= 1) {
     if (messages[i]?.role === 'user' && messages[i]?.content) {
@@ -259,27 +285,47 @@ function selectEntries(query: string, options: SearchOptions = {}): KnowledgeEnt
   const { limit = 3, fallbackToAll = true } = options;
   const normalised = normalise(query);
   if (!normalised) {
-    const entries = KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
     if (!Number.isFinite(limit)) {
-      return entries.slice();
+      return DEFAULT_FALLBACK_ENTRIES.slice();
     }
-    return entries.slice(0, limit);
+    return DEFAULT_FALLBACK_ENTRIES.slice(0, limit);
   }
 
-  const scored = KNOWLEDGE_BASE.map((entry) => {
-    const score = entry.keywords.reduce((acc, keyword) => {
-      const normalisedKeyword = normalise(keyword);
-      if (!normalisedKeyword) return acc;
-      if (normalised.includes(normalisedKeyword)) {
-        return acc + Math.max(2, normalisedKeyword.split(' ').length);
+  const queryWords = normalised.split(' ').filter(Boolean);
+  const queryWordSet = new Set(queryWords);
+
+  const scored = KNOWLEDGE_SEARCH_INDEX.map(({ entry, phrases, phraseTokens }) => {
+    let score = 0;
+
+    for (let index = 0; index < phrases.length; index += 1) {
+      const phrase = phrases[index];
+      if (!phrase) {
+        continue;
       }
-      const words = normalisedKeyword.split(' ');
-      const matchedWords = words.filter((word) => normalised.includes(word));
-      if (matchedWords.length > 0) {
-        return acc + matchedWords.length;
+
+      if (normalised.includes(phrase)) {
+        const phraseWordCount = Math.max(phraseTokens[index]?.length ?? 0, 1);
+        score += Math.max(2, phraseWordCount);
+        continue;
       }
-      return acc;
-    }, 0);
+
+      const tokens = phraseTokens[index];
+      if (!tokens?.length) {
+        continue;
+      }
+
+      let matchedWords = 0;
+      for (const token of tokens) {
+        if (queryWordSet.has(token)) {
+          matchedWords += 1;
+        }
+      }
+
+      if (matchedWords > 0) {
+        score += matchedWords;
+      }
+    }
+
     return { entry, score };
   });
 
