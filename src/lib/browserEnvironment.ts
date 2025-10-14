@@ -14,9 +14,14 @@ export type NavigatorConnection = {
   removeListener?: (listener: () => void) => void;
 };
 
+type NavigatorScheduling = {
+  isInputPending?: (options?: { includeContinuous?: boolean }) => boolean;
+};
+
 type ExtendedNavigator = Navigator & {
   connection?: NavigatorConnection;
   deviceMemory?: number;
+  scheduling?: NavigatorScheduling;
 };
 
 type Cleanup = void | (() => void);
@@ -111,6 +116,27 @@ export function shouldDeferHeavyWork(): boolean {
     isLowPowerDevice() ||
     Boolean(cachedReducedDataPreference)
   );
+}
+
+export function isUserInputPending(): boolean {
+  if (typeof navigator === 'undefined') {
+    return false;
+  }
+
+  const scheduling = (navigator as ExtendedNavigator).scheduling;
+  if (!scheduling || typeof scheduling.isInputPending !== 'function') {
+    return false;
+  }
+
+  try {
+    return scheduling.isInputPending({ includeContinuous: true });
+  } catch {
+    try {
+      return scheduling.isInputPending();
+    } catch {
+      return false;
+    }
+  }
 }
 
 export function runWhenDocumentVisible(effect: () => Cleanup): () => void {

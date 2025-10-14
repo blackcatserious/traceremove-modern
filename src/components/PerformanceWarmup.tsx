@@ -10,7 +10,7 @@ import {
   writeKnowledgeSnapshot,
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse } from '@/lib/ai/knowledgeTypes';
-import { runWhenDocumentVisible } from '@/lib/browserEnvironment';
+import { isUserInputPending, runWhenDocumentVisible } from '@/lib/browserEnvironment';
 import {
   hasPrefetchedRoute,
   markRoutePrefetched,
@@ -99,6 +99,11 @@ export default function PerformanceWarmup() {
           return;
         }
 
+        if (isUserInputPending()) {
+          schedule();
+          return;
+        }
+
         const hasBudget = () => {
           if (!deadline) return true;
           return deadline.timeRemaining() > 6 || deadline.didTimeout;
@@ -107,6 +112,14 @@ export default function PerformanceWarmup() {
         while (routeQueue.length && hasBudget()) {
           if (cancelled) {
             break;
+          }
+          if (isUserInputPending()) {
+            const href = routeQueue.shift();
+            if (href) {
+              routeQueue.unshift(href);
+            }
+            schedule();
+            return;
           }
           const href = routeQueue.shift();
           if (!href) continue;
@@ -130,6 +143,11 @@ export default function PerformanceWarmup() {
         if (requestQueue.length && hasBudget()) {
           const request = requestQueue.shift();
           if (request) {
+            if (isUserInputPending()) {
+              requestQueue.unshift(request);
+              schedule();
+              return;
+            }
             const controller = new AbortController();
             abortControllersRef.current.push(controller);
             fetch(request.url, { cache: 'force-cache', credentials: 'omit', signal: controller.signal })

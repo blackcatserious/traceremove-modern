@@ -1,4 +1,4 @@
-import { runWhenDocumentVisible, shouldDeferHeavyWork } from './browserEnvironment';
+import { isUserInputPending, runWhenDocumentVisible, shouldDeferHeavyWork } from './browserEnvironment';
 
 type IdleWindow = Window & {
   requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
@@ -46,6 +46,11 @@ export function scheduleIdlePreload(task: () => void | Promise<unknown>, options
 
   const runTask = () => {
     if (cancelled) {
+      return;
+    }
+
+    if (isUserInputPending()) {
+      schedule();
       return;
     }
 
