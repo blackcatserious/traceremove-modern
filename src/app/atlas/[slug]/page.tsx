@@ -4,9 +4,13 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, Clock, Globe2, Sparkles, Users2 } from 'lucide-react';
 
 import BackgroundLayers from '@/components/BackgroundLayers';
-import { getAtlasBlueprint } from '@/lib/atlasCatalog';
+import { getAllAtlasSlugs, getAtlasBlueprint } from '@/lib/atlasCatalog';
 
-export const dynamic = 'force-dynamic';
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getAllAtlasSlugs().map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({
   params,

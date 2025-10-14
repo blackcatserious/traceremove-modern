@@ -1003,7 +1003,13 @@ const atlasSpotlightBlueprints: AtlasBlueprint[] = focusAreas
 
 export const atlasBlueprints: AtlasBlueprint[] = [...coreAtlasBlueprints, ...atlasSpotlightBlueprints];
 
+const atlasBlueprintMap: ReadonlyMap<string, AtlasBlueprint> = new Map(
+  atlasBlueprints.map((blueprint) => [blueprint.slug, blueprint] as const),
+);
+
 export const ATLAS_BLUEPRINT_TOTAL = coreAtlasBlueprints.length + atlasSpotlightBlueprints.length;
 
 export const getAtlasBlueprint = (slug: string): AtlasBlueprint | undefined =>
-  atlasBlueprints.find((blueprint) => blueprint.slug === slug);
+  atlasBlueprintMap.get(slug);
+
+export const getAllAtlasSlugs = (): string[] => atlasBlueprints.map((blueprint) => blueprint.slug);
