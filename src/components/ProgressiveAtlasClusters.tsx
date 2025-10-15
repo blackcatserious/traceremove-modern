@@ -1,97 +1,160 @@
 'use client';
 
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
 import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+import type { AtlasCluster } from '@/lib/atlasClustersShared';
 
-export interface AtlasClusterCard {
-  slug: string;
-  heroEyebrow: string;
-  focusArea: string;
-  summary: string;
-  contextLabel: string;
-  timeHorizon: string;
+interface ProgressiveAtlasClustersProps {
+  initialClusters: AtlasCluster[];
+  totalClusters: number;
 }
-
-interface ClusterPayload {
-  id: string;
-  personaLabel: string;
-  items: AtlasClusterCard[];
-}
-
-export type ProgressiveAtlasCluster = ClusterPayload;
 
 const BATCH_SIZE = 3;
 
-function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayload[] }) {
+function ProgressiveAtlasClustersComponent({
+  initialClusters,
+  totalClusters,
+}: ProgressiveAtlasClustersProps) {
   const { constrainedConnection, deferHeavyWork } = usePerformanceProfile();
-  const batchSize = deferHeavyWork ? 1 : constrainedConnection ? 2 : BATCH_SIZE;
-  const [renderCount, setRenderCount] = useState(() => Math.min(batchSize, clusters.length));
+  const batchSize = useMemo(
+    () => (deferHeavyWork ? 1 : constrainedConnection ? 2 : BATCH_SIZE),
+    [constrainedConnection, deferHeavyWork],
+  );
+
+  const [clusters, setClusters] = useState<AtlasCluster[]>(() => initialClusters);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const loadingRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const offsetRef = useRef(initialClusters.length);
+
+  const hasMore = clusters.length < totalClusters;
   const rootMargin = useMemo(
     () => (batchSize === 1 ? '320px 0px' : batchSize === 2 ? '400px 0px' : '480px 0px'),
     [batchSize],
   );
+  const prefetchLinks = !deferHeavyWork;
 
   useEffect(() => {
-    setRenderCount((current) => {
-      const minimum = Math.min(batchSize, clusters.length);
-      return current < minimum ? minimum : current;
-    });
-  }, [batchSize, clusters.length]);
+    setClusters(initialClusters);
+    offsetRef.current = initialClusters.length;
+    setError(null);
+  }, [initialClusters, totalClusters]);
+
+  useEffect(() => () => {
+    abortControllerRef.current?.abort();
+  }, []);
+
+  const loadMore = useCallback(async () => {
+    if (!hasMore || loadingRef.current) {
+      return;
+    }
+
+    const remaining = totalClusters - offsetRef.current;
+    if (remaining <= 0) {
+      return;
+    }
+
+    const limit = Math.min(batchSize, remaining);
+    if (limit <= 0) {
+      return;
+    }
+
+    loadingRef.current = true;
+    setLoading(true);
+    setError(null);
+
+    const controller = new AbortController();
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = controller;
+
+    try {
+      const params = new URLSearchParams({
+        start: String(offsetRef.current),
+        limit: String(limit),
+      });
+
+      const response = await fetch(`/api/atlas-clusters?${params.toString()}`, {
+        signal: controller.signal,
+        cache: 'force-cache',
+        credentials: 'omit',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to load clusters: ${response.status}`);
+      }
+
+      const payload = (await response.json()) as { clusters?: AtlasCluster[] };
+      const nextClusters = payload.clusters ?? [];
+
+      if (nextClusters.length > 0) {
+        offsetRef.current += nextClusters.length;
+        setClusters((previous) => [...previous, ...nextClusters]);
+        setError(null);
+      } else {
+        offsetRef.current = totalClusters;
+      }
+    } catch (cause) {
+      if (!controller.signal.aborted) {
+        console.error('Unable to load additional atlas clusters', cause);
+        setError("We’re having trouble loading more atlas clusters. Try again in a moment.");
+      }
+    } finally {
+      if (!controller.signal.aborted) {
+        loadingRef.current = false;
+        setLoading(false);
+      }
+    }
+  }, [batchSize, hasMore, totalClusters]);
 
   useEffect(() => {
-    if (!sentinelRef.current) {
+    if (!sentinelRef.current || !hasMore || deferHeavyWork) {
       return;
     }
 
     if (typeof IntersectionObserver === 'undefined') {
-      setRenderCount(clusters.length);
+      if (!loadingRef.current) {
+        void loadMore();
+      }
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry?.isIntersecting) {
-        setRenderCount((previous) => {
-          if (previous >= clusters.length) {
-            return previous;
-          }
-
-          return Math.min(previous + batchSize, clusters.length);
-        });
-      }
-    }, {
-      root: null,
-      rootMargin,
-      threshold: 0,
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          void loadMore();
+        }
+      },
+      {
+        root: null,
+        rootMargin,
+        threshold: 0,
+      },
+    );
 
     observer.observe(sentinelRef.current);
-    observerRef.current = observer;
 
     return () => {
       observer.disconnect();
-      observerRef.current = null;
     };
-  }, [batchSize, clusters.length, rootMargin]);
+  }, [deferHeavyWork, hasMore, loadMore, rootMargin]);
 
   useEffect(() => {
-    if (renderCount >= clusters.length && observerRef.current) {
-      observerRef.current.disconnect();
-      observerRef.current = null;
+    if (typeof IntersectionObserver !== 'undefined' || !hasMore || deferHeavyWork || loadingRef.current) {
+      return;
     }
-  }, [clusters.length, renderCount]);
 
-  const visibleClusters = useMemo(() => clusters.slice(0, renderCount), [clusters, renderCount]);
-  const prefetchLinks = !deferHeavyWork;
+    void loadMore();
+  }, [deferHeavyWork, hasMore, loadMore]);
 
   return (
     <div className="mt-16 space-y-24">
-      {visibleClusters.map((cluster) => (
+      {clusters.map((cluster) => (
         <section key={cluster.id} className="space-y-8 content-auto">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -141,6 +204,24 @@ function ProgressiveAtlasClustersComponent({ clusters }: { clusters: ClusterPayl
           </div>
         </section>
       ))}
+
+      {error ? (
+        <p className="text-center text-sm text-white/60">{error}</p>
+      ) : null}
+
+      {hasMore ? (
+        <div className="flex flex-col items-center gap-4">
+          <button
+            type="button"
+            onClick={() => void loadMore()}
+            disabled={loading || deferHeavyWork}
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70 transition hover:border-accent-ai-purple/50 hover:bg-accent-ai-purple/20 disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-white/5"
+          >
+            {loading ? 'Loading Clusters…' : 'Load More Clusters'}
+          </button>
+        </div>
+      ) : null}
+
       <div ref={sentinelRef} aria-hidden className="h-px w-full" />
     </div>
   );

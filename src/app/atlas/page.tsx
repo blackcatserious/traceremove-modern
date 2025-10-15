@@ -2,47 +2,19 @@ import { Metadata } from 'next';
 import { ArrowUpRight, Filter, Search } from 'lucide-react';
 
 import BackgroundLayers from '@/components/BackgroundLayers';
-import { atlasBlueprints, ATLAS_BLUEPRINT_TOTAL } from '@/lib/atlasCatalog';
-import type { AtlasBlueprint } from '@/lib/atlasCatalog';
-import ProgressiveAtlasClusters, {
-  type ProgressiveAtlasCluster,
-  type AtlasClusterCard,
-} from '@/components/ProgressiveAtlasClusters';
+import ProgressiveAtlasClusters from '@/components/ProgressiveAtlasClusters';
+import { ATLAS_BLUEPRINT_TOTAL } from '@/lib/atlasCatalog';
+import { getAtlasClustersDataset } from '@/lib/server/atlasClusters';
+
+const INITIAL_CLUSTER_BATCH = 3;
+
+const { clusters: atlasClusters, totalClusters } = getAtlasClustersDataset();
+const initialClusters = atlasClusters.slice(0, INITIAL_CLUSTER_BATCH);
 
 export const metadata: Metadata = {
   title: 'Experience Atlas | Traceremove Research',
   description: `${ATLAS_BLUEPRINT_TOTAL} blueprint-grade pages detailing responsible AI, civic technology, and ethical innovation scenarios curated by Traceremove.`,
 };
-
-const groupedBlueprints = atlasBlueprints.reduce<Record<string, AtlasBlueprint[]>>((acc, blueprint) => {
-  if (!acc[blueprint.cluster]) {
-    acc[blueprint.cluster] = [];
-  }
-
-  acc[blueprint.cluster].push(blueprint);
-  return acc;
-}, {});
-
-const clusters = Object.keys(groupedBlueprints).sort((a, b) => a.localeCompare(b));
-
-const progressiveClusters: ProgressiveAtlasCluster[] = clusters.map((cluster) => {
-  const sortedBlueprints = groupedBlueprints[cluster].slice().sort((a, b) => a.title.localeCompare(b.title));
-  const personaLabel = (sortedBlueprints[0]?.persona ?? 'Responsible innovation leaders').toLowerCase();
-  const items: AtlasClusterCard[] = sortedBlueprints.map((blueprint) => ({
-    slug: blueprint.slug,
-    heroEyebrow: blueprint.hero.eyebrow,
-    focusArea: blueprint.focusArea,
-    summary: blueprint.summary,
-    contextLabel: blueprint.contextLabel,
-    timeHorizon: blueprint.timeHorizon,
-  }));
-
-  return {
-    id: cluster,
-    personaLabel,
-    items,
-  };
-});
 
 export default function AtlasIndexPage() {
   return (
@@ -71,7 +43,7 @@ export default function AtlasIndexPage() {
                   <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur">
                     <Filter className="h-5 w-5 text-white/70" />
                     <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">Clusters</p>
-                    <p className="mt-1 text-xl font-semibold text-white">{clusters.length} Domains</p>
+                    <p className="mt-1 text-xl font-semibold text-white">{totalClusters} Domains</p>
                   </div>
                   <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur">
                     <ArrowUpRight className="h-5 w-5 text-white/70" />
@@ -83,7 +55,7 @@ export default function AtlasIndexPage() {
             </div>
           </div>
 
-          <ProgressiveAtlasClusters clusters={progressiveClusters} />
+          <ProgressiveAtlasClusters initialClusters={initialClusters} totalClusters={totalClusters} />
         </div>
       </div>
     </div>
