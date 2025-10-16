@@ -17,6 +17,7 @@ import {
   prunePrefetchedRoutes,
 } from '@/lib/navigationPrefetchCache';
 import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+import { preloadMotionModule } from '@/lib/motionModule';
 
 const WARM_ROUTES = [
   '/research',
@@ -86,6 +87,8 @@ export default function PerformanceWarmup() {
         const cached = readKnowledgeSnapshot(request.query, request.category);
         return !cached;
       });
+
+      let motionPreloaded = false;
 
       if (!routeQueue.length && !requestQueue.length) {
         return;
@@ -168,6 +171,13 @@ export default function PerformanceWarmup() {
                 abortControllersRef.current = abortControllersRef.current.filter((instance) => instance !== controller);
               });
           }
+        }
+
+        if (!motionPreloaded && hasBudget()) {
+          motionPreloaded = true;
+          void preloadMotionModule().catch(() => {
+            // Ignore preload failures; motion will import on demand later.
+          });
         }
 
         if (!deferHeavyWork && (routeQueue.length || requestQueue.length)) {

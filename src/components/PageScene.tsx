@@ -2,8 +2,9 @@
 
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
+import usePrefersReducedMotion from '@/hooks/usePrefersReducedMotion';
+import useMotionModule from '@/hooks/useMotionModule';
 import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 interface ThemePreset {
@@ -172,11 +173,14 @@ type IdleWindow = Window & {
 
 export default function PageScene({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const systemReduceMotion = useReducedMotion();
+  const systemReduceMotion = usePrefersReducedMotion();
   const { deferHeavyWork, reducedMotion: profileReducedMotion } = usePerformanceProfile();
   const shouldReduceMotion = profileReducedMotion || systemReduceMotion;
   const [hydrated, setHydrated] = useState(false);
   const [ready, setReady] = useState(false);
+
+  const shouldAttemptAnimation = ready && !shouldReduceMotion && !deferHeavyWork;
+  const motionModule = useMotionModule(shouldAttemptAnimation);
 
   useEffect(() => {
     setHydrated(true);
@@ -248,101 +252,99 @@ export default function PageScene({ children }: { children: ReactNode }) {
     backgroundColor: theme.noiseColor,
   };
 
-  const animatedGradient = (
-    <motion.div
-      key={`${theme.id}-gradient`}
-      className={`page-gradient bg-gradient-to-br ${theme.gradient}`}
-      initial={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.98 }}
-      animate={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0.92, scale: 1 }}
-      exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 1.02 }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
-      aria-hidden
-    />
+  let gradientElement = (
+    <div key={`${theme.id}-gradient`} className={`page-gradient bg-gradient-to-br ${theme.gradient}`} aria-hidden />
   );
 
-  const contentWrapper = (
-    <motion.div
-      key={pathname}
-      className="page-shell"
-      initial={shouldReduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      exit={shouldReduceMotion ? undefined : { opacity: 0, y: -18, filter: 'blur(4px)' }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
-    >
-      {children}
-    </motion.div>
-  );
+  let haloElement = <div className="page-halo" style={haloStyle} aria-hidden />;
+  let beamElement = <div className="page-beams" style={beamStyle} aria-hidden />;
+  let meshElement = <div className="page-grid" style={meshStyle} aria-hidden />;
+  let noiseElement = <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />;
 
-  const shouldAnimateLayers = ready && !shouldReduceMotion && !deferHeavyWork;
-  const gradientElement = shouldAnimateLayers ? (
-    <AnimatePresence mode="wait">{animatedGradient}</AnimatePresence>
-  ) : (
-    <div className={`page-gradient bg-gradient-to-br ${theme.gradient}`} aria-hidden />
-  );
-
-  const haloElement = shouldAnimateLayers ? (
-    <motion.div
-      key={`${theme.id}-halo`}
-      className="page-halo"
-      style={haloStyle}
-      initial={{ opacity: 0.2 }}
-      animate={{ opacity: 0.75 }}
-      transition={{ duration: 1.2, ease: 'easeInOut' }}
-      aria-hidden
-    />
-  ) : (
-    <div className="page-halo" style={haloStyle} aria-hidden />
-  );
-
-  const beamElement = shouldAnimateLayers ? (
-    <motion.div
-      key={`${theme.id}-beams`}
-      className="page-beams"
-      style={beamStyle}
-      initial={{ opacity: 0.12 }}
-      animate={{ opacity: 0.24 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
-      aria-hidden
-    />
-  ) : (
-    <div className="page-beams" style={beamStyle} aria-hidden />
-  );
-
-  const meshElement = shouldAnimateLayers ? (
-    <motion.div
-      key={`${theme.id}-mesh`}
-      className="page-grid"
-      style={meshStyle}
-      initial={{ opacity: 0.05 }}
-      animate={{ opacity: 0.12 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
-      aria-hidden
-    />
-  ) : (
-    <div className="page-grid" style={meshStyle} aria-hidden />
-  );
-
-  const noiseElement = shouldAnimateLayers ? (
-    <motion.div
-      key={`${theme.id}-noise`}
-      className="page-noise"
-      style={noiseStyle as CSSProperties}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 0.16 }}
-      transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
-      aria-hidden
-    />
-  ) : (
-    <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />
-  );
-
-  const contentElement = shouldAnimateLayers ? (
-    <AnimatePresence mode="wait">{contentWrapper}</AnimatePresence>
-  ) : (
+  let contentElement = (
     <div key={pathname} className="page-shell">
       {children}
     </div>
   );
+
+  if (shouldAttemptAnimation && motionModule) {
+    gradientElement = (
+      <motionModule.AnimatePresence mode="wait">
+        <motionModule.motion.div
+          key={`${theme.id}-gradient`}
+          className={`page-gradient bg-gradient-to-br ${theme.gradient}`}
+          initial={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0, scale: 0.98 }}
+          animate={shouldReduceMotion ? { opacity: 0.92, scale: 1 } : { opacity: 0.92, scale: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 1.02 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, ease: 'easeOut' }}
+          aria-hidden
+        />
+      </motionModule.AnimatePresence>
+    );
+
+    haloElement = (
+      <motionModule.motion.div
+        key={`${theme.id}-halo`}
+        className="page-halo"
+        style={haloStyle}
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: 0.75 }}
+        transition={{ duration: 1.2, ease: 'easeInOut' }}
+        aria-hidden
+      />
+    );
+
+    beamElement = (
+      <motionModule.motion.div
+        key={`${theme.id}-beams`}
+        className="page-beams"
+        style={beamStyle}
+        initial={{ opacity: 0.12 }}
+        animate={{ opacity: 0.24 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        aria-hidden
+      />
+    );
+
+    meshElement = (
+      <motionModule.motion.div
+        key={`${theme.id}-mesh`}
+        className="page-grid"
+        style={meshStyle}
+        initial={{ opacity: 0.05 }}
+        animate={{ opacity: 0.12 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        aria-hidden
+      />
+    );
+
+    noiseElement = (
+      <motionModule.motion.div
+        key={`${theme.id}-noise`}
+        className="page-noise"
+        style={noiseStyle as CSSProperties}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.16 }}
+        transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
+        aria-hidden
+      />
+    );
+
+    const animatedContent = (
+      <motionModule.motion.div
+        key={pathname}
+        className="page-shell"
+        initial={shouldReduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 24, filter: 'blur(6px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        exit={shouldReduceMotion ? undefined : { opacity: 0, y: -18, filter: 'blur(4px)' }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, ease: 'easeOut' }}
+      >
+        {children}
+      </motionModule.motion.div>
+    );
+
+    contentElement = <motionModule.AnimatePresence mode="wait">{animatedContent}</motionModule.AnimatePresence>;
+  }
 
   return (
     <div className="page-scene" data-variant={theme.variant} data-hydrated={hydrated}>
