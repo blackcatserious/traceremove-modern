@@ -33,7 +33,7 @@ const defaultProfile: PerformanceProfile = {
   slowConnection: false,
   constrainedConnection: false,
   lowPowerDevice: false,
-  deferHeavyWork: false,
+  deferHeavyWork: true,
 };
 
 const PerformanceProfileContext = createContext<PerformanceProfile>(defaultProfile);
@@ -49,6 +49,11 @@ function matchesMedia(query: string): boolean {
     return false;
   }
 }
+
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
 
 function computeProfile(): PerformanceProfile {
   if (typeof window === 'undefined') {
@@ -73,32 +78,77 @@ function computeProfile(): PerformanceProfile {
 }
 
 export default function PerformanceProfileProvider({ children }: { children: ReactNode }) {
-  const [profile, setProfile] = useState<PerformanceProfile>(() => computeProfile());
+  const [profile, setProfile] = useState<PerformanceProfile>(() => {
+    const computed = computeProfile();
+    return { ...computed, deferHeavyWork: true };
+  });
 
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
 
+    const withIdle = window as IdleWindow;
+    let idleHandle: number | null = null;
+    let timeoutHandle: number | null = null;
+
+    const cancelScheduledEvaluation = () => {
+      if (idleHandle !== null && typeof withIdle.cancelIdleCallback === 'function') {
+        withIdle.cancelIdleCallback(idleHandle);
+        idleHandle = null;
+      }
+
+      if (timeoutHandle !== null) {
+        window.clearTimeout(timeoutHandle);
+        timeoutHandle = null;
+      }
+    };
+
     const evaluate = () => {
+      cancelScheduledEvaluation();
+
       const nextProfile = computeProfile();
 
       setProfile((current) => {
-        const hasChanged =
-          current.reducedMotion !== nextProfile.reducedMotion ||
-          current.reducedData !== nextProfile.reducedData ||
-          current.slowConnection !== nextProfile.slowConnection ||
-          current.constrainedConnection !== nextProfile.constrainedConnection ||
-          current.lowPowerDevice !== nextProfile.lowPowerDevice ||
-          current.deferHeavyWork !== nextProfile.deferHeavyWork;
+        if (
+          current.reducedMotion === nextProfile.reducedMotion &&
+          current.reducedData === nextProfile.reducedData &&
+          current.slowConnection === nextProfile.slowConnection &&
+          current.constrainedConnection === nextProfile.constrainedConnection &&
+          current.lowPowerDevice === nextProfile.lowPowerDevice &&
+          current.deferHeavyWork === nextProfile.deferHeavyWork
+        ) {
+          return current;
+        }
 
-        return hasChanged ? nextProfile : current;
+        return nextProfile;
       });
     };
 
-    const handleChange = () => evaluate();
+    const scheduleEvaluation = () => {
+      if (idleHandle !== null || timeoutHandle !== null) {
+        return;
+      }
 
-    evaluate();
+      const run = () => {
+        idleHandle = null;
+        timeoutHandle = null;
+        evaluate();
+      };
+
+      if (typeof withIdle.requestIdleCallback === 'function') {
+        idleHandle = withIdle.requestIdleCallback(run, { timeout: 1600 });
+      } else {
+        timeoutHandle = window.setTimeout(run, 600);
+      }
+    };
+
+    const handleChange = () => {
+      setProfile((current) => (current.deferHeavyWork ? current : { ...current, deferHeavyWork: true }));
+      scheduleEvaluation();
+    };
+
+    scheduleEvaluation();
 
     const disconnectMotion = attachMediaQueryListener('(prefers-reduced-motion: reduce)', handleChange);
     const disconnectData = attachMediaQueryListener('(prefers-reduced-data: reduce)', handleChange);
@@ -106,6 +156,7 @@ export default function PerformanceProfileProvider({ children }: { children: Rea
     const disconnectConnection = attachConnectionListener(handleChange);
 
     return () => {
+      cancelScheduledEvaluation();
       disconnectMotion?.();
       disconnectData?.();
       disconnectPointer?.();
