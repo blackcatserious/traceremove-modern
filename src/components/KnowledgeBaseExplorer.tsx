@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import {
   MessageSquare,
   Search,
@@ -29,6 +28,7 @@ import {
 } from '@/lib/ai/knowledgeCache';
 import type { KnowledgeBaseApiResponse, KnowledgeSnapshot } from '@/lib/ai/knowledgeTypes';
 import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+import useMotionModule from '@/hooks/useMotionModule';
 
 const ALL_CATEGORY = 'All';
 const REQUEST_LIMIT = 200;
@@ -101,11 +101,15 @@ export default function KnowledgeBaseExplorer({
   title = 'Traceremove knowledge matrix',
   description = 'Browse the in-domain knowledge base that powers metrics, tooling, and algorithmic support inside the assistant.',
 }: KnowledgeBaseExplorerProps) {
-  const { constrainedConnection, deferHeavyWork } = usePerformanceProfile();
+  const { constrainedConnection, deferHeavyWork, reducedMotion } = usePerformanceProfile();
   const displayConfig = useMemo(
     () => resolveDisplayConfig(deferHeavyWork, constrainedConnection),
     [constrainedConnection, deferHeavyWork],
   );
+  const allowMotion = !reducedMotion && !deferHeavyWork;
+  const motionModule = useMotionModule(allowMotion);
+  const MotionDiv = motionModule?.motion.div;
+  const MotionArticle = motionModule?.motion.article;
   const [visibleCount, setVisibleCount] = useState(() => displayConfig.initial);
   const [snapshotState, setSnapshotState] = useState<SnapshotState>({
     entries: [],
@@ -399,14 +403,20 @@ export default function KnowledgeBaseExplorer({
           </div>
           <div className="flex flex-col items-end gap-3 text-right">
             {lastPrompt && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200"
-              >
-                Prompt sent to assistant
-              </motion.div>
+              MotionDiv ? (
+                <MotionDiv
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200"
+                >
+                  Prompt sent to assistant
+                </MotionDiv>
+              ) : (
+                <div className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200">
+                  Prompt sent to assistant
+                </div>
+              )
             )}
             <div className="flex items-center gap-2">
               <div className="relative">
@@ -483,81 +493,100 @@ export default function KnowledgeBaseExplorer({
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {visibleEntries.map((entry) => (
-            <motion.article
-              key={entry.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 content-auto-card"
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${entry.accent} opacity-[0.18]`} />
-              <div className="relative space-y-5">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-white/70">
-                    {entry.category}
-                  </span>
-                  <Link
-                    href={entry.cta.href}
-                    className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:text-white"
-                  >
-                    {entry.cta.label}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                </div>
-
-                <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, deferredHighlightQuery)}</h3>
-                  <p className="text-sm text-white/70">{highlightText(entry.summary, deferredHighlightQuery)}</p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Key metrics</p>
-                    <ul className="space-y-2 text-sm text-white/75">
-                      {entry.metrics.slice(0, 3).map((metric) => (
-                        <li key={metric} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(metric, deferredHighlightQuery)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Toolchain & playbooks</p>
-                    <ul className="space-y-2 text-sm text-white/75">
-                      {[...entry.toolchain.slice(0, 1), ...entry.playbooks.slice(0, 1)].map((item) => (
-                        <li key={item} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-                          {highlightText(item, deferredHighlightQuery)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                  {entry.quickPrompts.map((prompt) => (
-                    <button
-                      key={prompt.label}
-                      type="button"
-                      onClick={() => handlePrompt(prompt.prompt)}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition hover:border-white/40 hover:text-white"
+          {visibleEntries.map((entry) => {
+            const content = (
+              <>
+                <div className={`absolute inset-0 bg-gradient-to-br ${entry.accent} opacity-[0.18]`} />
+                <div className="relative space-y-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-white/70">
+                      {entry.category}
+                    </span>
+                    <Link
+                      href={entry.cta.href}
+                      className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:text-white"
                     >
-                      <MessageSquare className="h-4 w-4 text-white/70" />
-                      {prompt.label}
-                    </button>
-                  ))}
-                  <Link
-                    href="/assistant"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:border-white/40 hover:text-white"
-                  >
-                    <NotebookPen className="h-4 w-4" />
-                    Assistant briefings
-                  </Link>
+                      {entry.cta.label}
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-semibold text-white">{highlightText(entry.title, deferredHighlightQuery)}</h3>
+                    <p className="text-sm text-white/70">{highlightText(entry.summary, deferredHighlightQuery)}</p>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Key metrics</p>
+                      <ul className="space-y-2 text-sm text-white/75">
+                        {entry.metrics.slice(0, 3).map((metric) => (
+                          <li key={metric} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                            {highlightText(metric, deferredHighlightQuery)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">Toolchain & playbooks</p>
+                      <ul className="space-y-2 text-sm text-white/75">
+                        {[...entry.toolchain.slice(0, 1), ...entry.playbooks.slice(0, 1)].map((item) => (
+                          <li key={item} className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                            {highlightText(item, deferredHighlightQuery)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    {entry.quickPrompts.map((prompt) => (
+                      <button
+                        key={prompt.label}
+                        type="button"
+                        onClick={() => handlePrompt(prompt.prompt)}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition hover:border-white/40 hover:text-white"
+                      >
+                        <MessageSquare className="h-4 w-4 text-white/70" />
+                        {prompt.label}
+                      </button>
+                    ))}
+                    <Link
+                      href="/assistant"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:border-white/40 hover:text-white"
+                    >
+                      <NotebookPen className="h-4 w-4" />
+                      Assistant briefings
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </motion.article>
-          ))}
+              </>
+            );
+
+            if (MotionArticle) {
+              return (
+                <MotionArticle
+                  key={entry.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6 }}
+                  className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 content-auto-card"
+                >
+                  {content}
+                </MotionArticle>
+              );
+            }
+
+            return (
+              <article
+                key={entry.id}
+                className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 content-auto-card"
+              >
+                {content}
+              </article>
+            );
+          })}
         </div>
 
         <div ref={sentinelRef} aria-hidden className="h-1 w-full" />
@@ -577,13 +606,19 @@ export default function KnowledgeBaseExplorer({
         )}
 
         {snapshotState.entries.length === 0 && !loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center text-white/70"
-          >
-            No entries match that search yet—try a different metric, tool, or algorithm keyword.
-          </motion.div>
+          MotionDiv ? (
+            <MotionDiv
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center text-white/70"
+            >
+              No entries match that search yet—try a different metric, tool, or algorithm keyword.
+            </MotionDiv>
+          ) : (
+            <div className="rounded-3xl border border-white/10 bg-white/5 px-6 py-12 text-center text-white/70">
+              No entries match that search yet—try a different metric, tool, or algorithm keyword.
+            </div>
+          )
         )}
       </div>
     </section>
