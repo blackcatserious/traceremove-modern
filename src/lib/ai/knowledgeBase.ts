@@ -272,6 +272,33 @@ const KNOWLEDGE_SEARCH_INDEX: KnowledgeSearchIndexEntry[] = KNOWLEDGE_BASE.map((
 
 const DEFAULT_FALLBACK_ENTRIES = KNOWLEDGE_BASE.filter((entry) => entry.id !== 'assistant-copilot');
 
+const SEARCH_CACHE = new Map<string, KnowledgeEntry[]>();
+const MAX_CACHE_SIZE = 200;
+
+function getCacheKey(query: string, limit: number, fallbackToAll: boolean): string {
+  const limitKey = Number.isFinite(limit) ? String(limit) : 'all';
+  return `${query}::${limitKey}::${fallbackToAll ? '1' : '0'}`;
+}
+
+function readCache(key: string): KnowledgeEntry[] | null {
+  const cached = SEARCH_CACHE.get(key);
+  if (!cached) {
+    return null;
+  }
+  return cached.slice();
+}
+
+function writeCache(key: string, entries: KnowledgeEntry[]) {
+  if (!SEARCH_CACHE.has(key) && SEARCH_CACHE.size >= MAX_CACHE_SIZE) {
+    const firstKey = SEARCH_CACHE.keys().next().value;
+    if (typeof firstKey === 'string') {
+      SEARCH_CACHE.delete(firstKey);
+    }
+  }
+
+  SEARCH_CACHE.set(key, entries.slice());
+}
+
 function extractUserQuery(messages: AIMessage[]): string {
   for (let i = messages.length - 1; i >= 0; i -= 1) {
     if (messages[i]?.role === 'user' && messages[i]?.content) {
@@ -284,11 +311,22 @@ function extractUserQuery(messages: AIMessage[]): string {
 function selectEntries(query: string, options: SearchOptions = {}): KnowledgeEntry[] {
   const { limit = 3, fallbackToAll = true } = options;
   const normalised = normalise(query);
+  const cacheKey = getCacheKey(normalised, limit, fallbackToAll);
+
+  const cached = readCache(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   if (!normalised) {
     if (!Number.isFinite(limit)) {
-      return DEFAULT_FALLBACK_ENTRIES.slice();
+      const result = DEFAULT_FALLBACK_ENTRIES.slice();
+      writeCache(cacheKey, result);
+      return result;
     }
-    return DEFAULT_FALLBACK_ENTRIES.slice(0, limit);
+    const result = DEFAULT_FALLBACK_ENTRIES.slice(0, limit);
+    writeCache(cacheKey, result);
+    return result;
   }
 
   const queryWords = normalised.split(' ').filter(Boolean);
@@ -335,14 +373,19 @@ function selectEntries(query: string, options: SearchOptions = {}): KnowledgeEnt
     .map(({ entry }) => entry);
 
   if (matched.length === 0) {
-    return fallbackToAll ? KNOWLEDGE_BASE.slice() : [];
+    const result = fallbackToAll ? KNOWLEDGE_BASE.slice() : [];
+    writeCache(cacheKey, result);
+    return result;
   }
 
   if (!Number.isFinite(limit)) {
-    return matched;
+    writeCache(cacheKey, matched);
+    return matched.slice();
   }
 
-  return matched.slice(0, Math.min(limit, matched.length));
+  const result = matched.slice(0, Math.min(limit, matched.length));
+  writeCache(cacheKey, result);
+  return result;
 }
 
 export function searchKnowledgeEntries(query: string, options?: SearchOptions): KnowledgeEntry[] {
