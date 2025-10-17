@@ -38,8 +38,42 @@ const defaultProfile: PerformanceProfile = {
 
 const PerformanceProfileContext = createContext<PerformanceProfile>(defaultProfile);
 
+function matchesMedia(query: string): boolean {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return false;
+  }
+
+  try {
+    return window.matchMedia(query).matches;
+  } catch {
+    return false;
+  }
+}
+
+function computeProfile(): PerformanceProfile {
+  if (typeof window === 'undefined') {
+    return defaultProfile;
+  }
+
+  const reducedMotion = matchesMedia('(prefers-reduced-motion: reduce)');
+  const reducedData = prefersReducedData();
+  const slowConnection = isSlowConnection();
+  const constrainedConnection = isConstrainedConnection();
+  const lowPowerDevice = isLowPowerDevice();
+  const deferHeavyWork = shouldDeferHeavyWork();
+
+  return {
+    reducedMotion,
+    reducedData,
+    slowConnection,
+    constrainedConnection,
+    lowPowerDevice,
+    deferHeavyWork,
+  };
+}
+
 export default function PerformanceProfileProvider({ children }: { children: ReactNode }) {
-  const [profile, setProfile] = useState<PerformanceProfile>(defaultProfile);
+  const [profile, setProfile] = useState<PerformanceProfile>(() => computeProfile());
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -47,23 +81,7 @@ export default function PerformanceProfileProvider({ children }: { children: Rea
     }
 
     const evaluate = () => {
-      const reducedMotion = typeof window.matchMedia === 'function'
-        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        : false;
-      const reducedData = prefersReducedData();
-      const slowConnection = isSlowConnection();
-      const constrainedConnection = isConstrainedConnection();
-      const lowPowerDevice = isLowPowerDevice();
-      const deferHeavyWork = shouldDeferHeavyWork();
-
-      const nextProfile: PerformanceProfile = {
-        reducedMotion,
-        reducedData,
-        slowConnection,
-        constrainedConnection,
-        lowPowerDevice,
-        deferHeavyWork,
-      };
+      const nextProfile = computeProfile();
 
       setProfile((current) => {
         const hasChanged =
@@ -78,9 +96,9 @@ export default function PerformanceProfileProvider({ children }: { children: Rea
       });
     };
 
-    evaluate();
-
     const handleChange = () => evaluate();
+
+    evaluate();
 
     const disconnectMotion = attachMediaQueryListener('(prefers-reduced-motion: reduce)', handleChange);
     const disconnectData = attachMediaQueryListener('(prefers-reduced-data: reduce)', handleChange);

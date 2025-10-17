@@ -43,10 +43,14 @@ export function prefersReducedData(): boolean {
     return cachedReducedDataPreference ?? false;
   }
 
-  const query = window.matchMedia('(prefers-reduced-data: reduce)');
-  cachedReducedDataPreference = query.matches;
+  try {
+    const query = window.matchMedia('(prefers-reduced-data: reduce)');
+    cachedReducedDataPreference = query.matches;
+  } catch {
+    // Ignore matchMedia failures (e.g. unsupported environments) and reuse the cached value.
+  }
 
-  return cachedReducedDataPreference;
+  return cachedReducedDataPreference ?? false;
 }
 
 export function isDataSaverEnabled(): boolean {
@@ -113,6 +117,7 @@ export function shouldDeferHeavyWork(): boolean {
   return (
     isDataSaverEnabled() ||
     isSlowConnection() ||
+    isConstrainedConnection() ||
     isLowPowerDevice() ||
     Boolean(cachedReducedDataPreference)
   );
