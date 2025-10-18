@@ -1,553 +1,321 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { 
-  Mail, 
-  MapPin, 
-  Send, 
-  User, 
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  Mail,
+  Send,
+  User,
   MessageSquare,
   Github,
   Linkedin,
   Twitter,
   Globe,
-  ExternalLink,
-  CheckCircle,
-  AlertCircle,
-  Loader2
+  ShieldCheck,
+  ArrowRight,
+  Calendar
 } from 'lucide-react';
-import PremiumButton from '@/components/PremiumButton';
+import Link from 'next/link';
+
+const contactChannels = [
+  {
+    label: 'Strategic engagements',
+    description: 'Collaborate on research programmes, atlas activations, and responsible AI delivery.',
+    address: 'partners@traceremove.com',
+    icon: ShieldCheck
+  },
+  {
+    label: 'Media & speaking',
+    description: 'Request keynotes, interviews, and commentary on ethical intelligence futures.',
+    address: 'press@traceremove.com',
+    icon: MessageSquare
+  },
+  {
+    label: 'Academic collaborations',
+    description: 'Co-develop syllabi, workshops, or research residencies with universities and institutes.',
+    address: 'academic@traceremove.com',
+    icon: Globe
+  }
+];
 
 const socialLinks = [
   {
     name: 'LinkedIn',
     url: 'https://linkedin.com/in/arthur-ziganshin',
-    icon: Linkedin,
-    description: 'Professional network and career updates',
-    gradient: 'from-blue-600 to-blue-700'
+    description: 'Professional updates and partnership announcements.'
   },
   {
     name: 'GitHub',
     url: 'https://github.com/traceremove',
-    icon: Github,
-    description: 'Open source projects and code repositories',
-    gradient: 'from-gray-800 to-gray-900'
-  },
-  {
-    name: 'ORCID',
-    url: 'https://orcid.org/0000-0002-1234-5678',
-    icon: Globe,
-    description: 'Academic publications and research profile',
-    gradient: 'from-green-600 to-green-700'
-  },
-  {
-    name: 'Google Scholar',
-    url: 'https://scholar.google.com/citations?user=ArthurZiganshin',
-    icon: Globe,
-    description: 'Citation metrics and academic papers',
-    gradient: 'from-red-600 to-red-700'
+    description: 'Open-source tooling, experimental prototypes, and reproducible artefacts.'
   },
   {
     name: 'ResearchGate',
     url: 'https://researchgate.net/profile/Arthur-Ziganshin',
-    icon: Globe,
-    description: 'Research collaboration and publications',
-    gradient: 'from-teal-600 to-teal-700'
+    description: 'Research collaborations, datasets, and citation metrics.'
   },
   {
     name: 'Twitter',
     url: 'https://twitter.com/traceremove',
-    icon: Twitter,
-    description: 'Thoughts on AI, technology, and research',
-    gradient: 'from-blue-400 to-blue-500'
-  }
-];
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'artur@traceremove.com',
-    href: 'mailto:artur@traceremove.com',
-    gradient: 'from-blue-500 to-purple-600'
-  },
-  {
-    icon: Globe,
-    label: 'Website',
-    value: 'traceremove.dev',
-    href: 'https://traceremove.dev',
-    gradient: 'from-purple-500 to-pink-600'
+    description: 'Real-time thoughts on philosophy, AI policy, and design futures.'
   }
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+  const prefersReducedMotion = useReducedMotion();
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
+    const nextErrors: Record<string, string> = {};
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      nextErrors.name = 'Name is required';
     }
-
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      nextErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      nextErrors.email = 'Enter a valid email address';
     }
-
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Subject is required';
+      nextErrors.subject = 'Subject is required';
     }
-
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      nextErrors.message = 'Message cannot be empty';
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long';
+      nextErrors.message = 'Please share at least 10 characters';
     }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!validateForm()) return;
 
     setFormStatus('loading');
-
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 1800));
       setFormStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setFormStatus('idle'), 5000);
-    } catch {
+      setTimeout(() => setFormStatus('idle'), 4000);
+    } catch (error) {
+      console.error(error);
       setFormStatus('error');
-      setTimeout(() => setFormStatus('idle'), 5000);
+      setTimeout(() => setFormStatus('idle'), 4000);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+  const updateField = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
   return (
-    <div className="min-h-screen relative">
-      {/* Hero Section */}
-      <section className="relative decorative-blobs overflow-hidden py-24 sm:py-32 lg:py-40">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)]" />
-        
-        <div className="relative decorative-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8"
-            >
-              <Mail className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Let&apos;s Connect
-              </span>
-            </motion.div>
+    <div className="relative overflow-hidden bg-slate-950 text-white">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_78%_22%,rgba(129,140,248,0.16),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,26,48,0.9)_45%,rgba(17,24,39,0.95)_100%)]" />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.55, scale: 1 } : { opacity: 0.85, scale: 1, rotate: [0, 8, -6, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.2 : 18, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
+            className="absolute -top-24 left-12 h-72 w-72 rounded-full bg-gradient-to-br from-indigo-500/35 via-sky-400/25 to-emerald-400/25 blur-3xl"
+          />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.4, scale: 1 } : { opacity: 0.65, scale: 1, rotate: [0, -10, 8, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.4 : 20, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut', delay: 0.6 }}
+            className="absolute -bottom-32 right-6 h-80 w-80 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-purple-500/25 to-cyan-400/25 blur-3xl"
+          />
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-8"
-            >
-              <h1 className="hero-title text-research-text mb-6">
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="block mb-2"
-                >
-                  Get in
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 bg-clip-text text-transparent"
-                >
-                  Touch
-                </motion.span>
-              </h1>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="section-title text-research-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed"
-            >
-              Let&apos;s discuss AI research, collaboration opportunities, or any questions about my work. 
-              I&apos;m always interested in connecting with fellow researchers and innovators to advance the field together.
-            </motion.p>
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+            <Mail className="h-5 w-5 text-sky-200" />
+            <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Connect with Traceremove</span>
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
+          </div>
+          <div className="mt-8 space-y-6">
+            <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+              Let’s choreograph responsible intelligence together.
+            </h1>
+            <p className="mx-auto max-w-3xl text-lg text-white/75 sm:text-xl">
+              Whether you are planning a research residency, deploying an atlas blueprint, or curating policy dialogue, the Traceremove lab is ready to collaborate across disciplines and geographies.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Form and Info */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50"></div>
-              <div className="relative glass-card-premium p-10">
-                {/* Background Effects */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-50" />
-                
-                <div className="relative">
-                  <div className="mb-8">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.6, delay: 1.0 }}
-                      className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-6"
-                    >
-                      <Send className="w-5 h-5 text-accent-ai-purple mr-2" />
-                      <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                        Send Message
-                      </span>
-                    </motion.div>
-                    <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Send a Message</h2>
-                  </div>
-              
-                  {formStatus === 'success' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl flex items-center shadow-soft"
-                    >
-                      <CheckCircle className="h-6 w-6 text-green-600 mr-4" />
-                      <span className="text-green-800 font-semibold font-ibm-sans">Message sent successfully! I&apos;ll get back to you soon.</span>
-                    </motion.div>
-                  )}
-
-                  {formStatus === 'error' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mb-8 p-6 bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-2xl flex items-center shadow-soft"
-                    >
-                      <AlertCircle className="h-6 w-6 text-red-600 mr-4" />
-                      <span className="text-red-800 font-semibold font-ibm-sans">Failed to send message. Please try again or use email directly.</span>
-                    </motion.div>
-                  )}
-
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                          Name *
-                        </label>
-                        <div className="relative">
-                          <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent-ai-purple" />
-                          <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            className={`w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans ${
-                              errors.name ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
-                            }`}
-                            placeholder="Your name"
-                          />
-                        </div>
-                        {errors.name && (
-                          <p className="mt-2 text-sm text-red-600 font-ibm-sans">{errors.name}</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                          Email *
-                        </label>
-                        <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent-ai-purple" />
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            className={`w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans ${
-                              errors.email ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
-                            }`}
-                            placeholder="your.email@example.com"
-                          />
-                        </div>
-                        {errors.email && (
-                          <p className="mt-2 text-sm text-red-600 font-ibm-sans">{errors.email}</p>
-                        )}
-                      </div>
+      <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(15,118,110,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.55fr_0.45fr]">
+            <div className="space-y-8">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <h2 className="text-2xl font-semibold text-white">Contact the studio</h2>
+                <p className="mt-3 text-sm text-white/70">
+                  Share your challenge, request, or collaboration idea. We respond within two business days with next steps and optional scheduling slots.
+                </p>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {contactChannels.map((channel) => (
+                    <div key={channel.label} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <channel.icon className="h-5 w-5 text-white/70" />
+                      <p className="mt-3 text-sm font-semibold text-white">{channel.label}</p>
+                      <p className="mt-1 text-xs text-white/60">{channel.description}</p>
+                      <Link
+                        href={`mailto:${channel.address}`}
+                        className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition-colors duration-300 hover:text-white"
+                      >
+                        {channel.address}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
                     </div>
-
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                        Subject *
-                      </label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 font-ibm-sans ${
-                          errors.subject ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
-                        }`}
-                        placeholder="What would you like to discuss?"
-                      />
-                      {errors.subject && (
-                        <p className="mt-2 text-sm text-red-600 font-ibm-sans">{errors.subject}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-bold text-research-700 mb-3 font-ibm-sans">
-                        Message *
-                      </label>
-                      <div className="relative">
-                        <MessageSquare className="absolute left-4 top-4 h-5 w-5 text-accent-ai-purple" />
-                        <textarea
-                          id="message"
-                          name="message"
-                          rows={6}
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          className={`w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-ai-purple focus:border-accent-ai-purple/40 transition-all duration-300 resize-none font-ibm-sans ${
-                            errors.message ? 'border-red-300 bg-red-50' : 'border-accent-ai-purple/20 shadow-lab-card hover:shadow-card-hover'
-                          }`}
-                          placeholder="Tell me about your project, research, or any questions you have..."
-                        />
-                      </div>
-                      {errors.message && (
-                        <p className="mt-2 text-sm text-red-600 font-ibm-sans">{errors.message}</p>
-                      )}
-                    </div>
-
-                    <PremiumButton
-                      type="submit"
-                      disabled={formStatus === 'loading'}
-                      loading={formStatus === 'loading'}
-                      variant="primary"
-                      size="lg"
-                      icon={formStatus === 'loading' ? Loader2 : Send}
-                      iconPosition="left"
-                      className="w-full text-lg"
-                    >
-                      {formStatus === 'loading' ? 'Sending...' : 'Send Message'}
-                    </PremiumButton>
-                  </form>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="space-y-10"
-            >
-              <div>
-                <div className="mb-8">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
-                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-6"
-                  >
-                    <MapPin className="w-5 h-5 text-accent-ai-purple mr-2" />
-                    <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                      Contact Information
-                    </span>
-                  </motion.div>
-                  <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Contact Information</h2>
-                </div>
-                
-                <div className="space-y-6">
-                  {contactInfo.map((info, index) => (
-                    <motion.div
-                      key={info.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 1.4 + index * 0.1 }}
-                      whileHover={{ scale: 1.02, y: -4 }}
-                      className="group"
-                    >
-                      <div className="relative glass-card-compact p-8 transition-all duration-500 overflow-hidden">
-                        {/* Background Effects */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
-                        <div className="relative flex items-center">
-                          <div className="p-4 rounded-2xl bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple text-white mr-6 shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
-                            <info.icon className="h-8 w-8" />
-                          </div>
-                          <div>
-                            <h3 className="font-bold text-research-700 text-lg mb-2 font-ibm-sans">{info.label}</h3>
-                            {info.href ? (
-                              <a
-                                href={info.href}
-                                className="text-accent-ai-purple hover:text-accent-lab-purple transition-colors duration-300 font-semibold font-ibm-sans text-lg"
-                              >
-                                {info.value}
-                              </a>
-                            ) : (
-                              <p className="text-research-600 font-semibold font-ibm-sans text-lg">{info.value}</p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* Quick Info */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.8 }}
-                className="relative overflow-hidden"
-              >
-                {/* Background Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-primary-600 rounded-3xl" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1),transparent_50%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]" />
-                
-                <div className="relative p-10 text-white">
-                  <h3 className="text-3xl font-bold mb-6 font-ibm-sans">Let&apos;s Collaborate</h3>
-                  <p className="text-white/90 leading-relaxed mb-8 text-lg font-ibm-sans">
-                    I&apos;m always interested in discussing AI research, ethical technology development, 
-                    and innovative solutions to complex problems. Whether you&apos;re a researcher, 
-                    developer, or organization looking to explore AI applications, let&apos;s connect.
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">AI Research</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Collaboration</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Consulting</span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-semibold border border-white/30 font-ibm-sans">Speaking</span>
-                  </div>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-5 w-5 text-white/70" />
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">Office hours</p>
                 </div>
-              </motion.div>
-            </motion.div>
+                <p className="mt-3 text-sm text-white/70">
+                  We host weekly open office hours for civic technologists, scholars, and builders exploring atlas adoption. Include “office hours” in your subject line to receive the latest scheduling link.
+                </p>
+              </div>
+            </div>
+
+            <motion.form
+              onSubmit={handleSubmit}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: '-80px' }}
+              className="space-y-5 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_36px_120px_rgba(15,23,42,0.55)] backdrop-blur-2xl"
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                    Name
+                  </label>
+                  <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
+                    <User className="h-4 w-4 text-white/50" />
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={updateField}
+                      className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  {errors.name && <p className="mt-1 text-xs text-rose-400">{errors.name}</p>}
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                    Email
+                  </label>
+                  <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
+                    <Mail className="h-4 w-4 text-white/50" />
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={updateField}
+                      className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                      placeholder="name@organisation.com"
+                    />
+                  </div>
+                  {errors.email && <p className="mt-1 text-xs text-rose-400">{errors.email}</p>}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  Subject
+                </label>
+                <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
+                  <MessageSquare className="h-4 w-4 text-white/50" />
+                  <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    value={formData.subject}
+                    onChange={updateField}
+                    className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                    placeholder="How can we collaborate?"
+                  />
+                </div>
+                {errors.subject && <p className="mt-1 text-xs text-rose-400">{errors.subject}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  Message
+                </label>
+                <div className="mt-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={updateField}
+                    rows={6}
+                    className="w-full resize-none bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+                    placeholder="Share goals, context, and timelines for your initiative."
+                  />
+                </div>
+                {errors.message && <p className="mt-1 text-xs text-rose-400">{errors.message}</p>}
+              </div>
+
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-white shadow-[0_20px_45px_rgba(56,189,248,0.35)] transition-opacity duration-300 disabled:cursor-not-allowed disabled:opacity-70"
+                disabled={formStatus === 'loading'}
+              >
+                {formStatus === 'loading' ? 'Sending…' : 'Send message'}
+                <Send className="h-4 w-4" />
+              </motion.button>
+
+              {formStatus === 'success' && <p className="text-center text-sm text-emerald-300">Message received — we will reply shortly.</p>}
+              {formStatus === 'error' && <p className="text-center text-sm text-rose-400">Something went wrong. Please retry or email directly.</p>}
+            </motion.form>
           </div>
         </div>
       </section>
 
-      {/* Social Links */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8"
-            >
-              <Globe className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Social Networks
-              </span>
-            </motion.div>
-            
-            <h2 className="text-4xl sm:text-5xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">Connect on Social Media</h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Follow my research updates, thoughts on AI ethics, and professional activities across various platforms.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {socialLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -8 }}
-                className="group"
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Community signals</h2>
+            <p className="mt-3 text-lg text-white/70">Stay close to Traceremove across professional networks, research hubs, and discourse platforms.</p>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {socialLinks.map((social) => (
+              <Link
+                key={social.name}
+                href={social.url}
+                className="group flex items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-2xl"
               >
-                <div className="relative glass-card-compact p-8 transition-all duration-500 overflow-hidden">
-                  {/* Background Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative flex items-start">
-                    <div className="p-4 rounded-2xl bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple text-white mr-6 shadow-ai-glow group-hover:shadow-hero-glow group-hover:scale-110 transition-all duration-300">
-                      <link.icon className="h-8 w-8" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-bold text-research-700 text-xl group-hover:text-accent-ai-purple transition-colors duration-300 font-ibm-sans">
-                          {link.name}
-                        </h3>
-                        <ExternalLink className="h-5 w-5 text-research-400 group-hover:text-accent-ai-purple transition-colors duration-300" />
-                      </div>
-                      <p className="text-research-600 leading-relaxed font-ibm-sans">
-                        {link.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Hover Border Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
-                       style={{ padding: '1px' }}>
-                    <div className="w-full h-full bg-white rounded-2xl" />
-                  </div>
+                <div>
+                  <p className="text-base font-semibold text-white">{social.name}</p>
+                  <p className="text-sm text-white/70">{social.description}</p>
                 </div>
-              </motion.a>
+                <ArrowRight className="h-5 w-5 text-white/60 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

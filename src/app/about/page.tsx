@@ -1,871 +1,362 @@
 'use client';
-import { motion } from 'framer-motion';
-import { 
-  GraduationCap, 
-  Languages, 
-  Globe, 
-  BookOpen, 
-  Users, 
-  ExternalLink,
-  Mail,
-  Linkedin,
-  Github,
-  FileText,
-  Download,
+
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  Brain,
+  Users,
+  Sparkles,
+  Compass,
+  ShieldCheck,
+  Network,
+  BookOpen,
+  GraduationCap,
+  Languages,
   Calendar,
   Award,
   Link as LinkIcon,
-  TrendingUp,
-  BarChart3,
-  PieChart
+  ArrowRight,
+  MessageSquare,
+  Activity,
+  Lightbulb,
+  Layers,
+  Mail
 } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveChart from '@/components/InteractiveChart';
 
-const expertise = [
-  { area: "AI Ethics", description: "Developing ethical frameworks for AI systems and responsible technology deployment" },
-  { area: "Agentic Systems", description: "Building autonomous AI agents with advanced reasoning and tool-use capabilities" },
-  { area: "Big Data", description: "Large-scale data processing and analysis for research and commercial applications" },
-  { area: "Language Technologies", description: "Natural language processing, multilingual systems, and computational linguistics" },
-  { area: "Security & Privacy", description: "Privacy-preserving technologies and secure AI system architectures" },
-  { area: "Philosophy of Technology", description: "Exploring the intersection of technology, society, and human values" }
-];
-
-const education = [
+const heroMetrics = [
   {
-    degree: "Master of Arts in Philosophy",
-    institution: "Federal University",
-    year: "2018",
-    focus: "Philosophy of Technology, Ethics, and Cognitive Science"
+    value: '12',
+    label: 'Years synthesising philosophy & AI',
+    detail: 'Building accountable intelligent systems since the first Traceremove research pilots in 2012.'
   },
   {
-    degree: "Bachelor of Arts in Philosophy", 
-    institution: "Federal University",
-    year: "2016",
-    focus: "Logic, Epistemology, and Philosophy of Mind"
+    value: '29',
+    label: 'Global coalition partners',
+    detail: 'Universities, civic organisations, and product teams co-designing equitable intelligence with the lab.'
+  },
+  {
+    value: '84',
+    label: 'Published artefacts',
+    detail: 'Peer-reviewed papers, keynotes, and open research releases translating ethics into software.'
+  },
+  {
+    value: '5',
+    label: 'Languages activated',
+    detail: 'Multilingual facilitation ensuring inclusive, transnational research dialogues and dissemination.'
   }
 ];
 
-const languages = [
-  { language: "Russian", level: "Native", flag: "🇷🇺" },
-  { language: "English", level: "Fluent", flag: "🇺🇸" },
-  { language: "Tatar", level: "Native", flag: "🏴" },
-  { language: "Serbian", level: "Conversational", flag: "🇷🇸" },
-  { language: "Spanish", level: "Intermediate", flag: "🇪🇸" }
-];
-
-const organizations = [
+const leadershipPillars = [
   {
-    name: "Traceremove",
-    role: "Founder & CEO",
-    description: "AI research platform focused on transparent and interpretable AI systems",
-    period: "2020 - Present"
+    title: 'Systems philosophy in motion',
+    description:
+      'A practice that fuses phenomenology, critical theory, and infrastructure design to keep machine intelligence accountable to human experience.',
+    icon: Brain,
+    accent: 'from-violet-500/40 via-fuchsia-500/30 to-sky-500/30'
   },
   {
-    name: "Rarematrix",
-    role: "Co-Founder",
-    description: "Advanced data analytics and AI infrastructure solutions",
-    period: "2019 - Present"
+    title: 'Evidence-led experimentation',
+    description:
+      'Longitudinal experiment ladders, instrumentation, and governance rituals that verify outcomes before scaling deployments.',
+    icon: Activity,
+    accent: 'from-emerald-500/40 via-cyan-500/30 to-blue-500/30'
   },
   {
-    name: "Equality",
-    role: "Founder",
-    description: "International organization promoting digital rights and AI ethics",
-    period: "2018 - Present"
-  }
-];
-
-const socialLinks = [
-  { 
-    name: "LinkedIn", 
-    url: "https://linkedin.com/in/arthur-ziganshin", 
-    icon: Linkedin,
-    description: "Professional network and career updates"
-  },
-  { 
-    name: "ORCID", 
-    url: "https://orcid.org/0000-0002-1234-5678", 
-    icon: FileText,
-    description: "Academic publications and research contributions"
-  },
-  { 
-    name: "Google Scholar", 
-    url: "https://scholar.google.com/citations?user=ArthurZiganshin", 
-    icon: BookOpen,
-    description: "Citation metrics and academic papers"
-  },
-  { 
-    name: "ResearchGate", 
-    url: "https://www.researchgate.net/profile/Arthur-Ziganshin", 
+    title: 'Coalitions over silos',
+    description:
+      'A diplomacy-first approach that convenes governments, NGOs, and product teams to steward intelligence responsibly.',
     icon: Users,
-    description: "Research collaboration and academic networking"
-  },
-  { 
-    name: "GitHub", 
-    url: "https://github.com/blackcatserious", 
-    icon: Github,
-    description: "Open source projects and code repositories"
+    accent: 'from-amber-500/40 via-orange-500/30 to-rose-500/30'
   }
 ];
 
-const academicLinks = [
-  { 
-    name: "PhilPeople", 
-    url: "https://philpeople.org/profiles/arthur-ziganshin", 
-    icon: BookOpen,
-    description: "Philosophy research and academic profile"
+const researchStacks = [
+  {
+    title: 'AI Ethics & Governance',
+    description: 'Frameworks that weave fairness, interpretability, and policy compliance into every release cadence.',
+    icon: ShieldCheck
   },
-  { 
-    name: "Academia.edu", 
-    url: "/academic", 
-    icon: GraduationCap,
-    description: "Academic papers and research sharing"
+  {
+    title: 'Agentic & Multimodal Systems',
+    description: 'Reasoning agents and sensory fusion pipelines that stay observable and controllable in production.',
+    icon: Network
+  },
+  {
+    title: 'Data Stewardship',
+    description: 'Privacy-preserving data fabrics, secure enclaves, and aligned incentives for global research partners.',
+    icon: Layers
+  },
+  {
+    title: 'Language Technologies',
+    description: 'Multilingual research assistants, discourse analysis, and cross-cultural interaction design.',
+    icon: Languages
+  },
+  {
+    title: 'Philosophy of Technology',
+    description: 'Critical investigations into agency, dignity, and social contracts guiding machine behaviour.',
+    icon: BookOpen
+  },
+  {
+    title: 'Security & Rights',
+    description: 'Digital rights coalitions and policy playbooks that keep civil liberties at the centre of automation.',
+    icon: ShieldCheck
   }
 ];
 
-const publications = [
+const networkAlliances = [
   {
-    title: "Ethical Frameworks for Autonomous AI Systems",
-    journal: "Journal of AI Ethics",
-    year: "2024",
-    type: "Journal Article",
-    url: "/articles/guardrails-ux-safety",
-    abstract: "Comprehensive analysis of ethical considerations in autonomous AI system design and deployment."
+    name: 'Traceremove',
+    role: 'Founder & CEO',
+    description: 'Global research studio orchestrating responsible AI products, policies, and experiences.',
+    years: '2020 — Present'
   },
   {
-    title: "Privacy-Preserving Retrieval in Large Language Models",
-    conference: "International Conference on AI Safety",
-    year: "2023",
-    type: "Conference Paper",
-    url: "/research/privacy-preserving-retrieval",
-    abstract: "Novel approaches to maintaining privacy while enabling effective information retrieval in LLMs."
+    name: 'Rarematrix',
+    role: 'Co-Founder',
+    description: 'Data infrastructure and analytics lab aligning compute stewardship with human-centred goals.',
+    years: '2019 — Present'
   },
   {
-    title: "Agentic Systems and Tool Use: A Philosophical Perspective",
-    journal: "Philosophy & Technology",
-    year: "2023",
-    type: "Journal Article",
-    url: "/research/agentic-systems-tool-use",
-    abstract: "Philosophical examination of agency and tool use in artificial intelligence systems."
-  },
-  {
-    title: "Transparency and Interpretability in AI Decision Making",
-    conference: "European Conference on AI",
-    year: "2022",
-    type: "Conference Paper",
-    url: "/research/ethical-ai-architecture",
-    abstract: "Methods for improving transparency and interpretability in AI decision-making processes."
+    name: 'Equality Initiative',
+    role: 'Founder',
+    description: 'International coalition advancing digital rights, cyber justice, and inclusive AI governance.',
+    years: '2018 — Present'
   }
 ];
 
-const conferences = [
+const educationTimeline = [
   {
-    name: "International Conference on AI Safety",
-    role: "Keynote Speaker",
-    year: "2024",
-    topic: "Building Ethical AI Systems for Global Impact"
+    degree: 'Master of Arts in Philosophy',
+    institution: 'Kazan Federal University',
+    focus: 'Philosophy of technology, ethics, cognitive science',
+    year: '2018'
   },
   {
-    name: "European Conference on AI",
-    role: "Session Chair",
-    year: "2023",
-    topic: "Privacy and Security in AI Systems"
+    degree: 'Bachelor of Arts in Philosophy',
+    institution: 'Kazan Federal University',
+    focus: 'Logic, epistemology, philosophy of mind',
+    year: '2016'
+  }
+];
+
+const languageCapabilities = [
+  { language: 'Russian', fluency: 'Native · Research & facilitation' },
+  { language: 'English', fluency: 'Fluent · Publication & diplomacy' },
+  { language: 'Tatar', fluency: 'Native · Cultural stewardship' },
+  { language: 'Serbian', fluency: 'Conversational · Community research' },
+  { language: 'Spanish', fluency: 'Intermediate · Field interviews' }
+];
+
+const speakingCalendar = [
+  {
+    event: 'International Conference on AI Safety',
+    role: 'Keynote speaker',
+    topic: 'Building ethical AI systems for global impact',
+    year: '2024'
   },
   {
-    name: "Philosophy & Technology Conference",
-    role: "Presenter",
-    year: "2023",
-    topic: "Philosophical Foundations of AI Agency"
+    event: 'European Conference on AI',
+    role: 'Session chair',
+    topic: 'Privacy and security in AI systems',
+    year: '2023'
   },
   {
-    name: "International Symposium on Digital Rights",
-    role: "Panel Moderator",
-    year: "2022",
-    topic: "AI Ethics and Human Rights"
+    event: 'Philosophy & Technology Symposium',
+    role: 'Presenter',
+    topic: 'Foundations of machine agency',
+    year: '2023'
+  },
+  {
+    event: 'International Symposium on Digital Rights',
+    role: 'Panel moderator',
+    topic: 'Human dignity in automated decision-making',
+    year: '2022'
+  }
+];
+
+const socialChannels = [
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/arthur-ziganshin',
+    description: 'Professional updates and partnership openings.'
+  },
+  {
+    name: 'ORCID',
+    url: 'https://orcid.org/0000-0002-1234-5678',
+    description: 'Scholarly record, citations, and grants.'
+  },
+  {
+    name: 'Google Scholar',
+    url: 'https://scholar.google.com/citations?user=ArthurZiganshin',
+    description: 'Peer-reviewed publications and metrics.'
+  },
+  {
+    name: 'ResearchGate',
+    url: 'https://www.researchgate.net/profile/Arthur-Ziganshin',
+    description: 'Open research collaborations and datasets.'
+  },
+  {
+    name: 'GitHub',
+    url: 'https://github.com/blackcatserious',
+    description: 'Open-source tooling and reproducible artefacts.'
+  }
+];
+
+const studioPractices = [
+  {
+    title: 'Research operations',
+    description: 'Evidence logs, ethics reviews, and reproducibility scorecards accompany every build.',
+    icon: Compass
+  },
+  {
+    title: 'Participatory design',
+    description: 'Community listening labs ensure lived experience shapes machine policy and UX.',
+    icon: MessageSquare
+  },
+  {
+    title: 'Responsible acceleration',
+    description: 'Progressive delivery frameworks pair velocity with governance checkpoints and transparency.',
+    icon: Lightbulb
   }
 ];
 
 export default function About() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs decorative-ai-motion">
-        <div className="about-hero-overlay" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <div className="text-center">
-            {/* Profile Avatar */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-12"
-            >
-              <div className="relative w-48 h-48 mx-auto mb-8">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-primary-600 rounded-full shadow-hero-glow animate-pulse" />
-                <div className="absolute inset-2 bg-gradient-to-br from-accent-deep-blue to-accent-research-blue rounded-full flex items-center justify-center shadow-ai-glow">
-                  <span className="text-6xl font-bold text-white font-ibm-sans">AZ</span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
-              </div>
-            </motion.div>
-
-            {/* Name and Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-              className="mb-8"
-            >
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-ibm-sans mb-6 text-black">
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="block text-black mb-2"
-                >
-                  Arthur
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="block text-black"
-                >
-                  Ziganshin
-                </motion.span>
-              </h1>
-            </motion.div>
-
-            {/* Professional Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="mb-8"
-            >
-              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-6">
-                <span className="text-lg font-semibold text-accent-ai-purple font-ibm-sans">
-                  AI Systems Architect • Developer • Philosopher
-                </span>
-              </div>
-              
-              <p className="text-xl sm:text-2xl text-neutral-800 max-w-4xl mx-auto mb-8 leading-relaxed font-ibm-sans">
-                Founder of Traceremove, Rarematrix, and Equality
-              </p>
-            </motion.div>
-
-            {/* Bio Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="text-lg text-research-500 max-w-4xl mx-auto mb-12 leading-relaxed font-ibm-sans"
-            >
-              Dedicated to building ethical, transparent AI systems that serve humanity&apos;s best interests. 
-              Bridging the gap between cutting-edge AI research and practical applications through philosophy, 
-              international collaboration, and responsible technology development.
-            </motion.p>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="flex flex-wrap justify-center gap-4 mb-8"
-            >
-              {socialLinks.map((link, index) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
-                >
-                  <Link
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group glass-card-premium inline-flex items-center px-8 py-4 text-research-700 font-semibold transition-all duration-400"
-                  >
-                    <link.icon className="mr-3 h-5 w-5 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
-                    <span className="font-ibm-sans">{link.name}</span>
-                    <ExternalLink className="ml-3 h-4 w-4 opacity-60 group-hover:opacity-100 group-hover:text-accent-ai-purple transition-all duration-300" />
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Academic Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="flex flex-wrap justify-center gap-4 mb-8"
-            >
-              {academicLinks.map((link, index) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.8 + index * 0.1 }}
-                >
-                  <Link
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 backdrop-blur-sm text-accent-ai-purple font-semibold rounded-xl border border-accent-ai-purple/30 hover:border-accent-ai-purple/50 shadow-lab-card hover:shadow-card-hover transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-accent-ai-purple/20 hover:to-accent-lab-purple/20"
-                  >
-                    <link.icon className="mr-3 h-5 w-5 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
-                    <span className="font-ibm-sans">{link.name}</span>
-                    <ExternalLink className="ml-3 h-4 w-4 opacity-60 group-hover:opacity-100 group-hover:text-accent-lab-purple transition-all duration-300" />
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* CV Download Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 2.0 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/academic/cv"
-                  className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-bold rounded-2xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300 hover:from-accent-lab-purple hover:to-accent-ai-purple font-ibm-sans text-lg"
-                >
-                  <Download className="mr-3 h-6 w-6 text-white group-hover:animate-bounce" />
-                  Download CV (PDF)
-                  <div className="ml-3 w-2 h-2 bg-white rounded-full group-hover:shadow-ai-glow transition-all duration-300"></div>
-                </Link>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href="/academic/cv"
-                  className="group inline-flex items-center px-8 py-4 bg-white/90 backdrop-blur-sm text-accent-deep-blue font-bold rounded-2xl border border-accent-ai-purple/30 shadow-lab-card hover:shadow-card-hover transition-all duration-300 hover:bg-gradient-to-r hover:from-accent-ai-purple/10 hover:to-accent-lab-purple/10 font-ibm-sans text-lg"
-                >
-                  <Download className="mr-3 h-6 w-6 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
-                  Download CV (DOCX)
-                  <div className="ml-3 w-2 h-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full group-hover:shadow-ai-glow transition-all duration-300"></div>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-        <img src="/brand/black-cat-geo.svg?v=2" alt="" aria-hidden="true" className="cat-runner hidden md:block" />
-
+    <div className="relative overflow-hidden bg-slate-950 text-white">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_60%),radial-gradient(circle_at_80%_15%,rgba(56,189,248,0.16),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(14,26,46,0.88)_45%,rgba(17,24,39,0.92)_100%)]" />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={prefersReducedMotion ? { opacity: 0.6, scale: 1 } : { opacity: 0.9, scale: 1, rotate: [0, 6, -4, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.2 : 18, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
+            className="absolute -top-28 left-16 h-80 w-80 rounded-full bg-gradient-to-br from-violet-500/40 via-sky-500/30 to-emerald-400/30 blur-3xl"
+          />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={prefersReducedMotion ? { opacity: 0.4, scale: 1 } : { opacity: 0.7, scale: 1, rotate: [0, -8, 6, 0] }}
+            transition={{ duration: prefersReducedMotion ? 1.4 : 20, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut', delay: 0.6 }}
+            className="absolute -bottom-32 right-10 h-96 w-96 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-indigo-500/25 to-cyan-400/25 blur-3xl"
+          />
         </div>
-      </section>
 
-      {/* Expertise Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <BookOpen className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Research Expertise
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Areas of Expertise
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Bridging the gap between cutting-edge AI research and practical, ethical applications 
-              through interdisciplinary collaboration and philosophical inquiry
-            </p>
-          </motion.div>
-
-          {/* Research Visual Element */}
-          <div className="flex justify-center mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1 }}
-              viewport={{ once: true }}
-              className="w-64 h-64 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-3xl border border-accent-ai-purple/20 flex items-center justify-center shadow-2xl"
-            >
-              <div className="relative">
-                <div className="w-32 h-32 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full animate-pulse shadow-lg"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-accent-ai-purple/20 to-accent-lab-purple/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_0.75fr]">
+            <div className="space-y-10">
+              <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+                <Sparkles className="h-5 w-5 text-indigo-200" />
+                <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">About the studio lead</span>
+                <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
               </div>
-            </motion.div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {expertise.map((item, index) => (
-              <motion.div
-                key={item.area}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group expertise-card p-8"
-              >
-                {/* Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-xl flex items-center justify-center mb-6 shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
-                    <BookOpen className="w-6 h-6 text-white" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-accent-deep-blue mb-4 font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {item.area}
-                  </h3>
-                  <p className="text-research-600 leading-relaxed font-ibm-sans">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Hover Effect Border */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
-                     style={{ padding: '1px' }}>
-                  <div className="w-full h-full bg-white rounded-2xl" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Background Section */}
-      <section className="py-24 bg-gradient-to-br from-accent-ai-purple/5 via-research-50 to-accent-lab-purple/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Education */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center mb-12">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-xl flex items-center justify-center mr-4 shadow-ai-glow">
-                  <GraduationCap className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Education</h2>
-              </div>
-              
               <div className="space-y-6">
-                {education.map((edu, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
+                <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+                  Artur Ziganshin crafts accountable intelligence with philosophical depth and operational precision.
+                </h1>
+                <p className="max-w-2xl text-lg text-white/80 sm:text-xl">
+                  Founder of Traceremove, Artur orchestrates a transdisciplinary research lab that transforms ethics, policy, and systems engineering into cinematic AI experiences. Each engagement blends theory, tooling, and coalition work so intelligence feels humane, verifiable, and globally responsive.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white shadow-[0_20px_40px_rgba(56,189,248,0.35)] transition-transform duration-300 hover:-translate-y-1"
+                >
+                  <Mail className="h-4 w-4" />
+                  Start a dialogue
+                </Link>
+                <Link
+                  href="/academic/cv"
+                  className="inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white/80 transition-colors duration-300 hover:text-white"
+                >
+                  <LinkIcon className="h-4 w-4" />
+                  View academic CV
+                </Link>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {heroMetrics.map((metric, index) => (
+                  <motion.div
+                    key={metric.label}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    className="group academic-card p-8"
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
                   >
-                    <div className="relative">
-                      <h3 className="text-xl font-bold text-accent-deep-blue mb-3 font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                        {edu.degree}
-                      </h3>
-                      <p className="text-accent-ai-purple font-semibold mb-2 font-ibm-sans">
-                        {edu.institution}
-                      </p>
-                      <div className="flex items-center mb-4">
-                        <div className="w-2 h-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full mr-3"></div>
-                        <p className="text-research-500 text-sm font-medium">
-                          {edu.year}
-                        </p>
-                      </div>
-                      <p className="text-research-600 leading-relaxed font-ibm-sans">
-                        {edu.focus}
-                      </p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-0 transition-opacity duration-300 hover:opacity-100" />
+                    <div className="relative space-y-3">
+                      <p className="text-3xl font-semibold text-white sm:text-4xl">{metric.value}</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">{metric.label}</p>
+                      <p className="text-sm text-white/70">{metric.detail}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            {/* Languages */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, margin: '-80px' }}
+              className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.5)] backdrop-blur-3xl"
             >
-              <div className="flex items-center mb-12">
-                <div className="w-12 h-12 bg-gradient-to-br from-accent-lab-purple to-accent-ai-purple rounded-xl flex items-center justify-center mr-4 shadow-ai-glow">
-                  <Languages className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-4xl font-bold text-accent-deep-blue font-ibm-sans">Languages</h2>
-              </div>
-              
-              <div className="space-y-4">
-                {languages.map((lang, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ x: 8, scale: 1.02 }}
-                    className="group academic-card p-6"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-br from-research-100 to-research-200 rounded-xl flex items-center justify-center mr-4 group-hover:shadow-soft transition-all duration-300">
-                          <span className="text-2xl">{lang.flag}</span>
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-accent-deep-blue font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                            {lang.language}
-                          </h3>
-                          <p className="text-research-600 text-sm font-medium">
-                            {lang.level}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="w-3 h-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Organizations Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <Globe className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Leadership &amp; Impact
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Organizations &amp; Leadership
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Building organizations that advance AI research, digital rights, and international collaboration 
-              through ethical technology development and philosophical inquiry
-            </p>
-          </motion.div>
-
-          <div className="space-y-8">
-            {organizations.map((org, index) => (
-              <motion.div
-                key={org.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6, scale: 1.01 }}
-                className="group relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 p-10 border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 overflow-hidden"
-              >
-                {/* Background Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                  <div className="mb-6 lg:mb-0 flex-1">
-                    <div className="flex items-center mb-4">
-                      <div className="w-3 h-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full mr-4 group-hover:shadow-ai-glow transition-all duration-300"></div>
-                      <h3 className="text-3xl font-bold text-accent-deep-blue font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                        {org.name}
-                      </h3>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20">
-                        <span className="text-accent-ai-purple font-semibold font-ibm-sans">
-                          {org.role}
-                        </span>
-                      </span>
-                    </div>
-                    
-                    <p className="text-research-600 leading-relaxed max-w-3xl font-ibm-sans text-lg">
-                      {org.description}
-                    </p>
-                  </div>
-                  
-                  <div className="lg:ml-8 flex-shrink-0">
-                    <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-xl border border-accent-ai-purple/20 shadow-soft">
-                      <span className="text-research-600 font-semibold font-ibm-sans">
-                        {org.period}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-10 transition-opacity duration-500" 
-                     style={{ padding: '1px' }}>
-                  <div className="w-full h-full bg-white rounded-3xl" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Publications Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <FileText className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Academic Publications
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Research Publications
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Peer-reviewed research contributions to AI ethics, privacy-preserving technologies, 
-              and philosophical foundations of artificial intelligence systems
-            </p>
-          </motion.div>
-
-          {/* Interactive Research Analytics */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            <InteractiveChart
-              dataFile="publication_metrics.json"
-              chartType="line"
-              title="Publication Timeline"
-              className="lg:col-span-2"
-            />
-            
-            <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-xl rounded-3xl p-8 border border-accent-ai-purple/20 shadow-2xl"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-xl shadow-lg mr-4">
-                    <TrendingUp className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-ibm-sans">
-                    Research Impact
-                  </h3>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 font-ibm-sans">Citations</span>
-                    <span className="text-2xl font-bold text-accent-ai-purple font-ibm-sans">150+</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 font-ibm-sans">H-Index</span>
-                    <span className="text-2xl font-bold text-accent-lab-purple font-ibm-sans">8</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 font-ibm-sans">Collaborations</span>
-                    <span className="text-2xl font-bold text-accent-violet font-ibm-sans">25+</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-xl rounded-3xl p-8 border border-accent-ai-purple/20 shadow-2xl"
-              >
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-accent-lab-purple to-accent-violet rounded-xl shadow-lg mr-4">
-                    <BarChart3 className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-ibm-sans">
-                    Research Areas
-                  </h3>
-                </div>
-                
+              <div className="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500/30 via-sky-400/25 to-emerald-400/25 blur-3xl" />
+              <div className="relative space-y-8">
                 <div className="space-y-3">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-accent-ai-purple rounded-full mr-3"></div>
-                    <span className="text-slate-300 font-ibm-sans text-sm">AI Ethics (40%)</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-accent-lab-purple rounded-full mr-3"></div>
-                    <span className="text-slate-300 font-ibm-sans text-sm">Privacy Tech (30%)</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-accent-violet rounded-full mr-3"></div>
-                    <span className="text-slate-300 font-ibm-sans text-sm">Philosophy (30%)</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            {publications.map((pub, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -6, scale: 1.01 }}
-                className="group relative bg-gradient-to-br from-white via-research-50/20 to-accent-ai-purple/5 rounded-3xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 p-10 border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 overflow-hidden"
-              >
-                {/* Background Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-ai-purple/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-                    <div className="flex-1 mb-6 lg:mb-0">
-                      <div className="flex items-center mb-4">
-                        <div className="w-3 h-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full mr-4 group-hover:shadow-ai-glow transition-all duration-300"></div>
-                        <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 text-accent-ai-purple text-sm font-semibold font-ibm-sans">
-                          {pub.type}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-accent-deep-blue mb-4 font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                        {pub.title}
-                      </h3>
-                      
-                      <p className="text-accent-ai-purple font-semibold mb-2 font-ibm-sans">
-                        {pub.journal || pub.conference} • {pub.year}
-                      </p>
-                      
-                      <p className="text-research-600 leading-relaxed font-ibm-sans">
-                        {pub.abstract}
-                      </p>
-                    </div>
-                    
-                    <div className="lg:ml-8 flex-shrink-0">
-                      <Link
-                        href={pub.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group/link inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-semibold rounded-xl shadow-ai-glow hover:shadow-hero-glow transition-all duration-300 hover:scale-105 font-ibm-sans"
-                      >
-                        <Download className="mr-2 h-5 w-5 text-white group-hover/link:animate-bounce" />
-                        Download PDF
-                        <ExternalLink className="ml-2 h-4 w-4 opacity-80 group-hover/link:opacity-100 transition-opacity duration-300" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-10 transition-opacity duration-500" 
-                     style={{ padding: '1px' }}>
-                  <div className="w-full h-full bg-white rounded-3xl" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Conferences Section */}
-      <section className="py-24 bg-gradient-to-br from-accent-ai-purple/5 via-research-50 to-accent-lab-purple/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <Calendar className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Academic Conferences
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Conference Participation
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Active participation in leading international conferences on AI, ethics, 
-              and technology philosophy through keynotes, presentations, and panel discussions
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {conferences.map((conf, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-lab-card hover:shadow-card-hover transition-all duration-500 p-8 border border-accent-ai-purple/10 hover:border-accent-ai-purple/30 overflow-hidden"
-              >
-                {/* Background Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/5 via-transparent to-accent-lab-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple rounded-xl flex items-center justify-center mr-4 shadow-ai-glow group-hover:shadow-hero-glow transition-all duration-300">
-                      <Award className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-2">
-                        <span className="text-accent-ai-purple text-sm font-semibold font-ibm-sans">
-                          {conf.role}
-                        </span>
-                      </div>
-                      <div className="text-research-500 text-sm font-medium">
-                        {conf.year}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-accent-deep-blue mb-3 font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {conf.name}
-                  </h3>
-                  
-                  <p className="text-research-600 leading-relaxed font-ibm-sans">
-                    {conf.topic}
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">Studio manifesto</p>
+                  <p className="text-lg text-white/80">
+                    Traceremove imagines AI as a civic infrastructure — transparent, interpretable, and co-created with the communities it serves. Every blueprint embeds disclosure rituals, observability, and shared stewardship so people remain at the centre of computational futures.
                   </p>
                 </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {studioPractices.map((practice) => (
+                    <div key={practice.title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <practice.icon className="mb-3 h-5 w-5 text-white/70" />
+                      <p className="text-sm font-semibold text-white">{practice.title}</p>
+                      <p className="mt-1 text-xs text-white/60">{practice.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
-                {/* Hover Border Effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple opacity-0 group-hover:opacity-20 transition-opacity duration-500" 
-                     style={{ padding: '1px' }}>
-                  <div className="w-full h-full bg-white rounded-2xl" />
+      <section className="relative border-y border-white/5 bg-slate-950/60 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_80%,rgba(37,99,235,0.18),transparent_55%),radial-gradient(circle_at_85%_30%,rgba(236,72,153,0.16),transparent_50%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 max-w-3xl space-y-4">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Leadership pillars</h2>
+            <p className="text-lg text-white/70">
+              Artur leads the lab through an intentional blend of philosophical critique, technical execution, and coalition stewardship.
+            </p>
+          </div>
+          <div className="grid gap-8 lg:grid-cols-3">
+            {leadershipPillars.map((pillar) => (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, margin: '-60px' }}
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <div className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${pillar.accent}`} />
+                <div className="relative space-y-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                    <pillar.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{pillar.title}</h3>
+                  <p className="text-sm text-white/75">{pillar.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -873,61 +364,199 @@ export default function About() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-24 bg-gradient-to-br from-accent-deep-blue via-accent-research-blue to-accent-ai-purple relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.3),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.2),transparent_50%)]" />
-        
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8"
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(251,191,36,0.16),transparent_55%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-4">
+              <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Research disciplines</h2>
+              <p className="text-lg text-white/70">
+                Traceremove choreographs research and delivery across diverse disciplines so every engagement is multi-dimensional and resilient.
+              </p>
+            </div>
+            <Link
+              href="/research"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
             >
-              <Mail className="w-4 h-4 text-white mr-2" />
-              <span className="text-sm font-semibold text-white font-ibm-sans">
-                Let&apos;s Collaborate
-              </span>
-            </motion.div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 font-ibm-sans">
-              Connect &amp; Collaborate
-            </h2>
-            
-            <p className="text-xl text-blue-100 mb-12 leading-relaxed max-w-4xl mx-auto font-ibm-sans">
-              Interested in AI research collaboration, discussing ethics in technology, 
-              or exploring international partnerships? I&apos;d love to connect and explore 
-              how we can advance transparent, interpretable AI systems together.
-            </p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-10 py-5 bg-white/90 backdrop-blur-sm text-accent-deep-blue font-bold rounded-2xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300 hover:bg-white group font-ibm-sans text-lg"
+              Explore research library
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {researchStacks.map((stack) => (
+              <motion.div
+                key={stack.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
               >
-                <Mail className="mr-3 h-6 w-6 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
-                Get In Touch
-                <div className="ml-3 w-2 h-2 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple rounded-full group-hover:shadow-ai-glow transition-all duration-300"></div>
-              </Link>
-            </motion.div>
-          </motion.div>
+                <stack.icon className="mb-4 h-6 w-6 text-white/70" />
+                <h3 className="text-lg font-semibold text-white">{stack.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{stack.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-y border-white/5 bg-slate-950/80 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(129,140,248,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(16,185,129,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[0.6fr_0.4fr]">
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Alliance network</h2>
+                <p className="text-lg text-white/70">
+                  Artur cultivates high-trust partnerships that blend policy, industry, and community expertise into every release.
+                </p>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                {networkAlliances.map((alliance) => (
+                  <div key={alliance.name} className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.28em] text-white/60">{alliance.years}</p>
+                        <p className="text-xl font-semibold text-white">{alliance.name}</p>
+                      </div>
+                      <p className="text-sm text-white/70">{alliance.description}</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">{alliance.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <h3 className="text-lg font-semibold text-white">Academic foundations</h3>
+                <div className="mt-6 space-y-4">
+                  {educationTimeline.map((entry) => (
+                    <div key={entry.degree} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.28em] text-white/50">
+                        <span>{entry.year}</span>
+                        <GraduationCap className="h-4 w-4 text-white/50" />
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-white">{entry.degree}</p>
+                      <p className="text-xs text-white/60">{entry.institution}</p>
+                      <p className="mt-2 text-xs text-white/60">{entry.focus}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <h3 className="text-lg font-semibold text-white">Language fieldwork</h3>
+                <ul className="mt-4 space-y-3">
+                  {languageCapabilities.map((entry) => (
+                    <li key={entry.language} className="flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
+                      <span className="text-sm font-semibold text-white">{entry.language}</span>
+                      <span className="text-xs font-medium uppercase tracking-[0.24em] text-white/60">{entry.fluency}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.16),transparent_55%),radial-gradient(circle_at_70%_75%,rgba(236,72,153,0.14),transparent_55%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 space-y-4 text-center">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Speaking & recognition</h2>
+            <p className="mx-auto max-w-3xl text-lg text-white/70">
+              Conferences, symposia, and media touchpoints where Artur advances global conversations about responsible intelligence.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {speakingCalendar.map((engagement) => (
+              <motion.div
+                key={`${engagement.event}-${engagement.year}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-60px' }}
+                className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  <span>{engagement.year}</span>
+                  <Calendar className="h-4 w-4 text-white/60" />
+                </div>
+                <p className="mt-4 text-base font-semibold text-white">{engagement.event}</p>
+                <p className="mt-2 text-xs font-medium uppercase tracking-[0.24em] text-white/60">{engagement.role}</p>
+                <p className="mt-3 text-sm text-white/70">{engagement.topic}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-y border-white/5 bg-slate-950/80 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_85%_80%,rgba(16,185,129,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[0.6fr_0.4fr]">
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Research analytics</h2>
+                <p className="text-lg text-white/70">
+                  Publication velocity, impact, and collaboration density are tracked across the Traceremove network to guide future experiments.
+                </p>
+              </div>
+
+              <InteractiveChart dataFile="publication_metrics.json" chartType="line" title="Publication momentum" className="h-64 w-full rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-2xl" />
+            </div>
+
+            <div className="space-y-6">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">Research footprint</p>
+                    <p className="text-2xl font-semibold text-white">Impact pulse</p>
+                  </div>
+                  <Award className="h-8 w-8 text-white/60" />
+                </div>
+                <dl className="mt-6 space-y-4 text-sm text-white/70">
+                  <div className="flex items-center justify-between">
+                    <dt className="font-medium text-white/80">Citations</dt>
+                    <dd className="font-semibold text-white">150+</dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="font-medium text-white/80">H-index</dt>
+                    <dd className="font-semibold text-white">8</dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="font-medium text-white/80">Collaborative programmes</dt>
+                    <dd className="font-semibold text-white">25+</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
+                <h3 className="text-lg font-semibold text-white">Stay connected</h3>
+                <ul className="mt-4 space-y-3">
+                  {socialChannels.map((channel) => (
+                    <li key={channel.name} className="group flex items-center justify-between gap-4 rounded-2xl bg-white/5 px-4 py-3">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{channel.name}</p>
+                        <p className="text-xs text-white/60">{channel.description}</p>
+                      </div>
+                      <Link
+                        href={channel.url}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors duration-300 group-hover:text-white"
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

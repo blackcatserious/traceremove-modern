@@ -1,421 +1,321 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { 
-  Brain, 
-  BookOpen, 
-  Lightbulb, 
-  Users, 
-  Globe, 
-  Target,
-  ArrowRight,
-  Quote,
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  Brain,
+  Lightbulb,
   Sparkles,
   Eye,
   Heart,
-  Zap
+  Feather,
+  QuoteIcon,
+  Scale,
+  Infinity as InfinityIcon,
+  ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
 
 const philosophicalAreas = [
   {
-    title: "Philosophy of Technology",
-    description: "Examining the relationship between technology, society, and human values. Exploring how AI systems shape and are shaped by philosophical frameworks.",
+    title: 'Philosophy of technology',
+    description: 'Investigates how sociotechnical systems sculpt agency, power, and everyday rituals across cultures.',
     icon: Brain,
-    gradient: "from-blue-500 to-purple-600",
-    keyTopics: ["Technological Determinism", "Human-AI Interaction", "Digital Ethics", "Posthuman Philosophy"]
+    palette: 'from-violet-500/40 via-fuchsia-500/30 to-sky-500/30',
+    topics: ['Technological determinism', 'Participatory infrastructures', 'Digital ethics', 'Posthuman philosophy']
   },
   {
-    title: "AI Ethics & Responsibility",
-    description: "Developing ethical frameworks for AI systems that prioritize human dignity, fairness, and social justice in technological advancement.",
+    title: 'AI ethics & responsibility',
+    description: 'Designs normative frameworks that align machine decision-making with human dignity and collective flourishing.',
     icon: Heart,
-    gradient: "from-purple-500 to-pink-600",
-    keyTopics: ["Algorithmic Fairness", "AI Governance", "Moral Agency", "Responsible Innovation"]
+    palette: 'from-rose-500/40 via-purple-500/30 to-orange-500/30',
+    topics: ['Algorithmic governance', 'Moral agency', 'Responsible innovation', 'Rights-preserving design']
   },
   {
-    title: "Epistemology & AI",
-    description: "Investigating how AI systems acquire, process, and represent knowledge. Exploring the philosophical foundations of machine learning and reasoning.",
+    title: 'Epistemology & intelligence',
+    description: 'Explores how AI acquires, represents, and justifies knowledge within contested epistemic communities.',
     icon: Eye,
-    gradient: "from-green-500 to-teal-600",
-    keyTopics: ["Machine Knowledge", "Interpretability", "Epistemic Justice", "Computational Epistemology"]
+    palette: 'from-emerald-500/35 via-teal-500/30 to-cyan-500/30',
+    topics: ['Machine hermeneutics', 'Interpretability', 'Epistemic justice', 'Knowledge provenance']
   },
   {
-    title: "Philosophy of Mind & Agency",
-    description: "Examining questions of consciousness, agency, and intentionality in artificial systems. Bridging cognitive science and AI development.",
+    title: 'Mind, agency, and embodiment',
+    description: 'Interrogates consciousness, intentionality, and embodiment to choreograph humane collaborations with AI.',
     icon: Lightbulb,
-    gradient: "from-orange-500 to-red-600",
-    keyTopics: ["Artificial Agency", "Consciousness Studies", "Intentionality", "Cognitive Architecture"]
+    palette: 'from-amber-500/40 via-orange-500/30 to-red-500/30',
+    topics: ['Artificial agency', 'Embodied cognition', 'Distributed mind', 'Situated intelligence']
   }
 ];
 
 const philosophicalWorks = [
   {
-    title: "The Ethics of Agentic AI Systems",
-    type: "Research Paper",
-    year: "2024",
-    description: "A comprehensive examination of moral agency in autonomous AI systems and the philosophical implications of machine decision-making.",
-    url: "/philosophy/ethics-agentic-ai-systems.pdf"
+    title: 'The ethics of agentic AI systems',
+    type: 'Research paper',
+    year: '2024',
+    description: 'A comprehensive examination of moral accountability in autonomous systems and the obligations of designers.',
+    href: '/philosophy/ethics-agentic-ai-systems.pdf'
   },
   {
-    title: "Technology, Society, and Human Flourishing",
-    type: "Book Chapter",
-    year: "2023",
-    description: "Exploring how technological advancement can be aligned with human values and social well-being through philosophical inquiry.",
-    url: "/philosophy/technology-society-flourishing.pdf"
+    title: 'Technology, society, and human flourishing',
+    type: 'Book chapter',
+    year: '2023',
+    description: 'Frameworks for aligning computation with human values through participatory governance and civic imagination.',
+    href: '/philosophy/technology-society-flourishing.pdf'
   },
   {
-    title: "Epistemic Responsibility in AI Development",
-    type: "Journal Article",
-    year: "2023",
-    description: "Investigating the epistemic duties of AI researchers and developers in creating knowledge-generating systems.",
-    url: "/philosophy/epistemic-responsibility-ai.pdf"
+    title: 'Epistemic responsibility in AI development',
+    type: 'Journal article',
+    year: '2023',
+    description: 'Investigates duties of care for research teams curating, labelling, and deploying data-intensive systems.',
+    href: '/philosophy/epistemic-responsibility-ai.pdf'
   },
   {
-    title: "Digital Rights and Human Dignity",
-    type: "Conference Paper",
-    year: "2022",
-    description: "Philosophical foundations for digital rights frameworks that protect human dignity in the age of AI and automation.",
-    url: "/philosophy/digital-rights-human-dignity.pdf"
+    title: 'Digital rights and human dignity',
+    type: 'Conference paper',
+    year: '2022',
+    description: 'Philosophical foundations for rights-preserving infrastructures in a world of pervasive automation.',
+    href: '/philosophy/digital-rights-human-dignity.pdf'
   }
 ];
 
 const philosophicalQuotes = [
   {
-    text: "Technology is not neutral. It embodies the values, assumptions, and intentions of its creators. Our responsibility is to ensure these align with human flourishing.",
-    context: "On Technology Ethics"
+    quote: 'Technology is never neutral; it is an argument about how we choose to live together. Our task is to script these arguments for collective thriving.',
+    context: 'On technology ethics'
   },
   {
-    text: "The question is not whether AI can think, but whether we can think responsibly about AI's role in human society.",
-    context: "On AI Philosophy"
+    quote: 'The question is not whether AI can think, but whether we can think responsibly about the agency we grant to machines.',
+    context: 'On AI philosophy'
   },
   {
-    text: "True progress in AI requires not just technical advancement, but philosophical wisdom about what it means to be human in a world of intelligent machines.",
-    context: "On Human-AI Coexistence"
+    quote: 'Progress in intelligence requires philosophical courage – to interrogate what it means to remain human amid algorithmic futures.',
+    context: 'On human-AI coexistence'
+  }
+];
+
+const guidingPrinciples = [
+  {
+    title: 'Human dignity first',
+    description: 'Design choices begin with the lived experiences of people most impacted by automation, centring justice and accessibility.',
+    icon: Feather
+  },
+  {
+    title: 'Transparency by default',
+    description: 'Every system earns trust through legible documentation, participatory oversight, and reproducible evidence.',
+    icon: Scale
+  },
+  {
+    title: 'Futures thinking',
+    description: 'Philosophical foresight maps long-term social consequences so intelligence evolves responsibly.',
+    icon: InfinityIcon
   }
 ];
 
 export default function Philosophy() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-research-50 via-white to-lab-50">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
-        
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-deep-blue/5 via-accent-ai-purple/5 to-accent-lab-purple/10 z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.1),transparent_50%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.08),transparent_50%)] z-10" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
-          <div className="text-center">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8"
-            >
-              <Brain className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Philosophy of Technology
-              </span>
-            </motion.div>
+    <div className="relative overflow-hidden bg-slate-950 text-white">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_78%_18%,rgba(236,72,153,0.16),transparent_50%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,18,36,0.9)_45%,rgba(17,24,39,0.94)_100%)]" />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.6, scale: 1 } : { opacity: 0.85, scale: 1, rotate: [0, 8, -6, 0] }}
+            transition={{
+              duration: prefersReducedMotion ? 1.2 : 18,
+              repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
+              ease: 'easeInOut'
+            }}
+            className="absolute -top-24 left-10 h-72 w-72 rounded-full bg-gradient-to-br from-indigo-500/35 via-violet-500/25 to-sky-400/25 blur-3xl"
+          />
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={prefersReducedMotion ? { opacity: 0.45, scale: 1 } : { opacity: 0.7, scale: 1, rotate: [0, -10, 8, 0] }}
+            transition={{
+              duration: prefersReducedMotion ? 1.4 : 20,
+              repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
+              ease: 'easeInOut',
+              delay: 0.6
+            }}
+            className="absolute -bottom-28 right-10 h-80 w-80 rounded-full bg-gradient-to-br from-rose-500/30 via-purple-500/25 to-cyan-400/25 blur-3xl"
+          />
+        </div>
 
-            {/* Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-8"
-            >
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-ibm-sans mb-6">
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="block text-accent-deep-blue mb-2"
-                >
-                  Philosophy &amp;
-                </motion.span>
-                <motion.span 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="block bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 bg-clip-text text-transparent"
-                >
-                  Technology
-                </motion.span>
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="space-y-10 text-center">
+            <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+              <Sparkles className="h-5 w-5 text-indigo-200" />
+              <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Philosophy of intelligence</span>
+              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
+            </div>
+
+            <div className="space-y-6">
+              <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+                Theory and critique to choreograph accountable intelligence.
               </h1>
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-xl sm:text-2xl text-research-600 max-w-4xl mx-auto mb-12 leading-relaxed font-ibm-sans"
-            >
-              Exploring the philosophical foundations of artificial intelligence, technology ethics, 
-              and the intersection of human values with technological advancement. Bridging ancient wisdom 
-              with contemporary challenges in AI development and deployment.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <Link
-                href="/philosophy/works"
-                className="group glass-card-premium inline-flex items-center px-8 py-4 text-research-700 font-semibold transition-all duration-400"
-              >
-                <BookOpen className="mr-3 h-5 w-5 text-accent-ai-purple group-hover:text-accent-lab-purple transition-colors duration-300" />
-                <span className="font-ibm-sans">Philosophical Works</span>
-                <ArrowRight className="ml-3 h-4 w-4 opacity-60 group-hover:opacity-100 group-hover:text-accent-ai-purple transition-all duration-300" />
-              </Link>
-              
-              <Link
-                href="/philosophy/ethics-framework"
-                className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-accent-ai-purple to-accent-lab-purple text-white font-bold rounded-2xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300 hover:from-accent-lab-purple hover:to-accent-ai-purple font-ibm-sans"
-              >
-                <Heart className="mr-3 h-5 w-5 text-white" />
-                Ethics Framework
-                <Sparkles className="ml-3 h-4 w-4 text-white group-hover:animate-pulse" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophical Areas Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <Lightbulb className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Areas of Inquiry
-              </span>
+              <p className="mx-auto max-w-3xl text-lg text-white/75 sm:text-xl">
+                Philosophy is the compass of Traceremove. Artur’s research blends critical theory, ethics, and futures thinking to design machine intelligence that honours human dignity, interrogates power, and invites collective stewardship.
+              </p>
             </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Philosophical Research Areas
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Investigating fundamental questions at the intersection of philosophy, technology, and human experience
-            </p>
-          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {philosophicalAreas.map((area, index) => (
-              <motion.div
-                key={area.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="glass-card-research group hover:shadow-card-hover transition-all duration-300"
-              >
-                <div className="p-8">
-                  <div className="flex items-center mb-6">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${area.gradient} flex items-center justify-center shadow-lab-card`}>
-                      <area.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-accent-deep-blue ml-4 font-ibm-sans">
-                      {area.title}
-                    </h3>
-                  </div>
-                  
-                  <p className="text-research-600 mb-6 leading-relaxed font-ibm-sans">
-                    {area.description}
-                  </p>
-                  
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-accent-ai-purple mb-3 font-ibm-sans">
-                      Key Topics:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {area.keyTopics.map((topic) => (
-                        <span
-                          key={topic}
-                          className="px-3 py-1 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 text-accent-ai-purple text-sm rounded-full border border-accent-ai-purple/20 font-ibm-sans"
-                        >
-                          {topic}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophical Works Section */}
-      <section className="py-24 bg-gradient-to-br from-lab-50 to-research-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <BookOpen className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Publications
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Philosophical Works
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Academic publications exploring the philosophical dimensions of AI, technology, and human society
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {philosophicalWorks.map((work, index) => (
-              <motion.div
-                key={work.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="glass-card-premium group hover:shadow-card-hover transition-all duration-300"
-              >
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-3 py-1 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 text-accent-ai-purple text-sm rounded-full border border-accent-ai-purple/20 font-ibm-sans">
-                      {work.type}
-                    </span>
-                    <span className="text-research-500 text-sm font-ibm-sans">
-                      {work.year}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-accent-deep-blue mb-4 font-ibm-sans group-hover:text-accent-ai-purple transition-colors duration-300">
-                    {work.title}
-                  </h3>
-                  
-                  <p className="text-research-600 mb-6 leading-relaxed font-ibm-sans">
-                    {work.description}
-                  </p>
-                  
-                  <Link
-                    href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-accent-ai-purple font-semibold hover:text-accent-lab-purple transition-colors duration-300 font-ibm-sans"
-                  >
-                    Read Paper
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophical Quotes Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent-ai-purple/10 to-accent-lab-purple/10 rounded-full border border-accent-ai-purple/20 mb-8">
-              <Quote className="w-5 h-5 text-accent-ai-purple mr-2" />
-              <span className="text-sm font-semibold text-accent-ai-purple font-ibm-sans">
-                Philosophical Insights
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-accent-deep-blue mb-6 font-ibm-sans">
-              Key Insights
-            </h2>
-            <p className="text-xl text-research-600 max-w-3xl mx-auto leading-relaxed font-ibm-sans">
-              Reflections on technology, ethics, and the human condition in the age of artificial intelligence
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {philosophicalQuotes.map((quote, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="glass-card-hero text-center group hover:shadow-card-hover transition-all duration-300"
-              >
-                <div className="p-8">
-                  <Quote className="w-12 h-12 text-accent-ai-purple mx-auto mb-6 opacity-60" />
-                  
-                  <blockquote className="text-lg text-research-700 mb-6 leading-relaxed font-ibm-sans italic">
-                    &ldquo;{quote.text}&rdquo;
-                  </blockquote>
-                  
-                  <cite className="text-accent-ai-purple font-semibold font-ibm-sans">
-                    {quote.context}
-                  </cite>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-24 bg-gradient-to-br from-accent-deep-blue via-accent-ai-purple to-accent-lab-purple">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 font-ibm-sans">
-              Join the Philosophical Dialogue
-            </h2>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed font-ibm-sans">
-              Engage with cutting-edge philosophical research on AI, technology, and human values. 
-              Contribute to the conversation shaping our technological future.
-            </p>
-            
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/contact"
-                className="group inline-flex items-center px-8 py-4 bg-white text-accent-deep-blue font-bold rounded-2xl shadow-hero-glow hover:shadow-ai-glow transition-all duration-300 hover:bg-gradient-to-r hover:from-white hover:to-lab-50 font-ibm-sans text-lg"
+                href="/articles"
+                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white shadow-[0_18px_40px_rgba(56,189,248,0.35)] transition-transform duration-300 hover:-translate-y-1"
               >
-                <Users className="mr-3 h-6 w-6 text-accent-ai-purple" />
-                Collaborate
-                <ArrowRight className="ml-3 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                Read latest essays
+                <ArrowRight className="h-4 w-4" />
               </Link>
-              
               <Link
-                href="/research"
-                className="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl border border-white/30 hover:border-white/50 shadow-lab-card hover:shadow-card-hover transition-all duration-300 hover:bg-white/20 font-ibm-sans text-lg"
+                href="/academic/ethics-syllabi"
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
               >
-                <Brain className="mr-3 h-6 w-6 text-white" />
-                Explore Research
-                <ArrowRight className="ml-3 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                Teaching materials
               </Link>
             </div>
-          </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_80%_60%,rgba(56,189,248,0.14),transparent_55%)]" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 space-y-4 text-left">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Philosophical terrains</h2>
+            <p className="max-w-3xl text-lg text-white/70">
+              Each discipline grounds Traceremove’s research in rigorous theory, ensuring design choices honour cultural nuance, justice, and long-term planetary wellbeing.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {philosophicalAreas.map((area) => (
+              <motion.div
+                key={area.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <div className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${area.palette}`} />
+                <div className="relative space-y-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                    <area.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{area.title}</h3>
+                  <p className="text-sm text-white/75">{area.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {area.topics.map((topic) => (
+                      <span key={topic} className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
+                        {topic}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(236,72,153,0.18),transparent_55%),radial-gradient(circle_at_75%_75%,rgba(56,189,248,0.14),transparent_55%)]" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Guiding principles</h2>
+            <p className="mx-auto max-w-3xl text-lg text-white/70">
+              These philosophical commitments anchor every research sprint, partnership, and product decision at Traceremove.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {guidingPrinciples.map((principle) => (
+              <motion.div
+                key={principle.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <principle.icon className="mb-4 h-6 w-6 text-white/70" />
+                <h3 className="text-lg font-semibold text-white">{principle.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{principle.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Selected works</h2>
+              <p className="max-w-2xl text-lg text-white/70">
+                Research across journals, conferences, and books translates philosophical inquiry into actionable playbooks for responsible intelligence.
+              </p>
+            </div>
+            <Link
+              href="/academic/publications-archive"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
+            >
+              View publications archive
+            </Link>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {philosophicalWorks.map((work) => (
+              <motion.div
+                key={work.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: '-80px' }}
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+              >
+                <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  <span>{work.type}</span>
+                  <span>{work.year}</span>
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-white">{work.title}</h3>
+                <p className="mt-2 text-sm text-white/70">{work.description}</p>
+                <Link
+                  href={work.href}
+                  className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition-colors duration-300 group-hover:text-white"
+                >
+                  Access paper
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_30%,rgba(251,191,36,0.16),transparent_55%),radial-gradient(circle_at_70%_70%,rgba(99,102,241,0.14),transparent_50%)]" />
+        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="space-y-8 text-center">
+            <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Philosophical reflections</h2>
+            <div className="space-y-6">
+              {philosophicalQuotes.map((entry) => (
+                <motion.blockquote
+                  key={entry.context}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+                >
+                  <QuoteIcon className="mx-auto mb-4 h-6 w-6 text-white/60" />
+                  <p className="text-lg text-white/80">“{entry.quote}”</p>
+                  <footer className="mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-white/60">{entry.context}</footer>
+                </motion.blockquote>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </div>

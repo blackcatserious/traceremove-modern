@@ -1,12 +1,40 @@
-@keyframes cat-pulse{0%{transform:translateY(0) scale(1);opacity:.85}50%{transform:translateY(-2px) scale(1.02);opacity:1}100%{transform:translateY(0) scale(1);opacity:.85}}.cat-geo{position:fixed;bottom:96px;right:28px;width:36px;height:36px;z-index:40;opacity:.9;pointer-events:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));animation:cat-pulse 4.5s ease-in-out infinite}@media (prefers-reduced-motion: reduce){.cat-geo{animation:none}}
-
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes cat-pulse {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.85;
+  }
+}
+
+.cat-geo {
+  position: fixed;
+  bottom: 96px;
+  right: 28px;
+  width: 36px;
+  height: 36px;
+  z-index: 40;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  animation: cat-pulse 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-geo {
+    animation: none;
+  }
+}
 
 /* Comprehensive layout bug fixes and overflow prevention */
 html, body {
@@ -80,10 +108,10 @@ canvas {
 /* Removed overly restrictive max-width rule that was causing positioning issues */
 
 /* Universal overflow prevention for all elements - preserve content visibility */
-div:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-section:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-main:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
-article:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
+div:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+section:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+main:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
+article:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]),
 aside:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
 header:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
 footer:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]), 
@@ -98,6 +126,24 @@ nav:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]) {
 }
 
 /* Removed overly restrictive negative positioning rule that was causing content to be offscreen */
+
+/* Content visibility helpers to keep large sections lightweight until scrolled into view */
+.content-auto,
+.content-auto-card {
+  contain: layout paint style;
+}
+
+@supports (content-visibility: auto) {
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 600px;
+  }
+
+  .content-auto-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 320px;
+  }
+}
 
 /* Fix floating navigation and background elements */
 .vanta-background, .fixed.inset-0 {
@@ -114,10 +160,11 @@ nav:not([class*="max-w"]):not([class*="container"]):not([class*="mx-auto"]) {
 :root {
   --background: #0F172A;
   --foreground: #F8FAFC;
-  --font-inter: var(--font-inter);
-  --font-jetbrains-mono: var(--font-jetbrains-mono);
-  --font-ibm-plex-sans: var(--font-ibm-plex-sans);
-  --font-ibm-plex-serif: var(--font-ibm-plex-serif);
+  --font-inter: 'Inter', 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', 'SFMono-Regular', 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-ibm-plex-sans: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-ibm-sans: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-ibm-plex-serif: 'IBM Plex Serif', 'Times New Roman', Times, serif;
   
   /* Research Lab Color Palette */
   --research-primary: #1e3a8a;
@@ -181,6 +228,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  background-color: #020617;
+  color: #e2e8f0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.15), transparent 45%), radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.12), transparent 45%), linear-gradient(180deg, rgba(2, 6, 23, 1) 0%, rgba(15, 23, 42, 0.95) 60%, rgba(30, 41, 59, 0.9) 100%);
 }
 
 a {
@@ -333,6 +383,147 @@ main {
   position: relative;
   z-index: 10;
   min-height: 100vh;
+}
+
+/* Immersive page scene styling applied across all routes */
+.page-scene {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: calc(100vh - 8rem);
+}
+
+.page-gradient,
+.page-halo,
+.page-beams,
+.page-grid,
+.page-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.6s ease, transform 0.8s ease;
+}
+
+.page-gradient {
+  filter: saturate(1.1) brightness(1.05);
+}
+
+.page-halo {
+  mix-blend-mode: screen;
+  filter: blur(120px) saturate(1.2);
+  animation: pageHaloPulse 18s ease-in-out infinite;
+}
+
+.page-beams {
+  mix-blend-mode: screen;
+  background-size: 200% 200%;
+  animation: pageBeamSweep 22s ease-in-out infinite;
+  opacity: 0.22;
+}
+
+.page-grid {
+  mix-blend-mode: screen;
+  background-size: 240px 240px, 320px 320px, 100% 100%;
+  animation: pageGridFloat 36s linear infinite;
+  opacity: 0.14;
+}
+
+.page-noise {
+  mix-blend-mode: soft-light;
+  opacity: 0.14;
+  animation: pageNoiseDrift 12s linear infinite;
+}
+
+.page-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3.5rem, 6vw, 5.5rem);
+  width: 100%;
+}
+
+.page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-scene[data-variant='hero'] .page-halo {
+  filter: blur(140px) saturate(1.3);
+}
+
+.page-scene[data-variant='research'] .page-grid {
+  opacity: 0.18;
+}
+
+.page-scene[data-variant='about'] .page-beams {
+  opacity: 0.26;
+}
+
+@keyframes pageHaloPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05) translate3d(8px, -6px, 0);
+    opacity: 0.78;
+  }
+}
+
+@keyframes pageBeamSweep {
+  0% {
+    background-position: -20% 45%;
+    opacity: 0.14;
+  }
+  50% {
+    background-position: 120% 55%;
+    opacity: 0.3;
+  }
+  100% {
+    background-position: -20% 45%;
+    opacity: 0.14;
+  }
+}
+
+@keyframes pageGridFloat {
+  0% {
+    background-position: 0% 0%, 0% 0%, 0% 0%;
+  }
+  50% {
+    background-position: 12% 8%, -10% 6%, 4% 2%;
+  }
+  100% {
+    background-position: 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes pageNoiseDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-6px, 8px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-gradient,
+  .page-halo,
+  .page-beams,
+  .page-grid,
+  .page-noise {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .page-shell {
+    gap: 3rem;
+  }
 }
 
 /* Navigation Positioning */
@@ -1047,34 +1238,55 @@ nav {
   left: 0;
   right: 0;
   z-index: 50;
-  background: linear-gradient(135deg, 
-    rgba(15, 23, 42, 0.95) 0%, 
-    rgba(30, 58, 138, 0.9) 30%, 
-    rgba(49, 46, 129, 0.92) 60%, 
-    rgba(124, 58, 237, 0.88) 100%);
-  backdrop-filter: blur(32px) saturate(1.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 8px 32px rgba(30, 58, 138, 0.2),
-    0 4px 16px rgba(124, 58, 237, 0.15),
-    0 2px 8px rgba(139, 92, 246, 0.1);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  background:
+    radial-gradient(135% 110% at 0% 0%, rgba(56, 189, 248, 0.35) 0%, rgba(15, 23, 42, 0) 55%),
+    radial-gradient(110% 120% at 100% 0%, rgba(168, 85, 247, 0.28) 0%, rgba(15, 23, 42, 0) 62%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 41, 59, 0.94) 45%, rgba(30, 58, 138, 0.92) 100%);
+  backdrop-filter: blur(36px) saturate(1.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 22px 60px rgba(15, 23, 42, 0.45),
+    0 12px 32px rgba(99, 102, 241, 0.25),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+  isolation: isolate;
+  overflow: visible;
 }
 
 .nav-premium::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, 
-    rgba(30, 58, 138, 0.1) 0%, 
-    rgba(124, 58, 237, 0.08) 50%, 
-    rgba(139, 92, 246, 0.1) 100%);
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(236, 72, 153, 0.12) 0%,
+    rgba(14, 165, 233, 0.08) 45%,
+    rgba(168, 85, 247, 0.16) 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
+}
+
+.nav-premium::after {
+  content: '';
+  position: absolute;
+  inset: -60px -60px -120px;
+  background: radial-gradient(70% 70% at 50% -10%, rgba(99, 102, 241, 0.45) 0%, rgba(15, 23, 42, 0) 70%);
+  opacity: 0.35;
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+.nav-premium.scrolled {
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 18px 60px rgba(15, 23, 42, 0.55),
+    0 10px 30px rgba(129, 140, 248, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
 }
 
 .nav-premium.scrolled::before {
@@ -1083,45 +1295,45 @@ nav {
 
 .nav-link-premium {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 12px 20px;
-  color: rgba(255, 255, 255, 0.9);
+  gap: 0.65rem;
+  padding: 0.65rem 1rem;
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 0.875rem;
   text-decoration: none;
-  border-radius: 16px;
+  border-radius: 1.5rem;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   overflow: hidden;
+  letter-spacing: 0.02em;
 }
 
 .nav-link-premium::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0.05) 50%, 
-    rgba(255, 255, 255, 0.08) 100%);
-  border-radius: 16px;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.16) 100%);
+  border-radius: inherit;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
-.nav-link-premium:hover::before {
+.nav-link-premium:hover::before,
+.nav-link-premium:focus-visible::before {
   opacity: 1;
 }
 
 .nav-link-premium:hover {
   color: rgba(255, 255, 255, 1);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 4px 16px rgba(124, 58, 237, 0.3),
-    0 2px 8px rgba(139, 92, 246, 0.2);
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 14px rgba(124, 58, 237, 0.28),
+    0 2px 8px rgba(79, 70, 229, 0.2);
 }
 
 .nav-link-premium.active {
@@ -3422,17 +3634,14 @@ a[href]:hover { text-decoration: underline; }
 }
 
 /* Navigation polish: stronger active state and nowrap guarantee */
-.nav-premium .nav-link-premium { white-space: nowrap; color: #fff; text-shadow: 0 0 6px rgba(0,0,0,.35); line-height: 1; }
+.nav-premium .nav-link-premium { white-space: nowrap; line-height: 1; color: rgba(255,255,255,0.92); text-shadow: 0 0 12px rgba(15,23,42,.45); }
 .nav-premium .nav-link-premium.active {
   color: #fff;
-  text-shadow: 0 0 12px rgba(124,58,237,.25);
+  text-shadow: 0 0 18px rgba(129,140,248,.45);
 }
-.nav-premium .nav-link-premium .w-5,
-.nav-premium .nav-link-premium svg { color: #fff; }
-.nav-premium .nav-link-premium svg { display: block; vertical-align: middle; filter: drop-shadow(0 0 10px rgba(0,0,0,.5)); }
-.nav-premium .nav-link-premium .inline-flex.bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+.nav-premium .nav-link-premium svg { color: #fff; display: block; vertical-align: middle; filter: drop-shadow(0 0 12px rgba(15,23,42,.55)); stroke: #fff; }
+.nav-premium .nav-link-premium .inline-flex.bg-white\/12 { background-color: rgba(255,255,255,0.14); }
 .nav-premium .nav-link-premium .ring-white\/25 { box-shadow: 0 0 0 1px rgba(255,255,255,0.25) inset; }
-.nav-premium .nav-link-premium svg { stroke: #fff; }
 
 /* About page readability */
 .about-hero-overlay {

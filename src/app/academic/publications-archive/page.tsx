@@ -656,7 +656,7 @@ export default function PublicationsArchive() {
                     with practical applications in explainable AI and transparent decision-making processes.
                   </p>
                   <div className="flex items-center space-x-4 text-sm text-research-text-secondary">
-                    <span>Citations: 156</span>
+                    <span>Citations: 176</span>
                     <span>•</span>
                     <span>Downloads: 3,120</span>
                     <span>•</span>
