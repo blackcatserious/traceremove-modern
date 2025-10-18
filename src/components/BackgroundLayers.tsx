@@ -13,7 +13,8 @@ interface BackgroundLayersProps {
     | 'projects'
     | 'tools'
     | 'academic'
-    | 'articles';
+    | 'articles'
+    | 'contact';
   className?: string;
 }
 
@@ -26,6 +27,7 @@ const VARIANT_COLORS: Record<NonNullable<BackgroundLayersProps['variant']>, stri
   tools: ['#082f49', '#0891b2', '#0ea5e9', '#6366f1', '#7c3aed'],
   academic: ['#111827', '#2563eb', '#7c3aed', '#22c55e', '#0ea5e9'],
   articles: ['#1e293b', '#f97316', '#f43f5e', '#a855f7', '#38bdf8'],
+  contact: ['#0f172a', '#2563eb', '#38bdf8', '#7c3aed', '#14b8a6'],
 };
 
 type WindowWithIdle = Window & {

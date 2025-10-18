@@ -2,6 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
+import BackgroundLayers from '@/components/BackgroundLayers';
+
 export const metadata: Metadata = {
   title: 'About — Artur Ziganshin',
   description: 'Profile of Artur Ziganshin: AI systems architect focused on AI ethics, privacy, and responsible AI.',
@@ -9,19 +11,29 @@ export const metadata: Metadata = {
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen">
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="relative aspect-[16/6] rounded-2xl overflow-hidden mb-8 decorative-blobs decorative-ai-rich">
-          <Image
-            src="/images/lab/lab-hero-1.svg"
-            alt="About visual"
-            fill
-            sizes="(max-width: 768px) 100vw, 1200px"
-            className="object-cover"
-          />
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+      <BackgroundLayers variant="about" className="opacity-60 mix-blend-screen" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(124,58,237,0.18),transparent_55%),radial-gradient(circle_at_85%_20%,rgba(56,189,248,0.16),transparent_58%),linear-gradient(180deg,rgba(15,23,42,0.96)_0%,rgba(17,24,39,0.92)_48%,rgba(15,23,42,0.94)_100%)]"
+      />
+
+      <div className="relative z-10">
+        <div className="relative mx-auto max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">
+          <div className="relative mb-8 aspect-[16/6] overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-[0_40px_120px_rgba(15,23,42,0.4)] backdrop-blur-xl">
+            <Image
+              src="/images/lab/lab-hero-1.svg"
+              alt="About visual"
+              fill
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover"
+              priority={false}
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-violet-500/25 via-fuchsia-500/18 to-sky-400/20 mix-blend-screen" />
+          </div>
         </div>
+        <div className="relative z-10">{children}</div>
       </div>
-      {children}
     </div>
   );
 }
