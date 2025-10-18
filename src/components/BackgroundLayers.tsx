@@ -5,7 +5,15 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
 
 interface BackgroundLayersProps {
-  variant?: 'default' | 'hero' | 'research' | 'about';
+  variant?:
+    | 'default'
+    | 'hero'
+    | 'research'
+    | 'about'
+    | 'projects'
+    | 'tools'
+    | 'academic'
+    | 'articles';
   className?: string;
 }
 
@@ -14,6 +22,10 @@ const VARIANT_COLORS: Record<NonNullable<BackgroundLayersProps['variant']>, stri
   hero: ['#0f172a', '#1d4ed8', '#4c1d95', '#7e22ce', '#4338ca'],
   research: ['#312e81', '#1e40af', '#2563eb', '#7c3aed', '#14b8a6'],
   about: ['#1f2937', '#4c1d95', '#6d28d9', '#0ea5e9', '#7c3aed'],
+  projects: ['#1f2937', '#fb923c', '#f97316', '#ec4899', '#e11d48'],
+  tools: ['#082f49', '#0891b2', '#0ea5e9', '#6366f1', '#7c3aed'],
+  academic: ['#111827', '#2563eb', '#7c3aed', '#22c55e', '#0ea5e9'],
+  articles: ['#1e293b', '#f97316', '#f43f5e', '#a855f7', '#38bdf8'],
 };
 
 type WindowWithIdle = Window & {

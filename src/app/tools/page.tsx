@@ -2,6 +2,7 @@
 
 import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 import KnowledgeBaseExplorerShell from '@/components/KnowledgeBaseExplorerShell';
+import BackgroundLayers from '@/components/BackgroundLayers';
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -203,6 +204,7 @@ export default function ToolsPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+      <BackgroundLayers variant="tools" className="opacity-70 mix-blend-screen" />
       <motion.div
         aria-hidden
         initial={{ opacity: 0 }}

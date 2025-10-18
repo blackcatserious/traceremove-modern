@@ -1,6 +1,7 @@
 'use client';
 
 import AssistantWidgetShell from '@/components/AssistantWidgetShell';
+import BackgroundLayers from '@/components/BackgroundLayers';
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -289,6 +290,7 @@ export default function ArticlesPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+      <BackgroundLayers variant="articles" className="opacity-70 mix-blend-screen" />
       <motion.div
         aria-hidden
         initial={{ opacity: 0 }}
