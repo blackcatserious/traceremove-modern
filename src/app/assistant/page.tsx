@@ -71,7 +71,7 @@ export default function AssistantPage() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative overflow-hidden bg-slate-950 text-white">
+    <div className="relative z-10 text-white">
       <section className="relative overflow-hidden py-20 sm:py-28 lg:py-32">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_78%_22%,rgba(129,140,248,0.18),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,21,38,0.9)_45%,rgba(15,23,42,0.94)_100%)]" />

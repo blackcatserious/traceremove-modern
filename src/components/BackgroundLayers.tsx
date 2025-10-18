@@ -14,7 +14,14 @@ interface BackgroundLayersProps {
     | 'tools'
     | 'academic'
     | 'articles'
-    | 'contact';
+    | 'contact'
+    | 'assistant'
+    | 'faq'
+    | 'legal'
+    | 'whitepapers'
+    | 'philosophy'
+    | 'members'
+    | 'sitemap';
   className?: string;
 }
 
@@ -28,6 +35,13 @@ const VARIANT_COLORS: Record<NonNullable<BackgroundLayersProps['variant']>, stri
   academic: ['#111827', '#2563eb', '#7c3aed', '#22c55e', '#0ea5e9'],
   articles: ['#1e293b', '#f97316', '#f43f5e', '#a855f7', '#38bdf8'],
   contact: ['#0f172a', '#2563eb', '#38bdf8', '#7c3aed', '#14b8a6'],
+  assistant: ['#0b1120', '#38bdf8', '#22d3ee', '#7c3aed', '#c084fc'],
+  faq: ['#0b1120', '#818cf8', '#38bdf8', '#a855f7', '#22d3ee'],
+  legal: ['#020617', '#38bdf8', '#22d3ee', '#10b981', '#7dd3fc'],
+  whitepapers: ['#020617', '#4c1d95', '#7c3aed', '#38bdf8', '#ec4899'],
+  philosophy: ['#020617', '#7c3aed', '#a855f7', '#38bdf8', '#22d3ee'],
+  members: ['#020617', '#6366f1', '#38bdf8', '#c084fc', '#22d3ee'],
+  sitemap: ['#020617', '#38bdf8', '#6366f1', '#f97316', '#22c55e'],
 };
 
 type WindowWithIdle = Window & {

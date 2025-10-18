@@ -231,7 +231,7 @@ class PrivacyPolicyFramework:
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen relative">
+    <div className="relative z-10 text-white">
       
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">

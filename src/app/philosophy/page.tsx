@@ -114,7 +114,7 @@ export default function Philosophy() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative overflow-hidden bg-slate-950 text-white">
+    <div className="relative z-10 text-white">
       <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_78%_18%,rgba(236,72,153,0.16),transparent_50%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,18,36,0.9)_45%,rgba(17,24,39,0.94)_100%)]" />
