@@ -15,6 +15,8 @@ interface BackgroundLayersProps {
     | 'academic'
     | 'articles'
     | 'contact'
+    | 'atlas'
+    | 'atlasBlueprint'
     | 'assistant'
     | 'faq'
     | 'legal'
@@ -35,6 +37,8 @@ const VARIANT_COLORS: Record<NonNullable<BackgroundLayersProps['variant']>, stri
   academic: ['#111827', '#2563eb', '#7c3aed', '#22c55e', '#0ea5e9'],
   articles: ['#1e293b', '#f97316', '#f43f5e', '#a855f7', '#38bdf8'],
   contact: ['#0f172a', '#2563eb', '#38bdf8', '#7c3aed', '#14b8a6'],
+  atlas: ['#020617', '#60a5fa', '#a855f7', '#38bdf8', '#9333ea'],
+  atlasBlueprint: ['#020617', '#38bdf8', '#818cf8', '#c084fc', '#0ea5e9'],
   assistant: ['#0b1120', '#38bdf8', '#22d3ee', '#7c3aed', '#c084fc'],
   faq: ['#0b1120', '#818cf8', '#38bdf8', '#a855f7', '#22d3ee'],
   legal: ['#020617', '#38bdf8', '#22d3ee', '#10b981', '#7dd3fc'],
