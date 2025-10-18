@@ -10,6 +10,7 @@ import AssistantWidgetShell from "@/components/AssistantWidgetShell";
 import PerformanceWarmup from "@/components/PerformanceWarmup";
 import PerformanceProfileProvider from "@/components/PerformanceProfileProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const dynamic = 'force-static';
 export const revalidate = 3600;
@@ -235,6 +236,7 @@ export default function RootLayout({
               </>
             )}
             <SpeedInsights />
+            <Analytics />
           </MotionProvider>
         </PerformanceProfileProvider>
       </body>
