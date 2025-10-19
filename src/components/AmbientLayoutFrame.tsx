@@ -15,23 +15,29 @@ interface AmbientLayoutFrameProps {
   backgroundClassName?: string;
   overlayClassName?: string;
   wrapperClassName?: string;
+  innerClassName?: string;
   contentClassName?: string;
+  hero?: ReactNode;
   children: ReactNode;
 }
 
 const BASE_WRAPPER_CLASS = 'relative min-h-screen overflow-hidden bg-slate-950 text-white';
 const BASE_BACKGROUND_CLASS = 'mix-blend-screen';
+const BASE_INNER_CLASS = 'relative z-10 flex flex-col gap-12';
+const BASE_CONTENT_CLASS = 'relative';
 
 export default function AmbientLayoutFrame({
   variant,
   backgroundClassName,
   overlayClassName,
   wrapperClassName,
+  innerClassName,
   contentClassName,
+  hero,
   children,
 }: AmbientLayoutFrameProps) {
   return (
-    <div className={cx(BASE_WRAPPER_CLASS, wrapperClassName)}>
+    <div className={cx(BASE_WRAPPER_CLASS, wrapperClassName)} data-ambient-variant={variant}>
       <BackgroundLayers
         variant={variant}
         className={cx(BASE_BACKGROUND_CLASS, backgroundClassName)}
@@ -39,7 +45,10 @@ export default function AmbientLayoutFrame({
       {overlayClassName ? (
         <div aria-hidden className={cx('pointer-events-none absolute inset-0', overlayClassName)} />
       ) : null}
-      <div className={cx('relative z-10', contentClassName)}>{children}</div>
+      <div className={cx(BASE_INNER_CLASS, innerClassName)}>
+        {hero}
+        <div className={cx(BASE_CONTENT_CLASS, contentClassName)}>{children}</div>
+      </div>
     </div>
   );
 }
