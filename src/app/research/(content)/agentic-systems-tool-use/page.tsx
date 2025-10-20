@@ -66,7 +66,7 @@ class AgenticSystem:
 
 export default function AgenticSystemsToolUse() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <>
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-secondary-50/30" />
@@ -298,6 +298,6 @@ export default function AgenticSystemsToolUse() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

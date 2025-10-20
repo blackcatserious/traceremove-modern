@@ -283,8 +283,8 @@ class OpacityResponsibilityFramework:
 
 export default function OpacityResponsibilityAI() {
   return (
-    <div className="min-h-screen relative">
-      
+          
+    <>
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16 decorative-blobs">
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
@@ -672,6 +672,6 @@ export default function OpacityResponsibilityAI() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

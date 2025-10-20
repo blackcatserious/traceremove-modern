@@ -308,8 +308,8 @@ class SemanticDataPipelineFramework:
 
 export default function SemanticDataPipelines() {
   return (
-    <div className="min-h-screen relative">
-      
+          
+    <>
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
@@ -703,6 +703,6 @@ export default function SemanticDataPipelines() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -77,7 +77,7 @@ class PrivacyPreservingRetrieval:
 
 export default function PrivacyPreservingRetrieval() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50">
+    <>
       {/* Header */}
       <section className="relative overflow-hidden py-12 sm:py-16 decorative-blobs">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-blue-50/30" />
@@ -304,6 +304,6 @@ export default function PrivacyPreservingRetrieval() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
