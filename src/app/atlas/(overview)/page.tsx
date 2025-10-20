@@ -16,10 +16,8 @@ export const metadata: Metadata = {
 
 export default function AtlasIndexPage() {
   return (
-    <div className="relative z-10">
-      <div className="mx-auto max-w-6xl px-6 pb-32 sm:px-10 lg:px-12">
-        <ProgressiveAtlasClusters initialClusters={initialClusters} totalClusters={totalClusters} />
-      </div>
+    <div className="mx-auto max-w-6xl px-6 pb-32 sm:px-10 lg:px-12">
+      <ProgressiveAtlasClusters initialClusters={initialClusters} totalClusters={totalClusters} />
     </div>
   );
 }

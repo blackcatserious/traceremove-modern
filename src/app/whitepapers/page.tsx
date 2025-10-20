@@ -120,7 +120,7 @@ export default function WhitepapersPage() {
   const others = filteredPapers.filter((paper) => !paper.featured);
 
   return (
-    <div className="relative z-10 text-white">
+    <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -258,6 +258,6 @@ export default function WhitepapersPage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

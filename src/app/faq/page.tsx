@@ -169,7 +169,7 @@ export default function FAQ() {
   };
 
   return (
-    <div className="relative z-10 text-white">
+    <>
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-4 sm:grid-cols-[2fr,1fr]">
           <div className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
@@ -271,6 +271,6 @@ export default function FAQ() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

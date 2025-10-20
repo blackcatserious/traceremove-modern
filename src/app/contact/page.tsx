@@ -114,7 +114,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative">
+    <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(15,118,110,0.14),transparent_50%)]" />
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -281,6 +281,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -231,7 +231,7 @@ class EthicsStatementFramework:
 
 export default function EthicsStatement() {
   return (
-    <div className="relative z-10 text-white">
+    <>
       
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
@@ -862,6 +862,6 @@ export default function EthicsStatement() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

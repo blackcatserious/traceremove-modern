@@ -239,8 +239,7 @@ export default function Research() {
   const supportingArticles = filteredArticles.filter((article) => !article.featured);
 
   return (
-    <div className="relative">
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-24 px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <div className="relative mx-auto flex max-w-7xl flex-col gap-24 px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <section className="space-y-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -491,6 +490,5 @@ export default function Research() {
           <AssistantWidgetShell compact={false} />
         </section>
       </div>
-    </div>
   );
 }

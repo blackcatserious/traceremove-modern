@@ -231,7 +231,7 @@ class PrivacyPolicyFramework:
 
 export default function PrivacyPolicy() {
   return (
-    <div className="relative z-10 text-white">
+    <>
       
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
@@ -909,6 +909,6 @@ export default function PrivacyPolicy() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

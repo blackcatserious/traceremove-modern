@@ -176,7 +176,7 @@ const socialChannels = [
 
 export default function About() {
   return (
-    <div className="relative">
+    <>
       <section className="relative border-y border-white/5 bg-slate-950/60 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_80%,rgba(37,99,235,0.18),transparent_55%),radial-gradient(circle_at_85%_30%,rgba(236,72,153,0.16),transparent_50%)]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -405,6 +405,6 @@ export default function About() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
