@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 
-import AtlasBlueprintHero from '@/app/atlas/[slug]/AtlasBlueprintHero';
+import AtlasBlueprintHero from '@/app/atlas/AtlasBlueprintHero';
 import { getAllAtlasSlugs, getAtlasBlueprint } from '@/lib/atlasCatalog';
 
 export const dynamicParams = false;
