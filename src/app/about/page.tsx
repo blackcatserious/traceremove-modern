@@ -179,7 +179,7 @@ export default function About() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/60 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_80%,rgba(37,99,235,0.18),transparent_55%),radial-gradient(circle_at_85%_30%,rgba(236,72,153,0.16),transparent_50%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-12 max-w-3xl space-y-4">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Leadership pillars</h2>
             <p className="text-lg text-white/70">
@@ -212,7 +212,7 @@ export default function About() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(251,191,36,0.16),transparent_55%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl space-y-4">
               <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Research disciplines</h2>
@@ -250,7 +250,7 @@ export default function About() {
 
       <section className="relative border-y border-white/5 bg-slate-950/80 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(129,140,248,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(16,185,129,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-12 lg:grid-cols-[0.6fr_0.4fr]">
             <div className="space-y-8">
               <div className="space-y-3">
@@ -312,7 +312,7 @@ export default function About() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.16),transparent_55%),radial-gradient(circle_at_70%_75%,rgba(236,72,153,0.14),transparent_55%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-12 space-y-4 text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Speaking & recognition</h2>
             <p className="mx-auto max-w-3xl text-lg text-white/70">
@@ -344,7 +344,7 @@ export default function About() {
 
       <section className="relative border-y border-white/5 bg-slate-950/80 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_85%_80%,rgba(16,185,129,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-12 lg:grid-cols-[0.6fr_0.4fr]">
             <div className="space-y-8">
               <div className="space-y-3">

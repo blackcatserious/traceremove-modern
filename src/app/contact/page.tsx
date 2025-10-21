@@ -117,7 +117,7 @@ export default function ContactPage() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(15,118,110,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-10 lg:grid-cols-[0.55fr_0.45fr]">
             <div className="space-y-8">
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
@@ -259,7 +259,7 @@ export default function ContactPage() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Community signals</h2>
             <p className="mt-3 text-lg text-white/70">Stay close to Traceremove across professional networks, research hubs, and discourse platforms.</p>

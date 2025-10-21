@@ -123,7 +123,7 @@ export default function WhitepapersPage() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-4 sm:grid-cols-[2fr,1fr]">
             <div className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
               <Search className="h-5 w-5 text-white/60" />
@@ -156,7 +156,7 @@ export default function WhitepapersPage() {
       {featured.length > 0 && (
         <section className="relative py-20">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
-          <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="relative">
             <div className="mb-10 text-center">
               <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Featured releases</h2>
               <p className="mt-3 text-lg text-white/70">Essential research for product teams and policy leaders launching responsible AI programmes.</p>
@@ -201,7 +201,7 @@ export default function WhitepapersPage() {
 
       <section className="relative border-t border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-10 text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Research catalogue</h2>
             <p className="mt-3 text-lg text-white/70">Browse additional papers by category, ready for download and citation.</p>
@@ -244,7 +244,7 @@ export default function WhitepapersPage() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative mx-auto max-w-4xl text-center">
           <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Need tailored insights?</h2>
           <p className="mt-3 text-lg text-white/70">We craft bespoke research briefings and governance frameworks for partners. Reach out to discuss your context.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-white/70">

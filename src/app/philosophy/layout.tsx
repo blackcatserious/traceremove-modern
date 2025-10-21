@@ -17,6 +17,8 @@ export default function PhilosophyLayout({ children }: { children: ReactNode }) 
       variant="philosophy"
       backgroundClassName={PHILOSOPHY_BACKGROUND_CLASS}
       overlayClassName={PHILOSOPHY_OVERLAY_CLASS}
+      innerClassName="mx-auto w-full max-w-6xl gap-24"
+      contentClassName="flex flex-col gap-24 px-4 pb-24 sm:px-6 sm:pb-28 lg:px-8"
       hero={<PhilosophyHero />}
     >
       {children}

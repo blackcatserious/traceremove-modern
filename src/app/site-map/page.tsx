@@ -128,7 +128,7 @@ export default function SiteMapPage() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_80%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-5xl">
           <div className="mb-12 space-y-4">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Primary corridors</h2>
             <p className="max-w-3xl text-lg text-white/70">
@@ -165,7 +165,7 @@ export default function SiteMapPage() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(56,189,248,0.16),transparent_55%),radial-gradient(circle_at_78%_70%,rgba(236,72,153,0.14),transparent_55%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-10 space-y-3">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Research clusters</h2>
             <p className="max-w-3xl text-lg text-white/70">
@@ -201,7 +201,7 @@ export default function SiteMapPage() {
 
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(15,118,110,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-10 space-y-3">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Resource hubs</h2>
             <p className="max-w-3xl text-lg text-white/70">
@@ -238,7 +238,7 @@ export default function SiteMapPage() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_72%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-8 text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Architecture overview</h2>
             <p className="mt-3 text-lg text-white/70">A high-level map linking major sections and the relationships between research corridors.</p>

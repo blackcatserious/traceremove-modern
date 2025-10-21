@@ -114,7 +114,7 @@ export default function Philosophy() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_80%_60%,rgba(56,189,248,0.14),transparent_55%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-12 space-y-4 text-left">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Philosophical terrains</h2>
             <p className="max-w-3xl text-lg text-white/70">
@@ -154,7 +154,7 @@ export default function Philosophy() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(236,72,153,0.18),transparent_55%),radial-gradient(circle_at_75%_75%,rgba(56,189,248,0.14),transparent_55%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-12 text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Guiding principles</h2>
             <p className="mx-auto max-w-3xl text-lg text-white/70">
@@ -182,7 +182,7 @@ export default function Philosophy() {
 
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-4">
               <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Selected works</h2>
@@ -229,7 +229,7 @@ export default function Philosophy() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_30%,rgba(251,191,36,0.16),transparent_55%),radial-gradient(circle_at_70%_70%,rgba(99,102,241,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="space-y-8 text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Philosophical reflections</h2>
             <div className="space-y-6">

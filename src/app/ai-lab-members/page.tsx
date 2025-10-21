@@ -63,7 +63,7 @@ export default function AILabMembers() {
     <>
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="rounded-[32px] border border-white/10 bg-white/5 p-6 shadow-[0_36px_120px_rgba(15,23,42,0.55)] backdrop-blur-2xl">
             <div className="grid gap-8 md:grid-cols-[0.65fr_0.35fr] md:items-start">
               <div className="space-y-6 text-left">
@@ -114,7 +114,7 @@ export default function AILabMembers() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_30%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="text-center">
             <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Collaboration pillars</h2>
             <p className="mt-3 text-lg text-white/70">Traceremove thrives through partnerships across academia, public institutions, and industry.</p>
@@ -140,7 +140,7 @@ export default function AILabMembers() {
 
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative mx-auto max-w-4xl text-center">
           <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">Lab architecture</h2>
           <p className="mt-3 text-lg text-white/70">Understand how leadership, programmes, and collaborators interlink to deliver responsible AI.</p>
           <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">

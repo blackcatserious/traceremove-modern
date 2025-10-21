@@ -170,7 +170,7 @@ export default function FAQ() {
 
   return (
     <>
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl py-12">
         <div className="grid gap-4 sm:grid-cols-[2fr,1fr]">
           <div className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
             <Search className="h-5 w-5 text-white/60" />
@@ -201,7 +201,7 @@ export default function FAQ() {
 
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-8 md:grid-cols-2">
             {filteredSections.map((section) => (
               <div key={section.category} className="space-y-4">
@@ -254,7 +254,7 @@ export default function FAQ() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_72%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative text-center">
           <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">FAQ architecture</h2>
           <p className="mt-3 text-lg text-white/70">See how the frequently asked questions connect to the wider Traceremove platform.</p>
           <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
