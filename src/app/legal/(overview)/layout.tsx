@@ -17,6 +17,8 @@ export default function LegalOverviewLayout({ children }: { children: ReactNode 
       variant="legal"
       backgroundClassName={LEGAL_BACKGROUND_CLASS}
       overlayClassName={LEGAL_OVERLAY_CLASS}
+      innerClassName="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8"
+      contentClassName="flex flex-col gap-16 py-20 sm:py-24 lg:gap-20 lg:py-28"
       hero={<LegalHero />}
     >
       {children}

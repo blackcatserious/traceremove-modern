@@ -160,7 +160,7 @@ export default function AcademicPage() {
   const remainingResources = filteredResources.slice(3);
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-24 px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <>
         <section className="space-y-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -336,6 +336,6 @@ export default function AcademicPage() {
         <section className="rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_50px_120px_rgba(15,23,42,0.65)] backdrop-blur-3xl">
           <AssistantWidgetShell compact={false} />
         </section>
-      </div>
+    </>
   );
 }

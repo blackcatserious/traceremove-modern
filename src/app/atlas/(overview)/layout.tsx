@@ -20,6 +20,8 @@ export default function AtlasOverviewLayout({ children }: { children: ReactNode 
       variant="atlas"
       backgroundClassName={ATLAS_BACKGROUND_CLASS}
       overlayClassName={ATLAS_OVERLAY_CLASS}
+      innerClassName="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12"
+      contentClassName="pb-32"
       hero={<AtlasHero blueprintCount={totalBlueprints} clusterCount={totalClusters} />}
     >
       {children}
