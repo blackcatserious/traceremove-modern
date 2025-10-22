@@ -78,7 +78,7 @@ export default function ToolsHero() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(56,189,248,0.15),transparent_55%),radial-gradient(circle_at_85%_20%,rgba(129,140,248,0.18),transparent_55%),linear-gradient(180deg,rgba(2,6,23,0.96)_0%,rgba(15,23,42,0.9)_45%,rgba(15,23,42,0.94)_100%)]" />
       </motion.div>
 
-      <section className="relative z-10 grid gap-16 overflow-hidden py-24 sm:py-32 lg:grid-cols-[1.05fr_0.95fr] lg:py-36">
+      <section className="relative z-10 grid gap-16 overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-36">
           <div className="space-y-10">
           <motion.div
             initial={{ opacity: 0, x: -16 }}

@@ -58,7 +58,7 @@ export default function HomeHero() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40">
+    <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.25),transparent_60%),radial-gradient(circle_at_85%_30%,rgba(14,165,233,0.18),transparent_60%),linear-gradient(135deg,rgba(2,6,23,0.95)_0%,rgba(11,26,48,0.92)_45%,rgba(30,64,175,0.85)_100%)]" />
       <motion.div
         aria-hidden

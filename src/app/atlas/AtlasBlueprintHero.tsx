@@ -9,7 +9,7 @@ interface AtlasBlueprintHeroProps {
 
 export default function AtlasBlueprintHero({ blueprint }: AtlasBlueprintHeroProps) {
   return (
-    <>
+    <div className="px-4 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-slate-300/80">
         <Link
           href="/atlas"
@@ -70,6 +70,6 @@ export default function AtlasBlueprintHero({ blueprint }: AtlasBlueprintHeroProp
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
