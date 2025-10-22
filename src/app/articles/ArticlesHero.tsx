@@ -88,7 +88,7 @@ export default function ArticlesHero() {
       </motion.div>
 
       <section className="relative z-10 overflow-hidden py-24 sm:py-32 lg:py-36">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-10">
               <motion.div

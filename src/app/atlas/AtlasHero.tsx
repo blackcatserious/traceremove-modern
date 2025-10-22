@@ -8,7 +8,7 @@ interface AtlasHeroProps {
 export default function AtlasHero({ blueprintCount, clusterCount }: AtlasHeroProps) {
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
-      <div className="relative mx-auto max-w-6xl px-6 sm:px-10 lg:px-12">
+      <div className="relative">
         <div id="atlas-navigation" className="sr-only">
           Atlas navigation anchor
         </div>
