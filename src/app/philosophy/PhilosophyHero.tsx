@@ -44,38 +44,35 @@ export default function PhilosophyHero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="space-y-10 text-center">
-          <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+      <div className="relative z-10 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
             <Sparkles className="h-5 w-5 text-indigo-200" />
             <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Philosophy of intelligence</span>
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
           </div>
+        <div className="mt-10 flex max-w-3xl flex-col gap-6">
+          <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Theory and critique to choreograph accountable intelligence.
+          </h1>
+          <p className="text-lg text-white/75 sm:text-xl">
+            Philosophy is the compass of Traceremove. Artur’s research blends critical theory, ethics, and futures thinking to design machine intelligence that honours human dignity, interrogates power, and invites collective stewardship.
+          </p>
+        </div>
 
-          <div className="space-y-6">
-            <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Theory and critique to choreograph accountable intelligence.
-            </h1>
-            <p className="mx-auto max-w-3xl text-lg text-white/75 sm:text-xl">
-              Philosophy is the compass of Traceremove. Artur’s research blends critical theory, ethics, and futures thinking to design machine intelligence that honours human dignity, interrogates power, and invites collective stewardship.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/articles"
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white shadow-[0_18px_40px_rgba(56,189,248,0.35)] transition-transform duration-300 hover:-translate-y-1"
-            >
-              Read latest essays
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/academic/ethics-syllabi"
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
-            >
-              Teaching materials
-            </Link>
-          </div>
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <Link
+            href="/articles"
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white shadow-[0_18px_40px_rgba(56,189,248,0.35)] transition-transform duration-300 hover:-translate-y-1"
+          >
+            Read latest essays
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href="/academic/ethics-syllabi"
+            className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
+          >
+            Teaching materials
+          </Link>
         </div>
       </div>
     </section>

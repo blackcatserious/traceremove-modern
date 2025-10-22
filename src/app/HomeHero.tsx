@@ -75,9 +75,8 @@ export default function HomeHero() {
         className="pointer-events-none absolute -bottom-36 right-[8%] h-96 w-96 rounded-full bg-gradient-to-br from-emerald-400/20 via-cyan-500/20 to-indigo-500/20 blur-3xl"
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="space-y-10">
+      <div className="relative z-10 grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="space-y-10">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -146,12 +145,12 @@ export default function HomeHero() {
                 </motion.div>
               ))}
             </div>
-          </div>
+        </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.25 }}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25 }}
             viewport={{ once: true, margin: '-80px' }}
             className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.45)] backdrop-blur-3xl"
           >
@@ -238,8 +237,7 @@ export default function HomeHero() {
                 ))}
               </div>
             </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

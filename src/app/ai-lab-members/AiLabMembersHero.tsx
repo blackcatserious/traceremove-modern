@@ -27,17 +27,17 @@ export default function AiLabMembersHero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+      <div className="relative z-10 flex flex-col items-center text-center">
         <Link href="/" className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/60 transition-colors duration-300 hover:text-white">
           <ArrowLeft className="h-4 w-4" />
           Return home
         </Link>
-        <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
           <Sparkles className="h-5 w-5 text-indigo-200" />
           <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Traceremove AI lab</span>
           <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
         </div>
-        <div className="mt-8 space-y-6">
+        <div className="mt-8 flex max-w-3xl flex-col gap-6">
           <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl">
             Meet the leadership guiding Traceremove’s responsible intelligence practice.
           </h1>

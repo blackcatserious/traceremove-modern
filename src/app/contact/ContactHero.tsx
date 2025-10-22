@@ -26,17 +26,17 @@ export default function ContactHero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+      <div className="relative z-10 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
           <Mail className="h-5 w-5 text-sky-200" />
           <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Connect with Traceremove</span>
           <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
         </div>
-        <div className="mt-8 space-y-6">
+        <div className="mt-8 flex max-w-3xl flex-col gap-6">
           <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
             Let’s choreograph responsible intelligence together.
           </h1>
-          <p className="mx-auto max-w-3xl text-lg text-white/75 sm:text-xl">
+          <p className="text-lg text-white/75 sm:text-xl">
             Whether you are planning a research residency, deploying an atlas blueprint, or curating policy dialogue, the Traceremove lab is ready to collaborate across disciplines and geographies.
           </p>
         </div>

@@ -53,18 +53,18 @@ export default function SiteMapHero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="space-y-10 text-center">
-          <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
+      <div className="relative z-10 flex flex-col gap-12">
+        <div className="flex flex-col items-center gap-10 text-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
             <Map className="h-5 w-5 text-sky-200" />
             <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Experience navigation</span>
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
           </div>
-          <div className="space-y-6">
+          <div className="flex max-w-3xl flex-col gap-6">
             <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               Navigate every cinematic blueprint, tool, and research corridor with ease.
             </h1>
-            <p className="mx-auto max-w-3xl text-lg text-white/75 sm:text-xl">
+            <p className="text-lg text-white/75 sm:text-xl">
               This site map stitches together Traceremove’s atlas, research programmes, operational tools, and academic archives. Explore the structure to orient your journey or share tailored pathways with collaborators.
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function SiteMapHero() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-3">
           {heroHighlights.map((highlight, index) => (
             <motion.div
               key={highlight.label}

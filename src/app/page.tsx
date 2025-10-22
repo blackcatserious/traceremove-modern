@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <AmbientLayoutFrame
       variant="hero"
-      innerClassName="gap-0"
+      innerClassName="mx-auto w-full max-w-7xl gap-0"
       contentClassName="flex flex-col"
       hero={<HomeHero />}
     >

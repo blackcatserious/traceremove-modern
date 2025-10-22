@@ -89,9 +89,8 @@ export default function AboutHero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="space-y-10">
+      <div className="relative z-10 grid items-center gap-16 lg:grid-cols-[1.25fr_0.75fr]">
+        <div className="space-y-10">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
               <Sparkles className="h-5 w-5 text-indigo-200" />
               <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">About the studio lead</span>
@@ -143,15 +142,15 @@ export default function AboutHero() {
                 </motion.div>
               ))}
             </div>
-          </div>
+        </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true, margin: '-80px' }}
-            className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.5)] backdrop-blur-3xl"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, margin: '-80px' }}
+          className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_40px_120px_rgba(15,23,42,0.5)] backdrop-blur-3xl"
+        >
             <div className="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500/30 via-sky-400/25 to-emerald-400/25 blur-3xl" />
             <div className="relative space-y-8">
               <div className="space-y-3">
@@ -170,8 +169,7 @@ export default function AboutHero() {
                 ))}
               </div>
             </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
