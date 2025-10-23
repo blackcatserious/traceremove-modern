@@ -287,7 +287,7 @@ export default function EthicsSyllabi() {
       {/* Header */}
       <section className="relative decorative-blobs overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/10 to-accent-lab-purple/5" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -347,7 +347,7 @@ export default function EthicsSyllabi() {
 
       {/* Content */}
       <section className="py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           <div className="prose prose-lg max-w-none">
             {/* Syllabi Overview */}
             <motion.div

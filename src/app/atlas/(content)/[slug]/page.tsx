@@ -55,7 +55,7 @@ export default async function AtlasBlueprintPage({
   }
 
   return (
-    <div className="px-6 sm:px-10 lg:px-12">
+    <>
       <AtlasBlueprintHero blueprint={blueprint} />
 
       <section className="mt-16 grid gap-12 lg:grid-cols-[1.2fr_1fr]">
@@ -153,6 +153,6 @@ export default async function AtlasBlueprintPage({
           </div>
         </aside>
       </section>
-    </div>
+    </>
   );
 }
