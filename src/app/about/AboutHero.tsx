@@ -57,7 +57,7 @@ export default function AboutHero() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-36">
+    <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_60%),radial-gradient(circle_at_80%_15%,rgba(56,189,248,0.16),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(14,26,46,0.88)_45%,rgba(17,24,39,0.92)_100%)]" />
         <motion.span

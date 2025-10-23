@@ -48,6 +48,7 @@ export default function Home() {
       variant="hero"
       innerClassName="mx-auto w-full max-w-7xl gap-0"
       contentClassName="flex flex-col"
+      heroClassName="px-4 sm:px-6 lg:px-8"
       hero={<HomeHero />}
     >
 

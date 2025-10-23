@@ -17,6 +17,7 @@ export default function AboutLayout({ children }: { children: ReactNode }) {
       overlayClassName={ABOUT_OVERLAY_CLASS}
       innerClassName="mx-auto w-full max-w-7xl gap-24"
       contentClassName="flex flex-col gap-24 px-4 pb-24 sm:px-6 sm:pb-28 lg:px-8"
+      heroClassName="px-4 sm:px-6 lg:px-8"
       hero={<AboutHero />}
     >
       {children}

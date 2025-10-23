@@ -17,8 +17,9 @@ export default function AcademicOverviewLayout({ children }: { children: ReactNo
       variant="academic"
       backgroundClassName={ACADEMIC_BACKGROUND_CLASS}
       overlayClassName={ACADEMIC_OVERLAY_CLASS}
-      innerClassName="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
-      contentClassName="flex flex-col gap-24 py-24 sm:py-28 lg:gap-32 lg:py-32"
+      innerClassName="mx-auto w-full max-w-7xl"
+      contentClassName="flex flex-col gap-24 px-4 py-24 sm:px-6 sm:py-28 lg:px-8 lg:gap-32 lg:py-32"
+      heroClassName="px-4 sm:px-6 lg:px-8"
       hero={<AcademicHero />}
     >
       {children}

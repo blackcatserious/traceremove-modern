@@ -77,7 +77,7 @@ export default function AcademicHero() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-36">
+    <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           aria-hidden

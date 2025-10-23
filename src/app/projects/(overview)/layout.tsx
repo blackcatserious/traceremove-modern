@@ -15,8 +15,9 @@ export default function ProjectsOverviewLayout({ children }: { children: ReactNo
       variant="projects"
       backgroundClassName={PROJECTS_BACKGROUND_CLASS}
       overlayClassName={PROJECTS_OVERLAY_CLASS}
-      innerClassName="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
-      contentClassName="flex flex-col gap-24 py-24 sm:py-28 lg:gap-32 lg:py-32"
+      innerClassName="mx-auto w-full max-w-7xl"
+      contentClassName="flex flex-col gap-24 px-4 py-24 sm:px-6 sm:py-28 lg:px-8 lg:gap-32 lg:py-32"
+      heroClassName="px-4 sm:px-6 lg:px-8"
       hero={<ProjectsHero />}
     >
       {children}
