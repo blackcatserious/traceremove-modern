@@ -211,13 +211,19 @@ export default function RootLayout({
         ))}
       </head>
       <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white">
+        <a
+          href="#page-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-1/2 focus:top-6 focus:-translate-x-1/2 focus:clip-auto focus:h-auto focus:w-auto focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-slate-900 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:whitespace-normal"
+        >
+          Skip to main content
+        </a>
         <PerformanceProfileProvider>
           <MotionProvider>
             <BackgroundProvider>
               <PerformanceWarmup />
               <Navigation />
               <Breadcrumb />
-              <main className="relative z-20 pt-24 pb-16">
+              <main id="page-content" className="relative z-20 pt-24 pb-16">
                 <PageScene>{children}</PageScene>
               </main>
               <Footer />

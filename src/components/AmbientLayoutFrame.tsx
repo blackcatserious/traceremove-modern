@@ -49,7 +49,7 @@ export default function AmbientLayoutFrame({
         <div aria-hidden className={cx('pointer-events-none absolute inset-0', overlayClassName)} />
       ) : null}
       <div className={cx(BASE_INNER_CLASS, innerClassName)}>
-        {hero ? <div className={cx(BASE_HERO_CLASS, heroClassName)}>{hero}</div> : null}
+        {hero ? <header className={cx(BASE_HERO_CLASS, heroClassName)}>{hero}</header> : null}
         <div className={cx(BASE_CONTENT_CLASS, contentClassName)}>{children}</div>
       </div>
     </div>
