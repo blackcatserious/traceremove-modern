@@ -33,6 +33,8 @@ const DROPDOWN_IDS = new Set(
     .map(([id]) => id),
 );
 
+const MOBILE_MENU_ID = 'site-navigation-mobile-panel';
+
 type ExpandedSections = Record<string, boolean>;
 
 type NavigationCatalog = typeof navigationCatalog;
@@ -63,6 +65,22 @@ export default function Navigation() {
   }, []);
 
   useEffect(() => {
+    if (!mobileOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+        setExpandedMobile({});
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileOpen]);
+
+  useEffect(() => {
     setMobileOpen(false);
     setExpandedMobile({});
     setDesktopDropdown(null);
@@ -87,7 +105,10 @@ export default function Navigation() {
         scrolled ? 'bg-slate-950/90 shadow-lg shadow-slate-900/40 backdrop-blur-xl border-b border-white/10' : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <nav
+        className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+        aria-label="Main navigation"
+      >
         <Link href="/" className="text-lg font-semibold tracking-tight text-white">
           Traceremove
         </Link>
@@ -156,6 +177,7 @@ export default function Navigation() {
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 text-white lg:hidden"
             aria-expanded={mobileOpen}
+            aria-controls={MOBILE_MENU_ID}
             onClick={() => setMobileOpen((prev) => !prev)}
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -165,7 +187,12 @@ export default function Navigation() {
 
       {mobileOpen ? (
         <div className="lg:hidden">
-          <div className="border-t border-white/10 bg-slate-950/95 px-4 pb-12 pt-4 shadow-2xl backdrop-blur-xl sm:px-6">
+          <div
+            id={MOBILE_MENU_ID}
+            className="border-t border-white/10 bg-slate-950/95 px-4 pb-12 pt-4 shadow-2xl backdrop-blur-xl sm:px-6"
+            role="dialog"
+            aria-modal="true"
+          >
             <nav aria-label="Mobile">
               <ul className="space-y-2">
                 {NAV_ITEMS.map((item) => {
@@ -180,6 +207,10 @@ export default function Navigation() {
                         <Link
                           href={item.href}
                           className={`text-base font-semibold ${active ? 'text-white' : 'text-white/80'}`}
+                          onClick={() => {
+                            setMobileOpen(false);
+                            setExpandedMobile({});
+                          }}
                         >
                           {item.label}
                         </Link>
@@ -201,6 +232,10 @@ export default function Navigation() {
                               key={`${item.id}-${dropdown.href}`}
                               href={dropdown.href}
                               className="block rounded-xl bg-white/5 px-3 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                              onClick={() => {
+                                setMobileOpen(false);
+                                setExpandedMobile({});
+                              }}
                             >
                               <span className="block font-semibold text-white">{dropdown.label}</span>
                               <span className="text-xs text-white/70">{dropdown.description}</span>
