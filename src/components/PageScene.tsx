@@ -312,6 +312,7 @@ export default function PageScene({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
 
   const shouldAttemptAnimation = ready && !shouldReduceMotion && !deferHeavyWork;
+  const simplifiedBackground = shouldReduceMotion || deferHeavyWork;
   const motionModule = useMotionModule(shouldAttemptAnimation);
 
   useEffect(() => {
@@ -392,6 +393,19 @@ export default function PageScene({ children }: { children: ReactNode }) {
   let beamElement = <div className="page-beams" style={beamStyle} aria-hidden />;
   let meshElement = <div className="page-grid" style={meshStyle} aria-hidden />;
   let noiseElement = <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />;
+
+  if (simplifiedBackground) {
+    haloElement = (
+      <div
+        className="page-halo"
+        style={{ ...haloStyle, opacity: 0.55 }}
+        aria-hidden
+      />
+    );
+    beamElement = null;
+    meshElement = null;
+    noiseElement = null;
+  }
 
   let contentElement = (
     <div key={pathname} className="page-shell">
@@ -479,7 +493,12 @@ export default function PageScene({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="page-scene" data-variant={theme.variant} data-hydrated={hydrated}>
+    <div
+      className="page-scene"
+      data-variant={theme.variant}
+      data-hydrated={hydrated}
+      data-simplified={simplifiedBackground ? 'true' : undefined}
+    >
       {gradientElement}
       {haloElement}
       {beamElement}

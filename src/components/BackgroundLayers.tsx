@@ -2,6 +2,9 @@
 
 import { useMemo } from 'react';
 
+import usePrefersReducedMotion from '@/hooks/usePrefersReducedMotion';
+import { usePerformanceProfile } from '@/components/PerformanceProfileProvider';
+
 type BackgroundVariant =
   | 'default'
   | 'hero'
@@ -103,30 +106,46 @@ interface BackgroundLayersProps {
 }
 
 export default function BackgroundLayers({ variant = 'default', className = '' }: BackgroundLayersProps) {
+  const { deferHeavyWork, reducedMotion: profileReducedMotion } = usePerformanceProfile();
+  const systemReducedMotion = usePrefersReducedMotion();
+  const simplified = deferHeavyWork || profileReducedMotion || systemReducedMotion;
+
   const layers = useMemo(() => VARIANT_GRADIENTS[variant] ?? VARIANT_GRADIENTS.default, [variant]);
 
+  const blurAmount = simplified ? '30px' : '60px';
+  const layerOpacity = simplified ? 0.7 : 0.9;
+  const backgroundImage = simplified ? layers.soft : `${layers.soft}, ${layers.vivid}`;
+
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden>
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      data-simplified={simplified ? 'true' : undefined}
+      aria-hidden
+    >
       <div className="absolute inset-0 bg-slate-950" />
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: `${layers.soft}, ${layers.vivid}`,
-          filter: 'blur(60px)',
-          opacity: 0.9,
+          backgroundImage,
+          filter: `blur(${blurAmount})`,
+          opacity: layerOpacity,
           transform: 'translateZ(0)',
         }}
       />
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(80% 80% at 50% 20%, rgba(226,232,240,0.08), transparent), radial-gradient(60% 60% at 80% 80%, rgba(15,118,110,0.12), transparent)',
-          mixBlendMode: 'screen',
-          opacity: 0.6,
-        }}
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_55%)]" />
+      {!simplified ? (
+        <>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'radial-gradient(80% 80% at 50% 20%, rgba(226,232,240,0.08), transparent), radial-gradient(60% 60% at 80% 80%, rgba(15,118,110,0.12), transparent)',
+              mixBlendMode: 'screen',
+              opacity: 0.6,
+            }}
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_55%)]" />
+        </>
+      ) : null}
     </div>
   );
 }

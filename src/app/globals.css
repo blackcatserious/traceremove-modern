@@ -143,6 +143,22 @@ main {
   animation: pageNoiseDrift 12s linear infinite;
 }
 
+.page-scene[data-simplified='true'] .page-gradient {
+  filter: saturate(1.02) brightness(1.02);
+}
+
+.page-scene[data-simplified='true'] .page-halo {
+  animation: none;
+  opacity: 0.55;
+  filter: blur(90px) saturate(1.05);
+}
+
+.page-scene[data-simplified='true'] .page-beams,
+.page-scene[data-simplified='true'] .page-grid,
+.page-scene[data-simplified='true'] .page-noise {
+  display: none;
+}
+
 .page-shell {
   position: relative;
   display: flex;

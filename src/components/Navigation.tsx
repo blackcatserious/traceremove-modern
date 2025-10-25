@@ -55,14 +55,46 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+    let ticking = false;
+
+    const updateScrollState = () => {
+      ticking = false;
+      const next = window.scrollY > 10;
+      setScrolled((current) => (current === next ? current : next));
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(updateScrollState);
+    };
+
+    updateScrollState();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+
+    if (mobileOpen) {
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.overflow = previousOverflow || '';
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     if (!mobileOpen) {
