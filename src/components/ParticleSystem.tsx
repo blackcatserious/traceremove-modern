@@ -92,7 +92,7 @@ export default function ParticleSystem({
         });
       });
 
-      particles.forEach((particle, index) => {
+      particles.forEach(particle => {
         particle.connections.forEach(connectionIndex => {
           const other = particles[connectionIndex];
           const dx = particle.x - other.x;

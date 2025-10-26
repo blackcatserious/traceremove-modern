@@ -180,9 +180,6 @@ export default function Home() {
                 icon={MessageSquare}
                 title="Language Models & Ethics"
                 description="Examining the moral considerations surrounding large-scale language models"
-                gradient="from-blue-900/40 to-cyan-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-cyan-500"
                 href="/research/human-centered-ai"
               />
             </motion.div>
@@ -197,9 +194,6 @@ export default function Home() {
                 icon={Database}
                 title="Big Data Architectures"
                 description="Developing robust AI frameworks for processing and analysis"
-                gradient="from-purple-900/40 to-pink-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-pink-500"
                 href="/research/big-data-interpretability"
               />
             </motion.div>
@@ -214,9 +208,6 @@ export default function Home() {
                 icon={Network}
                 title="Cognitive Agents"
                 description="Creating intelligent AI systems with advanced decision-making capabilities"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-indigo-500"
                 href="/research/agentic-systems-tool-use"
               />
             </motion.div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { User, Award, Globe, BookOpen } from 'lucide-react';
 
@@ -35,13 +36,17 @@ export default function ProfessionalAvatar({
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-accent-ai-purple via-accent-lab-purple to-primary-600 p-1 animate-pulse">
             <div className="w-full h-full rounded-full bg-white p-2">
               {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt={name}
-                  className="w-full h-full rounded-full object-cover shadow-ai-glow"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="relative h-full w-full overflow-hidden rounded-full">
+                  <Image
+                    src={imageUrl}
+                    alt={name}
+                    fill
+                    sizes="192px"
+                    className="object-cover shadow-ai-glow"
+                    priority={false}
+                    unoptimized
+                  />
+                </div>
               ) : (
                 <div className="w-full h-full rounded-full bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple flex items-center justify-center shadow-ai-glow">
                   <User className="w-20 h-20 text-white" />
