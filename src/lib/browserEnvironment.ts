@@ -2,6 +2,7 @@ const SLOW_CONNECTION_TYPES = new Set(['slow-2g', '2g']);
 const CONSERVATIVE_CONNECTION_TYPES = new Set(['3g']);
 
 let cachedReducedDataPreference: boolean | null = null;
+let cachedCoarsePointer: boolean | null = null;
 
 export type NavigatorConnection = {
   saveData?: boolean;
@@ -51,6 +52,21 @@ export function prefersReducedData(): boolean {
   }
 
   return cachedReducedDataPreference ?? false;
+}
+
+export function isCoarsePointer(): boolean {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return cachedCoarsePointer ?? false;
+  }
+
+  try {
+    const query = window.matchMedia('(pointer: coarse)');
+    cachedCoarsePointer = query.matches;
+  } catch {
+    // Ignore failures and reuse any cached value.
+  }
+
+  return cachedCoarsePointer ?? false;
 }
 
 export function isDataSaverEnabled(): boolean {
@@ -119,6 +135,7 @@ export function shouldDeferHeavyWork(): boolean {
     isSlowConnection() ||
     isConstrainedConnection() ||
     isLowPowerDevice() ||
+    isCoarsePointer() ||
     Boolean(cachedReducedDataPreference)
   );
 }

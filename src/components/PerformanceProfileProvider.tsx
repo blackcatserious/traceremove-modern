@@ -13,6 +13,7 @@ import {
   isConstrainedConnection,
   isLowPowerDevice,
   isSlowConnection,
+  isCoarsePointer,
   prefersReducedData,
   readConnection,
   shouldDeferHeavyWork,
@@ -24,6 +25,7 @@ export type PerformanceProfile = {
   slowConnection: boolean;
   constrainedConnection: boolean;
   lowPowerDevice: boolean;
+  coarsePointer: boolean;
   deferHeavyWork: boolean;
 };
 
@@ -33,6 +35,7 @@ const defaultProfile: PerformanceProfile = {
   slowConnection: false,
   constrainedConnection: false,
   lowPowerDevice: false,
+  coarsePointer: false,
   deferHeavyWork: true,
 };
 
@@ -61,6 +64,8 @@ function computeProfile(): PerformanceProfile {
   }
 
   const reducedMotion = matchesMedia('(prefers-reduced-motion: reduce)');
+  const coarsePointer = isCoarsePointer();
+  const effectiveReducedMotion = reducedMotion || coarsePointer;
   const reducedData = prefersReducedData();
   const slowConnection = isSlowConnection();
   const constrainedConnection = isConstrainedConnection();
@@ -68,11 +73,12 @@ function computeProfile(): PerformanceProfile {
   const deferHeavyWork = shouldDeferHeavyWork();
 
   return {
-    reducedMotion,
+    reducedMotion: effectiveReducedMotion,
     reducedData,
     slowConnection,
     constrainedConnection,
     lowPowerDevice,
+    coarsePointer,
     deferHeavyWork,
   };
 }
@@ -116,6 +122,7 @@ export default function PerformanceProfileProvider({ children }: { children: Rea
           current.slowConnection === nextProfile.slowConnection &&
           current.constrainedConnection === nextProfile.constrainedConnection &&
           current.lowPowerDevice === nextProfile.lowPowerDevice &&
+          current.coarsePointer === nextProfile.coarsePointer &&
           current.deferHeavyWork === nextProfile.deferHeavyWork
         ) {
           return current;

@@ -119,7 +119,7 @@ main {
 
 .page-halo {
   mix-blend-mode: screen;
-  filter: blur(120px) saturate(1.18);
+  filter: blur(90px) saturate(1.12);
   animation: pageHaloPulse 18s ease-in-out infinite;
 }
 
@@ -127,14 +127,14 @@ main {
   mix-blend-mode: screen;
   background-size: 200% 200%;
   animation: pageBeamSweep 24s ease-in-out infinite;
-  opacity: 0.22;
+  opacity: 0.18;
 }
 
 .page-grid {
   mix-blend-mode: screen;
   background-size: 240px 240px, 320px 320px, 100% 100%;
   animation: pageGridFloat 36s linear infinite;
-  opacity: 0.14;
+  opacity: 0.12;
 }
 
 .page-noise {
@@ -149,8 +149,8 @@ main {
 
 .page-scene[data-simplified='true'] .page-halo {
   animation: none;
-  opacity: 0.55;
-  filter: blur(90px) saturate(1.05);
+  opacity: 0.5;
+  filter: blur(60px) saturate(1.05);
 }
 
 .page-scene[data-simplified='true'] .page-beams,
