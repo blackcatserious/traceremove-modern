@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface VantaBackgroundProps {
@@ -77,7 +77,7 @@ export default function VantaBackground({ variant = 'default', className = '' }:
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<VantaEffect | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const config = variantConfigs[variant];
+  const config = useMemo(() => variantConfigs[variant], [variant]);
 
   useEffect(() => {
     const loadVanta = async () => {
@@ -114,7 +114,7 @@ export default function VantaBackground({ variant = 'default', className = '' }:
         vantaEffect.current = null;
       }
     };
-  }, [variant]);
+  }, [config]);
 
   return (
     <>
