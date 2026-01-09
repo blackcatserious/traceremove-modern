@@ -73,6 +73,30 @@ main {
   animation: cat-pulse 4.5s ease-in-out infinite;
 }
 
+.cat-runner {
+  position: absolute;
+  right: 6%;
+  bottom: -36px;
+  width: 160px;
+  height: 160px;
+  opacity: 0.85;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 30px rgba(15, 23, 42, 0.35));
+  animation: cat-runner-float 6s ease-in-out infinite;
+}
+
+@keyframes cat-runner-float {
+  0% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+}
+
 @keyframes cat-pulse {
   0% {
     transform: translateY(0) scale(1);
@@ -90,6 +114,10 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   .cat-geo {
+    animation: none;
+  }
+
+  .cat-runner {
     animation: none;
   }
 }
