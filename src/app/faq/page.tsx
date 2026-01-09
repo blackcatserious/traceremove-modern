@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Sparkles, ArrowLeft, Search, HelpCircle, ChevronDown, ChevronUp, BookOpen, Users, Shield, Globe, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, HelpCircle, ChevronDown, ChevronUp, BookOpen, Users, Shield, Globe, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import MermaidDiagram from '@/components/MermaidDiagram';
 
@@ -144,7 +144,6 @@ const faqData = [
 ];
 
 export default function FAQ() {
-  const prefersReducedMotion = useReducedMotion();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [expandedQuestions, setExpandedQuestions] = useState<number[]>([]);
@@ -170,76 +169,39 @@ export default function FAQ() {
   };
 
   return (
-    <div className="relative overflow-hidden bg-slate-950 text-white">
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-36">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(129,140,248,0.18),transparent_55%),radial-gradient(circle_at_82%_20%,rgba(56,189,248,0.16),transparent_55%),linear-gradient(135deg,rgba(2,6,23,0.92)_0%,rgba(11,26,48,0.9)_45%,rgba(17,24,39,0.95)_100%)]" />
-          <motion.span
-            aria-hidden
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={prefersReducedMotion ? { opacity: 0.55, scale: 1 } : { opacity: 0.85, scale: 1, rotate: [0, 8, -6, 0] }}
-            transition={{ duration: prefersReducedMotion ? 1.2 : 18, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
-            className="absolute -top-24 left-12 h-72 w-72 rounded-full bg-gradient-to-br from-indigo-500/35 via-sky-400/25 to-emerald-400/25 blur-3xl"
-          />
-          <motion.span
-            aria-hidden
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={prefersReducedMotion ? { opacity: 0.4, scale: 1 } : { opacity: 0.65, scale: 1, rotate: [0, -10, 8, 0] }}
-            transition={{ duration: prefersReducedMotion ? 1.4 : 20, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut', delay: 0.6 }}
-            className="absolute -bottom-30 right-8 h-80 w-80 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-purple-500/25 to-cyan-400/25 blur-3xl"
-          />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <Link href="/" className="mb-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/60 transition-colors duration-300 hover:text-white">
-            <ArrowLeft className="h-4 w-4" />
-            Return home
-          </Link>
-          <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-2xl">
-            <Sparkles className="h-5 w-5 text-indigo-200" />
-            <span className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">Frequently asked questions</span>
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(16,185,129,0.2)]" />
+    <>
+      <div className="mx-auto max-w-4xl py-12">
+        <div className="grid gap-4 sm:grid-cols-[2fr,1fr]">
+          <div className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
+            <Search className="h-5 w-5 text-white/60" />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search questions or keywords"
+              className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
+            />
           </div>
-          <div className="mt-8 space-y-6">
-            <h1 className="font-ibm-sans text-4xl font-semibold leading-tight text-white sm:text-5xl">
-              Answers curated from Traceremove’s atlas, projects, and academic collaborations.
-            </h1>
-            <p className="text-lg text-white/75">
-              Search by keyword, filter by theme, or browse the categories below to understand our research approach, platform features, and partnership opportunities.
-            </p>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-[2fr,1fr]">
-            <div className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
-              <Search className="h-5 w-5 text-white/60" />
-              <input
-                type="search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search questions or keywords"
-                className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none"
-              />
-            </div>
-            <div className="flex items-center justify-end gap-2 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
-              <HelpCircle className="h-5 w-5 text-white/60" />
-              <select
-                value={selectedCategory}
-                onChange={(event) => setSelectedCategory(event.target.value)}
-                className="w-full bg-transparent text-sm text-white focus:outline-none"
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category} className="bg-slate-900 text-white">
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="flex items-center justify-end gap-2 rounded-3xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-2xl">
+            <HelpCircle className="h-5 w-5 text-white/60" />
+            <select
+              value={selectedCategory}
+              onChange={(event) => setSelectedCategory(event.target.value)}
+              className="w-full bg-transparent text-sm text-white focus:outline-none"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category} className="bg-slate-900 text-white">
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </section>
+      </div>
 
       <section className="relative border-y border-white/5 bg-slate-950/85 py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_40%,rgba(99,102,241,0.16),transparent_55%),radial-gradient(circle_at_82%_60%,rgba(14,165,233,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="relative">
           <div className="grid gap-8 md:grid-cols-2">
             {filteredSections.map((section) => (
               <div key={section.category} className="space-y-4">
@@ -292,7 +254,7 @@ export default function FAQ() {
 
       <section className="relative py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_28%,rgba(236,72,153,0.16),transparent_55%),radial-gradient(circle_at_75%_72%,rgba(56,189,248,0.14),transparent_50%)]" />
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative text-center">
           <h2 className="font-ibm-sans text-3xl font-semibold sm:text-4xl">FAQ architecture</h2>
           <p className="mt-3 text-lg text-white/70">See how the frequently asked questions connect to the wider Traceremove platform.</p>
           <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
@@ -309,6 +271,6 @@ export default function FAQ() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

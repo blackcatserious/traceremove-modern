@@ -7,6 +7,7 @@ import { BackgroundProvider } from "@/components/BackgroundTester";
 import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
+import Image from "next/image";
 import PerformanceWarmup from "@/components/PerformanceWarmup";
 import PerformanceProfileProvider from "@/components/PerformanceProfileProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -203,7 +204,6 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         {structuredData.map((schema, index) => (
           <script
-            // eslint-disable-next-line react/no-danger
             key={`structured-data-${index}`}
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -211,13 +211,19 @@ export default function RootLayout({
         ))}
       </head>
       <body className="font-sans antialiased bg-slate-950 text-slate-100 selection:bg-indigo-500/40 selection:text-white">
+        <a
+          href="#page-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-1/2 focus:top-6 focus:-translate-x-1/2 focus:clip-auto focus:h-auto focus:w-auto focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-slate-900 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:whitespace-normal"
+        >
+          Skip to main content
+        </a>
         <PerformanceProfileProvider>
           <MotionProvider>
             <BackgroundProvider>
               <PerformanceWarmup />
               <Navigation />
               <Breadcrumb />
-              <main className="relative z-20 pt-24 pb-16">
+              <main id="page-content" className="relative z-20 pt-24 pb-16">
                 <PageScene>{children}</PageScene>
               </main>
               <Footer />
@@ -225,13 +231,13 @@ export default function RootLayout({
             {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
               <>
                 <AssistantWidgetShell compact />
-                <img
+                <Image
                   src="/brand/black-cat-geo.svg?v=2"
                   alt=""
                   aria-hidden="true"
                   className="cat-geo"
-                  loading="lazy"
-                  decoding="async"
+                  width={36}
+                  height={36}
                 />
               </>
             )}

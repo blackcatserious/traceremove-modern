@@ -9,9 +9,6 @@ interface ResearchCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  gradient: string;
-  borderColor: string;
-  iconGradient: string;
   className?: string;
   href?: string;
 }
@@ -20,9 +17,6 @@ export default function ResearchCard({
   icon: Icon,
   title,
   description,
-  gradient,
-  borderColor,
-  iconGradient,
   className = "",
   href
 }: ResearchCardProps) {
