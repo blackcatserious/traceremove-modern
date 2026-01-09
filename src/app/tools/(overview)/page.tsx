@@ -9,12 +9,9 @@ import { motion, useReducedMotion } from 'framer-motion';
 import {
   Brain,
   Code,
-  Database,
   Zap,
   Search,
   BarChart3,
-  Cpu,
-  Globe,
   ArrowRight,
   ExternalLink,
   Play,
