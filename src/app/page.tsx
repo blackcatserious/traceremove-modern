@@ -3,6 +3,7 @@ import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   BookOpen,
@@ -116,27 +117,18 @@ export default function Home() {
               icon={Sparkles}
               title="Our Mission"
               description="Understand the guiding principles and commitments behind the Traceremove research lab."
-              gradient="from-blue-900/40 to-purple-900/40"
-              borderColor="border-blue-500/20"
-              iconGradient="from-blue-500 to-blue-600"
               href="/about"
             />
             <FeatureCard
               icon={Info}
               title="Platform Map"
               description="Navigate 176 atlas entries, research areas, and interactive tools from a single overview."
-              gradient="from-purple-900/40 to-violet-900/40"
-              borderColor="border-purple-500/20"
-              iconGradient="from-purple-500 to-purple-600"
               href="/site-map"
             />
             <FeatureCard
               icon={BookOpen}
               title="Philosophy & Theory"
               description="Explore essays that connect ethics, phenomenology, and systems design to responsible AI."
-              gradient="from-violet-900/40 to-indigo-900/40"
-              borderColor="border-violet-500/20"
-              iconGradient="from-violet-500 to-violet-600"
               href="/articles"
             />
           </motion.div>
@@ -230,13 +222,13 @@ export default function Home() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white shadow-md ring-1 ring-white/20">
-                    <img
+                    <Image
                       src="/brand/black-cat-solid.svg?v=2"
                       alt=""
                       aria-hidden
                       className="h-6 w-6"
-                      loading="lazy"
-                      decoding="async"
+                      width={24}
+                      height={24}
                     />
                   </span>
                   <h3 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
@@ -265,13 +257,13 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <img
+            <Image
               src="/brand/black-cat-geo.svg?v=2"
               alt=""
               aria-hidden="true"
               className="cat-runner hidden md:block"
-              loading="lazy"
-              decoding="async"
+              width={160}
+              height={160}
             />
 
           </motion.div>

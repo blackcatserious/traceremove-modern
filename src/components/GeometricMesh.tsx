@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 interface GeometricMeshProps {
   variant?: 'research' | 'academic' | 'tech';
@@ -35,19 +35,18 @@ export default function GeometricMesh({
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  useEffect(() => {
-    setPatterns(generatePatterns());
-  }, [dimensions, variant, density]);
-
-  const getGridSize = () => {
+  const gridSize = useMemo(() => {
     switch (density) {
-      case 'low': return 120;
-      case 'high': return 60;
-      default: return 80;
+      case 'low':
+        return 120;
+      case 'high':
+        return 60;
+      default:
+        return 80;
     }
-  };
+  }, [density]);
 
-  const getColors = () => {
+  const colors = useMemo(() => {
     switch (variant) {
       case 'academic':
         return {
@@ -68,12 +67,9 @@ export default function GeometricMesh({
           accent: 'rgba(139, 92, 246, 0.06)'
         };
     }
-  };
+  }, [variant]);
 
-  const gridSize = getGridSize();
-  const colors = getColors();
-
-  const generatePatterns = () => {
+  const generatePatterns = useCallback(() => {
     const patterns = [];
     const { width, height } = dimensions;
 
@@ -169,7 +165,11 @@ export default function GeometricMesh({
     }
 
     return patterns;
-  };
+  }, [colors, dimensions, gridSize]);
+
+  useEffect(() => {
+    setPatterns(generatePatterns());
+  }, [generatePatterns]);
 
   return (
     <div className={`fixed inset-0 pointer-events-none ${className}`} style={{ zIndex: -7 }}>
