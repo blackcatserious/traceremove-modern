@@ -101,6 +101,7 @@ const navigationItems = [
       { href: '/tools/data-visualization-playground', label: 'Data Visualization Playground', icon: PieChart },
       { href: '/tools/paper-summarizer', label: 'Paper Summarizer', icon: BookMarked },
       { href: '/tools/language-model-comparison', label: 'Language Model Comparison', icon: GitCompare },
+      { href: '/tools/ai-assistant', label: 'AI Assistant', icon: Brain },
       { href: '/tools/annotation-demo', label: 'Annotation Demo', icon: Target }
     ]
   },

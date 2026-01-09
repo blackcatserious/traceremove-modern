@@ -19,7 +19,8 @@ import {
   Calculator,
   PieChart,
   BookMarked,
-  Target
+  Target,
+  Bot
 } from 'lucide-react';
 import Link from 'next/link';
 import BackgroundLayers from '@/components/BackgroundLayers';
@@ -104,6 +105,19 @@ const tools = [
     downloadCount: '3.7k'
   },
   {
+    id: 'ai-assistant',
+    title: 'AI Assistant',
+    description: 'ChatGPT-powered assistant for navigating research insights, recommending tools, and guiding platform usage.',
+    category: 'Conversational AI',
+    icon: Bot,
+    gradient: 'from-purple-500 to-blue-600',
+    features: ['ChatGPT Integration', 'Research Guidance', 'Tool Recommendations', 'Platform Support'],
+    status: 'Available',
+    demoUrl: '/tools/ai-assistant',
+    githubUrl: 'https://github.com/traceremove/ai-assistant',
+    downloadCount: '5.4k'
+  },
+  {
     id: 'annotation-demo',
     title: 'Annotation Demo',
     description: 'Interactive demonstration of AI-assisted annotation tools for various data types including text, images, and structured data.',
@@ -126,6 +140,7 @@ const categories = [
   { id: 'Visualization', label: 'Visualization', count: tools.filter(t => t.category === 'Visualization').length },
   { id: 'Research Tools', label: 'Research Tools', count: tools.filter(t => t.category === 'Research Tools').length },
   { id: 'Model Evaluation', label: 'Model Evaluation', count: tools.filter(t => t.category === 'Model Evaluation').length },
+  { id: 'Conversational AI', label: 'Conversational AI', count: tools.filter(t => t.category === 'Conversational AI').length },
   { id: 'Data Annotation', label: 'Data Annotation', count: tools.filter(t => t.category === 'Data Annotation').length }
 ];
 
