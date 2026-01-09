@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Clock, Tag, Share2, FileText, Shield, Scale, Users, Eye, MessageSquare, Heart, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Clock, Tag, Share2, Shield, Scale, Users, Eye, MessageSquare, Heart, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import InteractiveChart from '@/components/InteractiveChart';
 import LottieAnimation from '@/components/LottieAnimation';

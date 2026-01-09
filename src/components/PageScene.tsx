@@ -385,14 +385,14 @@ export default function PageScene({ children }: { children: ReactNode }) {
     backgroundColor: theme.noiseColor,
   };
 
-  let gradientElement = (
+  let gradientElement: ReactNode = (
     <div key={`${theme.id}-gradient`} className={`page-gradient bg-gradient-to-br ${theme.gradient}`} aria-hidden />
   );
 
-  let haloElement = <div className="page-halo" style={haloStyle} aria-hidden />;
-  let beamElement = <div className="page-beams" style={beamStyle} aria-hidden />;
-  let meshElement = <div className="page-grid" style={meshStyle} aria-hidden />;
-  let noiseElement = <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />;
+  let haloElement: ReactNode = <div className="page-halo" style={haloStyle} aria-hidden />;
+  let beamElement: ReactNode = <div className="page-beams" style={beamStyle} aria-hidden />;
+  let meshElement: ReactNode = <div className="page-grid" style={meshStyle} aria-hidden />;
+  let noiseElement: ReactNode = <div className="page-noise" style={noiseStyle as CSSProperties} aria-hidden />;
 
   if (simplifiedBackground) {
     haloElement = (
@@ -407,7 +407,7 @@ export default function PageScene({ children }: { children: ReactNode }) {
     noiseElement = null;
   }
 
-  let contentElement = (
+  let contentElement: ReactNode = (
     <div key={pathname} className="page-shell">
       {children}
     </div>

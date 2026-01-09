@@ -9,9 +9,9 @@ interface FeatureCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  gradient: string;
-  borderColor: string;
-  iconGradient: string;
+  gradient?: string;
+  borderColor?: string;
+  iconGradient?: string;
   className?: string;
   href?: string;
 }
@@ -20,12 +20,13 @@ export default function FeatureCard({
   icon: Icon,
   title,
   description,
-  gradient,
-  borderColor,
-  iconGradient,
+  gradient = 'from-accent-ai-purple/20 via-accent-lab-purple/10 to-transparent',
+  borderColor = 'border-white/10',
+  iconGradient = 'from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple',
   className = "",
   href
 }: FeatureCardProps) {
+  const borderClasses = `border ${borderColor}`;
   const Card = (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -46,8 +47,8 @@ export default function FeatureCard({
       style={{ perspective: '1000px' }}
       aria-label={title}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent rounded-3xl backdrop-blur-xl border border-white/10 shadow-2xl"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/20 via-accent-lab-purple/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+      <div className={`absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent rounded-3xl backdrop-blur-xl ${borderClasses} shadow-2xl`}></div>
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/5 to-accent-lab-purple/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-accent-ai-purple/50 via-accent-lab-purple/50 to-accent-ai-purple/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
       <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90 backdrop-blur-xl"></div>
@@ -66,7 +67,7 @@ export default function FeatureCard({
           }}
           className="relative mx-auto mb-6 w-20 h-20"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple via-accent-lab-purple to-accent-ai-purple rounded-2xl shadow-2xl"></div>
+          <div className={`absolute inset-0 bg-gradient-to-br ${iconGradient} rounded-2xl shadow-2xl`}></div>
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent rounded-2xl"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20 rounded-2xl"></div>
           <motion.div

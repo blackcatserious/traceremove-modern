@@ -8,8 +8,8 @@ import Link from 'next/link';
 interface InfoCardProps {
   title: string;
   description: string;
-  gradient: string;
-  borderColor: string;
+  gradient?: string;
+  borderColor?: string;
   className?: string;
   href?: string;
 }
@@ -17,11 +17,12 @@ interface InfoCardProps {
 export default function InfoCard({
   title,
   description,
-  gradient,
-  borderColor,
+  gradient = 'from-accent-ai-purple/25 via-accent-lab-purple/15 to-transparent',
+  borderColor = 'border-white/25',
   className = "",
   href
 }: InfoCardProps) {
+  const borderClasses = `border ${borderColor}`;
   const Card = (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -42,8 +43,8 @@ export default function InfoCard({
       style={{ perspective: '1500px' }}
       aria-label={title}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.15] via-white/[0.10] to-white/[0.05] rounded-4xl backdrop-blur-3xl border border-white/25 shadow-3xl"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-accent-ai-purple/25 via-accent-lab-purple/15 to-transparent rounded-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-800"></div>
+      <div className={`absolute inset-0 bg-gradient-to-br from-white/[0.15] via-white/[0.10] to-white/[0.05] rounded-4xl backdrop-blur-3xl ${borderClasses} shadow-3xl`}></div>
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} rounded-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-800`}></div>
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent-ai-purple/8 to-accent-lab-purple/15 rounded-4xl blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-600"></div>
       <motion.div
         animate={{ 
