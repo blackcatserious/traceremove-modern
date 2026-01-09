@@ -11,7 +11,6 @@ import {
   Mic,
   FileText,
   Library,
-  Calendar,
   Search,
   ArrowRight,
   Clock,

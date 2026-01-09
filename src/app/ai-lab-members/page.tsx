@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Users, ShieldCheck, Globe, Github, Linkedin, BookOpen, ArrowRight } from 'lucide-react';
+import { Users, ShieldCheck, Github, Linkedin, BookOpen, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import MermaidDiagram from '@/components/MermaidDiagram';
 

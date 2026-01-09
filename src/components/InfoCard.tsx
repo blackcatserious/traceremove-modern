@@ -8,8 +8,6 @@ import Link from 'next/link';
 interface InfoCardProps {
   title: string;
   description: string;
-  gradient: string;
-  borderColor: string;
   className?: string;
   href?: string;
 }
@@ -17,8 +15,6 @@ interface InfoCardProps {
 export default function InfoCard({
   title,
   description,
-  gradient,
-  borderColor,
   className = "",
   href
 }: InfoCardProps) {

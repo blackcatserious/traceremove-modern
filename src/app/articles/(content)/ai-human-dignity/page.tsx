@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, TrendingUp, Users, Shield, Heart, Brain, Scale, Globe, BookOpen, Code, Network, Lightbulb } from 'lucide-react';
+import { ArrowLeft, TrendingUp, Shield, Heart } from 'lucide-react';
 import LottieAnimation from '@/components/LottieAnimation';
 import MermaidDiagram from '@/components/MermaidDiagram';
 import InteractiveChart from '@/components/InteractiveChart';
