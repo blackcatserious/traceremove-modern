@@ -85,6 +85,24 @@ main {
   animation: cat-runner-float 6s ease-in-out infinite;
 }
 
+@media (max-width: 1023px) {
+  .cat-runner {
+    right: 3%;
+    bottom: -24px;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .cat-runner {
+    right: 8%;
+    bottom: -48px;
+    width: 180px;
+    height: 180px;
+  }
+}
+
 @keyframes cat-runner-float {
   0% {
     transform: translateY(0) rotate(-2deg);
