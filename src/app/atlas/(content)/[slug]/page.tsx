@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 
 import AtlasBlueprintHero from '@/app/atlas/AtlasBlueprintHero';
+import CodeBlock from '@/components/CodeBlock';
+import InteractiveChart from '@/components/InteractiveChart';
+import MermaidDiagram from '@/components/MermaidDiagram';
 import { getAllAtlasSlugs, getAtlasBlueprint } from '@/lib/atlasCatalog';
 
 export const dynamicParams = false;
@@ -108,6 +111,38 @@ export default async function AtlasBlueprintPage({
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-slate-950/70 p-8 shadow-lg shadow-indigo-900/30">
+            <h3 className="text-xl font-semibold text-white">Technology Lab Integration</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/70">
+              Every blueprint now ships with integrated visual analytics, executable process architecture, and
+              implementation-ready snippets so teams can move from strategy to deployment without layout breaks
+              across devices.
+            </p>
+
+            <div className="mt-6 grid gap-6 xl:grid-cols-2">
+              <InteractiveChart
+                dataFile="workflow_metrics.json"
+                chartType="bar"
+                title="Validation performance across delivery complexity"
+              />
+              <MermaidDiagram
+                chart={`graph TD
+    A[Signals] --> B[Blueprint]
+    B --> C[Lab Experiment]
+    C --> D[Validation]
+    D --> E[Rollout]
+    E --> A`}
+                className="h-full border-white/10 bg-slate-900/80 text-white shadow-lg shadow-slate-900/40"
+              />
+            </div>
+
+            <CodeBlock
+              className="mt-6 border-white/10 bg-slate-950/90"
+              language="typescript"
+              code={`type DeploymentSignal = {\n  blueprint: string;\n  risk: 'low' | 'medium' | 'high';\n  readiness: number;\n};\n\nexport function prioritizeSignals(signals: DeploymentSignal[]) {\n  return [...signals]\n    .sort((a, b) => b.readiness - a.readiness)\n    .map((signal, rank) => ({\n      ...signal,\n      rank: rank + 1,\n      owner: signal.risk === 'high' ? 'Governance Council' : 'Lab Delivery Team',\n    }));\n}`}
+            />
           </div>
         </div>
 
