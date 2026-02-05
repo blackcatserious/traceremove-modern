@@ -128,7 +128,12 @@ export default async function AtlasBlueprintPage({
                 title="Validation performance across delivery complexity"
               />
               <MermaidDiagram
-                chart={`flowchart LR\n  A[Signals & telemetry] --> B[Atlas blueprint adaptation]\n  B --> C[Technology lab experiment]\n  C --> D[Risk + ethics validation]\n  D --> E[Executive rollout]\n  E --> A`}
+                chart={`graph TD
+    A[Signals] --> B[Blueprint]
+    B --> C[Lab Experiment]
+    C --> D[Validation]
+    D --> E[Rollout]
+    E --> A`}
                 className="h-full border-white/10 bg-slate-900/80 text-white shadow-lg shadow-slate-900/40"
               />
             </div>
