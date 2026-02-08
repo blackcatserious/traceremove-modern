@@ -116,7 +116,7 @@ export default function Home() {
             <FeatureCard
               icon={Sparkles}
               title="Our Mission"
-              description="Understand the guiding principles and commitments behind the Traceremove research lab."
+              description="See how we make responsible AI practical for teams, partners, and communities."
               gradient="from-blue-900/40 to-purple-900/40"
               borderColor="border-blue-500/20"
               iconGradient="from-blue-500 to-blue-600"

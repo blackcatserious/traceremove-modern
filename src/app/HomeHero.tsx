@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { BookOpen, Network, ShieldCheck, Sparkles, Globe } from 'lucide-react';
+import { BookOpen, Network, ShieldCheck, Sparkles, Globe, UserPlus, CalendarCheck } from 'lucide-react';
 
 import PremiumButton from '@/components/PremiumButton';
 
@@ -97,12 +97,11 @@ export default function HomeHero() {
               className="space-y-8"
             >
               <h1 className="font-ibm-sans text-4xl font-semibold leading-[1.1] text-white sm:text-5xl lg:text-6xl">
-                Responsible intelligence, staged for motion and accountability.
+                We help teams build trustworthy AI with clear research, tools, and guidance.
               </h1>
               <p className="max-w-2xl text-lg text-white/80 sm:text-xl">
-                Traceremove is the research studio translating philosophical rigor and systems engineering into deployable AI
-                experiences. We choreograph 176 evidence-led blueprints so teams can design, govern, and scale intelligence with
-                confidence.
+                Traceremove turns complex AI ethics into practical steps: research blueprints, operational tools, and expert
+                support that make AI safer, more transparent, and easier to govern.
               </p>
             </motion.div>
 
@@ -112,17 +111,26 @@ export default function HomeHero() {
               transition={{ duration: 0.8, delay: 0.35 }}
               className="flex flex-wrap gap-4"
             >
-              <PremiumButton href="/atlas" icon={Sparkles} iconPosition="left" size="lg">
-                Explore the atlas
+              <PremiumButton href="/contact?intent=subscribe" icon={Sparkles} iconPosition="left" size="lg">
+                Subscribe to updates
               </PremiumButton>
               <PremiumButton
-                href="/projects"
+                href="/contact?intent=research"
                 variant="secondary"
-                icon={BookOpen}
+                icon={UserPlus}
                 iconPosition="left"
                 size="lg"
               >
-                View active projects
+                Join research programmes
+              </PremiumButton>
+              <PremiumButton
+                href="/contact?intent=consultation"
+                variant="ghost"
+                icon={CalendarCheck}
+                iconPosition="left"
+                size="lg"
+              >
+                Request a consultation
               </PremiumButton>
             </motion.div>
 

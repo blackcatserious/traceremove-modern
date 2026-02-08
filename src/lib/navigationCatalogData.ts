@@ -70,6 +70,116 @@ export type NavigationCatalogEntry = {
 export type NavigationCatalog = Record<string, NavigationCatalogEntry>;
 
 export const navigationCatalog: NavigationCatalog = {
+  'research-hub': {
+    meta: {
+      tagline: 'Research & Insights',
+      description:
+        'Explore core research areas, published articles, and whitepapers that turn responsible AI theory into action.',
+      highlight: {
+        title: 'Guardrails in UX Safety',
+        description: 'Designing humane guardrails for agentic systems in production.',
+        href: '/articles/guardrails-ux-safety',
+        icon: ArrowRight,
+        badge: 'Editor’s Pick',
+        accent: 'from-rose-500/80 via-purple-500/70 to-blue-500/80',
+        glow: '0 25px 60px rgba(244, 114, 182, 0.45)',
+      },
+    },
+    dropdown: [
+      {
+        href: '/research',
+        label: 'Research Areas',
+        description: 'Methodologies, ethical frameworks, and governance playbooks.',
+        icon: Microscope,
+        badge: 'Overview',
+      },
+      {
+        href: '/articles',
+        label: 'Articles & Essays',
+        description: 'Editorial deep dives on AI accountability and design.',
+        icon: Newspaper,
+      },
+      {
+        href: '/whitepapers',
+        label: 'Whitepapers',
+        description: 'Downloadable research briefs and policy memos.',
+        icon: ScrollText,
+      },
+      {
+        href: '/research/ethical-ai-architecture',
+        label: 'Ethical AI Architecture',
+        description: 'Architectural guardrails for responsible AI stacks.',
+        icon: Shield,
+      },
+      {
+        href: '/research/privacy-preserving-ai',
+        label: 'Privacy-Preserving AI',
+        description: 'Federated learning, secure enclaves, and adaptive consent.',
+        icon: Lock,
+      },
+      {
+        href: '/articles/comparative-llm-analysis',
+        label: 'Comparative LLM Analysis',
+        description: 'Evidence-led comparisons of open and closed models.',
+        icon: GitCompare,
+      },
+    ],
+  },
+  'atlas-tools': {
+    meta: {
+      tagline: 'Atlas & Tools',
+      description:
+        'Navigate the global atlas of AI case studies and the operational tools used to run research programmes.',
+      highlight: {
+        title: 'Experience Atlas Overview',
+        description: 'Survey the full atlas, filter by sector, and step into cinematic narratives.',
+        href: '/atlas',
+        icon: Compass,
+        badge: 'Explore',
+        accent: 'from-fuchsia-500/80 via-purple-500/70 to-indigo-500/80',
+        glow: '0 25px 60px rgba(168, 85, 247, 0.45)',
+      },
+    },
+    dropdown: [
+      {
+        href: '/atlas',
+        label: 'Atlas Overview',
+        description: '176 case studies across civic, climate, and product teams.',
+        icon: Sparkles,
+        badge: 'New',
+      },
+      {
+        href: '/tools',
+        label: 'Tooling Hub',
+        description: 'Dashboards, checklists, and workflow utilities.',
+        icon: Radar,
+      },
+      {
+        href: '/tools/ai-research-dashboard',
+        label: 'AI Research Dashboard',
+        description: 'Governance cockpit for AI programmes.',
+        icon: BarChart3,
+      },
+      {
+        href: '/tools/semantic-search-tool',
+        label: 'Semantic Search Tool',
+        description: 'Surface adjacent research signals with embeddings.',
+        icon: Search,
+      },
+      {
+        href: '/atlas/human-centered-safety-systems-healthcare-alliance',
+        label: 'Safety Systems · Healthcare',
+        description: 'Patient-first guardrails across clinical deployments.',
+        icon: Heart,
+      },
+      {
+        href: '/atlas/planetary-compute-stewardship-climate-tech',
+        label: 'Compute Stewardship · Climate',
+        description: 'Equitable compute governance for climate intelligence.',
+        icon: Globe,
+      },
+    ],
+  },
   research: {
     meta: {
       tagline: 'AI Research Blueprints',
