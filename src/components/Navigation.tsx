@@ -16,14 +16,11 @@ type BaseItem = {
 
 const NAV_ITEMS: BaseItem[] = [
   { id: 'home', href: '/', label: 'Home' },
-  { id: 'research', href: '/research', label: 'Research' },
+  { id: 'research-hub', href: '/research', label: 'Research & Insights' },
+  { id: 'atlas-tools', href: '/atlas', label: 'Atlas & Tools' },
   { id: 'projects', href: '/projects', label: 'Projects' },
-  { id: 'tools', href: '/tools', label: 'Tools' },
-  { id: 'atlas', href: '/atlas', label: 'Atlas' },
   { id: 'academic', href: '/academic', label: 'Academic' },
-  { id: 'articles', href: '/articles', label: 'Articles' },
   { id: 'about', href: '/about', label: 'About' },
-  { id: 'whitepapers', href: '/whitepapers', label: 'Whitepapers' },
   { id: 'contact', href: '/contact', label: 'Contact' },
 ];
 

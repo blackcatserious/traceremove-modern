@@ -12,6 +12,7 @@ import PerformanceWarmup from "@/components/PerformanceWarmup";
 import PerformanceProfileProvider from "@/components/PerformanceProfileProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import CallToAction from "@/components/CallToAction";
 
 export const dynamic = 'force-static';
 export const revalidate = 3600;
@@ -226,6 +227,7 @@ export default function RootLayout({
               <main id="page-content" className="relative z-20 pt-24 pb-16">
                 <PageScene>{children}</PageScene>
               </main>
+              <CallToAction />
               <Footer />
             </BackgroundProvider>
             {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
