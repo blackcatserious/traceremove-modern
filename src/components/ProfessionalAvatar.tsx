@@ -43,8 +43,7 @@ export default function ProfessionalAvatar({
                     fill
                     sizes="192px"
                     className="object-cover shadow-ai-glow"
-                    priority={false}
-                    unoptimized
+                    loading="lazy"
                   />
                 </div>
               ) : (

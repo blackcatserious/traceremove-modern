@@ -20,10 +20,10 @@ const NAV_ITEMS: BaseItem[] = [
   { id: 'projects', href: '/projects', label: 'Projects' },
   { id: 'tools', href: '/tools', label: 'Tools' },
   { id: 'atlas', href: '/atlas', label: 'Atlas' },
-  { id: 'academic', href: '/academic', label: 'Academic' },
-  { id: 'articles', href: '/articles', label: 'Articles' },
+  { id: 'academic', href: '/academic', label: 'Academy' },
+  { id: 'articles', href: '/articles', label: 'Insights' },
   { id: 'about', href: '/about', label: 'About' },
-  { id: 'whitepapers', href: '/whitepapers', label: 'Whitepapers' },
+  { id: 'whitepapers', href: '/whitepapers', label: 'Papers' },
   { id: 'contact', href: '/contact', label: 'Contact' },
 ];
 

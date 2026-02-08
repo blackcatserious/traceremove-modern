@@ -233,8 +233,7 @@ export default function Home() {
                   <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white shadow-md ring-1 ring-white/20">
                     <Image
                       src="/brand/black-cat-solid.svg?v=2"
-                      alt=""
-                      aria-hidden
+                      alt="Traceremove cat emblem"
                       className="h-6 w-6"
                       width={24}
                       height={24}
@@ -268,8 +267,7 @@ export default function Home() {
             </div>
             <Image
               src="/brand/black-cat-geo.svg?v=2"
-              alt=""
-              aria-hidden="true"
+              alt="Traceremove geometric cat runner"
               className="cat-runner hidden md:block"
               width={160}
               height={160}

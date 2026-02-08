@@ -233,8 +233,7 @@ export default function RootLayout({
                 <AssistantWidgetShell compact />
                 <Image
                   src="/brand/black-cat-geo.svg?v=2"
-                  alt=""
-                  aria-hidden="true"
+                  alt="Traceremove geometric cat emblem"
                   className="cat-geo"
                   width={36}
                   height={36}

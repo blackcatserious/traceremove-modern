@@ -91,7 +91,24 @@ export default function ContactPage() {
 
     setFormStatus('loading');
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1800));
+      const response = await fetch('/api/hubspot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'contact',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          pageUri: typeof window !== 'undefined' ? window.location.href : undefined,
+          pageName: 'Contact',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('HubSpot submission failed');
+      }
+
       setFormStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setFormStatus('idle'), 4000);
@@ -127,10 +144,10 @@ export default function ContactPage() {
                     <div key={channel.label} className="rounded-2xl border border-white/10 bg-white/5 p-4">
                       <channel.icon className="h-5 w-5 text-white/70" />
                       <p className="mt-3 text-sm font-semibold text-white">{channel.label}</p>
-                      <p className="mt-1 text-xs text-white/60">{channel.description}</p>
+                      <p className="mt-1 text-xs text-white/70">{channel.description}</p>
                       <Link
                         href={`mailto:${channel.address}`}
-                        className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/70 transition-colors duration-300 hover:text-white"
+                        className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/80 transition-colors duration-300 hover:text-white"
                       >
                         {channel.address}
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -142,8 +159,8 @@ export default function ContactPage() {
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl">
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-white/70" />
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">Office hours</p>
+                  <Calendar className="h-5 w-5 text-white/80" />
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/70">Office hours</p>
                 </div>
                 <p className="mt-3 text-sm text-white/70">
                   We host weekly open office hours for civic technologists, scholars, and builders exploring atlas adoption. Include “office hours” in your subject line to receive the latest scheduling link.
@@ -161,11 +178,11 @@ export default function ContactPage() {
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  <label htmlFor="name" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
                     Name
                   </label>
                   <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
-                    <User className="h-4 w-4 text-white/50" />
+                    <User className="h-4 w-4 text-white/60" />
                     <input
                       id="name"
                       name="name"
@@ -180,11 +197,11 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                  <label htmlFor="email" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
                     Email
                   </label>
                   <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
-                    <Mail className="h-4 w-4 text-white/50" />
+                    <Mail className="h-4 w-4 text-white/60" />
                     <input
                       id="email"
                       name="email"
@@ -200,11 +217,11 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                <label htmlFor="subject" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
                   Subject
                 </label>
                 <div className="mt-2 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
-                  <MessageSquare className="h-4 w-4 text-white/50" />
+                  <MessageSquare className="h-4 w-4 text-white/60" />
                   <input
                     id="subject"
                     name="subject"
@@ -219,7 +236,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+                <label htmlFor="message" className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
                   Message
                 </label>
                 <div className="mt-2 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3">
@@ -272,7 +289,7 @@ export default function ContactPage() {
                   <p className="text-base font-semibold text-white">{social.name}</p>
                   <p className="text-sm text-white/70">{social.description}</p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-white/60 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="h-5 w-5 text-white/70 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             ))}
           </div>

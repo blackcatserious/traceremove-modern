@@ -1,7 +1,13 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import AmbientLayoutFrame from '@/components/AmbientLayoutFrame';
 import ArticlesHero from '@/app/articles/ArticlesHero';
 import { ARTICLES_BACKGROUND_CLASS, ARTICLES_OVERLAY_CLASS } from '../ambientConfig';
+
+export const metadata: Metadata = {
+  title: 'Insights — Traceremove Research',
+  description: 'Editorial insights, field notes, and long-form analysis on responsible AI systems and governance.',
+};
 
 export default function ArticlesOverviewLayout({ children }: { children: ReactNode }) {
   return (

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -20,31 +21,31 @@ const coreLinks = [
   { name: 'Projects', href: '/projects' },
   { name: 'Tools', href: '/tools' },
   { name: 'Atlas', href: '/atlas' },
-  { name: 'Articles', href: '/articles' },
-  { name: 'Academic', href: '/academic' },
+  { name: 'Insights', href: '/articles' },
+  { name: 'Academy', href: '/academic' },
   { name: 'Contact', href: '/contact' },
 ];
 
 const atlasLinks = [
-  { name: 'Experience Atlas Overview', href: '/atlas' },
-  { name: 'Transparent Governance · Global', href: '/atlas/transparent-ai-governance-global-initiative' },
-  { name: 'Safety Systems · Healthcare', href: '/atlas/human-centered-safety-systems-healthcare-alliance' },
-  { name: 'Compute Stewardship · Climate', href: '/atlas/planetary-compute-stewardship-climate-tech' },
-  { name: 'Civic Participation · Consortium', href: '/atlas/civic-tech-participation-civic-consortium' },
+  { name: 'Atlas Overview', href: '/atlas' },
+  { name: 'Governance · Global', href: '/atlas/transparent-ai-governance-global-initiative' },
+  { name: 'Safety · Healthcare', href: '/atlas/human-centered-safety-systems-healthcare-alliance' },
+  { name: 'Compute · Climate', href: '/atlas/planetary-compute-stewardship-climate-tech' },
+  { name: 'Civic · Consortium', href: '/atlas/civic-tech-participation-civic-consortium' },
 ];
 
 const researchLinks = [
-  { name: 'Ethical AI Architecture', href: '/research/ethical-ai-architecture' },
+  { name: 'Ethical Architecture', href: '/research/ethical-ai-architecture' },
   { name: 'Privacy-Preserving AI', href: '/research/privacy-preserving-ai' },
   { name: 'Agentic Systems & Tool Use', href: '/research/agentic-systems-tool-use' },
   { name: 'Longitudinal Impact Forecasting', href: '/research/societal-impacts' },
-  { name: 'Whitepapers', href: '/whitepapers' },
+  { name: 'Papers', href: '/whitepapers' },
 ];
 
 const policyLinks = [
   { name: 'Privacy Policy', href: '/legal/privacy-policy' },
-  { name: 'Ethics Statement', href: '/legal/ethics-statement' },
-  { name: 'FAQ', href: '/faq' },
+  { name: 'Ethics Charter', href: '/legal/ethics-statement' },
+  { name: 'Atlas FAQ', href: '/faq' },
   { name: 'Site Map', href: '/site-map' },
   { name: 'AI Lab Members', href: '/ai-lab-members' },
 ];
@@ -65,7 +66,44 @@ const contactDetails = [
 ];
 
 export default function Footer() {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const currentYear = new Date().getFullYear();
+
+  const handleNewsletterSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!newsletterEmail.trim()) {
+      setNewsletterStatus('error');
+      return;
+    }
+
+    setNewsletterStatus('loading');
+
+    try {
+      const response = await fetch('/api/hubspot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'newsletter',
+          email: newsletterEmail,
+          pageUri: typeof window !== 'undefined' ? window.location.href : undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('HubSpot submission failed');
+      }
+
+      setNewsletterStatus('success');
+      setNewsletterEmail('');
+      setTimeout(() => setNewsletterStatus('idle'), 4000);
+    } catch (error) {
+      console.error(error);
+      setNewsletterStatus('error');
+      setTimeout(() => setNewsletterStatus('idle'), 4000);
+    }
+  };
 
   return (
     <motion.footer
@@ -96,7 +134,7 @@ export default function Footer() {
                   <Sparkles className="h-5 w-5 text-accent-ai-purple" />
                 </span>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">Traceremove Research</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">Traceremove Research</p>
                   <h2 className="text-2xl font-semibold text-white">AI Ethics · Systems Philosophy · Civic Innovation</h2>
                 </div>
               </div>
@@ -126,7 +164,7 @@ export default function Footer() {
               className="grid gap-10"
             >
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Platform</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Platform</h3>
                 <ul className="mt-4 space-y-3 text-sm text-white/70">
                   {coreLinks.map((link) => (
                     <li key={link.name}>
@@ -139,12 +177,12 @@ export default function Footer() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Experience Atlas</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Experience Atlas</h3>
                 <ul className="mt-4 space-y-3 text-sm text-white/70">
                   {atlasLinks.map((link) => (
                     <li key={link.name}>
                       <Link className="group inline-flex items-center gap-2 transition hover:text-white" href={link.href}>
-                        <Map className="h-3.5 w-3.5 text-white/50" />
+                        <Map className="h-3.5 w-3.5 text-white/60" />
                         <span>{link.name}</span>
                       </Link>
                     </li>
@@ -160,12 +198,12 @@ export default function Footer() {
               className="grid gap-10"
             >
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Research & Impact</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Research & Impact</h3>
                 <ul className="mt-4 space-y-3 text-sm text-white/70">
                   {researchLinks.map((link) => (
                     <li key={link.name}>
                       <Link className="group inline-flex items-center gap-2 transition hover:text-white" href={link.href}>
-                        <ShieldCheck className="h-3.5 w-3.5 text-white/50" />
+                        <ShieldCheck className="h-3.5 w-3.5 text-white/60" />
                         <span>{link.name}</span>
                       </Link>
                     </li>
@@ -173,12 +211,12 @@ export default function Footer() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Policy & Resources</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Policy & Resources</h3>
                 <ul className="mt-4 space-y-3 text-sm text-white/70">
                   {policyLinks.map((link) => (
                     <li key={link.name}>
                       <Link className="group inline-flex items-center gap-2 transition hover:text-white" href={link.href}>
-                        <Calendar className="h-3.5 w-3.5 text-white/50" />
+                        <Calendar className="h-3.5 w-3.5 text-white/60" />
                         <span>{link.name}</span>
                       </Link>
                     </li>
@@ -194,33 +232,42 @@ export default function Footer() {
               className="space-y-8"
             >
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Stay in Orbit</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Stay in Orbit</h3>
                 <p className="mt-3 text-sm text-white/70 leading-relaxed">
                   Subscribe for atlas drops, new research instruments, and invitations to closed-door salons.
                 </p>
-                <form className="mt-5 flex flex-col gap-3 sm:flex-row" action="/contact" method="get">
+                <form className="mt-5 flex flex-col gap-3 sm:flex-row" onSubmit={handleNewsletterSubmit}>
                   <input
                     type="email"
                     name="email"
                     required
                     placeholder="work email"
+                    value={newsletterEmail}
+                    onChange={(event) => setNewsletterEmail(event.target.value)}
                     className="flex-1 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/50 focus:border-accent-ai-purple focus:outline-none"
                   />
                   <button
                     type="submit"
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-ai-purple px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-ai-purple/40 transition hover:bg-accent-lab-purple"
+                    disabled={newsletterStatus === 'loading'}
                   >
-                    Join the list
+                    {newsletterStatus === 'loading' ? 'Joining…' : 'Join the list'}
                     <ArrowUpRight className="h-4 w-4" />
                   </button>
                 </form>
-                <p className="mt-2 text-xs text-white/50">We send 1–2 updates per month. No spam, ever.</p>
+                <p className="mt-2 text-xs text-white/60" aria-live="polite">
+                  {newsletterStatus === 'success'
+                    ? 'Thanks for joining. We will share the next drop soon.'
+                    : newsletterStatus === 'error'
+                      ? 'Unable to subscribe right now. Try again or reach out via contact.'
+                      : 'We send 1–2 updates per month. No spam, ever.'}
+                </p>
               </div>
 
               <div className="space-y-3 text-sm text-white/70">
                 {contactDetails.map((detail) => (
                   <div key={detail.label} className="flex flex-col">
-                    <span className="text-xs uppercase tracking-[0.25em] text-white/50">{detail.label}</span>
+                    <span className="text-xs uppercase tracking-[0.25em] text-white/60">{detail.label}</span>
                     {detail.href ? (
                       <Link href={detail.href} className="text-white transition hover:text-accent-ai-purple">
                         {detail.value}
@@ -233,7 +280,7 @@ export default function Footer() {
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Connect</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Connect</h3>
                 <div className="space-y-3 text-sm text-white/70">
                   {socialLinks.map((social, index) => (
                     <motion.a
@@ -246,7 +293,7 @@ export default function Footer() {
                       transition={{ duration: 0.3, delay: 0.1 * index }}
                       className="group inline-flex items-center gap-2 transition hover:text-white"
                     >
-                      <social.icon className="h-4 w-4 text-white/50 transition group-hover:text-accent-ai-purple" />
+                      <social.icon className="h-4 w-4 text-white/60 transition group-hover:text-accent-ai-purple" />
                       <span>{social.name}</span>
                       <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100" />
                     </motion.a>
@@ -273,7 +320,7 @@ export default function Footer() {
                 CV
               </Link>
               <Link href="/whitepapers" className="transition hover:text-white">
-                Whitepapers
+                Papers
               </Link>
             </div>
           </motion.div>
