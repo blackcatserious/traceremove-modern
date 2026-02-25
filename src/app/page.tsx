@@ -1,190 +1,79 @@
-'use client';
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { papers } from "@/data/papers";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'lucide-react';
-import FeatureCard from '@/components/FeatureCard';
-import ResearchCard from '@/components/ResearchCard';
-import InfoCard from '@/components/InfoCard';
+const researchAreas = [
+  {
+    title: "Epistemic Risks",
+    description:
+      "How AI systems generate persuasive but weakly grounded claims, and how we can audit those risks before deployment.",
+  },
+  {
+    title: "Ethical Architecture",
+    description:
+      "Design principles for normative constraints that work at model, interface, and institutional levels.",
+  },
+  {
+    title: "Human Dignity",
+    description:
+      "A philosophical framework for preserving agency, respect, and contestability in AI-mediated decisions.",
+  },
+];
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen relative">
-      {/* Hero Section with Premium Glass Effect */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
-        {/* Premium Content Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.04),transparent_60%)] z-10" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
-          <div className="text-center">
-            {/* Platform Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
-            >
-              <div className="inline-flex items-center space-x-3 px-6 py-3 rounded-full glass-card-premium border border-accent-ai-purple/30 shadow-ai-glow">
-                <Sparkles className="w-5 h-5 text-purple-300" />
-                <span className="text-white/90 font-medium text-sm tracking-wide typography-premium">
-                  AI Research Platform
-                </span>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-              </div>
-            </motion.div>
+    <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 py-14 sm:px-6">
+      <section className="rounded-2xl border border-neutral-200 bg-gradient-to-br from-white to-neutral-100 p-10 dark:border-neutral-800 dark:from-neutral-900 dark:to-neutral-950">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">AI Philosophy Research</p>
+        <h1 className="max-w-3xl font-serif text-4xl leading-tight text-neutral-900 dark:text-neutral-100 sm:text-6xl">
+          What machines mean, what they risk, what we owe.
+        </h1>
+        <p className="mt-6 max-w-3xl text-lg text-neutral-700 dark:text-neutral-300">
+          Artur Ziganshin · Independent AI Philosophy Researcher · MA Philosophy, Kazan Federal University
+        </p>
+      </section>
 
-            {/* Main Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-8"
-            >
-              <h1 className="hero-title text-white mb-8 typography-premium">
-                Advancing AI for a<br />
-                Better Future
-              </h1>
-              
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto mb-16 typography-premium leading-relaxed">
-                Traceremove is committed to exploring the intersection of artificial intelligence, 
-                ethics, and human understanding for responsible innovation.
-              </p>
-            </motion.div>
-
-            {/* Main Feature Cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="grid md:grid-cols-3 gap-8 mb-24"
-            >
-              <FeatureCard
-                icon={Sparkles}
-                title="Our Mission"
-                description="Learn about the guiding principles of our research lab"
-                gradient="from-blue-900/40 to-purple-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-blue-600"
-              />
-              
-              <FeatureCard
-                icon={Info}
-                title="How to Use This Platform"
-                description="Discover the features and content across multiple sections"
-                gradient="from-purple-900/40 to-violet-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-purple-600"
-              />
-              
-              <FeatureCard
-                icon={BookOpen}
-                title="Philosophy of AI"
-                description="Understand the ethical and philosophical context of our work"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-violet-600"
-              />
-            </motion.div>
-          </div>
+      <section>
+        <h2 className="mb-6 text-2xl font-semibold">Research Areas</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {researchAreas.map((area) => (
+            <article key={area.title} className="card">
+              <h3 className="text-lg font-semibold">{area.title}</h3>
+              <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">{area.description}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="section-title text-white mb-6 typography-premium">
-              Research Areas
-            </h2>
-            <p className="text-xl text-slate-300 max-w-4xl mx-auto typography-premium leading-relaxed">
-              Focusing on academic rigor and ethical integrity to build transparent and interpretable AI systems.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={MessageSquare}
-                title="Language Models & Ethics"
-                description="Examining the moral considerations surrounding large-scale language models"
-                gradient="from-blue-900/40 to-cyan-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-cyan-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Database}
-                title="Big Data Architectures"
-                description="Developing robust AI frameworks for processing and analysis"
-                gradient="from-purple-900/40 to-pink-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-pink-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Network}
-                title="Cognitive Agents"
-                description="Creating intelligent AI systems with advanced decision-making capabilities"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-indigo-500"
-              />
-            </motion.div>
-          </motion.div>
+      <section>
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">Recent Papers</h2>
+          <Link href="/research" className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
+            View all <ArrowRight size={16} />
+          </Link>
+        </div>
+        <div className="space-y-4">
+          {papers.slice(0, 3).map((paper) => (
+            <article key={paper.title} className="card">
+              <div className="mb-2"><span className="badge">{paper.status}</span></div>
+              <h3 className="text-xl font-semibold">{paper.title}</h3>
+              <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">{paper.abstract}</p>
+              <a href={paper.philArchiveUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm font-medium text-neutral-900 underline dark:text-neutral-100">
+                Read on PhilArchive
+              </a>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* About Artur Ziganshin Section */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <InfoCard
-              title="About Artur Ziganshin"
-              description="Learn about the background and expertise of our principal investigator."
-              gradient="from-blue-900/40 to-purple-900/40"
-              borderColor="border-blue-500/20"
-            />
-          </motion.div>
-        </div>
+      <section className="rounded-2xl border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900">
+        <h2 className="text-2xl font-semibold">Join the Newsletter</h2>
+        <p className="mt-2 text-neutral-700 dark:text-neutral-300">
+          Get concise briefings on AI epistemology, machine agency, and practical ethical governance.
+        </p>
+        <Link href="/newsletter" className="mt-4 inline-flex items-center gap-2 rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300">
+          Subscribe to The Epistemic Mirror <ArrowRight size={16} />
+        </Link>
       </section>
     </div>
   );
