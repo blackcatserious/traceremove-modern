@@ -27,6 +27,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] mb-4">Writing</h4>
             <Link href="/articles" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Articles</Link>
+            <Link href="/cv" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">CV</Link>
             <Link href="/newsletter" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">The Epistemic Mirror</Link>
             <Link href="/articles/ai-philosophy-reading-list" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Reading List</Link>
           </div>

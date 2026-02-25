@@ -16,6 +16,7 @@ export const siteConfig = {
   newsletter: {
     name: "The Epistemic Mirror",
     description: "Weekly philosophical analysis of AI developments.",
+    substackUrl: "https://traceremove.substack.com",
   },
   keywords: [
     "AI philosophy",

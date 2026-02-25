@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { siteConfig } from "@/data/site-config";
+import BackToTop from "@/components/ui/BackToTop";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Header />
             <main id="main-content">{children}</main>
             <Footer />
+            <BackToTop />
           </div>
         </ThemeProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { papers } from "@/data/papers";
 import { articles } from "@/data/articles";
+import { siteConfig } from "@/data/site-config";
 
 export default function HomePage() {
   return (
@@ -170,11 +171,12 @@ export default function HomePage() {
             <p className="text-[#8a8a97] mb-8">
               Weekly philosophical analysis of AI developments. No hype, no jargon — just clarity.
             </p>
-            <div className="flex gap-3 max-w-sm mx-auto">
-              <input type="email" placeholder="your@email.com" className="input flex-1" />
-              <button className="btn-primary whitespace-nowrap">Subscribe</button>
+            <div className="flex gap-3 max-w-sm mx-auto items-center justify-center">
+              <a href={siteConfig.newsletter.substackUrl} target="_blank" rel="noreferrer" className="btn-primary whitespace-nowrap">
+                Subscribe →
+              </a>
             </div>
-            <p className="text-xs text-[#4a4a58] mt-4">Free · Unsubscribe anytime</p>
+            <p className="text-xs text-[#4a4a58] mt-4">Free · Unsubscribe anytime · You'll be redirected to our Substack page.</p>
           </div>
         </FadeIn>
       </section>
