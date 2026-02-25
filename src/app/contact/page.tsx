@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import ContactClient from "./contact-client";
 
 export const metadata: Metadata = {
-  title: "Contact | Artur Ziganshin",
+  title: "Contact",
   description:
-    "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.",
+    "Get in touch for consulting inquiries, speaking invitations, research collaborations, or questions about AI philosophy.",
+  openGraph: {
+    title: "Contact | Artur Ziganshin",
+    url: "https://traceremove.dev/contact",
+  },
 };
 
 export default function ContactPage() {

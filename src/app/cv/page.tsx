@@ -3,9 +3,13 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { papers } from "@/data/papers";
 
 export const metadata: Metadata = {
-  title: "CV | Artur Ziganshin",
+  title: "Curriculum Vitae",
   description:
-    "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.",
+    "Academic CV of Artur Ziganshin — AI philosophy researcher. Publications, research areas, education, and professional activities.",
+  openGraph: {
+    title: "CV | Artur Ziganshin",
+    url: "https://traceremove.dev/cv",
+  },
 };
 
 export default function CVPage() {

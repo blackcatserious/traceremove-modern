@@ -3,9 +3,13 @@ import Link from "next/link";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
-  title: "Consulting & Speaking | Artur Ziganshin",
+  title: "Consulting & Speaking",
   description:
-    "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.",
+    "AI philosophy consulting, epistemic risk assessment, ethics review, and speaking engagements. Bringing philosophical rigor to AI decisions.",
+  openGraph: {
+    title: "Consulting & Speaking | Artur Ziganshin",
+    url: "https://traceremove.dev/services",
+  },
 };
 
 const services = [

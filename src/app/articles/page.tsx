@@ -4,9 +4,14 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { articles } from "@/data/articles";
 
 export const metadata: Metadata = {
-  title: "Writing | Artur Ziganshin",
+  title: "Articles & Essays",
   description:
-    "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.",
+    "Philosophical essays on AI, language models, epistemic risks, and the future of human-machine interaction.",
+  openGraph: {
+    title: "Writing | Artur Ziganshin",
+    description: "Philosophical essays on AI and technology.",
+    url: "https://traceremove.dev/articles",
+  },
 };
 
 export default function ArticlesPage() {

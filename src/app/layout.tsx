@@ -7,29 +7,51 @@ import Header from "@/components/layout/Header";
 import { siteConfig } from "@/data/site-config";
 import "./globals.css";
 
-const defaultDescription =
-  "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.";
-
 export const metadata: Metadata = {
-  title: "Artur Ziganshin — AI Philosophy Research",
-  description: defaultDescription,
-  keywords: ["AI philosophy", "epistemic risks", "AI ethics", "philosophy of AI", "Artur Ziganshin"],
   metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: "%s | Artur Ziganshin",
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
+  creator: siteConfig.author.name,
+  publisher: siteConfig.author.name,
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: "Artur Ziganshin — AI Philosophy Research",
-    description: defaultDescription,
-    siteName: "Traceremove",
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: "Traceremove — AI Philosophy Research" }],
+    siteName: "traceremove",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [{ url: "/og-image", width: 1200, height: 630, alt: siteConfig.title }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artur Ziganshin — AI Philosophy Research",
-    description: defaultDescription,
-    images: [siteConfig.ogImage],
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/og-image"],
+    creator: siteConfig.author.twitter,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+    types: {
+      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+    },
+  },
+  verification: {},
   icons: { icon: "/favicon.svg" },
 };
 
@@ -38,11 +60,21 @@ const personSchema = {
   "@type": "Person",
   name: siteConfig.author.name,
   url: siteConfig.url,
-  jobTitle: siteConfig.author.role,
-  affiliation: { "@type": "Organization", name: "Independent Research" },
-  email: siteConfig.author.email,
-  sameAs: [siteConfig.links.philarchive, siteConfig.links.academia, siteConfig.links.orcid, siteConfig.links.github],
-  description: siteConfig.author.bio,
+  jobTitle: "Independent AI Philosophy Researcher",
+  description: siteConfig.description,
+  sameAs: [siteConfig.author.orcid, siteConfig.author.philarchive, siteConfig.author.linkedin].filter(Boolean),
+  knowsAbout: [
+    "Artificial Intelligence",
+    "Epistemology",
+    "Philosophy of Mind",
+    "AI Ethics",
+    "Philosophy of Language",
+    "Machine Learning",
+  ],
+  hasCredential: [
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "degree", name: "Master of Philosophy" },
+    { "@type": "EducationalOccupationalCredential", credentialCategory: "degree", name: "PhD of Philosophy" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
