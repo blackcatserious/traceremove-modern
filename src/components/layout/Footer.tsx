@@ -1,42 +1,50 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <footer className="border-t border-black/10 bg-[#f5f3ee]/80 py-16 dark:border-white/10 dark:bg-[#131316]/75">
-      <div className="mx-auto grid max-w-[1280px] gap-10 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
-        <section>
-          <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] dark:text-[#b8b8c1]">Research</h3>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><a href="/research" className="hover:underline">Research</a></li>
-            <li><a href="/articles" className="hover:underline">Articles</a></li>
-            <li><a href="https://philarchive.org/s/artur%20ziganshin" target="_blank" rel="noreferrer" className="hover:underline">Papers on PhilArchive</a></li>
-          </ul>
-        </section>
+    <footer className="border-t border-white/[0.06]">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          <div>
+            <p
+              className="text-lg text-white italic"
+              style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
+              traceremove
+            </p>
+            <p className="text-sm text-[#6a6a78] mt-3 leading-relaxed max-w-[200px]">
+              Philosophical research on what AI means, risks, and owes.
+            </p>
+          </div>
 
-        <section>
-          <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] dark:text-[#b8b8c1]">Connect</h3>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><a href="mailto:artur@traceremove.dev" className="hover:underline">Email</a></li>
-            <li><a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:underline">LinkedIn</a></li>
-            <li><a href="https://orcid.org/0009-0003-8406-9303" target="_blank" rel="noreferrer" className="hover:underline">ORCID</a></li>
-            <li><a href="https://philarchive.org/s/artur%20ziganshin" target="_blank" rel="noreferrer" className="hover:underline">PhilArchive</a></li>
-          </ul>
-        </section>
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] mb-4">Research</h4>
+            <Link href="/research" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">All Papers</Link>
+            <a href="https://philarchive.org/s/artur%20ziganshin" target="_blank" rel="noreferrer" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">PhilArchive Profile</a>
+            <a href="https://orcid.org/0009-0003-8406-9303" target="_blank" rel="noreferrer" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">ORCID</a>
+          </div>
 
-        <section>
-          <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] dark:text-[#b8b8c1]">Newsletter</h3>
-          <p className="mt-4 text-sm">The Epistemic Mirror</p>
-          <form className="mt-3 flex gap-2">
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full rounded-full border border-black/15 bg-white/90 px-4 py-2 text-sm dark:border-white/15 dark:bg-[#1c1c22]"
-            />
-            <button type="button" className="rounded-full bg-[#ef5044] px-4 py-2 text-sm font-semibold text-white">Join</button>
-          </form>
-        </section>
-      </div>
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] mb-4">Writing</h4>
+            <Link href="/articles" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Articles</Link>
+            <Link href="/newsletter" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">The Epistemic Mirror</Link>
+            <Link href="/articles/ai-philosophy-reading-list" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Reading List</Link>
+          </div>
 
-      <div className="mx-auto mt-10 max-w-[1280px] border-t border-black/10 px-4 pt-5 text-sm text-[#5e5e6c] dark:border-white/10 dark:text-[#b8b8c1] sm:px-6 lg:px-8">
-        © 2026 Artur Ziganshin · Master of Philosophy · PhD of Philosophy
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5e5e6c] mb-4">Connect</h4>
+            <a href="mailto:artur@traceremove.dev" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Email</a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">LinkedIn</a>
+            <a href="https://x.com" target="_blank" rel="noreferrer" className="text-sm text-[#8a8a97] hover:text-white link-underline block py-1">Twitter / X</a>
+          </div>
+        </div>
+
+        <div className="border-t border-white/[0.04] my-10" />
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+          <span className="text-xs text-[#4a4a58]">© 2026 Artur Ziganshin</span>
+          <span className="text-xs text-[#4a4a58]">Master of Philosophy · PhD of Philosophy</span>
+        </div>
       </div>
     </footer>
   );

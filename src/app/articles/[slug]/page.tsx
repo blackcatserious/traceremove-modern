@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReadingProgress from "@/components/articles/ReadingProgress";
 import { articles } from "@/data/articles";
 
 const description =
@@ -23,17 +24,9 @@ function renderContent(content: string) {
     const trimmed = block.trim();
     if (!trimmed) return null;
     if (trimmed.startsWith("## ")) {
-      return (
-        <h2 key={i} className="mt-10 mb-4 text-2xl font-bold">
-          {trimmed.replace("## ", "")}
-        </h2>
-      );
+      return <h2 key={i}>{trimmed.replace("## ", "")}</h2>;
     }
-    return (
-      <p key={i} className="mb-4 leading-relaxed text-[#2f2f36] dark:text-[#d9d9de]">
-        {trimmed}
-      </p>
-    );
+    return <p key={i}>{trimmed}</p>;
   });
 }
 
@@ -44,41 +37,42 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   const related = articles.filter((item) => item.slug !== article.slug).slice(0, 3);
 
   return (
-    <article className="mx-auto max-w-[820px] px-4 py-14 sm:px-6">
-      <p className="text-xs uppercase tracking-wide text-[#6b6b79]">{article.date} · {article.readingTime}</p>
-      <h1 className="mt-2 text-5xl leading-tight" style={{ fontFamily: "var(--font-display), Georgia, serif" }}>{article.title}</h1>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {article.tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-black/10 px-2.5 py-0.5 text-xs dark:border-white/10">{tag}</span>
-        ))}
+    <article className="px-6 py-20">
+      <ReadingProgress />
+      <div className="max-w-3xl mx-auto">
+        <p className="text-xs uppercase tracking-wide text-[#6b6b79]">{article.date} · {article.readingTime}</p>
+        <h1 className="mt-2 text-5xl leading-tight">{article.title}</h1>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {article.tags.map((tag) => (
+            <span key={tag} className="badge badge-tag">{tag}</span>
+          ))}
+        </div>
       </div>
 
-      <section className="mt-10">{renderContent(article.content)}</section>
+      <div className="prose-custom max-w-[42rem] mx-auto mt-10">
+        {renderContent(article.content)}
+      </div>
 
-      <section className="mt-12 rounded-2xl border border-black/10 p-6 dark:border-white/10">
+      <section className="max-w-[42rem] mx-auto mt-12 card">
         <h3 className="text-xl font-semibold">About the Author</h3>
-        <p className="mt-2 text-sm leading-relaxed text-[#4d4d58] dark:text-[#d9d9de]">
+        <p className="mt-3 text-sm leading-relaxed text-[#8a8a97]">
           Artur Ziganshin is an independent AI philosophy researcher writing on epistemic risk, ethical architecture,
           and the social implications of machine intelligence.
         </p>
       </section>
 
-      <section className="mt-8 rounded-2xl border border-black/10 bg-[#f5f3ee] p-6 dark:border-white/10 dark:bg-[#1a1a1f]">
+      <section className="max-w-[42rem] mx-auto mt-8 card">
         <h3 className="text-xl font-semibold">Subscribe to The Epistemic Mirror</h3>
-        <p className="mt-2 text-sm">Weekly philosophical analysis of AI developments. Free, concise, and practical.</p>
-        <Link href="/newsletter" className="mt-3 inline-block rounded-full bg-[#ef5044] px-4 py-2 text-sm font-semibold text-white">
-          Subscribe →
-        </Link>
+        <p className="mt-3 text-sm text-[#8a8a97]">Weekly philosophical analysis of AI developments. Free, concise, and practical.</p>
+        <Link href="/newsletter" className="mt-4 btn-primary">Subscribe →</Link>
       </section>
 
-      <section className="mt-10">
+      <section className="max-w-[42rem] mx-auto mt-10">
         <h3 className="text-xl font-semibold">More articles</h3>
         <ul className="mt-3 space-y-2">
           {related.map((item) => (
             <li key={item.slug}>
-              <Link href={`/articles/${item.slug}`} className="text-[#ef5044] hover:underline">
-                {item.title}
-              </Link>
+              <Link href={`/articles/${item.slug}`} className="accent-link">{item.title}</Link>
             </li>
           ))}
         </ul>

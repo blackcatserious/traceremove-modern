@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { articles } from "@/data/articles";
 
 export const metadata: Metadata = {
@@ -10,24 +11,37 @@ export const metadata: Metadata = {
 
 export default function ArticlesPage() {
   return (
-    <div className="mx-auto max-w-[1024px] space-y-8 px-4 py-14 sm:px-6">
-      <header>
-        <h1 className="text-5xl" style={{ fontFamily: "var(--font-display), Georgia, serif" }}>Writing</h1>
-        <p className="mt-3 text-[#4d4d58] dark:text-[#d9d9de]">Essays on AI philosophy, epistemic risk, and ethical architecture.</p>
-      </header>
+    <div>
+      <div className="max-w-6xl mx-auto px-6 pt-32 pb-16">
+        <span className="overline">Writing</span>
+        <h1 className="mt-4 text-4xl md:text-5xl">Articles &amp; Essays</h1>
+        <p className="mt-4 text-lg text-[#8a8a97] max-w-2xl">
+          Refined long-form essays on AI philosophy, epistemic risk, and ethical architecture.
+        </p>
+      </div>
 
-      <div className="space-y-4">
-        {articles.map((article) => (
-          <article key={article.slug} className="card p-6">
-            <p className="text-xs uppercase tracking-wide text-[#6b6b79]">{article.date} · {article.readingTime}</p>
-            <Link href={`/articles/${article.slug}`} className="mt-2 block text-2xl font-semibold hover:underline">{article.title}</Link>
-            <p className="mt-2 text-sm leading-relaxed text-[#4d4d58] dark:text-[#d9d9de]">{article.excerpt}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {article.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-black/10 px-2.5 py-0.5 text-xs dark:border-white/10">{tag}</span>
-              ))}
-            </div>
-          </article>
+      <div className="max-w-6xl mx-auto px-6 pb-20">
+        {articles.map((article, i) => (
+          <FadeIn key={article.slug} delay={i * 0.06}>
+            <Link href={`/articles/${article.slug}`} className="block group">
+              <div className="py-6 border-b border-white/[0.04] group-hover:border-white/[0.08] transition-colors">
+                <div className="flex items-center gap-3 text-xs text-[#5e5e6c] mb-2">
+                  <time>{article.date}</time>
+                  <span>·</span>
+                  <span>{article.readingTime}</span>
+                </div>
+                <h3 className="text-2xl text-white group-hover:text-[#ef5044] transition-colors mb-2" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
+                  {article.title}
+                </h3>
+                <p className="text-sm text-[#7a7a88] line-clamp-2 mb-3">{article.excerpt}</p>
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag) => (
+                    <span key={tag} className="badge badge-tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </FadeIn>
         ))}
       </div>
     </div>
