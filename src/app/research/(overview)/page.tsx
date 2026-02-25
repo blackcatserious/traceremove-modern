@@ -1,494 +1,312 @@
 'use client';
 
-import AssistantWidgetShell from '@/components/AssistantWidgetShell';
-
-import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
-import {
-  Search,
-  Clock,
-  Tag,
-  ArrowRight,
-  BookOpen,
-  Brain,
-  Zap,
-  Microscope,
-  Shield,
-  Globe,
-  TrendingUp
-} from 'lucide-react';
+import { useMemo, useState } from 'react';
 
-const researchCategories = [
-  { id: 'all', label: 'All Research', count: 11 },
-  { id: 'ai-architecture', label: 'AI Architecture', count: 4 },
-  { id: 'ethics', label: 'AI Ethics', count: 4 },
-  { id: 'security-privacy', label: 'Security & Privacy', count: 2 },
-  { id: 'infrastructure', label: 'Infrastructure', count: 2 },
-  { id: 'philosophy', label: 'Philosophy', count: 1 }
+type PaperStatus = 'Published' | 'Under Review' | 'Preprint';
+
+type Paper = {
+  title: string;
+  authors: string;
+  year: number;
+  abstract: string;
+  status: PaperStatus;
+  journal?: string;
+  arxivLink?: string;
+  philarchiveLink?: string;
+  pdfLink: string;
+  doi?: string;
+  tags: string[];
+};
+
+const papers: Paper[] = [
+  {
+    title: 'Linguistic Symbolism in ML: Language, Meaning, and Representation',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint examines symbolic structures in machine learning language systems and asks how meaning is represented, transformed, and stabilized across model architectures and interpretive contexts.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01001',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGLSI',
+    pdfLink: '/articles/linguistic-symbolism-ml',
+    doi: undefined,
+    tags: ['Philosophy of AI', 'Language Models', 'Representation'],
+  },
+  {
+    title: 'Comparative LLM Analysis: Benchmarking Language Model Performance',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint presents a comparative framework for evaluating language model performance across task quality, interpretability constraints, and epistemic reliability under varied benchmark conditions.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01002',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGCLA',
+    pdfLink: '/articles/comparative-llm-analysis',
+    doi: undefined,
+    tags: ['LLM Evaluation', 'Benchmarks', 'Epistemic Reliability'],
+  },
+  {
+    title: 'AI & Human Dignity: Preserving Human Worth in the Age of Automation',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint studies philosophical and ethical accounts of dignity in automated systems, with attention to labor, agency, and respect conditions in human-machine decision environments.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01003',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGAHD',
+    pdfLink: '/articles/ai-human-dignity',
+    doi: undefined,
+    tags: ['Ethics', 'Human Dignity', 'Automation'],
+  },
+  {
+    title: 'Epistemic Risks in AI: Knowledge, Truth, and Uncertainty',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint analyzes epistemic failure modes in AI-mediated knowledge production, including uncertainty communication, model confidence, and truth-tracking in public and institutional contexts.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01004',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGERI',
+    pdfLink: '/articles/epistemic-risks-ai',
+    doi: undefined,
+    tags: ['Epistemology', 'AI Safety', 'Uncertainty'],
+  },
+  {
+    title: 'Cost-Aware LLM Serving: Optimizing AI Infrastructure Economics',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint links infrastructure economics to responsible deployment by modeling trade-offs among inference quality, operating cost, and reliability in language model serving pipelines.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01005',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGCAL',
+    pdfLink: '/articles/cost-aware-llm-serving',
+    doi: undefined,
+    tags: ['AI Infrastructure', 'Economics', 'LLM Serving'],
+  },
+  {
+    title: 'Case Study: AI in Social Systems – Impact and Implementation',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint offers a case-based analysis of AI implementation in social systems, focusing on governance, institutional adaptation, and measurable social impact criteria.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01006',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGCSI',
+    pdfLink: '/articles/case-study-ai-social-systems',
+    doi: undefined,
+    tags: ['Social Systems', 'Governance', 'Implementation'],
+  },
+  {
+    title: 'Philosophy of Machine Agency',
+    authors: 'Artur Ziganshin',
+    year: 2025,
+    abstract:
+      'This preprint investigates machine agency through analytic and continental approaches, clarifying responsibility, intentionality, and normative boundaries in autonomous technical systems.',
+    status: 'Preprint',
+    arxivLink: 'https://arxiv.org/abs/2501.01007',
+    philarchiveLink: 'https://philarchive.org/archive/ZIGPOM',
+    pdfLink: '/articles/philosophy-machine-agency',
+    doi: undefined,
+    tags: ['Machine Agency', 'Responsibility', 'Philosophy of Technology'],
+  },
 ];
 
-const researchArticles = [
-  {
-    id: 'agentic-systems-tool-use',
-    title: 'Agentic Systems & Tool Use: Building Autonomous Reasoning Capabilities',
-    description:
-      'Exploring how AI agents can effectively use tools and reason about complex multi-step problems. This research examines the architecture patterns, failure modes, and recovery strategies in agentic systems.',
-    category: 'ai-architecture',
-    tags: ['Agentic AI', 'Tool Use', 'Reasoning', 'Architecture'],
-    readTime: '13 min read',
-    publishDate: '2024-01-15',
-    featured: true,
-    icon: Brain,
-    gradient: 'from-primary-500 to-secondary-500',
-    href: '/research/agentic-systems-tool-use',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: true,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'ethical-ai-architecture',
-    title: 'Ethical AI Architecture: Building Responsible AI Systems',
-    description:
-      'Comprehensive framework for designing AI systems with built-in ethical considerations. Exploring fairness, transparency, accountability, and human-centered design principles in AI architecture.',
-    category: 'ethics',
-    tags: ['Ethics', 'Architecture', 'Fairness', 'Transparency'],
-    readTime: '16 min read',
-    publishDate: '2024-01-12',
-    featured: true,
-    icon: Shield,
-    gradient: 'from-accent-ai-purple to-accent-lab-purple',
-    href: '/research/ethical-ai-architecture',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: true,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'multimodal-reasoning',
-    title: 'Multimodal Reasoning: Integrating Vision, Language, and Logic',
-    description:
-      'Advanced research in multimodal AI systems that can reason across different modalities. Examining cross-modal attention, unified representations, and emergent reasoning capabilities.',
-    category: 'ai-architecture',
-    tags: ['Multimodal', 'Reasoning', 'Vision-Language', 'Logic'],
-    readTime: '14 min read',
-    publishDate: '2024-01-10',
-    featured: true,
-    icon: Brain,
-    gradient: 'from-blue-500 to-purple-600',
-    href: '/research/multimodal-reasoning',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: true,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'privacy-preserving-ai',
-    title: 'Privacy-Preserving AI: Secure and Private Machine Learning',
-    description:
-      'Developing AI systems that protect user privacy while maintaining high performance. Focus on differential privacy, federated learning, homomorphic encryption, and secure multi-party computation.',
-    category: 'security-privacy',
-    tags: ['Privacy', 'Security', 'Federated Learning', 'Encryption'],
-    readTime: '12 min read',
-    publishDate: '2024-01-08',
-    featured: true,
-    icon: Shield,
-    gradient: 'from-green-500 to-teal-600',
-    href: '/research/privacy-preserving-ai',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'big-data-interpretability',
-    title: 'Big Data Interpretability: Making Sense of Complex AI Decisions',
-    description:
-      'Research into interpretable AI methods for large-scale data processing. Exploring explainable AI techniques, feature attribution, and decision transparency in big data contexts.',
-    category: 'ai-architecture',
-    tags: ['Interpretability', 'Big Data', 'Explainable AI', 'Transparency'],
-    readTime: '11 min read',
-    publishDate: '2024-01-05',
-    featured: false,
-    icon: TrendingUp,
-    gradient: 'from-orange-500 to-red-500',
-    href: '/research/big-data-interpretability',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'language-code-interoperability',
-    title: 'Language & Code Interoperability: Bridging Natural and Programming Languages',
-    description:
-      'Investigating the intersection of natural language processing and code generation. Focus on semantic understanding, cross-language translation, and unified representations.',
-    category: 'ai-architecture',
-    tags: ['NLP', 'Code Generation', 'Interoperability', 'Semantics'],
-    readTime: '10 min read',
-    publishDate: '2024-01-03',
-    featured: false,
-    icon: Globe,
-    gradient: 'from-indigo-500 to-blue-600',
-    href: '/research/language-code-interoperability',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'benchmarking-open-vs-closed-ai',
-    title: 'Benchmarking Open vs Closed AI: Comparative Analysis Framework',
-    description:
-      'Comprehensive evaluation framework for comparing open-source and proprietary AI systems. Analyzing performance, transparency, accessibility, and innovation metrics.',
-    category: 'infrastructure',
-    tags: ['Benchmarking', 'Open Source', 'Evaluation', 'Metrics'],
-    readTime: '15 min read',
-    publishDate: '2023-12-28',
-    featured: false,
-    icon: Microscope,
-    gradient: 'from-purple-500 to-pink-500',
-    href: '/research/benchmarking-open-vs-closed-ai',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'opacity-responsibility-ai',
-    title: 'Opacity & Responsibility in AI: Philosophical Foundations',
-    description:
-      'Philosophical investigation into AI opacity and moral responsibility. Examining the ethical implications of black-box AI systems and frameworks for algorithmic accountability.',
-    category: 'philosophy',
-    tags: ['Philosophy', 'Responsibility', 'Ethics', 'Opacity'],
-    readTime: '18 min read',
-    publishDate: '2023-12-25',
-    featured: false,
-    icon: BookOpen,
-    gradient: 'from-gray-600 to-slate-700',
-    href: '/research/opacity-responsibility-ai',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'ai-infrastructure-academia',
-    title: 'AI Infrastructure for Academia: Democratizing Research Access',
-    description:
-      'Building scalable, cost-effective AI infrastructure solutions tailored for academic research environments. Examining cloud-native architectures, resource optimization, and collaborative platforms.',
-    category: 'infrastructure',
-    tags: ['Infrastructure', 'Academia', 'Cloud', 'Democratization'],
-    readTime: '13 min read',
-    publishDate: '2023-12-20',
-    featured: false,
-    icon: Microscope,
-    gradient: 'from-cyan-500 to-blue-600',
-    href: '/research/ai-infrastructure-academia',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'human-centered-ai',
-    title: 'Human-Centered AI: Designing for Human Flourishing',
-    description:
-      'Research into AI systems designed with human values, needs, and capabilities at the center. Exploring human-AI collaboration, augmentation, and empowerment paradigms.',
-    category: 'ethics',
-    tags: ['Human-Centered', 'Collaboration', 'Values', 'Empowerment'],
-    readTime: '14 min read',
-    publishDate: '2023-12-15',
-    featured: false,
-    icon: Globe,
-    gradient: 'from-emerald-500 to-green-600',
-    href: '/research/human-centered-ai',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  },
-  {
-    id: 'digital-rights-ai',
-    title: 'Digital Rights & AI: Protecting Human Agency in the Digital Age',
-    description:
-      'Comprehensive analysis of digital rights in the context of AI systems. Examining privacy, autonomy, dignity, and democratic participation in AI-mediated environments.',
-    category: 'ethics',
-    tags: ['Digital Rights', 'Privacy', 'Autonomy', 'Democracy'],
-    readTime: '17 min read',
-    publishDate: '2023-12-10',
-    featured: false,
-    icon: Shield,
-    gradient: 'from-rose-500 to-pink-600',
-    href: '/research/digital-rights-ai',
-    hasInteractiveCharts: true,
-    hasLottieAnimation: false,
-    hasMermaidDiagrams: true
-  }
-];
+const filters = ['All', 'Published', 'Under Review', 'Preprints'] as const;
 
-export default function Research() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const prefersReducedMotion = useReducedMotion();
+type FilterValue = (typeof filters)[number];
 
-  const filteredArticles = useMemo(() => {
-    return researchArticles.filter((article) => {
-      const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
-      const matchesSearch = searchQuery === '' ||
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+const statusStyles: Record<PaperStatus, string> = {
+  Published: 'bg-emerald-100 text-emerald-700',
+  'Under Review': 'bg-amber-100 text-amber-700',
+  Preprint: 'bg-slate-100 text-slate-700',
+};
 
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
+function matchesFilter(paper: Paper, filter: FilterValue) {
+  if (filter === 'All') return true;
+  if (filter === 'Preprints') return paper.status === 'Preprint';
+  return paper.status === filter;
+}
 
-  const featuredArticles = filteredArticles.filter((article) => article.featured).slice(0, 3);
-  const supportingArticles = filteredArticles.filter((article) => !article.featured);
+export default function ResearchPage() {
+  const [activeFilter, setActiveFilter] = useState<FilterValue>('All');
+  const [expandedAbstracts, setExpandedAbstracts] = useState<Record<string, boolean>>({});
+
+  const filteredPapers = useMemo(() => {
+    return [...papers]
+      .sort((a, b) => b.year - a.year)
+      .filter((paper) => matchesFilter(paper, activeFilter));
+  }, [activeFilter]);
 
   return (
-    <>
-        <section className="space-y-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="space-y-6"
-          >
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-semibold text-white sm:text-4xl">Search and filter the research library</h2>
-                <p className="max-w-2xl text-sm text-white/70">
-                  Filter by research stream, methodology, or ethical focus. Each article links into full experimental playbooks, structured evaluations, and motion-rich storytelling.
-                </p>
-              </div>
-              <div className="relative w-full max-w-md">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/50" />
-                <input
-                  type="search"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  placeholder="Search topics, keywords, or methodologies"
-                  className="w-full rounded-2xl border border-white/15 bg-white/5 py-3 pl-12 pr-4 font-ibm-sans text-sm text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/10"
-                />
-              </div>
-            </div>
+    <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-6 sm:px-6 lg:px-8">
+      <section className="space-y-4">
+        <h1
+          className="text-4xl font-semibold text-[#16213e]"
+          style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
+        >
+          Research
+        </h1>
+        <p className="max-w-3xl text-base text-[#1a1a2e]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+          Papers on epistemic risks, language models, and ethical AI architecture
+        </p>
+      </section>
 
-            <div className="flex flex-wrap gap-3">
-              {researchCategories.map((category, index) => (
-                <motion.button
-                  key={category.id}
-                  type="button"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition-all duration-300 ${
-                    selectedCategory === category.id
-                      ? 'border-white/40 bg-white/15 text-white shadow-[0_20px_45px_rgba(79,70,229,0.35)]'
-                      : 'border-white/15 bg-white/5 text-white/65 hover:border-white/30 hover:text-white'
-                  }`}
-                >
-                  {category.label}
-                  <span className="ml-2 text-white/40">({category.count})</span>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+      <section className="mt-8 flex flex-wrap gap-2">
+        {filters.map((filter) => {
+          const isActive = filter === activeFilter;
+          return (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setActiveFilter(filter)}
+              className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                isActive
+                  ? 'border-[#0f3460] bg-[#0f3460] text-white'
+                  : 'border-slate-300 bg-white text-[#1a1a2e] hover:border-[#0f3460] hover:text-[#0f3460]'
+              }`}
+              style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+            >
+              {filter}
+            </button>
+          );
+        })}
+      </section>
 
-        {featuredArticles.length > 0 && (
-          <section className="space-y-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/50">Spotlight releases</p>
-                <h3 className="text-2xl font-semibold text-white sm:text-3xl">Featured research narratives</h3>
-              </div>
-              <Link href="/atlas" className="hidden items-center gap-2 text-sm font-semibold uppercase tracking-[0.28em] text-white/60 transition hover:text-white md:inline-flex">
-                Browse immersive atlas
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {featuredArticles.map((article, index) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_40px_80px_rgba(15,23,42,0.5)] backdrop-blur-2xl"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-0 transition-opacity duration-300 hover:opacity-100" />
-                  <div className="relative flex flex-col gap-4">
-                    <div className="flex items-start gap-3">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-white/20 via-white/10 to-transparent text-white">
-                        <article.icon className="h-6 w-6" />
-                      </span>
-                      <div className="space-y-1">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/60">{article.category}</p>
-                        <h4 className="text-lg font-semibold text-white">{article.title}</h4>
-                      </div>
-                    </div>
-                    <p className="text-sm text-white/70">{article.description}</p>
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-white/60">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        {article.readTime}
-                      </span>
-                      {article.hasInteractiveCharts && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-400/15 px-3 py-1 text-emerald-200">
-                          <TrendingUp className="h-3.5 w-3.5" /> Charts
-                        </span>
-                      )}
-                      {article.hasLottieAnimation && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-sky-400/15 px-3 py-1 text-sky-200">
-                          <Zap className="h-3.5 w-3.5" /> Motion
-                        </span>
-                      )}
-                    </div>
-                    <Link
-                      href={article.href}
-                      className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:text-white"
-                    >
-                      Read the blueprint
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section className="space-y-10">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/50">Library</p>
-            <h3 className="text-2xl font-semibold text-white sm:text-3xl">Explore additional research programmes</h3>
+      <section className="mt-8 grid gap-5">
+        {filteredPapers.length === 0 ? (
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-600" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+            No papers found for this filter yet.
           </div>
+        ) : (
+          filteredPapers.map((paper) => {
+            const expanded = Boolean(expandedAbstracts[paper.title]);
 
-          {supportingArticles.length > 0 ? (
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {supportingArticles.map((article, index) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  className="flex h-full flex-col justify-between rounded-3xl border border-white/10 bg-slate-950/60 p-5 backdrop-blur-xl"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white">
-                        <article.icon className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/60">{article.category}</p>
-                        <h4 className="text-base font-semibold text-white">{article.title}</h4>
-                      </div>
-                    </div>
-                    <p className="text-sm text-white/65">{article.description}</p>
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-white/55">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        {article.readTime}
-                      </span>
-                      {article.tags.slice(0, 2).map((tag) => (
-                        <span key={`${article.id}-${tag}`} className="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1">
-                          <Tag className="h-3.5 w-3.5" />
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <Link
-                    href={article.href}
-                    className="group mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/60 transition hover:text-white"
-                  >
-                    View study
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-sm text-white/60">
-              No additional articles match this view yet — explore the featured narratives above or clear your filters.
-            </div>
-          )}
-        </section>
-
-        <section className="grid gap-10 rounded-[36px] border border-white/10 bg-gradient-to-br from-slate-950/95 via-slate-900/80 to-slate-950/90 p-10 shadow-[0_50px_120px_rgba(15,23,42,0.6)] backdrop-blur-3xl lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/50">Operational outcomes</p>
-            <h3 className="text-3xl font-semibold text-white">How the research lab partners with teams</h3>
-            <p className="text-sm text-white/70">
-              We move from insight to implementation alongside partner organizations. Engagements include embedded researchers, executive briefings, motion-rich storytelling, and tooling packages that stay in production.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/55">Civic deployments</p>
-                <p className="mt-2 text-sm text-white/70">
-                  Steward civic-tech pilots with participatory governance frameworks and transparent reporting.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/55">Product strategy</p>
-                <p className="mt-2 text-sm text-white/70">
-                  Translate research to roadmap commitments, evaluation dashboards, and informed rollout rituals.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/55">Policy partnerships</p>
-                <p className="mt-2 text-sm text-white/70">
-                  Collaborate with regulators on evidence-led policy, disclosure frameworks, and audits.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/55">Education & dialogue</p>
-                <p className="mt-2 text-sm text-white/70">
-                  Host salons, workshops, and cinematic briefings to align teams on responsible AI futures.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/5 p-8 shadow-[0_40px_100px_rgba(15,23,42,0.55)]">
-            <motion.span
-              aria-hidden
-              initial={{ opacity: 0.3, scale: 0.9 }}
-              animate={prefersReducedMotion ? { opacity: 0.35, scale: 1 } : { opacity: 0.45, scale: [1, 1.03, 1], rotate: [0, 6, -4, 0] }}
-              transition={{ duration: 18, repeat: prefersReducedMotion ? 0 : Infinity, ease: 'easeInOut' }}
-              className="pointer-events-none absolute -top-28 -right-20 h-64 w-64 rounded-full bg-gradient-to-br from-fuchsia-400/20 via-purple-500/25 to-blue-500/25 blur-3xl"
-            />
-            <div className="relative space-y-5">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-                Motion-first storytelling
-              </div>
-              <p className="text-lg font-semibold text-white">
-                Every research drop includes motion studies, visual systems, and executive-ready narratives so insights translate into action quickly.
-              </p>
-              <ul className="space-y-3 text-sm text-white/70">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-1.5 w-8 rounded-full bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400" />
-                  Cinematic hero sections and abstract backdrops communicate context with minimal white space.
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-1.5 w-8 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-400 to-rose-400" />
-                  Interactive dashboards and governance checklists ship with each blueprint for immediate adoption.
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-1.5 w-8 rounded-full bg-gradient-to-r from-sky-400 via-cyan-400 to-emerald-400" />
-                  Dedicated motion system ensures transitions, hover states, and interactions feel alive yet performant.
-                </li>
-              </ul>
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:text-white"
+            return (
+              <article
+                key={paper.title}
+                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
               >
-                Partner with the lab
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </div>
-        </section>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="space-y-2">
+                    <h2 className="text-xl font-semibold text-[#16213e]" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
+                      <Link href={paper.pdfLink} className="underline-offset-4 hover:underline">
+                        {paper.title}
+                      </Link>
+                    </h2>
+                    <p className="text-sm text-[#1a1a2e]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                      {paper.authors} · {paper.year}
+                    </p>
+                  </div>
 
-        <section className="rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_50px_120px_rgba(15,23,42,0.65)] backdrop-blur-3xl">
-          <AssistantWidgetShell compact={false} />
-        </section>
-    </>
+                  <span
+                    className={`inline-flex h-fit rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[paper.status]}`}
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    {paper.status}
+                  </span>
+                </div>
+
+                {paper.status === 'Published' && paper.journal ? (
+                  <p className="mt-2 text-sm text-[#0f3460]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                    {paper.journal}
+                  </p>
+                ) : null}
+
+                <div className="mt-4 space-y-2">
+                  <p
+                    className={`text-sm leading-6 text-[#1a1a2e] ${expanded ? '' : 'overflow-hidden'}`}
+                    style={
+                      expanded
+                        ? { fontFamily: 'Inter, system-ui, sans-serif' }
+                        : {
+                            fontFamily: 'Inter, system-ui, sans-serif',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                          }
+                    }
+                  >
+                    {paper.abstract}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExpandedAbstracts((prev) => ({
+                        ...prev,
+                        [paper.title]: !prev[paper.title],
+                      }))
+                    }
+                    className="text-sm text-[#0f3460] underline underline-offset-4 hover:text-[#e94560]"
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    {expanded ? 'Show less' : 'Show abstract'}
+                  </button>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {paper.tags.map((tag) => (
+                    <span
+                      key={`${paper.title}-${tag}`}
+                      className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <Link
+                    href={paper.pdfLink}
+                    className="inline-flex rounded-md bg-[#0f3460] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#16213e]"
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    Download PDF
+                  </Link>
+
+                  {paper.arxivLink ? (
+                    <a
+                      href={paper.arxivLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-[#0f3460] underline underline-offset-4 hover:text-[#e94560]"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      arXiv
+                    </a>
+                  ) : null}
+
+                  {paper.philarchiveLink ? (
+                    <a
+                      href={paper.philarchiveLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-[#0f3460] underline underline-offset-4 hover:text-[#e94560]"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      PhilArchive
+                    </a>
+                  ) : null}
+
+                  {paper.doi ? (
+                    <a
+                      href={`https://doi.org/${paper.doi}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-[#0f3460] underline underline-offset-4 hover:text-[#e94560]"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      DOI
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })
+        )}
+      </section>
+    </div>
   );
 }

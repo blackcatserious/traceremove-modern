@@ -1,3 +1,6 @@
+@import 'katex/dist/katex.min.css';
+@import 'highlight.js/styles/github.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -286,4 +289,43 @@ main {
   .page-noise {
     animation: none;
   }
+}
+
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  color: #16213e;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.article-content ul,
+.article-content ol {
+  padding-left: 1.25rem;
+}
+
+.article-content a {
+  color: #0f3460;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-content code {
+  background: #f1f5f9;
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.9em;
+}
+
+.article-content pre code {
+  background: transparent;
+  padding: 0;
 }

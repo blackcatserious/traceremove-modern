@@ -3,6 +3,7 @@ Allow: /
 
 # Sitemap
 Sitemap: https://traceremove.dev/sitemap.xml
+Host: https://traceremove.dev
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
@@ -17,7 +18,10 @@ Disallow: /api/
 Allow: /
 Allow: /about
 Allow: /research
+Allow: /projects
 Allow: /tools
+Allow: /atlas
+Allow: /articles
 Allow: /contact
 
 # Block common bot traps
