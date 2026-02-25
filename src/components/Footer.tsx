@@ -22,6 +22,7 @@ const coreLinks = [
   { name: 'Tools', href: '/tools' },
   { name: 'Atlas', href: '/atlas' },
   { name: 'Insights', href: '/articles' },
+  { name: 'Newsletter', href: '/newsletter' },
   { name: 'Academy', href: '/academic' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -231,6 +232,17 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="space-y-8"
             >
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Newsletter</h3>
+                <p className="mt-2 text-sm text-white/70">Read The Epistemic Mirror for weekly AI philosophy analysis.</p>
+                <Link
+                  href="/newsletter"
+                  className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-accent-ai-purple"
+                >
+                  Open newsletter page
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">Stay in Orbit</h3>
                 <p className="mt-3 text-sm text-white/70 leading-relaxed">

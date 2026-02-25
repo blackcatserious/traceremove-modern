@@ -7,6 +7,7 @@ import { BackgroundProvider } from "@/components/BackgroundTester";
 import PageScene from "@/components/PageScene";
 import MotionProvider from "@/components/MotionProvider";
 import AssistantWidgetShell from "@/components/AssistantWidgetShell";
+import NewsletterFloatingBanner from '@/components/NewsletterFloatingBanner';
 import Image from "next/image";
 import PerformanceWarmup from "@/components/PerformanceWarmup";
 import PerformanceProfileProvider from "@/components/PerformanceProfileProvider";
@@ -227,6 +228,7 @@ export default function RootLayout({
                 <PageScene>{children}</PageScene>
               </main>
               <Footer />
+              <NewsletterFloatingBanner />
             </BackgroundProvider>
             {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && (
               <>
