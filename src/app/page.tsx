@@ -1,191 +1,160 @@
 'use client';
 
-import React from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'lucide-react';
-import FeatureCard from '@/components/FeatureCard';
-import ResearchCard from '@/components/ResearchCard';
-import InfoCard from '@/components/InfoCard';
+import { Playfair_Display } from 'next/font/google';
+import { Mail, Moon, Sun } from 'lucide-react';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+});
+
+type ExternalLink = {
+  label: string;
+  href: string;
+};
+
+const profileLinks: ExternalLink[] = [
+  { label: 'Google Scholar', href: 'https://scholar.google.com' },
+  { label: 'PhilArchive', href: 'https://philarchive.org' },
+  { label: 'Academia.edu', href: 'https://www.academia.edu' },
+  { label: 'ORCID', href: 'https://orcid.org' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com' },
+  { label: 'Email', href: 'mailto:contact@traceremove.dev' },
+];
 
 export default function Home() {
-  return (
-    <div className="min-h-screen relative">
-      {/* Hero Section with Premium Glass Effect */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
-        {/* Premium Content Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.04),transparent_60%)] z-10" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
-          <div className="text-center">
-            {/* Platform Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
-            >
-              <div className="inline-flex items-center space-x-3 px-6 py-3 rounded-full glass-card-premium border border-accent-ai-purple/30 shadow-ai-glow">
-                <Sparkles className="w-5 h-5 text-purple-300" />
-                <span className="text-white/90 font-medium text-sm tracking-wide typography-premium">
-                  AI Research Platform
-                </span>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-              </div>
-            </motion.div>
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-            {/* Main Title */}
+  const theme = useMemo(
+    () => ({
+      background: isDarkMode ? 'bg-[#111827]' : 'bg-white',
+      surface: isDarkMode ? 'bg-[#1f2937]' : 'bg-[#f9fafb]',
+      textPrimary: isDarkMode ? 'text-[#f3f4f6]' : 'text-[#1a1a2e]',
+      textSecondary: isDarkMode ? 'text-[#d1d5db]' : 'text-[#1a1a2e]/80',
+      heading: isDarkMode ? 'text-[#c7d2fe]' : 'text-[#16213e]',
+      accent: isDarkMode ? 'text-[#93c5fd]' : 'text-[#0f3460]',
+      border: isDarkMode ? 'border-[#334155]' : 'border-[#dbe2ef]',
+      button:
+        'bg-[#0f3460] text-white hover:bg-[#0f3460]/90 focus-visible:ring-[#e94560]/50',
+    }),
+    [isDarkMode]
+  );
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${theme.background}`}>
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <header className="mb-14 flex items-center justify-between">
+          <p className={`text-sm tracking-[0.18em] uppercase ${theme.accent}`}>traceremove.dev</p>
+          <button
+            type="button"
+            onClick={() => setIsDarkMode((prev) => !prev)}
+            className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 ${theme.border} ${theme.textPrimary}`}
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
+            <span>{isDarkMode ? 'Light' : 'Dark'}</span>
+          </button>
+        </header>
+
+        <main className="space-y-16">
+          <section className="space-y-8">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-8"
+              transition={{ duration: 0.5 }}
+              className="space-y-5"
             >
-              <h1 className="hero-title text-white mb-8 typography-premium">
-                Advancing AI for a<br />
-                Better Future
+              <h1 className={`${playfair.className} text-4xl sm:text-5xl lg:text-6xl ${theme.heading}`}>
+                Artur Ziganshin
               </h1>
-              
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto mb-16 typography-premium leading-relaxed">
-                Traceremove is committed to exploring the intersection of artificial intelligence, 
-                ethics, and human understanding for responsible innovation.
+              <h2 className={`${playfair.className} text-2xl sm:text-3xl ${theme.accent}`}>
+                Independent Researcher in AI Philosophy
+              </h2>
+              <p className={`max-w-3xl text-lg leading-relaxed ${theme.textSecondary}`}>
+                Investigating epistemic risks, ethical architecture, and the philosophical foundations
+                of machine intelligence.
+              </p>
+              <p className={`text-sm sm:text-base ${theme.textPrimary}`}>
+                MA, BA Philosophy, Kazan Federal University | Founder, Kazan Philosophical Society
               </p>
             </motion.div>
 
-            {/* Main Feature Cards */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="grid md:grid-cols-3 gap-8 mb-24"
+              transition={{ duration: 0.55, delay: 0.1 }}
+              className="flex flex-wrap gap-2"
             >
-              <FeatureCard
-                icon={Sparkles}
-                title="Our Mission"
-                description="Learn about the guiding principles of our research lab"
-                gradient="from-blue-900/40 to-purple-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-blue-600"
-              />
-              
-              <FeatureCard
-                icon={Info}
-                title="How to Use This Platform"
-                description="Discover the features and content across multiple sections"
-                gradient="from-purple-900/40 to-violet-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-purple-600"
-              />
-              
-              <FeatureCard
-                icon={BookOpen}
-                title="Philosophy of AI"
-                description="Understand the ethical and philosophical context of our work"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-violet-600"
-              />
+              {profileLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+                  rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                  className={`rounded-full border px-3 py-1.5 text-sm transition-colors hover:text-[#e94560] ${theme.border} ${theme.textPrimary}`}
+                >
+                  {link.label}
+                </a>
+              ))}
             </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="section-title text-white mb-6 typography-premium">
-              Research Areas
-            </h2>
-            <p className="text-xl text-slate-300 max-w-4xl mx-auto typography-premium leading-relaxed">
-              Focusing on academic rigor and ethical integrity to build transparent and interpretable AI systems.
-            </p>
-          </motion.div>
+            <motion.a
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.2 }}
+              href="/research"
+              className={`inline-flex items-center rounded-md px-5 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 ${theme.button}`}
+            >
+              Read Latest Research →
+            </motion.a>
+          </section>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
+          <section className={`rounded-2xl border p-6 sm:p-8 ${theme.border} ${theme.surface}`}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="grid gap-8 lg:grid-cols-[220px_1fr]"
             >
-              <ResearchCard
-                icon={MessageSquare}
-                title="Language Models & Ethics"
-                description="Examining the moral considerations surrounding large-scale language models"
-                gradient="from-blue-900/40 to-cyan-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-cyan-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Database}
-                title="Big Data Architectures"
-                description="Developing robust AI frameworks for processing and analysis"
-                gradient="from-purple-900/40 to-pink-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-pink-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Network}
-                title="Cognitive Agents"
-                description="Creating intelligent AI systems with advanced decision-making capabilities"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-indigo-500"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+              <div className="flex justify-start lg:justify-center">
+                <div className="flex h-36 w-36 items-center justify-center rounded-full border-2 border-dashed border-[#0f3460]/40 bg-white/50 text-center text-xs font-medium text-[#0f3460]">
+                  Photo
+                  <br />
+                  Placeholder
+                </div>
+              </div>
 
-      {/* About Artur Ziganshin Section */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <InfoCard
-              title="About Artur Ziganshin"
-              description="Learn about the background and expertise of our principal investigator."
-              gradient="from-blue-900/40 to-purple-900/40"
-              borderColor="border-blue-500/20"
-            />
-          </motion.div>
-        </div>
-      </section>
+              <div className="space-y-5">
+                <h3 className={`${playfair.className} text-3xl ${theme.heading}`}>About</h3>
+                <p className={`leading-relaxed ${theme.textSecondary}`}>
+                  My academic training in philosophy at Kazan Federal University, where I completed both
+                  BA and MA degrees, shaped my interest in how conceptual analysis can inform practical
+                  technology governance.
+                </p>
+                <p className={`leading-relaxed ${theme.textSecondary}`}>
+                  My research focuses on epistemic risks in AI, the philosophy of language models, and
+                  normative questions about preserving human dignity within automated systems and
+                  decision-making infrastructures.
+                </p>
+                <p className={`leading-relaxed ${theme.textSecondary}`}>
+                  Current projects examine interpretability as a philosophical problem, standards for
+                  responsible model deployment, and interdisciplinary methods that connect ethics,
+                  social theory, and technical AI research.
+                </p>
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#e94560]/10 px-4 py-2 text-sm">
+                  <Mail size={14} className="text-[#e94560]" />
+                  <span className={theme.textPrimary}>
+                    Currently seeking PhD opportunities in AI philosophy and ethics
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
