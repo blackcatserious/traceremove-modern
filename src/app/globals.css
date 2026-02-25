@@ -2,54 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    --background: 250 250 248;
+    --foreground: 28 28 34;
+    --accent: 239 80 68;
+    --brass: 224 171 78;
+  }
+
+  .dark {
+    --background: 19 19 22;
+    --foreground: 238 238 240;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-paper-white dark:bg-paper-darker text-ink-900 dark:text-ink-100 font-body;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  /* Selection color */
+  ::selection {
+    @apply bg-accent-100 dark:bg-accent-900/40 text-ink-900 dark:text-ink-100;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-ink-300 dark:bg-ink-700 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-ink-400 dark:bg-ink-600; }
 }
 
-.dark {
-  color-scheme: dark;
+@layer components {
+  /* Film grain texture overlay */
+  .grain-overlay::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    animation: grain 8s steps(10) infinite;
+    opacity: 0.4;
+  }
+
+  .dark .grain-overlay::before {
+    opacity: 0.25;
+  }
+
+  /* Horizontal rule — editorial style */
+  .editorial-hr {
+    @apply w-16 h-px bg-ink-300 dark:bg-ink-700 mx-auto my-12;
+  }
+
+  /* Decorative dot separator */
+  .dot-separator::after {
+    content: "·";
+    @apply mx-2 text-ink-400;
+  }
+
+  /* Animated underline on hover */
+  .hover-underline {
+    @apply relative;
+  }
+  .hover-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 w-0 h-px bg-accent-500 transition-all duration-300;
+  }
+  .hover-underline:hover::after {
+    @apply w-full;
+  }
+
+  /* Card base */
+  .card {
+    @apply bg-white dark:bg-ink-800/50 rounded-card border border-ink-100 dark:border-ink-800 
+           shadow-card hover:shadow-card-hover transition-all duration-300;
+  }
+
+  /* Status badges */
+  .badge-published { @apply bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800; }
+  .badge-review { @apply bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800; }
+  .badge-preprint { @apply bg-ink-50 text-ink-600 dark:bg-ink-800 dark:text-ink-400 border border-ink-200 dark:border-ink-700; }
+
+  /* Prose overrides for articles */
+  .prose-article {
+    @apply prose prose-lg dark:prose-invert max-w-article mx-auto;
+    @apply prose-headings:font-display prose-headings:tracking-tight;
+    @apply prose-a:text-accent-600 dark:prose-a:text-accent-400 prose-a:decoration-accent-300;
+    @apply prose-blockquote:border-accent-500 prose-blockquote:not-italic;
+    @apply prose-code:before:content-none prose-code:after:content-none;
+    @apply prose-code:bg-ink-100 dark:prose-code:bg-ink-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded;
+    @apply prose-img:rounded-card prose-img:shadow-card;
+  }
 }
 
-body {
-  margin: 0;
-  font-family: var(--font-source-sans), system-ui, sans-serif;
-}
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
 
-code,
-pre,
-kbd,
-samp {
-  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-.card {
-  border-radius: 0.75rem;
-  border: 1px solid rgb(229 229 229);
-  background: rgb(255 255 255);
-  padding: 1.5rem;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-}
-
-.dark .card {
-  border-color: rgb(38 38 38);
-  background: rgb(23 23 23);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 9999px;
-  border: 1px solid rgb(212 212 212);
-  padding: 0.125rem 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: rgb(64 64 64);
-}
-
-.dark .badge {
-  border-color: rgb(64 64 64);
-  color: rgb(212 212 212);
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-500 to-brass-500;
+  }
 }
