@@ -1,25 +1,30 @@
-const articles = [
-  { slug: "why-ai-needs-philosophy", title: "Why AI Needs Philosophy Now More Than Ever", date: "2026-03-01", readingTime: "8 min", excerpt: "Large language models don't understand meaning. They process patterns. This distinction matters enormously.", tags: ["AI philosophy", "epistemic risks", "LLMs"] },
-  { slug: "what-deepseek-reveals-about-ai-knowledge", title: "What DeepSeek Reveals About the Fragility of AI Knowledge", date: "2026-03-08", readingTime: "6 min", excerpt: "When different training approaches produce similar benchmarks, what does that tell us about understanding?", tags: ["DeepSeek", "epistemic risks", "benchmarking"] },
-  { slug: "ai-ethics-reading-list-2026", title: "The Essential AI Philosophy Reading List for 2026", date: "2026-03-15", readingTime: "10 min", excerpt: "From Turing's original question to the latest debates on AI consciousness.", tags: ["reading list", "books", "philosophy of AI"] },
-  { slug: "epistemic-risk-audit-frameworks", title: "Epistemic Risk Audit Frameworks", date: "2026-03-22", readingTime: "7 min", excerpt: "A practical framework for evaluating AI knowledge claims.", tags: ["epistemic risks", "frameworks"] },
-];
+import type { Metadata } from "next";
+import Link from "next/link";
+import { articles } from "@/data/articles";
+
+export const metadata: Metadata = {
+  title: "Writing | Artur Ziganshin",
+  description:
+    "Independent AI philosophy research on epistemic risks, ethical architecture, and the philosophical foundations of artificial intelligence.",
+};
 
 export default function ArticlesPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="text-4xl font-semibold">Articles</h1>
-      <p className="mt-3 text-neutral-700 dark:text-neutral-300">Essays on AI philosophy, governance, and machine epistemology.</p>
+    <div className="mx-auto max-w-[1024px] space-y-8 px-4 py-14 sm:px-6">
+      <header>
+        <h1 className="text-5xl" style={{ fontFamily: "var(--font-display), Georgia, serif" }}>Writing</h1>
+        <p className="mt-3 text-[#4d4d58] dark:text-[#d9d9de]">Essays on AI philosophy, epistemic risk, and ethical architecture.</p>
+      </header>
 
-      <div className="mt-8 space-y-4">
+      <div className="space-y-4">
         {articles.map((article) => (
-          <article key={article.slug} className="card">
-            <div className="text-sm text-neutral-500">{article.date} · {article.readingTime}</div>
-            <h2 className="mt-1 text-xl font-semibold">{article.title}</h2>
-            <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">{article.excerpt}</p>
+          <article key={article.slug} className="card p-6">
+            <p className="text-xs uppercase tracking-wide text-[#6b6b79]">{article.date} · {article.readingTime}</p>
+            <Link href={`/articles/${article.slug}`} className="mt-2 block text-2xl font-semibold hover:underline">{article.title}</Link>
+            <p className="mt-2 text-sm leading-relaxed text-[#4d4d58] dark:text-[#d9d9de]">{article.excerpt}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {article.tags.map((tag) => (
-                <span key={tag} className="badge">{tag}</span>
+                <span key={tag} className="rounded-full border border-black/10 px-2.5 py-0.5 text-xs dark:border-white/10">{tag}</span>
               ))}
             </div>
           </article>

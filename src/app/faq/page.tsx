@@ -61,7 +61,7 @@ const faqData = [
       {
         id: 2,
         question: "Who is Artur Ziganshin?",
-        answer: "Artur Ziganshin is the founder of Traceremove and Rarematrix, an AI systems architect, developer, and philosopher of technology. He holds BA/MA degrees in Philosophy from Kazan Federal University (KFU) and has extensive expertise in AI ethics, Big Data, language technologies, and security. He is multilingual (Russian, English, Tatar, Serbian, Spanish) and actively involved in international activities including Equality, ORM, and cyber rights research."
+        answer: "Artur Ziganshin is the founder of Traceremove and Rarematrix, an AI systems architect, developer, and philosopher of technology. He holds BA/MA degrees in Philosophy from  and has extensive expertise in AI ethics, Big Data, language technologies, and security. He is multilingual (Russian, English, Tatar, Serbian, Spanish) and actively involved in international activities including Equality, ORM, and cyber rights research."
       },
       {
         id: 3,

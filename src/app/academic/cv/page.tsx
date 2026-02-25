@@ -14,7 +14,7 @@ graph TD
     A --> C[Research Development]
     A --> D[Professional Growth]
     B --> E[BA Philosophy - KFU]
-    B --> F[MA Philosophy - KFU]
+    B --> F[Master of Philosophy - KFU]
     B --> G[Specialized Training]
     C --> H[AI Ethics Research]
     C --> I[Language Technologies]
@@ -485,7 +485,7 @@ export default function CV() {
               <div className="space-y-6">
                 <div className="border-l-4 border-blue-500 pl-6">
                   <h3 className="text-lg font-semibold text-research-text mb-2">Master of Arts in Philosophy</h3>
-                  <p className="text-research-text-secondary mb-2">Kazan Federal University (KFU)</p>
+                  <p className="text-research-text-secondary mb-2"></p>
                   <p className="body-text text-research-text-secondary">
                     Advanced philosophical research with focus on technology ethics, epistemology, 
                     and philosophy of mind. Thesis research on the intersection of artificial 
@@ -495,7 +495,7 @@ export default function CV() {
                 </div>
                 <div className="border-l-4 border-green-500 pl-6">
                   <h3 className="text-lg font-semibold text-research-text mb-2">Bachelor of Arts in Philosophy</h3>
-                  <p className="text-research-text-secondary mb-2">Kazan Federal University (KFU)</p>
+                  <p className="text-research-text-secondary mb-2"></p>
                   <p className="body-text text-research-text-secondary">
                     Comprehensive philosophical foundation covering logic, ethics, metaphysics, 
                     and epistemology. Specialized coursework in philosophy of science, technology 
@@ -693,7 +693,7 @@ export default function CV() {
                 <div className="border-l-4 border-yellow-500 pl-6">
                   <h3 className="text-lg font-semibold text-research-text mb-2">Academic Excellence</h3>
                   <p className="body-text text-research-text-secondary">
-                    Graduated with distinction from Kazan Federal University, demonstrating 
+                    Graduated with distinction from , demonstrating 
                     exceptional performance in philosophical research and critical analysis.
                   </p>
                 </div>

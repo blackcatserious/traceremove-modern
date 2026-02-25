@@ -17,7 +17,7 @@ graph TD
     B --> E[MIT AI Lab]
     B --> F[Stanford HAI]
     B --> G[Oxford Future of Humanity]
-    C --> H[Kazan Federal University]
+    C --> H[]
     C --> I[ETH Zurich]
     C --> J[University of Toronto]
     D --> K[Technology Companies]
@@ -440,7 +440,7 @@ export default function Collaborations() {
                     <p>• University of Tokyo AI Research</p>
                     <p>• National University of Singapore</p>
                     <p>• Australian National University</p>
-                    <p>• Kazan Federal University</p>
+                    <p>• </p>
                   </div>
                 </div>
               </div>
