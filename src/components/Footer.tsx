@@ -20,6 +20,7 @@ const coreLinks = [
   { name: 'Research', href: '/research' },
   { name: 'Projects', href: '/projects' },
   { name: 'Tools', href: '/tools' },
+  { name: 'Services', href: '/services' },
   { name: 'Atlas', href: '/atlas' },
   { name: 'Insights', href: '/articles' },
   { name: 'Newsletter', href: '/newsletter' },
