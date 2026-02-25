@@ -1,0 +1,65 @@
+---
+title: "Epistemic Risk Audit Frameworks for Language Models"
+date: "2026-01-15"
+tags:
+  - Epistemic Risks
+  - Language Models
+  - AI Ethics
+excerpt: "A practical audit workflow for identifying knowledge distortions, uncertainty handling failures, and citation reliability risks in production language model systems."
+coverImage: "/images/lab/lab-setup-analytics.svg"
+readingTime: "8 min"
+published: true
+---
+
+Language models increasingly mediate research, governance, and education workflows. When these systems fail epistemically, they produce not just low-quality text but distorted reasoning paths that can influence policy and institutional judgment.
+
+<Callout variant="info">
+<strong>Info:</strong> This note outlines a lightweight audit sequence teams can run before publishing model outputs in high-stakes settings.
+</Callout>
+
+## 1. Reliability dimensions
+
+We evaluate three dimensions:
+
+1. **Claim grounding**: does the output map to verifiable evidence?
+2. **Uncertainty signaling**: does the model expose limits and ambiguity?
+3. **Citation integrity**: are references real and contextually relevant?
+
+A quick scoring formula can be written as:
+
+$$
+R = 0.4G + 0.35U + 0.25C
+$$
+
+where $G$ is grounding, $U$ is uncertainty quality, and $C$ is citation integrity.
+
+## 2. Implementation sketch
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class AuditScore:
+    grounding: float
+    uncertainty: float
+    citations: float
+
+    def reliability(self) -> float:
+        return 0.4 * self.grounding + 0.35 * self.uncertainty + 0.25 * self.citations
+```
+
+## 3. Practice notes
+
+Teams should track score drift across releases and compare against domain baselines[^1]. Inline policy references should always be testable against source documentation.
+
+<Callout variant="warning">
+<strong>Warning:</strong> A high fluency score can conceal low epistemic reliability; fluency is not evidence.
+</Callout>
+
+<Callout variant="question">
+<strong>Question:</strong> Which user groups are most harmed when uncertainty markers are removed from generated responses?
+</Callout>
+
+![Knowledge validation workflow](/images/lab/lab-whiteboard-research.svg)
+
+[^1]: For a concise background discussion, see recent debates on benchmark validity and confidence calibration in LLM evaluation literature.
