@@ -1,283 +1,175 @@
 'use client';
-import AssistantWidgetShell from '@/components/AssistantWidgetShell';
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  BookOpen,
-  Info,
-  Sparkles,
-  MessageSquare,
-  Database,
-  Network,
-  ArrowRight
-} from 'lucide-react';
-import FeatureCard from '@/components/FeatureCard';
-import ResearchCard from '@/components/ResearchCard';
-import AmbientLayoutFrame from '@/components/AmbientLayoutFrame';
-import HomeHero from '@/app/HomeHero';
+import { motion } from 'framer-motion';
+import { Moon, Sun } from 'lucide-react';
 
-const atlasHighlights = [
-  {
-    title: 'Transparent AI Governance',
-    description:
-      'An international alliance codifying compliance workflows, oversight tooling, and disclosure playbooks for public AI.',
-    href: '/atlas/transparent-ai-governance-global-initiative',
-    badge: 'Policy Alliance'
-  },
-  {
-    title: 'Human-Centered Safety Systems',
-    description:
-      'Clinical-grade safety layers, sense-making sessions, and patient advisory panels guiding machine decision support.',
-    href: '/atlas/human-centered-safety-systems-healthcare-alliance',
-    badge: 'Healthcare'
-  },
-  {
-    title: 'Planetary Compute Stewardship',
-    description:
-      'Climate intelligence field labs coordinating compute access, measurement, and regenerative incentives worldwide.',
-    href: '/atlas/planetary-compute-stewardship-climate-tech',
-    badge: 'Climate Tech'
-  }
+const profileLinks = [
+  { label: 'Google Scholar', href: 'https://scholar.google.com/' },
+  { label: 'PhilArchive', href: 'https://philarchive.org/' },
+  { label: 'Academia.edu', href: 'https://www.academia.edu/' },
+  { label: 'ORCID', href: 'https://orcid.org/' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/arthur-ziganshin' },
+  { label: 'Email', href: 'mailto:artur@traceremove.com' },
 ];
 
-export default function Home() {
+const aboutParagraphs = [
+  'Artur Ziganshin holds an MA in Philosophy from Kazan Federal University and has developed his work at the intersection of analytic philosophy, ethics, and artificial intelligence. His academic training grounds his approach in conceptual precision and critical method.',
+  'His current research examines epistemic risks in AI systems, the philosophy of language models, and the relationship between automation and human dignity. He focuses on how machine-generated knowledge claims are interpreted, trusted, and institutionalized in social settings.',
+  'Ongoing projects include frameworks for evaluating epistemic reliability in generative systems, ethical design criteria for language-model deployment, and philosophical analysis of agency, responsibility, and value alignment in human-machine collaboration.',
+];
+
+export default function HomePage() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = useMemo(
+    () =>
+      darkMode
+        ? {
+            page: 'bg-[#0f172a] text-slate-100',
+            surface: 'bg-[#111827] border-slate-700',
+            heading: 'text-slate-100',
+            body: 'text-slate-300',
+            muted: 'text-slate-400',
+            accent: 'text-[#7dd3fc]',
+            link: 'text-[#93c5fd] hover:text-[#bfdbfe]',
+            highlight: 'text-[#fb7185]',
+            button: 'bg-[#0f3460] text-white hover:bg-[#1d4d7a]',
+          }
+        : {
+            page: 'bg-white text-[#1a1a2e]',
+            surface: 'bg-white border-slate-200',
+            heading: 'text-[#16213e]',
+            body: 'text-[#1a1a2e]',
+            muted: 'text-slate-600',
+            accent: 'text-[#0f3460]',
+            link: 'text-[#0f3460] hover:text-[#e94560]',
+            highlight: 'text-[#e94560]',
+            button: 'bg-[#0f3460] text-white hover:bg-[#16213e]',
+          },
+    [darkMode],
+  );
+
   return (
-    <AmbientLayoutFrame
-      variant="hero"
-      innerClassName="mx-auto w-full max-w-7xl gap-0"
-      contentClassName="flex flex-col"
-      heroClassName="px-4 sm:px-6 lg:px-8"
-      hero={<HomeHero />}
-    >
-
-      <section className="relative py-20">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950/80 via-slate-900/65 to-indigo-950/60" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center"
+    <div className={`-mt-24 min-h-screen w-full ${theme.page}`}>
+      <div className="mx-auto w-full max-w-5xl px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+        <header className="mb-14 flex items-center justify-between border-b border-slate-200 pb-5 dark:border-slate-700">
+          <p className={`text-sm ${theme.muted}`}>Personal research website</p>
+          <button
+            type="button"
+            onClick={() => setDarkMode((prev) => !prev)}
+            className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors ${
+              darkMode
+                ? 'border-slate-600 bg-slate-800 text-slate-100 hover:bg-slate-700'
+                : 'border-slate-300 bg-white text-[#16213e] hover:bg-slate-50'
+            }`}
+            aria-label="Toggle dark mode"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/60">Atlas Spotlights</p>
-            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              176 cinematic pages stitched across civic, academic, and product realities
-            </h2>
-            <p className="mt-4 max-w-3xl mx-auto text-base text-white/70 sm:text-lg">
-              Dive into richly produced hero narratives, governance checklists, and motion-enhanced visuals that make complex AI deployments legible for teams and stakeholders alike.
-            </p>
-          </motion.div>
+            {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {darkMode ? 'Light' : 'Dark'}
+          </button>
+        </header>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {atlasHighlights.map((highlight, index) => (
-              <motion.div
-                key={highlight.href}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
-                viewport={{ once: true, margin: '-80px' }}
-                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl"
+        <section className="space-y-7 pb-14">
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className={`text-4xl font-semibold sm:text-5xl ${theme.heading}`}
+            style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
+          >
+            Artur Ziganshin
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.05 }}
+            className={`text-lg ${theme.accent}`}
+          >
+            Independent Researcher in AI Philosophy
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.1 }}
+            className={`max-w-3xl text-base leading-relaxed ${theme.body}`}
+            style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+          >
+            Investigating epistemic risks, ethical architecture, and the philosophical foundations of machine intelligence.
+          </motion.p>
+
+          <p className={`text-sm ${theme.muted}`} style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+            MA Philosophy, Kazan Federal University | Founder, Kazan Philosophical Society
+          </p>
+
+          <div className="flex flex-wrap gap-x-5 gap-y-2 pt-2">
+            {profileLinks.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target={item.href.startsWith('mailto:') ? undefined : '_blank'}
+                rel={item.href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                className={`text-sm underline underline-offset-4 transition-colors ${theme.link}`}
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
               >
-                <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
-                  <span>{highlight.badge}</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70">
-                    Atlas {index + 1}
-                  </span>
-                </div>
-                <h3 className="mt-6 text-xl font-semibold text-white">{highlight.title}</h3>
-                <p className="mt-3 text-sm text-white/70">{highlight.description}</p>
-                <Link
-                  href={highlight.href}
-                  className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-white transition-colors duration-300 group-hover:text-indigo-200"
-                >
-                  Explore blueprint
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                />
-              </motion.div>
+                {item.label}
+              </a>
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mt-16 grid gap-6 lg:grid-cols-3"
-          >
-            <FeatureCard
-              icon={Sparkles}
-              title="Our Mission"
-              description="Understand the guiding principles and commitments behind the Traceremove research lab."
-              gradient="from-blue-900/40 to-purple-900/40"
-              borderColor="border-blue-500/20"
-              iconGradient="from-blue-500 to-blue-600"
-              href="/about"
-            />
-            <FeatureCard
-              icon={Info}
-              title="Platform Map"
-              description="Navigate 176 atlas entries, research areas, and interactive tools from a single overview."
-              gradient="from-purple-900/40 to-violet-900/40"
-              borderColor="border-purple-500/20"
-              iconGradient="from-purple-500 to-purple-600"
-              href="/site-map"
-            />
-            <FeatureCard
-              icon={BookOpen}
-              title="Philosophy & Theory"
-              description="Explore essays that connect ethics, phenomenology, and systems design to responsible AI."
-              gradient="from-violet-900/40 to-indigo-900/40"
-              borderColor="border-violet-500/20"
-              iconGradient="from-violet-500 to-violet-600"
-              href="/articles"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-24">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-indigo-950/60" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[32px] border border-white/10 bg-white/5 p-10 backdrop-blur-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="section-title text-research-text mb-6 typography-premium">
-              Research Areas
-            </h2>
-            <p className="text-xl text-research-text-secondary max-w-4xl mx-auto typography-premium leading-relaxed">
-              Focusing on academic rigor and ethical integrity to build transparent and interpretable AI systems.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
+          <div className="pt-2">
+            <Link
+              href="/research"
+              className={`inline-flex rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${theme.button}`}
+              style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
             >
-              <ResearchCard
-                icon={MessageSquare}
-                title="Language Models & Ethics"
-                description="Examining the moral considerations surrounding large-scale language models"
-                href="/research/human-centered-ai"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Database}
-                title="Big Data Architectures"
-                description="Developing robust AI frameworks for processing and analysis"
-                href="/research/big-data-interpretability"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Network}
-                title="Cognitive Agents"
-                description="Creating intelligent AI systems with advanced decision-making capabilities"
-                href="/research/agentic-systems-tool-use"
-              />
-            </motion.div>
-          </motion.div>
+              Read Latest Research →
+            </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* About Artur Ziganshin Section */}
-      <section className="relative py-24">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/70 to-indigo-950/60" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+        <section className={`rounded-2xl border p-6 sm:p-8 ${theme.surface}`}>
+          <h2
+            className={`mb-6 text-2xl font-semibold ${theme.heading}`}
+            style={{ fontFamily: '"Playfair Display", Georgia, serif' }}
           >
-            <div className="about-card relative rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-10 backdrop-blur-2xl shadow-[0_30px_80px_rgba(15,23,42,0.45)] transition-shadow">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-white shadow-md ring-1 ring-white/20">
-                    <Image
-                      src="/brand/black-cat-solid.svg?v=2"
-                      alt="Traceremove cat emblem"
-                      className="h-6 w-6"
-                      width={24}
-                      height={24}
-                    />
-                  </span>
-                  <h3 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                    About Artur Ziganshin
-                  </h3>
-                </div>
-                <div className="hidden sm:flex items-center justify-center">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-accent-ai-purple to-accent-lab-purple shadow-md">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5 text-white"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </span>
-                </div>
-              </div>
+            About
+          </h2>
 
-              <p className="mt-4 text-base sm:text-lg text-white/80">
-                “The struggle itself toward the heights is enough to fill a person&rsquo;s heart. One must imagine Sisyphus happy.” — Albert Camus
-              </p>
-
-              <p className="mt-3 text-sm sm:text-base text-white/70">
-                Learn about the background and expertise of our principal investigator.
-              </p>
-
-              <div className="mt-6">
-                <a href="/about" className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white transition-colors hover:border-white/40 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
-                  <span className="font-medium">Learn more</span>
-                  <svg viewBox="0 0 24 24" className="h-4 w-4"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </a>
-              </div>
+          <div className="grid gap-8 md:grid-cols-[140px_1fr] md:items-start">
+            <div className="flex justify-start md:pt-1">
+              <div
+                className={`h-28 w-28 rounded-full border ${
+                  darkMode ? 'border-slate-600 bg-slate-700' : 'border-slate-300 bg-slate-100'
+                }`}
+                aria-label="Profile photo placeholder"
+              />
             </div>
-            <Image
-              src="/brand/black-cat-geo.svg?v=2"
-              alt="Traceremove geometric cat runner"
-              className="cat-runner hidden md:block"
-              width={160}
-              height={160}
-            />
 
-          </motion.div>
-        </div>
+            <div className="space-y-4" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+              {aboutParagraphs.map((paragraph, index) => (
+                <motion.p
+                  key={paragraph.slice(0, 24)}
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.06 }}
+                  className={`text-sm leading-7 sm:text-base ${theme.body}`}
+                >
+                  {paragraph}
+                </motion.p>
+              ))}
 
-      </section>
-      {process.env.NEXT_PUBLIC_ASSISTANT_WIDGET !== 'off' && <AssistantWidgetShell compact />}
-    </AmbientLayoutFrame>
+              <p className={`pt-2 text-sm font-medium sm:text-base ${theme.highlight}`}>
+                Currently seeking PhD opportunities in AI philosophy and ethics.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   );
 }
