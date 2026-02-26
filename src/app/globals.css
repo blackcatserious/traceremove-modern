@@ -40,12 +40,12 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.75rem;
-    border-radius: 0.75rem;
+    border-radius: 14px;
     font-size: 0.875rem;
     font-weight: 600;
     background: linear-gradient(135deg, #ef5044, #e03e32);
     color: #fff;
-    box-shadow: 0 2px 16px rgba(239,80,68,0.25);
+    box-shadow: 0 2px 16px rgba(239,80,68,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
     transition: all 0.3s;
   }
   .btn-primary:hover {

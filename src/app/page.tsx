@@ -15,21 +15,21 @@ export default function Home() {
   return (
     <main>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "176px", paddingBottom: "64px" }}>
+      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "120px", paddingBottom: "64px" }}>
         {/* Background orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div style={{
             position: "absolute", top: "-20%", right: "-10%",
-            width: 600, height: 600, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(239,80,68,0.07) 0%, transparent 70%)",
-            filter: "blur(60px)",
+            width: 700, height: 700, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(239,80,68,0.10) 0%, transparent 70%)",
+            filter: "blur(80px)",
             animation: "pulseGlow 5s ease-in-out infinite",
           }} />
           <div style={{
             position: "absolute", bottom: "-10%", left: "-5%",
             width: 400, height: 400, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(107,138,237,0.05) 0%, transparent 70%)",
-            filter: "blur(60px)",
+            background: "radial-gradient(circle, rgba(107,138,237,0.07) 0%, transparent 70%)",
+            filter: "blur(80px)",
             animation: "pulseGlow 5s ease-in-out infinite 2s",
           }} />
           {/* Dot grid */}
@@ -46,7 +46,12 @@ export default function Home() {
           </FadeIn>
 
           <FadeIn delay={0.1}>
-            <h1 className="mt-6 text-4xl md:text-6xl lg:text-7xl tracking-tight">
+            <h1 className="mt-6 text-4xl md:text-6xl lg:text-7xl tracking-tight" style={{
+              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}>
               What machines mean,<br />
               what they risk,<br />
               what we owe.
@@ -61,13 +66,13 @@ export default function Home() {
           </FadeIn>
 
           <FadeIn delay={0.35}>
-            <p className="mt-4 text-sm" style={{ color: "#5a5a68" }}>
+            <p className="text-sm" style={{ color: "#5a5a68", marginTop: "12px" }}>
               Artur Ziganshin · Master of Philosophy · PhD of Philosophy
             </p>
           </FadeIn>
 
           <FadeIn delay={0.45}>
-            <div className="flex flex-wrap gap-4 mt-7">
+            <div className="flex flex-wrap gap-4" style={{ marginTop: "20px" }}>
               <Link href="/research" className="btn-primary">
                 Read Research <ArrowRight className="w-4 h-4" />
               </Link>
@@ -80,6 +85,7 @@ export default function Home() {
       </section>
 
       {/* ═══ STATS ═══ */}
+      <div style={{ height: "40px" }} />
       <FadeIn className="max-w-5xl mx-auto px-6 pb-12">
         <div style={{
           display: "grid",

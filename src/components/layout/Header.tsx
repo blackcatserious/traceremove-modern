@@ -91,11 +91,23 @@ export default function Header() {
                     fontWeight: 500,
                     letterSpacing: "0.02em",
                     color: isActive(item.href) ? "#ffffff" : "#6a6a78",
-                    transition: "color 0.2s",
+                    borderBottom: "1px solid transparent",
+                    paddingBottom: "3px",
+                    transition: "all 0.25s ease",
                     fontFamily: "'Source Sans 3', sans-serif",
                   }}
-                  onMouseEnter={(e) => { if (!isActive(item.href)) e.currentTarget.style.color = "#ffffff"; }}
-                  onMouseLeave={(e) => { if (!isActive(item.href)) e.currentTarget.style.color = "#6a6a78"; }}
+                  onMouseEnter={(e) => { 
+                    if (!isActive(item.href)) {
+                      e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.borderBottomColor = "rgba(239,80,68,0.4)";
+                    }
+                  }}
+                  onMouseLeave={(e) => { 
+                    if (!isActive(item.href)) {
+                      e.currentTarget.style.color = "#6a6a78";
+                      e.currentTarget.style.borderBottomColor = "transparent";
+                    }
+                  }}
                   >
                     {item.label}
                   </span>
