@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main>
       {/* ═══ HERO ═══ */}
-      <section className="relative px-6 pt-28 md:pt-36 pb-16 overflow-hidden">
+      <section className="relative px-6 pt-40 md:pt-48 pb-16 overflow-hidden">
         {/* Background orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div style={{
@@ -81,22 +81,23 @@ export default function Home() {
 
       {/* ═══ STATS ═══ */}
       <FadeIn className="max-w-5xl mx-auto px-6 pb-12">
-        <div className="flex flex-wrap gap-10 md:gap-16 py-6" style={{ borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-          <div>
-            <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>7</p>
-            <p className="text-xs mt-1" style={{ color: "#5a5a68" }}>Research Papers</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-8" 
+             style={{ borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>7</p>
+            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Research Papers</p>
           </div>
-          <div>
-            <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>5</p>
-            <p className="text-xs mt-1" style={{ color: "#5a5a68" }}>Essays Published</p>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>5</p>
+            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Essays Published</p>
           </div>
-          <div>
-            <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>3</p>
-            <p className="text-xs mt-1" style={{ color: "#5a5a68" }}>Research Areas</p>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>3</p>
+            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Research Areas</p>
           </div>
-          <div>
-            <p className="text-2xl font-bold" style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: "#ef5044" }}>↗</p>
-            <p className="text-xs mt-1" style={{ color: "#5a5a68" }}>Open Access</p>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold" style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: "#ef5044" }}>↗</p>
+            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Open Access</p>
           </div>
         </div>
       </FadeIn>

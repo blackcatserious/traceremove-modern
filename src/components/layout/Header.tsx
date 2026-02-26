@@ -50,7 +50,7 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden items-center gap-8 desktop-nav">
             {NAV.map((item) => (
               <Link key={item.href} href={item.href} className="relative py-1">
                 <span className={`text-[13px] font-medium tracking-wide transition-colors duration-200 ${
@@ -67,7 +67,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <button className="md:hidden w-10 h-10 flex items-center justify-center relative z-[60]" onClick={() => setOpen(!open)}>
+          <button className="mobile-toggle w-10 h-10 flex items-center justify-center relative z-[60]" onClick={() => setOpen(!open)}>
             {open ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
           </button>
         </div>
