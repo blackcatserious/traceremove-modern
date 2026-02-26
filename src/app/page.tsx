@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main>
       {/* ═══ HERO ═══ */}
-      <section className="relative px-6 pt-40 md:pt-48 pb-16 overflow-hidden">
+      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "176px", paddingBottom: "64px" }}>
         {/* Background orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div style={{
@@ -81,23 +81,29 @@ export default function Home() {
 
       {/* ═══ STATS ═══ */}
       <FadeIn className="max-w-5xl mx-auto px-6 pb-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-8" 
-             style={{ borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-          <div className="text-center md:text-left">
-            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>7</p>
-            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Research Papers</p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "32px",
+          padding: "28px 0",
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+        }}>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>7</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Research Papers</p>
           </div>
-          <div className="text-center md:text-left">
-            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>5</p>
-            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Essays Published</p>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>5</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Essays Published</p>
           </div>
-          <div className="text-center md:text-left">
-            <p className="text-3xl font-bold text-white" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>3</p>
-            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Research Areas</p>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>3</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Research Areas</p>
           </div>
-          <div className="text-center md:text-left">
-            <p className="text-3xl font-bold" style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: "#ef5044" }}>↗</p>
-            <p className="text-xs mt-1.5" style={{ color: "#5a5a68" }}>Open Access</p>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#ef5044", fontFamily: "'Instrument Serif', Georgia, serif" }}>↗</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Open Access</p>
           </div>
         </div>
       </FadeIn>
@@ -110,7 +116,7 @@ export default function Home() {
             <p className="text-sm mb-12" style={{ color: "#5a5a68" }}>Three interconnected lines of inquiry into the philosophical foundations of AI.</p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-3 gap-5" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
             <FadeIn delay={0.1}>
               <div className="card">
                 <div className="flex items-center gap-3 mb-4">
