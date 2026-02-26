@@ -1,54 +1,90 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { articles } from "@/data/articles";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Articles & Essays",
-  description:
-    "Philosophical essays on AI, language models, epistemic risks, and the future of human-machine interaction.",
-  openGraph: {
-    title: "Writing | Artur Ziganshin",
-    description: "Philosophical essays on AI and technology.",
-    url: "https://traceremove.dev/articles",
-  },
-};
+import Link from "next/link";
+
+let articles: any[] = [];
+try { const mod = require("@/data/articles"); articles = mod.articles || mod.default || []; } catch {}
 
 export default function ArticlesPage() {
   return (
-    <div>
-      <div className="max-w-6xl mx-auto px-6 pt-32 pb-16">
+    <main>
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "120px 24px 24px" }}>
         <span className="overline">Writing</span>
-        <h1 className="mt-4 text-4xl md:text-5xl">Articles &amp; Essays</h1>
-        <p className="mt-4 text-lg text-[#8a8a97] max-w-2xl">
-          Refined long-form essays on AI philosophy, epistemic risk, and ethical architecture.
+        <h1 style={{
+          fontFamily: "'Instrument Serif', Georgia, serif",
+          fontSize: "clamp(2rem, 4vw, 3rem)",
+          marginTop: "16px",
+        }}>
+          Articles & Essays
+        </h1>
+        <p style={{ marginTop: "12px", color: "#7a7a88", maxWidth: "550px", lineHeight: 1.6 }}>
+          Long-form philosophical analysis of AI — epistemic risks, ethical architecture,
+          and the questions that technology alone cannot answer.
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 pb-20">
-        {articles.map((article, i) => (
-          <FadeIn key={article.slug} delay={i * 0.06}>
-            <Link href={`/articles/${article.slug}`} className="block group">
-              <div className="py-6 border-b border-white/[0.04] group-hover:border-white/[0.08] transition-colors">
-                <div className="flex items-center gap-3 text-xs text-[#5e5e6c] mb-2">
-                  <time>{article.date}</time>
-                  <span>·</span>
-                  <span>{article.readingTime}</span>
-                </div>
-                <h3 className="text-2xl text-white group-hover:text-[#ef5044] transition-colors mb-2" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
-                  {article.title}
-                </h3>
-                <p className="text-sm text-[#7a7a88] line-clamp-2 mb-3">{article.excerpt}</p>
-                <div className="flex flex-wrap gap-2">
-                  {article.tags.map((tag) => (
-                    <span key={tag} className="badge badge-tag">{tag}</span>
-                  ))}
-                </div>
+      <div style={{ maxWidth: "820px", margin: "0 auto", padding: "24px 24px 80px" }}>
+        {articles.map((article: any, i: number) => (
+          <Link
+            key={article.slug || i}
+            href={`/articles/${article.slug}`}
+            style={{ textDecoration: "none", display: "block" }}
+          >
+            <article style={{
+              padding: "28px 0",
+              borderBottom: "1px solid rgba(255,255,255,0.04)",
+              transition: "border-color 0.3s",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderBottomColor = "rgba(255,255,255,0.10)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderBottomColor = "rgba(255,255,255,0.04)"; }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "13px", color: "#4a4a58", marginBottom: "10px" }}>
+                <time>{formatDate(article.date)}</time>
+                <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#3a3a45" }} />
+                <span>{article.readingTime}</span>
               </div>
-            </Link>
-          </FadeIn>
+
+              <h2 style={{
+                fontFamily: "'Instrument Serif', Georgia, serif",
+                fontSize: "1.4rem",
+                color: "#f0f0f3",
+                marginBottom: "8px",
+                lineHeight: 1.25,
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#ef5044"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "#f0f0f3"; }}
+              >
+                {article.title}
+              </h2>
+
+              <p style={{ fontSize: "0.95rem", color: "#6a6a78", lineHeight: 1.6, marginBottom: "12px" }}>
+                {article.excerpt}
+              </p>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                {(article.tags || []).map((tag: string) => (
+                  <span key={tag} className="badge-tag">{tag}</span>
+                ))}
+              </div>
+            </article>
+          </Link>
         ))}
+
+        {articles.length === 0 && (
+          <p style={{ color: "#5a5a68", padding: "40px 0" }}>Articles coming soon.</p>
+        )}
       </div>
-    </div>
+    </main>
   );
+}
+
+function formatDate(dateStr: string): string {
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  } catch {
+    return dateStr;
+  }
 }
