@@ -2,13 +2,43 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-4 text-center">
-      <div className="mb-4 text-7xl italic text-[#ef5044]">φ</div>
-      <h1 className="text-4xl font-semibold">404 — Page not found</h1>
-      <p className="mt-3 text-neutral-700 dark:text-neutral-300">The page you were looking for does not exist.</p>
-      <Link href="/" className="mt-6 rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900">
-        Return home
-      </Link>
-    </div>
+    <main
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <p
+          style={{
+            fontSize: "80px",
+            fontFamily: "'Instrument Serif', Georgia, serif",
+            color: "#2a2a35",
+            lineHeight: 1,
+          }}
+        >
+          404
+        </p>
+        <h1
+          style={{
+            fontFamily: "'Instrument Serif', Georgia, serif",
+            fontSize: "1.5rem",
+            marginTop: "16px",
+            color: "#f0f0f3",
+          }}
+        >
+          Page not found
+        </h1>
+        <p style={{ color: "#5a5a68", marginTop: "8px", marginBottom: "24px" }}>
+          The page you&apos;re looking for doesn&apos;t exist or has been moved.
+        </p>
+        <Link href="/" className="btn-primary">
+          Back to homepage
+        </Link>
+      </div>
+    </main>
   );
 }

@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { siteConfig } from "@/data/site-config";
-import BackToTop from "@/components/ui/BackToTop";
+import { BackToTop } from "@/components/ui/BackToTop";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
     types: {
-      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+      "application/rss+xml": "/feed.xml",
     },
   },
   verification: {},
@@ -91,7 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <div className="relative min-h-screen">
             <Header />
-            <main id="main-content">{children}</main>
+            <div id="main-content">{children}</div>
             <Footer />
             <BackToTop />
           </div>

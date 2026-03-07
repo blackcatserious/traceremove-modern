@@ -139,3 +139,8 @@
   .desktop-nav { display: flex !important; }
   .mobile-toggle { display: none !important; }
 }
+
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

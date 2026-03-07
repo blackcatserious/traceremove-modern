@@ -1,28 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowUp } from "lucide-react";
 
-export default function BackToTop() {
-  const [visible, setVisible] = useState(false);
+export function BackToTop() {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 500);
-    onScroll();
+    const onScroll = () => setShow(window.scrollY > 500);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (!visible) return null;
+  if (!show) return null;
 
   return (
     <button
-      type="button"
-      aria-label="Back to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.10] text-[#8a8a97] flex items-center justify-center animate-fade-in"
+      aria-label="Back to top"
+      style={{
+        position: "fixed",
+        bottom: "24px",
+        right: "24px",
+        zIndex: 40,
+        width: "40px",
+        height: "40px",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(255,255,255,0.06)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        cursor: "pointer",
+        transition: "all 0.3s",
+        opacity: show ? 1 : 0,
+        transform: show ? "translateY(0)" : "translateY(10px)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "rgba(255,255,255,0.10)";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+      }}
     >
-      <ArrowUp className="w-4 h-4" />
+      <ArrowUp size={16} color="#7a7a88" />
     </button>
   );
 }
