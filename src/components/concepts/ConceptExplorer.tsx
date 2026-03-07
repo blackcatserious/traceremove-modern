@@ -29,7 +29,7 @@ export default function ConceptExplorer() {
     return concepts.filter((concept) => {
       if (filter !== "all" && concept.category !== filter) return false;
       if (!lowered) return true;
-      return `${concept.name} ${concept.shortDescription} ${concept.fullDescription}`.toLowerCase().includes(lowered);
+      return `${concept.name} ${concept.description} ${concept.detail}`.toLowerCase().includes(lowered);
     });
   }, [filter, query]);
 
@@ -40,7 +40,7 @@ export default function ConceptExplorer() {
 
   const relatedConcepts = useMemo(() => {
     if (!activeConcept) return [];
-    return activeConcept.relatedTo
+    return activeConcept.related
       .map((id) => concepts.find((item) => item.id === id))
       .filter((item): item is Concept => Boolean(item));
   }, [activeConcept]);
@@ -93,7 +93,7 @@ export default function ConceptExplorer() {
                 style={{ backgroundColor: categoryColors[concept.category] }}
               />
               <h3 className="text-sm font-semibold text-white">{concept.name}</h3>
-              <p className="text-xs text-[#7a7a88] line-clamp-2 mt-2">{concept.shortDescription}</p>
+              <p className="text-xs text-[#7a7a88] line-clamp-2 mt-2">{concept.description}</p>
             </button>
           ))}
         </div>
@@ -129,7 +129,7 @@ export default function ConceptExplorer() {
               {titleCase(activeConcept.category)}
             </span>
 
-            {activeConcept.fullDescription.split("\n\n").map((paragraph) => (
+            {activeConcept.detail.split("\n\n").map((paragraph) => (
               <p key={paragraph.slice(0, 40)} className="mt-4 text-sm leading-relaxed text-[#b0b0bc]">
                 {paragraph}
               </p>
@@ -138,7 +138,7 @@ export default function ConceptExplorer() {
             <div className="mt-6">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[#8a8a97]">Key Thinkers</h3>
               <ul className="mt-2 flex flex-wrap gap-2">
-                {activeConcept.keyThinkers.map((thinker) => (
+                {activeConcept.thinkers.map((thinker) => (
                   <li key={thinker} className="badge badge-tag">
                     {thinker}
                   </li>
@@ -148,7 +148,7 @@ export default function ConceptExplorer() {
 
             <div className="mt-6">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[#8a8a97]">Relevance to AI</h3>
-              <p className="mt-2 text-sm text-[#b0b0bc] leading-relaxed">{activeConcept.relevanceToAI}</p>
+              <p className="mt-2 text-sm text-[#b0b0bc] leading-relaxed">{activeConcept.aiRelevance}</p>
             </div>
 
             <div className="mt-6">

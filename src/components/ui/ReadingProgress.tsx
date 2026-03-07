@@ -1,23 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function ReadingProgress() {
+export function ReadingProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
-      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = documentHeight > 0 ? (window.scrollY / documentHeight) * 100 : 0;
-      setProgress(Math.max(0, Math.min(100, ratio)));
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
     };
-
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <div className="fixed left-0 top-0 z-50 h-[2px] bg-[#ef5044] transition-[width] duration-200" style={{ width: `${progress}%` }} />
+    <div style={{
+      position: "fixed", top: 0, left: 0, zIndex: 100,
+      width: `${progress}%`, height: "2px",
+      background: "linear-gradient(90deg, #ef5044, #f87a71)",
+      transition: "width 0.1s linear",
+    }} />
   );
 }

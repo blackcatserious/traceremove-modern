@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import ReadingProgress from "@/components/ui/ReadingProgress";
+import { ReadingProgress } from "@/components/ui/ReadingProgress";
 import { articles } from "@/data/articles";
 
 export function generateStaticParams() {
