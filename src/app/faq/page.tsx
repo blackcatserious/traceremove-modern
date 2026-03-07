@@ -61,7 +61,7 @@ const faqData = [
       {
         id: 2,
         question: "Who is Artur Ziganshin?",
-        answer: "Artur Ziganshin is the founder of Traceremove and Rarematrix, an AI systems architect, developer, and philosopher of technology. He holds BA/MA degrees in Philosophy from  and has extensive expertise in AI ethics, Big Data, language technologies, and security. He is multilingual (Russian, English, Tatar, Serbian, Spanish) and actively involved in international activities including Equality, ORM, and cyber rights research."
+        answer: "Artur Ziganshin is the founder of traceremove.dev and an independent philosopher of AI. He holds a Master of Philosophy and a PhD of Philosophy, and works on epistemic risk, AI ethics, language, and governance. His publications and preprints are available through PhilArchive and this site."
       },
       {
         id: 3,
@@ -71,7 +71,7 @@ const faqData = [
       {
         id: 4,
         question: "How can I get involved with Traceremove?",
-        answer: "There are several ways to get involved: (1) Follow our research through publications and updates, (2) Participate in our research studies when opportunities arise, (3) Collaborate on research projects if you're an academic or industry researcher, (4) Engage with our open-source tools and provide feedback, (5) Join our community discussions and workshops. Contact us at info@traceremove.dev to explore collaboration opportunities."
+        answer: "There are several ways to get involved: (1) Follow our research through publications and updates, (2) Participate in our research studies when opportunities arise, (3) Collaborate on research projects if you're an academic or industry researcher, (4) Engage with our open-source tools and provide feedback, (5) Join our community discussions and workshops. Contact us at artur@traceremove.dev to explore collaboration opportunities."
       }
     ]
   },
@@ -512,7 +512,7 @@ export default function FAQ() {
                   <div className="academic-card p-6">
                     <h3 className="text-lg font-semibold text-research-text mb-3">Additional Resources</h3>
                     <div className="space-y-2 text-sm text-research-text-secondary">
-                      <p>• <Link href="/about" className="text-accent-ai-purple hover:underline">About page</Link> for detailed information</p>
+                      <p>• <Link href="/cv" className="text-accent-ai-purple hover:underline">About page</Link> for detailed information</p>
                       <p>• <Link href="/contact" className="text-accent-ai-purple hover:underline">Contact form</Link> for specific inquiries</p>
                       <p>• <Link href="/site-map" className="text-accent-ai-purple hover:underline">Site map</Link> for navigation help</p>
                       <p>• Research publications for technical details</p>

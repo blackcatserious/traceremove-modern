@@ -54,10 +54,10 @@ const teamMembers = {
       role: "Founder & Director",
       title: "AI Systems Architect, Developer, Philosopher of Technology",
       location: "International",
-      bio: "Artur Ziganshin is the founder and director of the Traceremove AI Research Lab, bringing together expertise in AI systems architecture, software development, and philosophy of technology. With a background in philosophy from  and extensive experience in AI ethics, big data, and language technologies, Artur leads interdisciplinary research that bridges technical innovation with ethical considerations. His work focuses on transparency, responsibility, and human-centered approaches to AI development.",
+      bio: "Artur Ziganshin is the founder and director of the Traceremove AI Research Lab, bringing together expertise in AI systems architecture, software development, and philosophy of technology. With a background in philosophy and extensive work in AI ethics, epistemic risk, and language technologies, Artur leads interdisciplinary research that bridges technical innovation with ethical considerations. His work focuses on transparency, responsibility, and human-centered approaches to AI development.",
       expertise: ["AI Ethics", "Systems Architecture", "Philosophy of Technology", "Big Data", "Language Technologies", "Security", "Transparency"],
       languages: ["Russian", "English", "Tatar", "Serbian", "Spanish"],
-      projects: ["Traceremove Platform", "Rarematrix", "Equality Initiative", "Ethical AI Framework"],
+      projects: ["Traceremove Platform", "Epistemic Risk Research", "Ethical AI Framework", "Philosophy of Language & AI"],
       social: {
         linkedin: "https://linkedin.com/in/artur-ziganshin",
         github: "https://github.com/zikzk1394",
