@@ -1,4 +1,4 @@
-export type Article = {
+export interface Article {
   slug: string;
   title: string;
   date: string;
@@ -6,7 +6,7 @@ export type Article = {
   excerpt: string;
   tags: string[];
   content: string;
-};
+}
 
 export const articles: Article[] = [
   {
@@ -14,11 +14,9 @@ export const articles: Article[] = [
     title: "Why AI Needs Philosophy Now More Than Ever",
     date: "2026-03-01",
     readingTime: "8 min read",
-    excerpt:
-      "Large language models don't understand meaning. They process patterns. This distinction matters enormously — and philosophy is the only discipline equipped to explain why.",
+    excerpt: "Large language models don't understand meaning. They process patterns. This distinction matters enormously — and philosophy is the only discipline equipped to explain why.",
     tags: ["AI philosophy", "epistemic risks", "LLMs"],
-    content: `
-We are living through the most significant expansion of artificial language production in human history. Every day, large language models generate billions of words. These outputs look like understanding. They feel like understanding. But the philosophical question that should keep us awake at night is simple: are they understanding?
+    content: `We are living through the most significant expansion of artificial language production in human history. Every day, large language models generate billions of words. These outputs look like understanding. They feel like understanding. But the philosophical question that should keep us awake at night is simple: are they understanding?
 
 This is not an idle academic puzzle. The answer determines whether we can trust AI systems with consequential decisions — diagnosing illness, adjudicating legal disputes, allocating resources, educating children.
 
@@ -42,19 +40,16 @@ Philosophy offers centuries of conceptual tools. The philosophy of language prov
 
 The AI research community has largely built systems using engineering metrics — accuracy, perplexity, benchmark performance. Philosophy asks the how and why questions that engineering alone cannot answer.
 
-These are not abstract questions. They are the most urgent applied philosophy problems of our generation.
-`,
+These are not abstract questions. They are the most urgent applied philosophy problems of our generation.`,
   },
   {
     slug: "what-deepseek-reveals",
     title: "What DeepSeek Reveals About the Fragility of AI Knowledge",
     date: "2026-03-08",
     readingTime: "6 min read",
-    excerpt:
-      "The rise of DeepSeek challenges Western assumptions about AI development — but the deeper lesson is philosophical.",
+    excerpt: "The rise of DeepSeek challenges Western assumptions about AI development — but the deeper lesson is philosophical.",
     tags: ["DeepSeek", "epistemic risks", "benchmarking"],
-    content: `
-When DeepSeek demonstrated performance competitive with Western frontier models at a fraction of the training cost, the AI industry panicked about economics. But the more interesting question is epistemological.
+    content: `When DeepSeek demonstrated performance competitive with Western frontier models at a fraction of the training cost, the AI industry panicked about economics. But the more interesting question is epistemological.
 
 What does it mean that two completely different training approaches, using different data and different computational budgets, produce systems that score similarly on benchmarks?
 
@@ -72,19 +67,16 @@ Philosophy has a name for this: epistemic luck. When someone arrives at a true b
 
 The DeepSeek moment should prompt a fundamental rethinking of how we evaluate AI systems. Instead of asking how well does this system perform on benchmarks, we should ask: what kind of epistemic process is this system using, and is that process reliable across contexts we have not tested?
 
-This is a philosophical question requiring philosophical methods — careful conceptual analysis, attention to edge cases, examination of the conditions under which our confidence is justified.
-`,
+This is a philosophical question requiring philosophical methods — careful conceptual analysis, attention to edge cases, examination of the conditions under which our confidence is justified.`,
   },
   {
     slug: "ai-philosophy-reading-list",
     title: "The Essential AI Philosophy Reading List for 2026",
     date: "2026-03-15",
     readingTime: "10 min read",
-    excerpt:
-      "From Turing's original question to the latest debates on AI consciousness — a curated guide to the philosophical foundations.",
+    excerpt: "From Turing's original question to the latest debates on AI consciousness — a curated guide to the philosophical foundations.",
     tags: ["reading list", "books", "philosophy of AI", "education"],
-    content: `
-Whether you are an engineer building AI systems, a policymaker regulating them, or a citizen affected by them, philosophical literacy about AI is no longer optional.
+    content: `Whether you are an engineer building AI systems, a policymaker regulating them, or a citizen affected by them, philosophical literacy about AI is no longer optional.
 
 ## Tier 1: Philosophical Foundations
 
@@ -106,23 +98,20 @@ Shannon Vallor, Technology and the Virtues (2016). Vallor applies virtue ethics 
 
 David Chalmers, Reality+ (2022). Chalmers extends his work on consciousness to virtual reality and simulation.
 
-The growing literature on AI epistemology represents one of the fastest-growing subfields in philosophy of AI. My own work — Epistemic Risks in AI — examines conditions under which AI outputs can count as knowledge.
+The growing literature on AI epistemology represents one of the fastest-growing subfields in philosophy of AI. My own work on epistemic risks examines conditions under which AI outputs can count as knowledge.
 
 ## How to Use This List
 
-If you have limited time, start with Turing and Searle from Tier 1, then Crawford and Narayanan from Tier 2. These four texts give you a philosophical foundation stronger than 95% of people working in AI today.
-`,
+If you have limited time, start with Turing and Searle from Tier 1, then Crawford and Narayanan from Tier 2. These four texts give you a philosophical foundation stronger than 95% of people working in AI today.`,
   },
   {
     slug: "searles-chinese-room-in-2026",
     title: "Searle's Chinese Room at 46: Does It Still Apply to GPT?",
     date: "2026-03-22",
     readingTime: "9 min read",
-    excerpt:
-      "The most famous thought experiment in philosophy of mind meets the most powerful language models ever built.",
+    excerpt: "The most famous thought experiment in philosophy of mind meets the most powerful language models ever built.",
     tags: ["Chinese Room", "Searle", "LLMs", "philosophy of mind"],
-    content: `
-In 1980, John Searle imagined a person locked in a room, receiving Chinese characters through a slot, consulting a massive rulebook, and passing back Chinese characters that constituted correct responses. The person in the room does not understand Chinese — they are following rules mechanically. Searle's conclusion: computers that manipulate symbols according to rules do not understand, no matter how convincing their outputs.
+    content: `In 1980, John Searle imagined a person locked in a room, receiving Chinese characters through a slot, consulting a massive rulebook, and passing back Chinese characters that constituted correct responses. The person in the room does not understand Chinese — they are following rules mechanically. Searle's conclusion: computers that manipulate symbols according to rules do not understand, no matter how convincing their outputs.
 
 Forty-six years later, large language models produce text that is often indistinguishable from human writing. They pass bar exams, write poetry, debug code, and explain quantum mechanics. Does this finally refute the Chinese Room?
 
@@ -140,19 +129,16 @@ What modern LLMs add to the Chinese Room debate is the grounding problem. Searle
 
 Modern LLMs do not weaken Searle. They create new versions of the Chinese Room at unprecedented scale. Every chatbot interaction is a Chinese Room — symbols in, rules applied, symbols out. The room has gotten enormously larger and faster. But the person inside still does not understand Chinese.
 
-The philosophical conclusion: we should treat LLM outputs with the same epistemic caution we would apply to any system that produces convincing language without understanding what it says.
-`,
+The philosophical conclusion: we should treat LLM outputs with the same epistemic caution we would apply to any system that produces convincing language without understanding what it says.`,
   },
   {
     slug: "dignity-problem-automated-hiring",
     title: "The Dignity Problem in Automated Hiring",
     date: "2026-03-29",
     readingTime: "7 min read",
-    excerpt:
-      "When AI screens your resume, it treats you as a data point. Kant identified why this matters 250 years ago.",
+    excerpt: "When AI screens your resume, it treats you as a data point. Kant identified why this matters 250 years ago.",
     tags: ["human dignity", "Kant", "automation", "hiring", "ethics"],
-    content: `
-Consider a scenario. You spend three weeks crafting a job application. You tailor your cover letter, update your portfolio, ask colleagues for references. You submit the application. Within 0.3 seconds, an AI screening system rejects you because your resume does not contain enough keywords matching the job description.
+    content: `Consider a scenario. You spend three weeks crafting a job application. You tailor your cover letter, update your portfolio, ask colleagues for references. You submit the application. Within 0.3 seconds, an AI screening system rejects you because your resume does not contain enough keywords matching the job description.
 
 The technical problem here is well-documented — keyword matching is a crude proxy for qualification. But the deeper problem is philosophical, and it concerns human dignity.
 
@@ -172,7 +158,6 @@ A human recruiter who reads your application engages — however briefly — wit
 
 This does not mean automated hiring is inherently impermissible. It means that any such system must be designed with dignity constraints. Every applicant must have the right to know that automation was used. Every automated rejection must be reviewable by a human. The system must never be the sole decision-maker for consequential employment decisions.
 
-These are not just policy recommendations. They are moral requirements that follow from the philosophical principle of human dignity.
-`,
+These are not just policy recommendations. They are moral requirements that follow from the philosophical principle of human dignity.`,
   },
 ];
