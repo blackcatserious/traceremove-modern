@@ -1,22 +1,4 @@
-import type { MetadataRoute } from "next";
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/_next/"],
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
-      },
-      {
-        userAgent: "Scholarbot",
-        allow: "/",
-      },
-    ],
-    sitemap: "https://traceremove.dev/sitemap.xml",
-  };
+import type{MetadataRoute}from"next";
+export default function robots():MetadataRoute.Robots{
+  return{rules:[{userAgent:"*",allow:"/",disallow:["/api/","/_next/"]}],sitemap:"https://traceremove.dev/sitemap.xml"};
 }
