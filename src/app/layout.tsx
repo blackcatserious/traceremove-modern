@@ -4,78 +4,52 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import { siteConfig } from "@/data/site-config";
 import { BackToTop } from "@/components/ui/BackToTop";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL("https://traceremove.dev"),
   title: {
-    default: siteConfig.title,
+    default: "Artur Ziganshin — AI Philosophy Research",
     template: "%s | Artur Ziganshin",
   },
-  description: siteConfig.description,
-  keywords: [...siteConfig.keywords],
-  authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
-  creator: siteConfig.author.name,
-  publisher: siteConfig.author.name,
+  description:
+    "Independent philosophical research on epistemic risks, ethical architecture, and the foundations of artificial intelligence.",
+  keywords: [
+    "AI philosophy",
+    "epistemic risks",
+    "AI ethics",
+    "philosophy of artificial intelligence",
+    "Artur Ziganshin",
+  ],
+  authors: [{ name: "Artur Ziganshin", url: "https://traceremove.dev" }],
+  creator: "Artur Ziganshin",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteConfig.url,
+    url: "https://traceremove.dev",
     siteName: "traceremove",
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: [{ url: "/og-image", width: 1200, height: 630, alt: siteConfig.title }],
+    title: "Artur Ziganshin — AI Philosophy Research",
+    description:
+      "Independent philosophical research on epistemic risks, ethical architecture, and AI foundations.",
+    images: [{ url: "/og-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.title,
-    description: siteConfig.description,
+    title: "Artur Ziganshin — AI Philosophy Research",
+    description: "Independent philosophical research on epistemic risks and AI foundations.",
     images: ["/og-image"],
-    creator: siteConfig.author.twitter,
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   alternates: {
-    canonical: siteConfig.url,
-    types: {
-      "application/rss+xml": "/feed.xml",
-    },
+    canonical: "https://traceremove.dev",
+    types: { "application/rss+xml": "https://traceremove.dev/feed.xml" },
   },
-  verification: {},
   icons: { icon: "/favicon.svg" },
-};
-
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: siteConfig.author.name,
-  url: siteConfig.url,
-  jobTitle: "Independent AI Philosophy Researcher",
-  description: siteConfig.description,
-  sameAs: [siteConfig.author.orcid, siteConfig.author.philarchive, siteConfig.author.linkedin].filter(Boolean),
-  knowsAbout: [
-    "Artificial Intelligence",
-    "Epistemology",
-    "Philosophy of Mind",
-    "AI Ethics",
-    "Philosophy of Language",
-    "Machine Learning",
-  ],
-  hasCredential: [
-    { "@type": "EducationalOccupationalCredential", credentialCategory: "degree", name: "Master of Philosophy" },
-    { "@type": "EducationalOccupationalCredential", credentialCategory: "degree", name: "PhD of Philosophy" },
-  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -91,12 +65,51 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <div className="relative min-h-screen">
             <Header />
-            <div id="main-content">{children}</div>
+            <div id="main-content">
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    name: "Artur Ziganshin",
+                    url: "https://traceremove.dev",
+                    jobTitle: "Independent AI Philosophy Researcher",
+                    description:
+                      "Independent philosophical research on epistemic risks, ethical architecture, and the foundations of artificial intelligence.",
+                    sameAs: [
+                      "https://orcid.org/0009-0001-0647-3753",
+                      "https://philarchive.org/s/artur%20ziganshin",
+                      "https://linkedin.com/in/artur-ziganshin",
+                    ],
+                    knowsAbout: [
+                      "Artificial Intelligence",
+                      "Epistemology",
+                      "AI Ethics",
+                      "Philosophy of Mind",
+                      "Philosophy of Language",
+                    ],
+                    hasCredential: [
+                      {
+                        "@type": "EducationalOccupationalCredential",
+                        credentialCategory: "degree",
+                        name: "Master of Philosophy",
+                      },
+                      {
+                        "@type": "EducationalOccupationalCredential",
+                        credentialCategory: "degree",
+                        name: "PhD of Philosophy",
+                      },
+                    ],
+                  }),
+                }}
+              />
+              {children}
+            </div>
             <Footer />
             <BackToTop />
           </div>
         </ThemeProvider>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
         <Analytics />
         <SpeedInsights />
       </body>

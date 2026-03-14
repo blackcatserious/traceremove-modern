@@ -12,7 +12,42 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const { slug } = await props.params;
   const article = articles.find((a) => a.slug === slug);
   if (!article) return { title: "Not Found" };
-  return { title: article.title, description: article.excerpt };
+
+  return {
+    title: article.title,
+    description: article.excerpt,
+    openGraph: {
+      type: "article",
+      title: article.title,
+      description: article.excerpt,
+      url: `https://traceremove.dev/articles/${slug}`,
+      publishedTime: article.date,
+      authors: ["Artur Ziganshin"],
+      tags: article.tags,
+      images: [{ url: `/og-article/${slug}`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+    },
+    other: {
+      citation_title: article.title,
+      citation_author: "Ziganshin, Artur",
+      citation_publication_date: article.date,
+      citation_online_date: article.date,
+      citation_journal_title: "traceremove — AI Philosophy Research",
+      citation_language: "en",
+      citation_public_url: `https://traceremove.dev/articles/${slug}`,
+      "DC.title": article.title,
+      "DC.creator": "Ziganshin, Artur",
+      "DC.date": article.date,
+      "DC.type": "Text",
+      "DC.format": "text/html",
+      "DC.language": "en",
+      "DC.subject": (article.tags || []).join("; "),
+    },
+  };
 }
 
 function fmt(d: string) { try { return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }); } catch { return d; } }

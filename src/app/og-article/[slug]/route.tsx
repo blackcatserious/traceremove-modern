@@ -2,29 +2,16 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-function humanizeSlug(slug: string) {
-  return slug
+export async function GET(
+  request: Request,
+  props: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await props.params;
+
+  const title = slug
     .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
-}
-
-export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-
-  let title = humanizeSlug(slug);
-  let tags = "";
-
-  try {
-    const { articles } = await import("@/data/articles");
-    const article = articles.find((a) => a.slug === slug);
-    if (article) {
-      title = article.title;
-      tags = article.tags.slice(0, 3).join(" · ");
-    }
-  } catch {
-    // keep fallback title/tags for edge safety
-  }
 
   return new ImageResponse(
     (
@@ -36,20 +23,28 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "80px",
-          background: "#0a0a0f",
+          background: "linear-gradient(135deg, #0a0a0f 0%, #151520 100%)",
           color: "#e8e8ec",
           fontFamily: "Georgia, serif",
         }}
       >
         <div>
-          <div style={{ fontSize: 14, color: "#ef5044", letterSpacing: "0.2em", marginBottom: 32 }}>
-            TRACEREMOVE · AI PHILOSOPHY
+          <div
+            style={{
+              fontSize: 14,
+              color: "#ef5044",
+              letterSpacing: "0.25em",
+              marginBottom: 36,
+              textTransform: "uppercase" as const,
+            }}
+          >
+            traceremove · AI Philosophy
           </div>
-          <div style={{ fontSize: 52, lineHeight: 1.15, maxWidth: 900 }}>{title}</div>
+          <div style={{ fontSize: 48, lineHeight: 1.12, maxWidth: 850 }}>{title}</div>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <div style={{ fontSize: 20, color: "#8a8a97" }}>Artur Ziganshin</div>
-          <div style={{ fontSize: 16, color: "#5e5e6c" }}>{tags}</div>
+          <div style={{ fontSize: 20, color: "#7a7a88" }}>Artur Ziganshin</div>
+          <div style={{ fontSize: 16, color: "#4a4a58" }}>traceremove.dev</div>
         </div>
       </div>
     ),
