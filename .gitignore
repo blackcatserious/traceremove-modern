@@ -39,3 +39,47 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Binary files - never commit these
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.webp
+*.bmp
+*.tiff
+*.avif
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.otf
+*.mp4
+*.mp3
+*.pdf
+*.zip
+*.tar
+*.gz
+
+# Binary files - never commit these
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.webp
+*.bmp
+*.tiff
+*.avif
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.otf
+*.mp4
+*.mp3
+*.pdf
+*.zip
+*.tar
+*.gz
