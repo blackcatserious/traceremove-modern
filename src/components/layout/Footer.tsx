@@ -2,7 +2,7 @@
 export default function Footer(){return(
 <footer style={{borderTop:"1px solid rgba(255,255,255,0.04)"}}>
 <div style={{maxWidth:1152,margin:"0 auto",padding:"64px 24px 24px"}}>
-<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:40,marginBottom:48}}>
+<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:32,marginBottom:48}}>
 <div><span style={{fontFamily:"'Instrument Serif',Georgia,serif",fontStyle:"italic",fontSize:"1.15rem",color:"#f0f0f3"}}>traceremove</span><p style={{fontSize:13,color:"#5a5a68",marginTop:12,lineHeight:1.6}}>AI philosophy research.</p></div>
 <div><h4 style={{fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.15em",color:"#4a4a58",marginBottom:16}}>Research</h4><FL h="/research">Papers</FL><FL h="/articles">Articles</FL><FL h="/cv">CV</FL></div>
 <div><h4 style={{fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.15em",color:"#4a4a58",marginBottom:16}}>More</h4><FL h="/newsletter">Newsletter</FL><FL h="/services">Services</FL><FL h="/contact">Contact</FL></div>

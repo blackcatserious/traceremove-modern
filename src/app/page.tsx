@@ -8,6 +8,11 @@ let articles: any[] = [];
 try { papers = require("@/data/papers").papers || require("@/data/papers").default || []; } catch {}
 try { articles = require("@/data/articles").articles || require("@/data/articles").default || []; } catch {}
 
+function fmtDate(d: string) {
+  try { return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); }
+  catch { return d; }
+}
+
 export default function Home() {
   const topPapers = papers.slice(0, 3);
   const topArticles = articles.slice(0, 3);
@@ -15,26 +20,26 @@ export default function Home() {
   return (
     <main>
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "120px", paddingBottom: "64px" }}>
+      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "100px", paddingBottom: "32px" }}>
         {/* Background orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div style={{
             position: "absolute", top: "-20%", right: "-10%",
-            width: 700, height: 700, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(239,80,68,0.10) 0%, transparent 70%)",
-            filter: "blur(80px)",
+            width: 800, height: 800, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(239,80,68,0.12) 0%, transparent 70%)",
+            filter: "blur(100px)",
             animation: "pulseGlow 5s ease-in-out infinite",
           }} />
           <div style={{
             position: "absolute", bottom: "-10%", left: "-5%",
-            width: 400, height: 400, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(107,138,237,0.07) 0%, transparent 70%)",
-            filter: "blur(80px)",
+            width: 500, height: 500, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(107,138,237,0.08) 0%, transparent 70%)",
+            filter: "blur(100px)",
             animation: "pulseGlow 5s ease-in-out infinite 2s",
           }} />
           {/* Dot grid */}
           <div style={{
-            position: "absolute", inset: 0, opacity: 0.3,
+            position: "absolute", inset: 0, opacity: 0.25,
             backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
             backgroundSize: "28px 28px",
           }} />
@@ -48,7 +53,7 @@ export default function Home() {
           <FadeIn delay={0.1}>
             <h1 className="mt-6 text-4xl md:text-6xl lg:text-7xl tracking-tight" style={{
               fontFamily: "'Instrument Serif', Georgia, serif",
-              fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
+              fontSize: "clamp(2.75rem, 7vw, 6rem)",
               lineHeight: 1.05,
               letterSpacing: "-0.02em",
             }}>
@@ -85,7 +90,7 @@ export default function Home() {
       </section>
 
       {/* ═══ STATS ═══ */}
-      <div style={{ height: "40px" }} />
+      <div style={{ height: "16px" }} />
       <FadeIn className="max-w-5xl mx-auto px-6 pb-12">
         <div style={{
           display: "grid",
@@ -113,6 +118,10 @@ export default function Home() {
           </div>
         </div>
       </FadeIn>
+
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
 
       {/* ═══ RESEARCH AREAS ═══ */}
       <section className="px-6 py-16">
@@ -174,8 +183,13 @@ export default function Home() {
         </div>
       </section>
 
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
+
       {/* ═══ RECENT PAPERS ═══ */}
       {topPapers.length > 0 && (
+        <>
         <section className="px-6 py-16">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
@@ -212,10 +226,16 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+        </div>
+        </>
       )}
 
       {/* ═══ LATEST WRITING ═══ */}
       {topArticles.length > 0 && (
+        <>
         <section className="px-6 py-16">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
@@ -229,7 +249,7 @@ export default function Home() {
                 <Link href={`/articles/${a.slug}`} className="block group">
                   <div className="py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                     <div className="flex items-center gap-3 text-xs mb-2" style={{ color: "#4a4a58" }}>
-                      <time>{a.date}</time>
+                      <time>{fmtDate(a.date)}</time>
                       <span>·</span>
                       <span>{a.readingTime}</span>
                     </div>
@@ -243,7 +263,16 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+        </div>
+        </>
       )}
+
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
 
       {/* ═══ NEWSLETTER CTA ═══ */}
       <section className="px-6 py-20">
