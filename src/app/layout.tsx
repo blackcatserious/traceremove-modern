@@ -1,218 +1,117 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ThemeProvider } from "next-themes";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { BackToTop } from "@/components/ui/BackToTop";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Breadcrumb from "@/components/Breadcrumb";
-import Footer from "@/components/Footer";
-import { BackgroundProvider } from "@/components/BackgroundTester";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const ibmPlexSerif = IBM_Plex_Serif({
-  variable: "--font-ibm-plex-serif",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://traceremove.dev'),
+  metadataBase: new URL("https://traceremove.dev"),
   title: {
-    default: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
-    template: "%s | Traceremove Research"
+    default: "Artur Ziganshin — AI Philosophy Research",
+    template: "%s | Artur Ziganshin",
   },
-  description: "Advanced AI research platform by Artur Ziganshin. Specializing in AI ethics, privacy-preserving technologies, agentic systems, and philosophical foundations of artificial intelligence. International collaborations in responsible AI development.",
+  description:
+    "Artur Ziganshin — independent AI philosophy researcher. Epistemic risk assessment, ethical AI architecture, and philosophical frameworks for responsible artificial intelligence. Master of Philosophy, PhD of Philosophy.",
   keywords: [
-    "AI research", "artificial intelligence", "AI ethics", "privacy-preserving AI", "agentic systems", 
-    "philosophy of technology", "responsible AI", "machine learning ethics", "AI safety", 
-    "computational philosophy", "digital rights", "AI governance", "transparent AI", "interpretable AI",
-    "Artur Ziganshin", "Traceremove", "AI researcher", "philosophy PhD", "international AI collaboration",
-    "Big Data", "language technologies", "security", "Rarematrix", "Equality", "Federal University"
+    "AI philosophy",
+    "epistemic risks",
+    "AI ethics",
+    "philosophy of artificial intelligence",
+    "Artur Ziganshin",
   ],
-  authors: [{ name: "Artur Ziganshin", url: "https://traceremove.dev/about" }],
+  authors: [{ name: "Artur Ziganshin", url: "https://traceremove.dev" }],
   creator: "Artur Ziganshin",
-  publisher: "Traceremove Research",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://traceremove.dev",
-    siteName: "Traceremove Research",
-    title: "Traceremove Research | Artur Ziganshin - AI Researcher & Philosopher",
-    description: "Advanced AI research platform specializing in AI ethics, privacy-preserving technologies, and philosophical foundations of artificial intelligence. Leading international collaborations in responsible AI development.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Traceremove Research - AI Ethics & Philosophy Lab",
-        type: "image/png",
-      },
-      {
-        url: "/og-image-square.png", 
-        width: 1200,
-        height: 1200,
-        alt: "Traceremove Research Logo",
-        type: "image/png",
-      }
-    ],
+    siteName: "traceremove",
+    title: "Artur Ziganshin — AI Philosophy Research",
+    description:
+      "Independent philosophical research on epistemic risks, ethical architecture, and AI foundations.",
+    images: [{ url: "/og-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Traceremove Research | AI Ethics & Philosophy",
-    description: "Advanced AI research platform specializing in ethical AI systems, privacy-preserving technologies, and philosophical foundations of artificial intelligence.",
-    images: ["/twitter-image.png"],
-    creator: "@traceremove",
-    site: "@traceremove",
+    title: "Artur Ziganshin — AI Philosophy Research",
+    description: "Independent philosophical research on epistemic risks and AI foundations.",
+    images: ["/og-image"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "your-google-verification-code",
-    yandex: "your-yandex-verification-code",
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   alternates: {
     canonical: "https://traceremove.dev",
+    types: { "application/rss+xml": "https://traceremove.dev/feed.xml" },
   },
-  category: "technology",
+  icons: { icon: "/favicon.svg" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1e3a8a" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Artur Ziganshin",
-              "jobTitle": "AI Systems Architect & Researcher",
-              "description": "AI systems architect, developer, and philosopher of technology specializing in AI ethics, privacy-preserving technologies, and responsible AI development.",
-              "url": "https://traceremove.dev",
-              "sameAs": [
-                "https://linkedin.com/in/artur-ziganshin",
-                "https://orcid.org/0000-0000-0000-0000",
-                "https://scholar.google.com/citations?user=example",
-                "https://www.researchgate.net/profile/Artur-Ziganshin",
-                "https://philpeople.org/profiles/artur-ziganshin",
-                "https://academia.edu/ArturZiganshin",
-                "https://github.com/traceremove"
-              ],
-              "affiliation": [
-                {
-                  "@type": "Organization",
-                  "name": "Traceremove",
-                  "url": "https://traceremove.dev",
-                  "description": "AI research platform focused on transparent and interpretable AI systems"
-                },
-                {
-                  "@type": "Organization", 
-                  "name": "Rarematrix",
-                  "description": "Advanced data analytics and AI infrastructure solutions"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Equality",
-                  "description": "International organization promoting digital rights and AI ethics"
-                }
-              ],
-              "alumniOf": [
-                {
-                  "@type": "EducationalOrganization",
-                  "name": "Federal University",
-                  "description": "Master of Arts in Philosophy, Bachelor of Arts in Philosophy"
-                }
-              ],
-              "knowsAbout": [
-                "Artificial Intelligence", "AI Ethics", "Privacy-Preserving Technologies", "Agentic Systems",
-                "Philosophy of Technology", "Machine Learning", "Big Data", "Language Technologies",
-                "Security & Privacy", "Responsible AI Development"
-              ],
-              "expertise": [
-                {
-                  "@type": "Thing",
-                  "name": "AI Ethics",
-                  "description": "Developing ethical frameworks for AI systems and responsible technology deployment"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Agentic Systems",
-                  "description": "Building autonomous AI agents with advanced reasoning and tool-use capabilities"
-                },
-                {
-                  "@type": "Thing",
-                  "name": "Privacy-Preserving Technologies",
-                  "description": "Privacy-preserving technologies and secure AI system architectures"
-                }
-              ],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Traceremove Research",
-                "url": "https://traceremove.dev",
-                "description": "AI research lab focused on ethical AI systems and philosophical foundations"
-              }
-            })
-          }}
-        />
-      </head>
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} font-sans antialiased bg-white text-gray-900`}
-      >
-        <BackgroundProvider>
-          <Navigation />
-          <Breadcrumb />
-          <main className="relative pt-24 pb-16 z-20">
-            {children}
-          </main>
-          <Footer />
-        </BackgroundProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <a
+            href="#main-content"
+            className="sr-only z-[100] rounded-md bg-[#ef5044] px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          >
+            Skip to content
+          </a>
+          <div className="relative min-h-screen">
+            <Header />
+            <div id="main-content">
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    name: "Artur Ziganshin",
+                    url: "https://traceremove.dev",
+                    jobTitle: "Independent AI Philosophy Researcher",
+                    description:
+                      "Independent philosophical research on epistemic risks, ethical architecture, and the foundations of artificial intelligence.",
+                    sameAs: [
+                      "https://orcid.org/0009-0001-0647-3753",
+                      "https://philarchive.org/s/artur%20ziganshin",
+                      "https://linkedin.com/in/artur-ziganshin",
+                    ],
+                    knowsAbout: [
+                      "Artificial Intelligence",
+                      "Epistemology",
+                      "AI Ethics",
+                      "Philosophy of Mind",
+                      "Philosophy of Language",
+                    ],
+                    hasCredential: [
+                      {
+                        "@type": "EducationalOccupationalCredential",
+                        credentialCategory: "degree",
+                        name: "Master of Philosophy",
+                      },
+                      {
+                        "@type": "EducationalOccupationalCredential",
+                        credentialCategory: "degree",
+                        name: "PhD of Philosophy",
+                      },
+                    ],
+                  }),
+                }}
+              />
+              {children}
+            </div>
+            <Footer />
+            <BackToTop />
+          </div>
+        </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

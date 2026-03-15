@@ -1,191 +1,325 @@
-'use client';
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { FadeIn } from "@/components/ui/FadeIn";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, Info, Sparkles, MessageSquare, Database, Network } from 'lucide-react';
-import FeatureCard from '@/components/FeatureCard';
-import ResearchCard from '@/components/ResearchCard';
-import InfoCard from '@/components/InfoCard';
+// Try to import data — use empty arrays if files don't exist
+let papers: any[] = [];
+let articles: any[] = [];
+try { papers = require("@/data/papers").papers || require("@/data/papers").default || []; } catch {}
+try { articles = require("@/data/articles").articles || require("@/data/articles").default || []; } catch {}
+
+function fmtDate(d: string) {
+  try { return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); }
+  catch { return d; }
+}
 
 export default function Home() {
+  const topPapers = papers.slice(0, 3);
+  const topArticles = articles.slice(0, 3);
+
   return (
-    <div className="min-h-screen relative">
-      {/* Hero Section with Premium Glass Effect */}
-      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 decorative-blobs">
-        {/* Premium Content Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(108,99,255,0.05),transparent_60%)] z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(112,86,230,0.04),transparent_60%)] z-10" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20 decorative-content">
-          <div className="text-center">
-            {/* Platform Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8"
-            >
-              <div className="inline-flex items-center space-x-3 px-6 py-3 rounded-full glass-card-premium border border-accent-ai-purple/30 shadow-ai-glow">
-                <Sparkles className="w-5 h-5 text-purple-300" />
-                <span className="text-white/90 font-medium text-sm tracking-wide typography-premium">
-                  AI Research Platform
-                </span>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+    <main>
+      {/* ═══ HERO ═══ */}
+      <section className="relative overflow-hidden" style={{ paddingLeft: "24px", paddingRight: "24px", paddingTop: "100px", paddingBottom: "32px" }}>
+        {/* Background orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div style={{
+            position: "absolute", top: "-20%", right: "-10%",
+            width: 800, height: 800, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(239,80,68,0.12) 0%, transparent 70%)",
+            filter: "blur(100px)",
+            animation: "pulseGlow 5s ease-in-out infinite",
+          }} />
+          <div style={{
+            position: "absolute", bottom: "-10%", left: "-5%",
+            width: 500, height: 500, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(107,138,237,0.08) 0%, transparent 70%)",
+            filter: "blur(100px)",
+            animation: "pulseGlow 5s ease-in-out infinite 2s",
+          }} />
+          {/* Dot grid */}
+          <div style={{
+            position: "absolute", inset: 0, opacity: 0.25,
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }} />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto">
+          <FadeIn>
+            <span className="overline">AI Philosophy Research</span>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <h1 className="mt-6 text-4xl md:text-6xl lg:text-7xl tracking-tight" style={{
+              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontSize: "clamp(2.75rem, 7vw, 6rem)",
+              lineHeight: 1.05,
+              letterSpacing: "-0.02em",
+            }}>
+              What machines mean,<br />
+              what they risk,<br />
+              what we owe.
+            </h1>
+          </FadeIn>
+
+          <FadeIn delay={0.25}>
+            <p className="mt-6 text-lg md:text-xl max-w-2xl leading-relaxed" style={{ color: "#7a7a88" }}>
+              Independent philosophical research on the epistemic foundations, ethical
+              architecture, and social implications of artificial intelligence.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.35}>
+            <p className="text-sm" style={{ color: "#5a5a68", marginTop: "12px" }}>
+              Artur Ziganshin · Master of Philosophy · PhD of Philosophy
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.45}>
+            <div className="flex flex-wrap gap-4" style={{ marginTop: "20px" }}>
+              <Link href="/research" className="btn-primary">
+                Read Research <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="/newsletter" className="btn-secondary">
+                Subscribe <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ═══ STATS ═══ */}
+      <div style={{ height: "16px" }} />
+      <FadeIn className="max-w-5xl mx-auto px-6 pb-12">
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "32px",
+          padding: "28px 0",
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+        }}>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>7</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Research Papers</p>
+          </div>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>5</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Essays Published</p>
+          </div>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", fontFamily: "'Instrument Serif', Georgia, serif" }}>3</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Research Areas</p>
+          </div>
+          <div>
+            <p style={{ fontSize: "1.75rem", fontWeight: 700, color: "#ef5044", fontFamily: "'Instrument Serif', Georgia, serif" }}>↗</p>
+            <p style={{ fontSize: "12px", color: "#5a5a68", marginTop: "6px" }}>Open Access</p>
+          </div>
+        </div>
+      </FadeIn>
+
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
+
+      {/* ═══ RESEARCH AREAS ═══ */}
+      <section className="px-6 py-16">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <h2 className="text-3xl md:text-4xl mb-3">Research Areas</h2>
+            <p className="text-sm mb-12" style={{ color: "#5a5a68" }}>Three interconnected lines of inquiry into the philosophical foundations of AI.</p>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-5" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
+            <FadeIn delay={0.1}>
+              <div className="card">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef5044" }} />
+                  <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: "#5a5a68" }}>Epistemology</span>
+                </div>
+                <h3 className="text-xl text-white mb-3" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>Epistemic Risks</h3>
+                <p className="text-sm leading-relaxed mb-5" style={{ color: "#7a7a88" }}>
+                  How do AI systems generate persuasive but weakly grounded claims?
+                  I develop frameworks for auditing epistemic reliability, drawing on
+                  process reliabilism and virtue epistemology.
+                </p>
+                <Link href="/research" className="accent-link inline-flex items-center gap-1">Explore <ArrowRight className="w-3.5 h-3.5" /></Link>
               </div>
-            </motion.div>
+            </FadeIn>
 
-            {/* Main Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="mb-8"
-            >
-              <h1 className="hero-title text-white mb-8 typography-premium">
-                Advancing AI for a<br />
-                Better Future
-              </h1>
-              
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto mb-16 typography-premium leading-relaxed">
-                Traceremove is committed to exploring the intersection of artificial intelligence, 
-                ethics, and human understanding for responsible innovation.
-              </p>
-            </motion.div>
+            <FadeIn delay={0.2}>
+              <div className="card">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#e0ab4e" }} />
+                  <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: "#5a5a68" }}>Ethics</span>
+                </div>
+                <h3 className="text-xl text-white mb-3" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>Ethical Architecture</h3>
+                <p className="text-sm leading-relaxed mb-5" style={{ color: "#7a7a88" }}>
+                  Design principles for embedding normative constraints at the model,
+                  interface, and institutional levels — so ethics is structural,
+                  not decorative.
+                </p>
+                <Link href="/research" className="accent-link inline-flex items-center gap-1">Explore <ArrowRight className="w-3.5 h-3.5" /></Link>
+              </div>
+            </FadeIn>
 
-            {/* Main Feature Cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="grid md:grid-cols-3 gap-8 mb-24"
-            >
-              <FeatureCard
-                icon={Sparkles}
-                title="Our Mission"
-                description="Learn about the guiding principles of our research lab"
-                gradient="from-blue-900/40 to-purple-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-blue-600"
-              />
-              
-              <FeatureCard
-                icon={Info}
-                title="How to Use This Platform"
-                description="Discover the features and content across multiple sections"
-                gradient="from-purple-900/40 to-violet-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-purple-600"
-              />
-              
-              <FeatureCard
-                icon={BookOpen}
-                title="Philosophy of AI"
-                description="Understand the ethical and philosophical context of our work"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-violet-600"
-              />
-            </motion.div>
+            <FadeIn delay={0.3}>
+              <div className="card">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#6b8aed" }} />
+                  <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: "#5a5a68" }}>Social Philosophy</span>
+                </div>
+                <h3 className="text-xl text-white mb-3" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>Human Dignity</h3>
+                <p className="text-sm leading-relaxed mb-5" style={{ color: "#7a7a88" }}>
+                  A framework grounded in Kantian ethics and capabilities theory
+                  for preserving agency, respect, and contestability in
+                  AI-mediated decisions.
+                </p>
+                <Link href="/research" className="accent-link inline-flex items-center gap-1">Explore <ArrowRight className="w-3.5 h-3.5" /></Link>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Research Areas Section with Premium Glass Effect */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/20 to-slate-900/30 backdrop-blur-sm" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="section-title text-white mb-6 typography-premium">
-              Research Areas
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
+
+      {/* ═══ RECENT PAPERS ═══ */}
+      {topPapers.length > 0 && (
+        <>
+        <section className="px-6 py-16">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-3xl">Recent Papers</h2>
+                <Link href="/research" className="accent-link flex items-center gap-1">View all <ArrowRight className="w-4 h-4" /></Link>
+              </div>
+            </FadeIn>
+            <div className="space-y-4">
+              {topPapers.map((paper: any, i: number) => (
+                <FadeIn key={paper.title || i} delay={i * 0.1}>
+                  <div className="card">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="badge-preprint">Preprint</span>
+                      <span className="text-xs" style={{ color: "#4a4a58" }}>2025</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
+                      {paper.title}
+                    </h3>
+                    <p className="text-sm line-clamp-2 mb-4" style={{ color: "#6a6a78" }}>{paper.abstract || paper.description}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1.5">
+                        {(paper.tags || []).slice(0, 3).map((t: string) => <span key={t} className="badge-tag">{t}</span>)}
+                      </div>
+                      {paper.url && (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" className="accent-link text-xs flex items-center gap-1">
+                          PhilArchive <ArrowRight className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+        </div>
+        </>
+      )}
+
+      {/* ═══ LATEST WRITING ═══ */}
+      {topArticles.length > 0 && (
+        <>
+        <section className="px-6 py-16">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-3xl">Latest Writing</h2>
+                <Link href="/articles" className="accent-link flex items-center gap-1">View all <ArrowRight className="w-4 h-4" /></Link>
+              </div>
+            </FadeIn>
+            {topArticles.map((a: any, i: number) => (
+              <FadeIn key={a.slug || i} delay={i * 0.1}>
+                <Link href={`/articles/${a.slug}`} className="block group">
+                  <div className="py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                    <div className="flex items-center gap-3 text-xs mb-2" style={{ color: "#4a4a58" }}>
+                      <time>{fmtDate(a.date)}</time>
+                      <span>·</span>
+                      <span>{a.readingTime}</span>
+                    </div>
+                    <h3 className="text-xl text-white mb-1.5 group-hover:text-[#ef5044] transition-colors" style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}>
+                      {a.title}
+                    </h3>
+                    <p className="text-sm line-clamp-2" style={{ color: "#6a6a78" }}>{a.excerpt}</p>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+        </section>
+
+        <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+        </div>
+        </>
+      )}
+
+      <div style={{ maxWidth: "1152px", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }} />
+      </div>
+
+      {/* ═══ NEWSLETTER CTA ═══ */}
+      <section className="px-6 py-20">
+        <FadeIn>
+          <div className="relative max-w-xl mx-auto text-center p-10 md:p-14 rounded-3xl overflow-hidden"
+            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.02), rgba(239,80,68,0.015))", border: "1px solid rgba(255,255,255,0.05)" }}>
+            <div style={{
+              position: "absolute", top: "-50%", left: "50%", transform: "translateX(-50%)",
+              width: 300, height: 300, borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(239,80,68,0.08), transparent 70%)",
+              filter: "blur(40px)", pointerEvents: "none",
+            }} />
+            <h2 className="relative text-3xl md:text-4xl mb-4" style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontStyle: "italic" }}>
+              The Epistemic Mirror
             </h2>
-            <p className="text-xl text-slate-300 max-w-4xl mx-auto typography-premium leading-relaxed">
-              Focusing on academic rigor and ethical integrity to build transparent and interpretable AI systems.
+            <p className="relative text-sm mb-8" style={{ color: "#7a7a88" }}>
+              Weekly philosophical analysis of AI developments.<br />No hype. No jargon. Just clarity.
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={MessageSquare}
-                title="Language Models & Ethics"
-                description="Examining the moral considerations surrounding large-scale language models"
-                gradient="from-blue-900/40 to-cyan-900/40"
-                borderColor="border-blue-500/20"
-                iconGradient="from-blue-500 to-cyan-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Database}
-                title="Big Data Architectures"
-                description="Developing robust AI frameworks for processing and analysis"
-                gradient="from-purple-900/40 to-pink-900/40"
-                borderColor="border-purple-500/20"
-                iconGradient="from-purple-500 to-pink-500"
-              />
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <ResearchCard
-                icon={Network}
-                title="Cognitive Agents"
-                description="Creating intelligent AI systems with advanced decision-making capabilities"
-                gradient="from-violet-900/40 to-indigo-900/40"
-                borderColor="border-violet-500/20"
-                iconGradient="from-violet-500 to-indigo-500"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
+            <div className="relative flex gap-3 max-w-sm mx-auto">
+              <input type="email" placeholder="your@email.com" className="input flex-1" />
+              <a href="mailto:artur@traceremove.dev?subject=Newsletter%20Subscription&body=I%20would%20like%20to%20subscribe%20to%20The%20Epistemic%20Mirror." className="btn-primary" style={{ textDecoration: "none", whiteSpace: "nowrap", padding: "12px 24px" }}>Subscribe</a>
+            </div>
+            <p className="relative text-[11px] mt-4" style={{ color: "#3a3a45" }}>Free · Unsubscribe anytime</p>
+          </div>
+        </FadeIn>
       </section>
 
-      {/* About Artur Ziganshin Section */}
-      <section className="relative py-24 decorative-blobs">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 decorative-content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <InfoCard
-              title="About Artur Ziganshin"
-              description="Learn about the background and expertise of our principal investigator."
-              gradient="from-blue-900/40 to-purple-900/40"
-              borderColor="border-blue-500/20"
-            />
-          </motion.div>
-        </div>
+      {/* ═══ ABOUT ═══ */}
+      <section className="px-6 py-16 mb-8">
+        <FadeIn>
+          <div className="max-w-2xl mx-auto">
+            <p className="leading-relaxed mb-4" style={{ color: "#8a8a97" }}>
+              I investigate the philosophical foundations of artificial intelligence —
+              focusing on what AI systems know, how they fail, and what we owe to
+              the people affected by their decisions.
+            </p>
+            <p className="leading-relaxed mb-6" style={{ color: "#8a8a97" }}>
+              My work sits at the intersection of epistemology, ethics, and philosophy
+              of language. I publish on PhilArchive and write weekly analysis for a
+              growing community of readers.
+            </p>
+            <Link href="/cv" className="accent-link inline-flex items-center gap-1">
+              Read full CV <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </FadeIn>
       </section>
-    </div>
+    </main>
   );
 }

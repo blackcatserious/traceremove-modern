@@ -28,6 +28,19 @@ ChartJS.register(
   ArcElement
 );
 
+
+type ChartDataState = {
+  labels: string[];
+  datasets: Array<{
+    label: string;
+    data: number[];
+    backgroundColor: string | string[];
+    borderColor: string | string[];
+    borderWidth: number;
+    fill?: boolean;
+  }>;
+};
+
 interface InteractiveChartProps {
   dataFile: string;
   chartType: 'bar' | 'line' | 'doughnut';
@@ -38,7 +51,7 @@ interface InteractiveChartProps {
 export default function InteractiveChart({ dataFile, chartType, title, className = '' }: InteractiveChartProps) {
   const chartRef = useRef(null);
   // Use state to store current chart data. Initialize with default values so chart renders immediately.
-  const [chartData, setChartData] = useState(getDefaultChartData());
+  const [chartData, setChartData] = useState<ChartDataState>(getDefaultChartData());
 
   /**
    * Helper to build chart datasets based on the contents of the fetched JSON file.
@@ -46,7 +59,7 @@ export default function InteractiveChart({ dataFile, chartType, title, className
    * an object conforming to Chart.js expected format. Fallbacks to default
    * chart data when metrics are absent.
    */
-  const getChartData = useCallback((data: unknown) => {
+  const getChartData = useCallback((data: unknown): ChartDataState => {
     // Workflow metrics: success rates across task types
     if (dataFile.includes('workflow_metrics')) {
       const metrics = Array.isArray(data) ? data[0] : null;
@@ -122,7 +135,7 @@ export default function InteractiveChart({ dataFile, chartType, title, className
    * Provide a basic sample dataset so the component can render immediately
    * even before remote data has loaded. This avoids initial layout shift.
    */
-  function getDefaultChartData() {
+  function getDefaultChartData(): ChartDataState {
     return {
       labels: ['Data 1', 'Data 2', 'Data 3'],
       datasets: [
