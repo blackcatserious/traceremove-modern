@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Artur Ziganshin",
   },
   description:
-    "Independent philosophical research on epistemic risks, ethical architecture, and the foundations of artificial intelligence.",
+    "Artur Ziganshin — independent AI philosophy researcher. Epistemic risk assessment, ethical AI architecture, and philosophical frameworks for responsible artificial intelligence. Master of Philosophy, PhD of Philosophy.",
   keywords: [
     "AI philosophy",
     "epistemic risks",

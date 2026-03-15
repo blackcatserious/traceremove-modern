@@ -73,6 +73,11 @@ export default function ChatPage() {
   return (
     <main>
       <div style={{ maxWidth: 780, margin: "0 auto", padding: "100px 24px 16px" }}>
+        <div style={{ marginBottom: 8 }}>
+          <a href="/" style={{ fontSize: 12, color: "#4a4a58", textDecoration: "none" }}>Home</a>
+          <span style={{ margin: "0 8px", color: "#2a2a35" }}>/</span>
+          <span style={{ fontSize: 12, color: "#5a5a68" }}>Chat</span>
+        </div>
         <span className="overline">AI Assistant</span>
         <h1
           style={{

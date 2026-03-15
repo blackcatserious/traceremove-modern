@@ -293,7 +293,7 @@ export default function Home() {
             </p>
             <div className="relative flex gap-3 max-w-sm mx-auto">
               <input type="email" placeholder="your@email.com" className="input flex-1" />
-              <button className="btn-primary text-sm px-5">Subscribe</button>
+              <a href="mailto:artur@traceremove.dev?subject=Newsletter%20Subscription&body=I%20would%20like%20to%20subscribe%20to%20The%20Epistemic%20Mirror." className="btn-primary" style={{ textDecoration: "none", whiteSpace: "nowrap", padding: "12px 24px" }}>Subscribe</a>
             </div>
             <p className="relative text-[11px] mt-4" style={{ color: "#3a3a45" }}>Free · Unsubscribe anytime</p>
           </div>
