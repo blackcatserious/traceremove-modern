@@ -3,6 +3,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 import { articles } from "@/data/articles";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ReadingProgress } from "@/components/ui/ReadingProgress";
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -68,6 +69,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
   if (!article) notFound();
   return (
     <main>
+      <ReadingProgress />
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "120px 24px 0" }}>
         <Link href="/articles" style={{ color: "#5a5a68", fontSize: 13, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowLeft size={14} /> Back to articles</Link>
         <div style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 13, color: "#4a4a58", marginTop: 32 }}><time>{fmt(article.date)}</time><span style={{ width: 3, height: 3, borderRadius: "50%", background: "#3a3a45" }} /><span>{article.readingTime}</span></div>

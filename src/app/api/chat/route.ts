@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SYSTEM = `You are a philosophical assistant on traceremove.dev by Artur Ziganshin (MPhil, PhD Philosophy).
-Provide rigorous philosophical analysis of AI. Draw on epistemology, philosophy of language, ethics (Kantian, virtue, capabilities), philosophy of mind.
-Style: 2-4 paragraphs, concrete examples, acknowledge uncertainty. Reference thinkers. Stay on philosophy/AI/ethics.`;
+const SYS = `You are a philosophical assistant on traceremove.dev by Artur Ziganshin (MPhil, PhD Philosophy). Provide rigorous philosophical analysis of AI. Draw on epistemology, philosophy of language, ethics (Kantian, virtue, capabilities), philosophy of mind. Style: 2-4 paragraphs, concrete examples, acknowledge uncertainty. Reference specific thinkers. Stay on philosophy/AI/ethics topics.`;
 
 export async function POST(req: NextRequest) {
   const key = process.env.OPENAI_API_KEY;
   if (!key) return NextResponse.json({ error: "No API key" }, { status: 503 });
-
   try {
     const { messages } = await req.json();
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -15,7 +12,7 @@ export async function POST(req: NextRequest) {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
       body: JSON.stringify({
         model: "gpt-4o-mini",
-        messages: [{ role: "system", content: SYSTEM }, ...messages.slice(-10)],
+        messages: [{ role: "system", content: SYS }, ...messages.slice(-10)],
         max_tokens: 800,
         temperature: 0.7,
       }),

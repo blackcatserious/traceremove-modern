@@ -7,7 +7,7 @@ import { concepts, type Concept } from "@/data/concepts";
 const categories = ["all", "epistemology", "ethics", "mind", "language", "political"] as const;
 type CategoryFilter = (typeof categories)[number];
 
-const categoryColors: Record<Exclude<CategoryFilter, "all">, string> = {
+const categoryColors: Record<string, string> = {
   epistemology: "#ef5044",
   ethics: "#e0ab4e",
   mind: "#6b8aed",
